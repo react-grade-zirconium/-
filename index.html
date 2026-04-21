@@ -8,99 +8,37 @@
 <style>
     :root {
         --primary: #2563eb; --dark: #1e293b; --bg: #f8fafc; --card: #ffffff;
-        --info-color: #0d9488; --korean-color: #8b5cf6; --korean-theme2: #d946ef; --climate-color: #f59e0b;
-        --tropical: #f59e0b; --dry: #ef4444; --temperate: #22c55e; --cold: #3b82f6; --polar: #a78bfa; --mountain: #fb923c;
+        --info-color: #0d9488; --korean-color: #b45309; --climate-color: #f59e0b;
+        --tropical: #f59e0b; --dry: #ef4444; --temperate: #22c55e; --cold: #3b82f6; --polar: #a78bfa;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: 'Pretendard', 'Malgun Gothic', sans-serif; background: var(--bg); color: var(--dark); display: flex; min-height: 100vh; overflow: hidden; }
 
     /* 사이드바 */
     .sidebar { width: 250px; background: var(--dark); color: white; display: flex; flex-direction: column; height: 100vh; z-index: 1000; flex-shrink: 0; box-shadow: 2px 0 10px rgba(0,0,0,0.1); }
-    .sidebar-header { padding: 30px 20px; font-size: 1.6rem; font-weight: 900; border-bottom: 1px solid rgba(255,255,255,0.1); text-align: center; letter-spacing: 1px; color: #60a5fa; }
-    .subject-list { flex: 1; padding: 20px 0; overflow-y: auto; }
-    .subject-item { padding: 16px 25px; cursor: pointer; transition: 0.3s; opacity: 0.7; display: flex; align-items: center; gap: 12px; font-size: 1.05rem; }
-    .subject-item:hover { opacity: 0.9; background: rgba(255,255,255,0.05); }
+    .sidebar-header { padding: 30px 20px; font-size: 1.6rem; font-weight: 900; border-bottom: 1px solid rgba(255,255,255,0.1); text-align: center; color: #60a5fa; }
+    .subject-list { flex: 1; padding: 20px 0; }
+    .subject-item { padding: 16px 25px; cursor: pointer; transition: 0.3s; opacity: 0.7; display: flex; align-items: center; gap: 12px; }
+    .subject-item:hover { background: rgba(255,255,255,0.05); }
     .subject-item.active { opacity: 1; background: var(--primary); font-weight: bold; }
 
     /* 메인 컨텐츠 영역 */
-    .main-content { flex: 1; padding: 40px; height: 100vh; overflow-y: auto; position: relative; }
-    .subject-title { font-size: 2.2rem; font-weight: 800; margin-bottom: 25px; border-left: 8px solid var(--primary); padding-left: 18px; transition: 0.3s; }
+    .main-content { flex: 1; padding: 30px; height: 100vh; overflow-y: auto; }
+    .subject-title { font-size: 2rem; font-weight: 800; margin-bottom: 20px; border-left: 8px solid var(--primary); padding-left: 18px; }
 
-    /* 공통 탭 메뉴 */
-    .tabs { display: flex; gap: 8px; margin-bottom: 25px; border-bottom: 2px solid #e2e8f0; overflow-x: auto; flex-shrink: 0; }
-    .tab { padding: 12px 20px; cursor: pointer; font-size: 0.95rem; font-weight: 700; color: #64748b; white-space: nowrap; transition: 0.2s; border-radius: 8px 8px 0 0; }
-    .tab:hover { background: #f1f5f9; }
-    .tab.active { color: var(--primary); border-bottom: 3px solid var(--primary); background: white; }
-    .tab.theme-k1.active { color: var(--korean-color); border-bottom: 3px solid var(--korean-color); }
-    .tab.theme-k2.active { color: var(--korean-theme2); border-bottom: 3px solid var(--korean-theme2); }
-    .tab.theme-cli.active { color: var(--climate-color); border-bottom: 3px solid var(--climate-color); }
-
-    .card { background: var(--card); border-radius: 16px; padding: 35px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); margin-bottom: 25px; line-height: 1.7; font-size: 1.05rem; }
-    .section { display: none; animation: fadeIn 0.4s ease; }
-    .section.active { display: block; }
-    .hidden { display: none !important; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-    /* 국어 모의고사 UI */
-    .exam-nav { display: flex; gap: 10px; overflow-x: auto; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #e2e8f0; }
-    .exam-btn { padding: 10px 18px; border: 2px solid var(--korean-color); background: white; color: var(--korean-color); border-radius: 30px; cursor: pointer; font-weight: 800; white-space: nowrap; }
+    /* 국어 회차 선택 메뉴 */
+    .exam-nav { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+    .exam-btn { 
+        padding: 10px 20px; border: 2px solid var(--korean-color); background: white; 
+        color: var(--korean-color); border-radius: 30px; cursor: pointer; font-weight: 800; transition: 0.2s;
+    }
     .exam-btn:hover, .exam-btn.active { background: var(--korean-color); color: white; }
-    .exam-container { display: flex; gap: 25px; height: calc(100vh - 280px); min-height: 600px; }
-    .passage-pane { flex: 1.2; background: white; border: 1px solid #cbd5e0; border-radius: 16px; padding: 40px; overflow-y: auto; line-height: 1.9; font-size: 1.05rem; }
-    .question-pane { flex: 1; background: #f8fafc; border: 1px solid #cbd5e0; border-radius: 16px; padding: 30px; overflow-y: auto; }
-    .poem-box { margin-bottom: 50px; }
-    .poem-title { font-weight: 900; margin-bottom: 20px; padding: 10px 15px; border-radius: 8px; display: inline-block; }
-    .title-theme1 { color: #5b21b6; background: #ede9fe; }
-    .title-theme2 { color: #86198f; background: #fae8ff; }
-    .q-item { margin-bottom: 35px; background: white; padding: 30px; border-radius: 12px; border: 1px solid #e2e8f0; }
-    .q-options label { display: flex; align-items: flex-start; margin-bottom: 12px; cursor: pointer; padding: 10px; background: #f8fafc; border-radius: 8px; }
-    .btn-check-kor { color: white; border: none; padding: 14px; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 15px; }
-    .btn-theme1 { background: var(--korean-color); } .btn-theme2 { background: var(--korean-theme2); }
 
-    /* 사회(기후) UI 스타일 */
-    .concept-grid { display: grid; gap: 20px; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); }
-    .concept-card { background: white; border: 1px solid #e2e8f0; border-radius: 14px; padding: 25px; position: relative; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.02); }
-    .concept-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 5px; }
-    .concept-card.tropical::before { background: var(--tropical); }
-    .concept-card.dry::before { background: var(--dry); }
-    .concept-card.temperate::before { background: var(--temperate); }
-    .concept-card.cold::before { background: var(--cold); }
-    .concept-card.polar::before { background: var(--polar); }
-    .concept-card.general::before { background: var(--dark); }
-    .card-title { font-size: 1.15rem; font-weight: 800; margin-bottom: 15px; }
-    .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; color: white; }
-    .badge.tropical { background: var(--tropical); } .badge.dry { background: var(--dry); } .badge.temperate { background: var(--temperate); }
-    .badge.cold { background: var(--cold); } .badge.polar { background: var(--polar); } .badge.mountain { background: var(--mountain); }
-    .concept-list { list-style: none; display: flex; flex-direction: column; gap: 8px; font-size: 0.95rem; }
-    .concept-list li { padding: 8px 12px; background: #f8fafc; border-left: 3px solid #cbd5e0; border-radius: 0 6px 6px 0; }
-    .temp-range { display: inline-block; background: #eff6ff; color: #2563eb; padding: 4px 10px; border-radius: 6px; font-weight: bold; font-size: 0.85rem; margin-bottom: 15px; }
-    .concept-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; margin-top: 10px; }
-    .concept-table th, .concept-table td { padding: 10px; border: 1px solid #e2e8f0; text-align: left; }
-    .concept-table th { background: #f1f5f9; }
+    /* 프레임 스타일 */
+    .frame-container { width: 100%; height: calc(100vh - 180px); border-radius: 16px; overflow: hidden; background: white; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+    iframe { width: 100%; height: 100%; border: none; }
 
-    /* 사회 타이머 퀴즈 UI */
-    .cli-quiz-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; font-weight: bold; }
-    .cli-timer-bar { height: 8px; background: #e2e8f0; border-radius: 4px; margin-bottom: 20px; overflow: hidden; }
-    .cli-timer-fill { height: 100%; background: var(--primary); transition: width 1s linear; }
-    .cli-timer-fill.warning { background: var(--dry); }
-    .cli-timer-text.danger { color: var(--dry); font-weight: 900; }
-    .cli-question-card { background: white; border: 2px solid #e2e8f0; border-radius: 12px; padding: 30px; max-width: 800px; margin: 0 auto; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-    .cli-option-btn { display: block; width: 100%; text-align: left; padding: 15px; margin-bottom: 10px; border-radius: 8px; border: 1px solid #cbd5e0; background: #f8fafc; cursor: pointer; transition: 0.2s; font-size: 1rem; }
-    .cli-option-btn:hover:not(:disabled) { border-color: var(--primary); background: #eff6ff; }
-    .cli-option-btn.correct { background: #f0fdf4; border-color: #22c55e; color: #15803d; font-weight: bold; }
-    .cli-option-btn.wrong { background: #fef2f2; border-color: #ef4444; color: #b91c1c; }
-    .cli-exp-box { display: none; background: #f1f5f9; padding: 15px; border-radius: 8px; margin-top: 20px; font-size: 0.95rem; line-height: 1.6; border-left: 4px solid var(--primary); }
-    .cli-next-btn { display: none; width: 100%; padding: 15px; background: var(--dark); color: white; font-weight: bold; border: none; border-radius: 8px; margin-top: 15px; cursor: pointer; }
-    
-    /* 기후 게임 UI */
-    .game-start-screen { text-align: center; padding: 50px 20px; background: white; border-radius: 16px; border: 1px solid #e2e8f0; max-width: 700px; margin: 0 auto; }
-    .game-start-btn { padding: 15px 30px; background: var(--climate-color); color: white; border: none; border-radius: 12px; font-size: 1.2rem; font-weight: bold; cursor: pointer; margin-top: 20px; transition: 0.2s; }
-    .game-start-btn:hover { transform: scale(1.05); }
-    .graph-wrap { background: white; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; margin-bottom: 20px; }
-    .map-wrap { background: #0d1b2a; border-radius: 12px; padding: 20px; margin-bottom: 20px; text-align: center; }
-    .map-marker { animation: pulse 1.5s infinite; }
-    @keyframes pulse { 0%,100%{r:7; opacity:1;} 50%{r:12; opacity:0.6;} }
-    .game-grid-opts { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .hidden { display: none !important; }
 </style>
 </head>
 <body>
@@ -108,135 +46,47 @@
 <div class="sidebar">
     <div class="sidebar-header">STUDY MAX</div>
     <div class="subject-list">
-        <div id="side-korean" class="subject-item active" onclick="switchSubject('korean')">📖 <span>국어 (수능형)</span></div>
+        <div id="side-korean" class="subject-item active" onclick="switchSubject('korean')">📖 <span>국어 (모의고사)</span></div>
         <div id="side-climate" class="subject-item" onclick="switchSubject('climate')">🌍 <span>사회 (기후/지리)</span></div>
-        <div id="side-history" class="subject-item" onclick="switchSubject('history')">📚 <span>한국사 (심화)</span></div>
+        <div id="side-history" class="subject-item" onclick="switchSubject('history')">📚 <span>한국사 (인터랙티브)</span></div>
         <div id="side-info" class="subject-item" onclick="switchSubject('info')">💻 <span>정보 (알고리즘)</span></div>
     </div>
 </div>
 
 <div class="main-content">
-    <h1 id="main-title" class="subject-title" style="border-left-color: var(--korean-color);">국어 모의고사</h1>
+    <h1 id="main-title" class="subject-title" style="border-left-color: var(--korean-color);">국어 서정 시 모의고사</h1>
 
     <div id="content-korean">
-        <div class="tabs">
-            <div id="tab-theme1" class="tab theme-k1 active" onclick="switchKoreanTheme(1)">🌙 &lt;별 헤는 밤&gt; 테마</div>
-            <div id="tab-theme2" class="tab theme-k2" onclick="switchKoreanTheme(2)">🤝 &lt;방문객&gt; 테마</div>
+        <div class="exam-nav">
+            <button class="exam-btn active" onclick="loadKorean(1, this)">제1회차 (세트1)</button>
+            <button class="exam-btn" onclick="loadKorean('2_3', this)">제2·3회차 (세트2-3)</button>
+            <button class="exam-btn" onclick="loadKorean(4, this)">제4회차 (세트4)</button>
+            <button class="exam-btn" onclick="loadKorean(5, this)">제5회차 (예정)</button>
         </div>
-        <div class="card" id="korean-card" style="border-top: 6px solid var(--korean-color); padding: 25px;">
-            <div class="exam-nav" id="exam-nav"></div>
-            <div class="exam-container">
-                <div class="passage-pane" id="passage-pane"></div>
-                <div class="question-pane" id="question-pane"></div>
-            </div>
+        <div class="frame-container">
+            <iframe id="koreanFrame" src="./korean_set1.html"></iframe>
         </div>
     </div>
 
     <div id="content-climate" class="hidden">
-        <div class="tabs">
-            <div class="tab theme-cli active" onclick="openSubTab(event, 'cli-concept', 'content-climate')">📚 핵심 개념</div>
-            <div class="tab theme-cli" onclick="openSubTab(event, 'cli-q1', 'content-climate')">📝 기본 구분</div>
-            <div class="tab theme-cli" onclick="openSubTab(event, 'cli-q2', 'content-climate')">🌴 열대·건조</div>
-            <div class="tab theme-cli" onclick="openSubTab(event, 'cli-q3', 'content-climate')">🌲 온대·냉대·한대</div>
-            <div class="tab theme-cli" onclick="openSubTab(event, 'cli-q4', 'content-climate')">🏠 인간 생활</div>
-            <div class="tab theme-cli" onclick="openSubTab(event, 'cli-q5', 'content-climate')">🏆 종합 퀴즈</div>
-            <div class="tab theme-cli" onclick="openSubTab(event, 'cli-graph', 'content-climate')">📊 그래프 스피드퀴즈</div>
-            <div class="tab theme-cli" onclick="openSubTab(event, 'cli-map', 'content-climate')">🗺️ 세계지도 퀴즈</div>
-        </div>
-        
-        <div id="cli-concept" class="section active"></div>
-        <div id="cli-q1" class="section"><div id="cli_box_q1"></div></div>
-        <div id="cli-q2" class="section"><div id="cli_box_q2"></div></div>
-        <div id="cli-q3" class="section"><div id="cli_box_q3"></div></div>
-        <div id="cli-q4" class="section"><div id="cli_box_q4"></div></div>
-        <div id="cli-q5" class="section"><div id="cli_box_q5"></div></div>
-        
-        <div id="cli-graph" class="section">
-            <div id="graphStartScreen" class="game-start-screen">
-                <h2 style="font-size:1.8rem; margin-bottom:15px; color:var(--climate-color);">📊 기후 그래프 스피드퀴즈</h2>
-                <p style="color:#64748b; line-height:1.6;">기후 그래프를 보고 어떤 기후인지 맞추세요!<br>총 10문제 (문제당 10초)</p>
-                <button class="game-start-btn" onclick="startGraphGame()">🚀 게임 시작</button>
-            </div>
-            <div id="graphGameArea" class="cli-question-card" style="display:none;">
-                <div class="cli-quiz-header">
-                    <span id="graphProgress" style="color:var(--primary);">1 / 10</span>
-                    <span id="graphScore">점수: 0</span>
-                    <span id="graphTimerText" class="cli-timer-text" style="font-size:1.2rem;">10</span>
-                </div>
-                <div class="cli-timer-bar"><div class="cli-timer-fill" id="graphTimerBar"></div></div>
-                <div class="graph-wrap"><canvas id="climateChart" height="250"></canvas></div>
-                <div class="game-grid-opts" id="graphOptions"></div>
-                <div class="cli-exp-box" id="graphExplanation" style="display:block; opacity:0;"></div>
-                <button class="cli-next-btn" id="graphNextBtn" onclick="nextGraphQuestion()">다음 문제 →</button>
-            </div>
-            <div id="graphResultArea" class="game-start-screen" style="display:none;"></div>
-        </div>
-
-        <div id="cli-map" class="section">
-            <div id="mapStartScreen" class="game-start-screen">
-                <h2 style="font-size:1.8rem; margin-bottom:15px; color:#10b981;">🗺️ 세계지도 기후 퀴즈</h2>
-                <p style="color:#64748b; line-height:1.6;">세계 지도에 표시된 위치의 기후를 맞추세요!<br>총 10문제 (문제당 10초)</p>
-                <button class="game-start-btn" style="background:#10b981;" onclick="startMapGame()">🚀 게임 시작</button>
-            </div>
-            <div id="mapGameArea" class="cli-question-card" style="display:none;">
-                <div class="cli-quiz-header">
-                    <span id="mapProgress" style="color:#10b981;">1 / 10</span>
-                    <span id="mapScore">점수: 0</span>
-                    <span id="mapTimerText" class="cli-timer-text" style="font-size:1.2rem;">10</span>
-                </div>
-                <div class="cli-timer-bar"><div class="cli-timer-fill" id="mapTimerBar" style="background:#10b981;"></div></div>
-                <div id="mapLocationLabel" style="font-weight:bold; color:var(--dark); margin-bottom:10px; text-align:center; font-size:1.1rem;"></div>
-                <div class="map-wrap">
-                    <svg id="worldMapSvg" viewBox="0 0 1000 500" style="width:100%;">
-                        <rect width="1000" height="500" fill="#0d1b2a"/>
-                        <line x1="0" y1="250" x2="1000" y2="250" stroke="#1e3a5f" stroke-width="1"/>
-                        <text x="10" y="245" fill="#38bdf8" font-size="12">적도(0°)</text>
-                        <path d="M 60,80 L 180,60 L 240,140 L 200,240 L 140,220 Z" fill="#1a3a1a" stroke="#2a5a2a"/>
-                        <path d="M 160,280 L 240,340 L 210,440 L 160,360 Z" fill="#1a3a1a" stroke="#2a5a2a"/>
-                        <path d="M 430,70 L 530,80 L 490,140 L 430,90 Z" fill="#1a3a1a" stroke="#2a5a2a"/>
-                        <path d="M 450,130 L 560,140 L 540,330 L 460,310 Z" fill="#1a3a1a" stroke="#2a5a2a"/>
-                        <path d="M 530,60 L 800,70 L 730,170 L 560,150 Z" fill="#1a3a1a" stroke="#2a5a2a"/>
-                        <path d="M 680,160 L 730,210 L 680,200 Z" fill="#1a3a1a" stroke="#2a5a2a"/>
-                        <path d="M 720,280 L 860,300 L 810,390 L 710,320 Z" fill="#1a3a1a" stroke="#2a5a2a"/>
-                        <path d="M 200,30 L 300,50 L 240,90 Z" fill="#1a3a1a" stroke="#2a5a2a"/>
-                        <rect x="0" y="460" width="1000" height="40" fill="#1a2a3a"/>
-                        <g id="mapMarkerGroup"></g>
-                    </svg>
-                </div>
-                <div class="game-grid-opts" id="mapOptions"></div>
-                <div class="cli-exp-box" id="mapExplanation" style="display:block; opacity:0;"></div>
-                <button class="cli-next-btn" id="mapNextBtn" style="background:#10b981;" onclick="nextMapQuestion()">다음 문제 →</button>
-            </div>
-            <div id="mapResultArea" class="game-start-screen" style="display:none;"></div>
+        <div class="frame-container" style="height: calc(100vh - 120px);">
+            <div id="cli-concept">내용을 불러오는 중...</div>
         </div>
     </div>
 
     <div id="content-history" class="hidden" style="height: calc(100vh - 120px);">
-        <iframe src="./history_interactive.html" style="width: 100%; height: 100%; border: none; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.03);"></iframe>
+        <iframe src="./history_interactive.html"></iframe>
     </div>
 
     <div id="content-info" class="hidden" style="height: calc(100vh - 120px);">
-        <iframe src="./mega_study.html" style="width: 100%; height: 100%; border: none; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.03);"></iframe>
+        <iframe src="./mega_study.html"></iframe>
     </div>
-
 </div>
 
-<script src="./korean.js"></script>
 <script src="./climate.js"></script>
 
 <script>
-    // ========================================================
-    // 1. 공통 및 일반 과목 로직 (국어, 기후)
-    // ========================================================
-    function openSubTab(evt, targetId, parentId) {
-        const p = document.getElementById(parentId);
-        p.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-        p.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-        document.getElementById(targetId).classList.add('active');
-        evt.currentTarget.classList.add('active');
-    }
-
-    let currentKorTheme = 1;
+    // 과목 전환 로직
     function switchSubject(subject) {
         document.querySelectorAll('.subject-item').forEach(el => el.classList.remove('active'));
         ['korean', 'climate', 'history', 'info'].forEach(s => document.getElementById(`content-${s}`).classList.add('hidden'));
@@ -246,302 +96,31 @@
         document.getElementById(`content-${subject}`).classList.remove('hidden');
 
         if(subject === 'korean') {
-            title.innerText = "국어 모의고사";
-            title.style.borderLeftColor = (currentKorTheme === 1) ? 'var(--korean-color)' : 'var(--korean-theme2)';
-            switchKoreanTheme(currentKorTheme);
+            title.innerText = "국어 서정 시 모의고사";
+            title.style.borderLeftColor = 'var(--korean-color)';
         } else if(subject === 'climate') {
             title.innerText = "사회 (기후와 인간 생활)";
             title.style.borderLeftColor = 'var(--climate-color)';
         } else if(subject === 'history') {
-            title.innerText = "한국사 (고대~근대 통합 정리)";
+            title.innerText = "한국사 인터랙티브 학습";
             title.style.borderLeftColor = 'var(--primary)';
         } else if(subject === 'info') {
-            title.innerText = "정보 (III+V 단원 완벽 정리)";
+            title.innerText = "정보 (알고리즘 및 프로그래밍)";
             title.style.borderLeftColor = 'var(--info-color)';
         }
     }
 
-    // 국어 렌더링 로직
-    function switchKoreanTheme(themeId) {
-        currentKorTheme = themeId;
-        const t1 = document.getElementById('tab-theme1'), t2 = document.getElementById('tab-theme2');
-        const card = document.getElementById('korean-card'), title = document.getElementById('main-title');
-        
-        t1.classList.toggle('active', themeId === 1);
-        t2.classList.toggle('active', themeId === 2);
-        
-        const color = themeId === 1 ? 'var(--korean-color)' : 'var(--korean-theme2)';
-        card.style.borderTopColor = color; title.style.borderLeftColor = color;
-        
-        renderExamNav(themeId === 1 ? window.theme1Exams : window.theme2Exams, themeId);
-    }
-
-    function renderExamNav(data, themeId) {
-        if(!data) return;
-        const nav = document.getElementById('exam-nav'); nav.innerHTML = '';
-        data.forEach((ex, idx) => {
-            const btn = document.createElement('button');
-            btn.className = `exam-btn ${themeId===2?'theme2':''}`;
-            if(idx === 0) btn.classList.add('active');
-            btn.innerText = ex.title.split(':')[0];
-            btn.onclick = () => loadExam(data, idx, btn, themeId);
-            nav.appendChild(btn);
-        });
-        loadExam(data, 0, nav.firstChild, themeId);
-    }
-
-    function loadExam(data, idx, btn, themeId) {
+    // 국어 회차 변경 로직
+    function loadKorean(num, btn) {
         document.querySelectorAll('.exam-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
-        const ex = data[idx], qPane = document.getElementById('question-pane');
-        document.getElementById('passage-pane').innerHTML = ex.passage;
-        
-        const color = themeId === 1 ? 'var(--korean-color)' : 'var(--korean-theme2)';
-        qPane.innerHTML = `<h3 style="margin-bottom:20px; color:${color};">📝 ${ex.title}</h3>`;
-        
-        ex.questions.forEach((q, qIdx) => {
-            let opts = q.options.map((opt, oIdx) => `<label><input type="radio" name="q_${ex.id}_${qIdx}" value="${oIdx}"> <b>${oIdx+1})</b> ${opt}</label>`).join('');
-            qPane.innerHTML += `
-                <div class="q-item">
-                    <div style="font-weight:bold; margin-bottom:15px;">${qIdx+1}. ${q.q}</div>
-                    <div class="q-options">${opts}</div>
-                    <button class="btn-check-kor ${themeId === 1 ? 'btn-theme1' : 'btn-theme2'}" onclick="checkKorAns(this, ${q.a}, '${q.exp}')">정답 확인</button>
-                    <div class="ans-content-gen" style="margin-top:15px;"></div>
-                </div>`;
-        });
+        document.getElementById('koreanFrame').src = `./korean_set${num}.html`;
     }
 
-    function checkKorAns(btn, correctIdx, exp) {
-        let selected = -1;
-        btn.parentElement.querySelectorAll('input').forEach((r, i) => { if(r.checked) selected = i; });
-        const ansDiv = btn.parentElement.querySelector('.ans-content-gen');
-        ansDiv.style.display = 'block';
-
-        if(selected === -1) {
-            ansDiv.innerHTML = `⚠️ 보기를 선택해주세요!`; ansDiv.style.background = "#fee2e2"; ansDiv.style.color = "#ef4444";
-        } else if(selected === correctIdx) {
-            ansDiv.innerHTML = `⭕ <b>정답!</b><br><br><span style="color:#475569;">[해설] ${exp}</span>`; ansDiv.style.background = "#f0fdf4"; ansDiv.style.color = "#15803d";
-        } else {
-            ansDiv.innerHTML = `❌ <b>오답 (정답: ${correctIdx+1}번)</b><br><br><span style="color:#475569;">[해설] ${exp}</span>`; ansDiv.style.background = "#fef2f2"; ansDiv.style.color = "#b91c1c";
-        }
-    }
-
-
-    // ========================================================
-    // 2. 사회(기후) - 타이머 객관식 퀴즈 로직
-    // ========================================================
-    const cliStates = {};
-    function initCliQuiz(qId, containerId) {
-        const data = window.climateQuizData[qId];
-        cliStates[qId] = { qId, containerId, data, current: 0, score: 0, answered: false, timer: null, timeLeft: 15 };
-        renderCliQuiz(cliStates[qId]);
-    }
-
-    function renderCliQuiz(state) {
-        const container = document.getElementById(state.containerId);
-        if(state.current >= state.data.length) {
-            container.innerHTML = `<div class="game-start-screen"><h2>🎯 완료!</h2><p>총 점수: ${state.score} / ${state.data.length * 10}점</p><button class="game-start-btn" onclick="initCliQuiz('${state.qId}', '${state.containerId}')">다시 풀기</button></div>`;
-            return;
-        }
-        const q = state.data[state.current];
-        state.answered = false; state.timeLeft = 15;
-        
-        container.innerHTML = `
-            <div class="cli-question-card">
-                <div class="cli-quiz-header">
-                    <span style="color:var(--primary);">${state.current+1} / ${state.data.length}</span>
-                    <span>점수: ${state.score}</span>
-                    <span id="cliTimer_${state.qId}" class="cli-timer-text">15</span>
-                </div>
-                <div class="cli-timer-bar"><div class="cli-timer-fill" id="cliBar_${state.qId}" style="width:100%"></div></div>
-                <div style="font-size:1.15rem; font-weight:bold; margin-bottom:20px; line-height:1.5;">Q. ${q.q}</div>
-                <div id="cliOpts_${state.qId}">
-                    ${q.opts.map((o,i)=>`<button class="cli-option-btn" onclick="selectCliAns('${state.qId}',${i})">${i+1}) ${o}</button>`).join('')}
-                </div>
-                <div class="cli-exp-box" id="cliExp_${state.qId}"></div>
-                <button class="cli-next-btn" id="cliNext_${state.qId}" onclick="nextCliQ('${state.qId}')">다음 문제 →</button>
-            </div>
-        `;
-        startCliTimer(state);
-    }
-
-    function startCliTimer(state) {
-        clearInterval(state.timer);
-        const text = document.getElementById(`cliTimer_${state.qId}`), bar = document.getElementById(`cliBar_${state.qId}`);
-        state.timer = setInterval(() => {
-            state.timeLeft--; text.innerText = state.timeLeft; bar.style.width = (state.timeLeft/15*100)+'%';
-            if(state.timeLeft <= 5) { text.classList.add('danger'); bar.classList.add('warning'); }
-            if(state.timeLeft <= 0) selectCliAns(state.qId, -1);
-        }, 1000);
-    }
-
-    function selectCliAns(qId, idx) {
-        const state = cliStates[qId];
-        if(state.answered) return;
-        state.answered = true; clearInterval(state.timer);
-
-        const q = state.data[state.current], isCorrect = (idx === q.a);
-        if(isCorrect) state.score += 10;
-
-        const btns = document.getElementById(`cliOpts_${qId}`).querySelectorAll('button');
-        btns.forEach((btn, i) => {
-            btn.disabled = true;
-            if(i === q.a) btn.classList.add('correct');
-            else if(i === idx) btn.classList.add('wrong');
-        });
-
-        const expDiv = document.getElementById(`cliExp_${qId}`);
-        expDiv.innerHTML = `<b>${isCorrect ? '⭕ 정답!' : (idx===-1?'⏰ 시간초과':'❌ 오답')}</b><br><br>${q.exp}`;
-        expDiv.style.display = 'block'; expDiv.style.opacity = '1';
-        document.getElementById(`cliNext_${qId}`).style.display = 'block';
-    }
-
-    function nextCliQ(qId) { cliStates[qId].current++; renderCliQuiz(cliStates[qId]); }
-
-    // ========================================================
-    // 3. 사회(기후) - 그래프 스피드 게임
-    // ========================================================
-    let graphState = { current: 0, score: 0, timer: null, timeLeft: 10, chart: null };
-    function startGraphGame() {
-        document.getElementById('graphStartScreen').style.display = 'none';
-        document.getElementById('graphResultArea').style.display = 'none';
-        document.getElementById('graphGameArea').style.display = 'block';
-        window.climateGraphQuizData.sort(() => Math.random() - 0.5);
-        graphState = { current: 0, score: 0, timer: null, timeLeft: 10, chart: graphState.chart };
-        renderGraphQ();
-    }
-
-    function renderGraphQ() {
-        if(graphState.current >= window.climateGraphQuizData.length) {
-            document.getElementById('graphGameArea').style.display = 'none';
-            document.getElementById('graphResultArea').innerHTML = `<h2>🎯 그래프 마스터!</h2><p>점수: ${graphState.score} / 100점</p><button class="game-start-btn" onclick="startGraphGame()">다시 하기</button>`;
-            document.getElementById('graphResultArea').style.display = 'block';
-            return;
-        }
-        const q = window.climateGraphQuizData[graphState.current];
-        document.getElementById('graphProgress').innerText = `${graphState.current+1} / 10`;
-        document.getElementById('graphScore').innerText = `점수: ${graphState.score}`;
-        document.getElementById('graphNextBtn').style.display = 'none';
-        document.getElementById('graphExplanation').style.opacity = '0';
-        
-        document.getElementById('graphOptions').innerHTML = q.opts.map((o,i) => `<button class="cli-option-btn" onclick="checkGraphAns(${i})" style="margin:0; text-align:center; font-weight:bold;">${o}</button>`).join('');
-        drawChart(q.t, q.p);
-        
-        graphState.timeLeft = 10; clearInterval(graphState.timer);
-        const text = document.getElementById('graphTimerText'), bar = document.getElementById('graphTimerBar');
-        text.innerText = 10; text.classList.remove('danger'); bar.classList.remove('warning'); bar.style.width = '100%';
-
-        graphState.timer = setInterval(() => {
-            graphState.timeLeft--; text.innerText = graphState.timeLeft; bar.style.width = (graphState.timeLeft/10*100)+'%';
-            if(graphState.timeLeft <= 3) { text.classList.add('danger'); bar.classList.add('warning'); }
-            if(graphState.timeLeft <= 0) checkGraphAns(-1);
-        }, 1000);
-    }
-
-    function drawChart(temps, precips) {
-        const ctx = document.getElementById('climateChart').getContext('2d');
-        if(graphState.chart) graphState.chart.destroy();
-        graphState.chart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
-                datasets: [
-                    { label: '기온(℃)', type: 'line', data: temps, borderColor: '#ef4444', backgroundColor: '#ef4444', borderWidth: 2, yAxisID: 'y-temp' },
-                    { label: '강수량(mm)', type: 'bar', data: precips, backgroundColor: '#3b82f6', yAxisID: 'y-precip' }
-                ]
-            },
-            options: { responsive: true, maintainAspectRatio: false,
-                scales: {
-                    'y-temp': { type: 'linear', position: 'left', min: -40, max: 40 },
-                    'y-precip': { type: 'linear', position: 'right', min: 0, max: 400, grid: { drawOnChartArea: false } }
-                }
-            }
-        });
-    }
-
-    function checkGraphAns(idx) {
-        clearInterval(graphState.timer);
-        const q = window.climateGraphQuizData[graphState.current], isCorrect = (idx === q.a);
-        if(isCorrect) graphState.score += 10;
-        document.getElementById('graphScore').innerText = `점수: ${graphState.score}`;
-
-        const btns = document.getElementById('graphOptions').querySelectorAll('button');
-        btns.forEach((b, i) => { b.disabled = true; if(i===q.a) b.classList.add('correct'); else if(i===idx) b.classList.add('wrong'); });
-
-        const exp = document.getElementById('graphExplanation');
-        exp.innerHTML = `<b>${isCorrect ? '⭕ 정답!' : '❌ 오답'}</b><br>${q.exp}`; exp.style.opacity = '1';
-        document.getElementById('graphNextBtn').style.display = 'block';
-    }
-    function nextGraphQuestion() { graphState.current++; renderGraphQ(); }
-
-    // ========================================================
-    // 4. 사회(기후) - 지도 퀴즈 게임
-    // ========================================================
-    let mapState = { current: 0, score: 0, timer: null, timeLeft: 10 };
-    function startMapGame() {
-        document.getElementById('mapStartScreen').style.display = 'none';
-        document.getElementById('mapResultArea').style.display = 'none';
-        document.getElementById('mapGameArea').style.display = 'block';
-        window.climateMapQuizData.sort(() => Math.random() - 0.5);
-        mapState = { current: 0, score: 0, timer: null, timeLeft: 10 };
-        renderMapQ();
-    }
-
-    function renderMapQ() {
-        if(mapState.current >= window.climateMapQuizData.length) {
-            document.getElementById('mapGameArea').style.display = 'none';
-            document.getElementById('mapResultArea').innerHTML = `<h2>🗺️ 지리 마스터!</h2><p>점수: ${mapState.score} / 100점</p><button class="game-start-btn" onclick="startMapGame()">다시 하기</button>`;
-            document.getElementById('mapResultArea').style.display = 'block'; return;
-        }
-        const q = window.climateMapQuizData[mapState.current];
-        document.getElementById('mapProgress').innerText = `${mapState.current+1} / 10`;
-        document.getElementById('mapScore').innerText = `점수: ${mapState.score}`;
-        document.getElementById('mapLocationLabel').innerText = `📍 이곳의 기후는? (${q.loc})`;
-        document.getElementById('mapNextBtn').style.display = 'none';
-        document.getElementById('mapExplanation').style.opacity = '0';
-        
-        document.getElementById('mapOptions').innerHTML = q.opts.map((o,i) => `<button class="cli-option-btn" onclick="checkMapAns(${i})" style="margin:0; text-align:center; font-weight:bold;">${o}</button>`).join('');
-        document.getElementById('mapMarkerGroup').innerHTML = `<circle class="map-marker" cx="${q.x}" cy="${q.y}" r="8" fill="#ef4444" stroke="#fff" stroke-width="2"/><circle cx="${q.x}" cy="${q.y}" r="3" fill="#fff"/>`;
-        
-        mapState.timeLeft = 10; clearInterval(mapState.timer);
-        const text = document.getElementById('mapTimerText'), bar = document.getElementById('mapTimerBar');
-        text.innerText = 10; text.classList.remove('danger'); bar.style.width = '100%';
-
-        mapState.timer = setInterval(() => {
-            mapState.timeLeft--; text.innerText = mapState.timeLeft; bar.style.width = (mapState.timeLeft/10*100)+'%';
-            if(mapState.timeLeft <= 3) text.classList.add('danger');
-            if(mapState.timeLeft <= 0) checkMapAns(-1);
-        }, 1000);
-    }
-
-    function checkMapAns(idx) {
-        clearInterval(mapState.timer);
-        const q = window.climateMapQuizData[mapState.current], isCorrect = (idx === q.a);
-        if(isCorrect) mapState.score += 10;
-        document.getElementById('mapScore').innerText = `점수: ${mapState.score}`;
-
-        const btns = document.getElementById('mapOptions').querySelectorAll('button');
-        btns.forEach((b, i) => { b.disabled = true; if(i===q.a) b.classList.add('correct'); else if(i===idx) b.classList.add('wrong'); });
-
-        const exp = document.getElementById('mapExplanation');
-        exp.innerHTML = `<b>${isCorrect ? '⭕ 정답!' : '❌ 오답'}</b><br>${q.exp}`; exp.style.opacity = '1';
-        document.getElementById('mapNextBtn').style.display = 'block';
-    }
-    function nextMapQuestion() { mapState.current++; renderMapQ(); }
-
-    // ========================================================
-    // 초기화 로직 (모든 과목 데이터 연동)
-    // ========================================================
+    // 초기화
     window.onload = () => {
-        // 사회(기후) 데이터 바인딩
         if(window.climateSummaryHTML) document.getElementById('cli-concept').innerHTML = window.climateSummaryHTML;
-        if(window.climateQuizData) {
-            initCliQuiz('q1', 'cli_box_q1'); initCliQuiz('q2', 'cli_box_q2');
-            initCliQuiz('q3', 'cli_box_q3'); initCliQuiz('q4', 'cli_box_q4'); initCliQuiz('q5', 'cli_box_q5');
-        }
-
-        // 시작 과목 설정 (기본은 한국사로 설정해서 바로 확인 가능하게 함)
-        switchSubject('history');
+        switchSubject('korean');
     };
 </script>
 </body>
