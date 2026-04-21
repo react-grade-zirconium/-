@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>고1 국어 서정 시 미니 모의고사</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap');
+
+:root {
+  --paper:#fdfaf5;
+  --ink:#1c1917;
+  --accent:#b45309;
+  --accent2:#92400e;
+  --light:#f5efe6;
+  --border:#d6c9b5;
+  --red:#dc2626;
+  --green:#15803d;
+  --muted:#78716c;
+  --serif:'Noto Serif KR',serif;
+  --sans:'Noto Sans KR',sans-serif;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--serif);background:var(--paper);color:var(--ink);min-height:100vh}
+
+/* ── 표지 ── */
+#cover{
+  min-height:100vh;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  background:var(--ink);
+  position:relative;overflow:hidden;padding:40px 20px;
+}
+#cover::before{
+  content:'';position:absolute;inset:0;
+  background:repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(255,255,255,.04) 39px,rgba(255,255,255,.04) 40px),
+             repeating-linear-gradient(90deg,transparent,transparent 39px,rgba(255,255,255,.04) 39px,rgba(255,255,255,.04) 40px);
+}
+.cover-seal{
+  width:80px;height:80px;border-radius:50%;
+  border:3px solid var(--accent);
+  display:flex;align-items:center;justify-content:center;
+  font-size:2rem;margin-bottom:24px;
+  animation:pulse 2s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(180,83,9,.4)}50%{box-shadow:0 0 0 12px rgba(180,83,9,0)}}
+.cover-label{
+  font-family:var(--sans);font-size:.72rem;font-weight:700;
+  letter-spacing:4px;color:var(--accent);margin-bottom:16px;
+}
+.cover-title{
+  font-size:clamp(1.8rem,5vw,2.8rem);font-weight:700;
+  color:#fdfaf5;text-align:center;line-height:1.3;margin-bottom:8px;
+}
+.cover-title em{color:var(--accent);font-style:normal}
+.cover-desc{
+  font-family:var(--sans);color:#a8a29e;font-size:.85rem;
+  margin-bottom:40px;text-align:center;line-height:1.8;
+}
+.cover-meta{
+  display:flex;gap:32px;margin-bottom:48px;flex-wrap:wrap;justify-content:center;
+}
+.meta-item{text-align:center}
+.meta-item .num{font-size:2rem;font-weight:700;color:#fdfaf5}
+.meta-item .lbl{font-family:var(--sans);font-size:.72rem;color:#78716c;letter-spacing:1px}
+.divider{width:1px;background:#3d3832}
+.start-btn{
+  font-family:var(--sans);background:var(--accent);color:white;
+  border:none;padding:16px 52px;border-radius:4px;
+  font-size:1rem;font-weight:700;cursor:pointer;letter-spacing:2px;
+  transition:all .3s;position:relative;overflow:hidden;
+}
+.start-btn::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(rgba(255,255,255,.1),transparent);
+}
+.start-btn:hover{background:var(--accent2);transform:translateY(-2px);box-shadow:0 8px 24px rgba(180,83,9,.4)}
+
+/* ── 시험 헤더 ── */
+#exam{display:none}
+.sticky-header{
+  position:sticky;top:0;z-index:100;
+  background:var(--ink);border-bottom:3px solid var(--accent);
+  padding:0 24px;display:flex;align-items:stretch;justify-content:space-between;
+}
+.header-left{display:flex;flex-direction:column;justify-content:center;padding:10px 0}
+.header-title{font-family:var(--sans);color:#fdfaf5;font-size:.82rem;font-weight:700;letter-spacing:1px}
+.header-sub{font-family:var(--sans);color:#78716c;font-size:.7rem;margin-top:2px}
+.timer-wrap{display:flex;align-items:center;gap:10px;padding:10px 0}
+.timer{
+  font-family:'Courier New',monospace;font-size:1.5rem;font-weight:700;
+  color:#fdfaf5;background:rgba(255,255,255,.06);
+  padding:8px 16px;border-radius:4px;border:1px solid #3d3832;
+  min-width:100px;text-align:center;transition:all .3s;
+}
+.timer.warn{color:#fbbf24;border-color:#f59e0b;background:rgba(245,158,11,.1)}
+.timer.danger{color:#ef4444;border-color:#ef4444;background:rgba(239,68,68,.1);animation:blink .8s step-end infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.4}}
+.progress-bar{height:3px;background:#3d3832}
+.progress-fill{height:3px;background:linear-gradient(90deg,var(--accent),#fbbf24);transition:width .5s}
+
+/* ── 답안 현황 ── */
+.answer-status{
+  background:var(--light);border-bottom:1px solid var(--border);
+  padding:10px 24px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+}
+.ans-label{font-family:var(--sans);font-size:.72rem;font-weight:700;color:var(--muted);letter-spacing:1px;margin-right:4px}
+.ans-dot{
+  width:26px;height:26px;border-radius:50%;
+  border:2px solid var(--border);background:white;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--sans);font-size:.7rem;font-weight:700;color:var(--muted);
+  cursor:pointer;transition:all .2s;
+}
+.ans-dot.done{background:var(--accent);border-color:var(--accent);color:white}
+.submit-wrap{margin-left:auto}
+.submit-btn{
+  font-family:var(--sans);background:var(--ink);color:white;
+  border:none;padding:8px 20px;border-radius:4px;
+  font-size:.78rem;font-weight:700;cursor:pointer;letter-spacing:1px;
+  transition:all .2s;
+}
+.submit-btn:hover{background:#3d3832}
+.submit-btn:disabled{opacity:.4;cursor:not-allowed}
+
+/* ── 시험지 본문 ── */
+.exam-body{max-width:860px;margin:0 auto;padding:32px 24px 80px}
+
+.passage-block{margin-bottom:40px}
+.passage-header{
+  display:flex;align-items:center;gap:10px;margin-bottom:12px;
+}
+.passage-tag{
+  background:var(--ink);color:white;
+  font-family:var(--sans);font-size:.7rem;font-weight:700;
+  padding:4px 10px;border-radius:2px;letter-spacing:1px;
+}
+.passage-range{font-family:var(--sans);font-size:.78rem;color:var(--muted)}
+
+.poem-wrap{
+  background:white;border:1px solid var(--border);border-left:4px solid var(--accent);
+  padding:24px 28px;border-radius:0 4px 4px 0;margin-bottom:16px;
+}
+.poem-title{
+  font-size:.82rem;font-weight:700;color:var(--muted);
+  letter-spacing:1px;margin-bottom:2px;font-family:var(--sans);
+}
+.poem-author{font-size:.78rem;color:var(--accent);margin-bottom:18px;font-family:var(--sans);font-weight:600}
+.poem-text{
+  font-size:.97rem;line-height:2.2;color:var(--ink);
+  white-space:pre-line;letter-spacing:.3px;
+}
+.poem-note{
+  background:var(--light);border:1px solid var(--border);border-radius:4px;
+  padding:10px 14px;margin-top:12px;font-family:var(--sans);
+  font-size:.76rem;color:var(--muted);line-height:1.7;
+}
+.poem-note span{font-weight:700;color:var(--ink)}
+
+.two-poem{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:620px){.two-poem{grid-template-columns:1fr}}
+
+/* ── 문제 ── */
+.q-block{margin-bottom:28px}
+.q-num-row{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.q-number{
+  width:28px;height:28px;border-radius:50%;
+  background:var(--ink);color:white;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--sans);font-size:.78rem;font-weight:700;flex-shrink:0;
+}
+.q-score-tag{
+  font-family:var(--sans);font-size:.68rem;font-weight:700;
+  background:var(--light);border:1px solid var(--border);
+  color:var(--accent);padding:2px 7px;border-radius:12px;
+}
+.q-text{font-size:.92rem;line-height:1.85;color:var(--ink);margin-bottom:14px;font-weight:400;font-family:var(--sans)}
+.q-text strong{font-weight:700;background:#fff3cd;padding:1px 3px}
+.q-box{
+  background:var(--light);border:1px solid var(--border);border-radius:4px;
+  padding:12px 16px;margin-bottom:12px;font-family:var(--sans);
+  font-size:.84rem;line-height:1.8;color:var(--ink);
+}
+
+.options{list-style:none;display:flex;flex-direction:column;gap:7px}
+.opt-btn{
+  width:100%;text-align:left;border:1.5px solid var(--border);border-radius:4px;
+  background:white;cursor:pointer;padding:10px 14px;
+  font-family:var(--sans);font-size:.87rem;color:#374151;
+  display:flex;align-items:flex-start;gap:10px;line-height:1.6;
+  transition:all .2s;
+}
+.opt-btn:hover:not(:disabled){border-color:#b45309;background:#fffbf5;color:var(--ink)}
+.opt-btn.selected{border-color:#b45309;background:#fffbf5;color:var(--accent);font-weight:600}
+.opt-btn.correct{border-color:var(--green);background:#f0fdf4;color:var(--green);font-weight:700}
+.opt-btn.wrong{border-color:var(--red);background:#fef2f2;color:var(--red)}
+.opt-btn.show-answer{border-color:var(--green);background:#f0fdf4;color:var(--green)}
+.opt-mark{
+  min-width:22px;height:22px;border-radius:50%;
+  border:1.5px solid currentColor;background:transparent;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.68rem;font-weight:700;flex-shrink:0;margin-top:1px;
+  transition:all .2s;
+}
+.opt-btn.selected .opt-mark{background:var(--accent);border-color:var(--accent);color:white}
+.opt-btn.correct .opt-mark{background:var(--green);border-color:var(--green);color:white}
+.opt-btn.wrong .opt-mark{background:var(--red);border-color:var(--red);color:white}
+.opt-btn.show-answer .opt-mark{background:var(--green);border-color:var(--green);color:white}
+
+.exp-box{
+  display:none;margin-top:10px;padding:12px 14px;
+  background:linear-gradient(135deg,#fffbf5,#fff8ee);
+  border:1px solid #f59e0b;border-radius:4px;
+  font-family:var(--sans);font-size:.8rem;line-height:1.75;color:#78350f;
+}
+.exp-box.show{display:block}
+.exp-box strong{color:var(--ink)}
+
+/* ── 결과 화면 ── */
+#result{display:none;min-height:100vh;background:var(--ink);padding:60px 20px}
+.result-inner{max-width:680px;margin:0 auto;text-align:center}
+.result-grade{
+  font-size:6rem;font-weight:900;line-height:1;margin-bottom:8px;
+  background:linear-gradient(135deg,#f59e0b,#fbbf24);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.result-label{font-family:var(--sans);color:#a8a29e;font-size:.85rem;margin-bottom:32px;letter-spacing:1px}
+.result-stats{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:40px;
+}
+.stat-card{background:rgba(255,255,255,.05);border:1px solid #3d3832;border-radius:8px;padding:20px 12px}
+.stat-card .n{font-size:2rem;font-weight:700;color:#fdfaf5}
+.stat-card .l{font-family:var(--sans);font-size:.72rem;color:#78716c;margin-top:4px;letter-spacing:1px}
+.result-msg{
+  background:rgba(180,83,9,.12);border:1px solid rgba(180,83,9,.3);
+  border-radius:8px;padding:20px;margin-bottom:32px;
+  font-family:var(--sans);font-size:.9rem;color:#fbbf24;line-height:1.8;
+}
+.review-btn{
+  font-family:var(--sans);background:white;color:var(--ink);
+  border:none;padding:14px 40px;border-radius:4px;
+  font-size:.9rem;font-weight:700;cursor:pointer;transition:all .2s;letter-spacing:1px;
+}
+.review-btn:hover{background:#f5efe6;transform:translateY(-2px)}
+.omr-grid{
+  display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:32px;
+}
+.omr-item{
+  background:rgba(255,255,255,.04);border:1px solid #3d3832;border-radius:6px;
+  padding:12px 8px;text-align:center;
+}
+.omr-item .qi{font-family:var(--sans);font-size:.68rem;color:#78716c;margin-bottom:4px}
+.omr-item .qa{font-size:1rem;font-weight:700}
+.omr-item.ok .qa{color:#4ade80}
+.omr-item.no .qa{color:#f87171}
+.omr-item.skip .qa{color:#78716c}
+
+/* ── 타임업 오버레이 ── */
+#timeup{
+  display:none;position:fixed;inset:0;z-index:200;
+  background:rgba(0,0,0,.75);backdrop-filter:blur(4px);
+  align-items:center;justify-content:center;
+}
+#timeup.show{display:flex}
+.timeup-box{
+  background:var(--ink);border:2px solid var(--red);border-radius:12px;
+  padding:40px;text-align:center;max-width:360px;
+}
+.timeup-icon{font-size:3rem;margin-bottom:12px}
+.timeup-title{font-family:var(--sans);font-size:1.3rem;font-weight:700;color:white;margin-bottom:8px}
+.timeup-sub{font-family:var(--sans);color:#a8a29e;font-size:.85rem;margin-bottom:24px}
+.timeup-btn{
+  font-family:var(--sans);background:var(--red);color:white;
+  border:none;padding:12px 32px;border-radius:4px;
+  font-size:.9rem;font-weight:700;cursor:pointer;
+}
+
+hr.q-divider{border:none;border-top:1px dashed var(--border);margin:32px 0}
+</style>
+</head>
+<body>
+
+<!-- ════ 표지 ════ -->
+<div id="cover">
+  <div class="cover-seal">📖</div>
+  <div class="cover-label">2024 · 고등학교 1학년</div>
+  <h1 class="cover-title">국어 <em>서정 시</em><br>미니 모의고사</h1>
+  <p class="cover-desc">화자의 태도 · 표현 방법 · 시어의 의미 · 작품 비교<br>시험 시작 후 시간이 흐릅니다. 집중하세요.</p>
+  <div class="cover-meta">
+    <div class="meta-item"><div class="num">10</div><div class="lbl">문 항</div></div>
+    <div class="divider"></div>
+    <div class="meta-item"><div class="num">20</div><div class="lbl">분</div></div>
+    <div class="divider"></div>
+    <div class="meta-item"><div class="num">100</div><div class="lbl">점 만점</div></div>
+  </div>
+  <button class="start-btn" onclick="startExam()">시험 시작 ▶</button>
+</div>
+
+<!-- ════ 시험 ════ -->
+<div id="exam">
+  <div class="sticky-header">
+    <div class="header-left">
+      <div class="header-title">국어 · 서정 시 미니 모의고사</div>
+      <div class="header-sub">고등학교 1학년 | 총 10문항 100점</div>
+    </div>
+    <div class="timer-wrap">
+      <span style="font-family:var(--sans);color:#78716c;font-size:.75rem;letter-spacing:1px">남은 시간</span>
+      <div class="timer" id="timerDisplay">20:00</div>
+    </div>
+  </div>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+
+  <div class="answer-status">
+    <span class="ans-label">답안 현황</span>
+    <div id="answerDots"></div>
+    <div class="submit-wrap">
+      <button class="submit-btn" id="submitBtn" onclick="submitExam()" disabled>답안 제출</button>
+    </div>
+  </div>
+
+  <div class="exam-body">
+
+    <!-- ══ 지문 1: [1~3번] ══ -->
+    <div class="passage-block">
+      <div class="passage-header">
+        <span class="passage-tag">지문 1</span>
+        <span class="passage-range">1~3번 공통 지문</span>
+      </div>
+      <div class="poem-wrap">
+        <div class="poem-title">작품명: 귀촉도 (歸蜀途)</div>
+        <div class="poem-author">서정주 (창작 예시 — 시험용 재구성)</div>
+        <div class="poem-text">눈물 아롱아롱
+피리 불고 가신 님의 밟으신 길은
+진달래 꽃비 오는 서역(西域) 삼만 리.
+
+흰 옷깃 여며 여며 가옵신 님의
+다시 오진 못하는 파촉(巴蜀) 삼만 리.
+
+신이나 삼아 줄 걸, 슬픈 사연의
+올올이 아로새긴 육날메투리.
+
+은장도 푸른 날로 이냥 베어서
+부질없는 이 머리털 엮어 드릴걸.
+
+초롱에 불빛 지친 밤하늘
+눈물 어린 별 셋이 지리라 지리라.</div>
+        <div class="poem-note">
+          <span>※ 어휘 풀이</span><br>
+          귀촉도: 두견새의 다른 이름. 슬피 우는 새로, 이별의 슬픔을 상징함.<br>
+          서역(西域): 중국 서쪽의 먼 지방. 여기서는 임이 떠나간 머나먼 곳.<br>
+          육날메투리: 삼이나 왕골로 엮은 신발. 여섯 날(가닥)로 만들어 정성을 상징함.<br>
+          은장도: 작은 장식용 칼.
+        </div>
+      </div>
+
+      <!-- 1번 -->
+      <div class="q-block" id="qb1">
+        <div class="q-num-row">
+          <div class="q-number">1</div>
+          <span class="q-score-tag">10점</span>
+        </div>
+        <p class="q-text">위 시의 화자에 대한 설명으로 <strong>가장 적절한 것</strong>은?</p>
+        <ul class="options" id="q1opts">
+          <li><button class="opt-btn" onclick="select(1,0)"><span class="opt-mark">①</span>떠나간 임을 원망하며 강한 분노를 표출하고 있다.</button></li>
+          <li><button class="opt-btn" onclick="select(1,1)"><span class="opt-mark">②</span>임과 재회할 날을 기대하며 희망적인 태도를 보이고 있다.</button></li>
+          <li><button class="opt-btn" onclick="select(1,2)"><span class="opt-mark">③</span>임을 떠나보낸 슬픔과 그리움 속에서 헌신적 사랑을 표현하고 있다.</button></li>
+          <li><button class="opt-btn" onclick="select(1,3)"><span class="opt-mark">④</span>임의 부재(不在)를 담담하게 수용하며 체념의 태도를 드러내고 있다.</button></li>
+          <li><button class="opt-btn" onclick="select(1,4)"><span class="opt-mark">⑤</span>자신의 처지를 반성하며 임과 이별한 책임을 스스로 묻고 있다.</button></li>
+        </ul>
+        <div class="exp-box" id="exp1">
+          <strong>정답: ③</strong><br>
+          화자는 임이 돌아오지 못하는 먼 곳으로 떠났음을 알면서도 신발을 삼아 주고 머리털을 엮어 드리겠다는 극진한 사랑을 표현하고 있습니다. 분노(①)나 희망(②)이 아닌 슬픔과 그리움, 그리고 헌신적 사랑이 중심입니다. 체념(④)이나 자책(⑤)도 핵심이 아닙니다.
+        </div>
+      </div>
+
+      <!-- 2번 -->
+      <div class="q-block" id="qb2">
+        <div class="q-num-row">
+          <div class="q-number">2</div>
+          <span class="q-score-tag">10점</span>
+        </div>
+        <p class="q-text">위 시의 표현상 특징으로 <strong>적절하지 않은 것</strong>은?</p>
+        <ul class="options" id="q2opts">
+          <li><button class="opt-btn" onclick="select(2,0)"><span class="opt-mark">①</span>'삼만 리'의 반복을 통해 임과의 거리감과 단절감을 강조하고 있다.</button></li>
+          <li><button class="opt-btn" onclick="select(2,1)"><span class="opt-mark">②</span>'신이나 삼아 줄 걸', '엮어 드릴걸' 등의 가정적 표현으로 후회를 드러낸다.</button></li>
+          <li><button class="opt-btn" onclick="select(2,2)"><span class="opt-mark">③</span>'눈물 아롱아롱'에서 시각적 이미지로 화자의 슬픔을 감각적으로 표현하고 있다.</button></li>
+          <li><button class="opt-btn" onclick="select(2,3)"><span class="opt-mark">④</span>역설적 표현을 활용하여 이별의 고통을 역설적으로 미화하고 있다.</button></li>
+          <li><button class="opt-btn" onclick="select(2,4)"><span class="opt-mark">⑤</span>'진달래 꽃비'라는 청각의 시각화를 통해 이별의 분위기를 형상화하고 있다.</button></li>
+        </ul>
+        <div class="exp-box" id="exp2">
+          <strong>정답: ④</strong><br>
+          이 시에는 역설적 표현이 두드러지게 나타나지 않습니다. 시 전체에 걸쳐 직접적인 슬픔과 그리움의 정서가 표현되어 있습니다. ①은 '삼만 리' 반복으로 거리를 강조, ②는 가정법적 후회 표현, ③은 시각적 이미지, ⑤는 '꽃비'라는 감각적 이미지 활용이 모두 적절합니다.
+        </div>
+      </div>
+
+      <!-- 3번 -->
+      <div class="q-block" id="qb3">
+        <div class="q-num-row">
+          <div class="q-number">3</div>
+          <span class="q-score-tag">10점</span>
+        </div>
+        <p class="q-text"><보기>를 참고할 때, 시의 마지막 연('초롱에 불빛 지친 밤하늘 / 눈물 어린 별 셋이 지리라 지리라.')에 대한 감상으로 <strong>가장 적절한 것</strong>은?</p>
+        <div class="q-box">
+          <strong>〈보 기〉</strong><br>
+          이 시는 임과 이별한 화자의 정한(情恨)을 다루며, '귀촉도(두견새)'의 이미지를 통해 이루지 못한 사랑의 슬픔을 노래한다. '별'은 동양 문학에서 죽은 이의 혼, 또는 그리운 대상을 상징하기도 하며, '지리라'의 반복은 소멸을 암시한다.
+        </div>
+        <ul class="options" id="q3opts">
+          <li><button class="opt-btn" onclick="select(3,0)"><span class="opt-mark">①</span>밤하늘 별을 보며 자연의 아름다움에 경이로움을 느끼는 화자의 심정이 담겨 있다.</button></li>
+          <li><button class="opt-btn" onclick="select(3,1)"><span class="opt-mark">②</span>'별 셋'은 삼위일체의 절대적 존재를 상징하며 화자에게 위안을 준다.</button></li>
+          <li><button class="opt-btn" onclick="select(3,2)"><span class="opt-mark">③</span>눈물 어린 별이 지는 이미지를 통해 임과의 이별 슬픔이 소멸되어 가는 것을 표현한다.</button></li>
+          <li><button class="opt-btn" onclick="select(3,3)"><span class="opt-mark">④</span>'지리라'의 반복은 새벽이 밝아옴을 기대하는 희망의 표현이다.</button></li>
+          <li><button class="opt-btn" onclick="select(3,4)"><span class="opt-mark">⑤</span>화자가 임과의 재회를 포기하고 현실에 적응하는 모습을 보여 준다.</button></li>
+        </ul>
+        <div class="exp-box" id="exp3">
+          <strong>정답: ③</strong><br>
+          〈보기〉에서 '별'은 그리운 대상(임)을 상징하고 '지리라'는 소멸을 암시한다고 했습니다. 따라서 '눈물 어린 별 셋이 지리라'는 임에 대한 슬픔과 그리움이 별과 함께 사라져 가는(소멸) 모습을 형상화한 것으로 볼 수 있습니다.
+        </div>
+      </div>
+    </div>
+
+    <hr class="q-divider">
+
+    <!-- ══ 지문 2: [4~6번] ══ -->
+    <div class="passage-block">
+      <div class="passage-header">
+        <span class="passage-tag">지문 2</span>
+        <span class="passage-range">4~6번 공통 지문</span>
+      </div>
+      <div class="poem-wrap">
+        <div class="poem-title">작품명: 풀 (시험용 재구성)</div>
+        <div class="poem-author">김수영 풍 — 시험용 창작 지문</div>
+        <div class="poem-text">풀이 눕는다
+비를 몰아오는 동풍에 나부껴
+풀은 눕고
+드디어 울었다
+날이 흐려서 더 울다가
+다시 누웠다
+
+풀이 눕는다
+바람보다도 더 빨리 눕는다
+바람보다도 더 빨리 울고
+바람보다도 먼저 일어난다
+
+날이 흐리고 풀이 눕는다
+발목까지
+발밑까지 눕는다
+바람보다 늦게 누워도
+바람보다 먼저 일어나고
+바람보다 늦게 울어도
+바람보다 먼저 웃는다
+날이 흐리고 풀뿌리가 흔들린다</div>
+      </div>
+
+      <!-- 4번 -->
+      <div class="q-block" id="qb4">
+        <div class="q-num-row">
+          <div class="q-number">4</div>
+          <span class="q-score-tag">10점</span>
+        </div>
+        <p class="q-text">위 시에서 '풀'과 '바람'의 관계에 대한 설명으로 <strong>가장 적절한 것</strong>은?</p>
+        <ul class="options" id="q4opts">
+          <li><button class="opt-btn" onclick="select(4,0)"><span class="opt-mark">①</span>'풀'은 자연의 순리에 순응하고, '바람'은 자연의 아름다움을 나타낸다.</button></li>
+          <li><button class="opt-btn" onclick="select(4,1)"><span class="opt-mark">②</span>'풀'은 억압받는 존재이고, '바람'은 억압하는 외부 세력을 상징한다.</button></li>
+          <li><button class="opt-btn" onclick="select(4,2)"><span class="opt-mark">③</span>'풀'과 '바람'은 서로 도움을 주고받는 상호 협력적 관계이다.</button></li>
+          <li><button class="opt-btn" onclick="select(4,3)"><span class="opt-mark">④</span>'풀'은 변화를 거부하고, '바람'은 변화를 추구하는 대립 구도이다.</button></li>
+          <li><button class="opt-btn" onclick="select(4,4)"><span class="opt-mark">⑤</span>'풀'은 고통을 피하고, '바람'은 고통을 주는 존재로 서로 단순한 인과관계이다.</button></li>
+        </ul>
+        <div class="exp-box" id="exp4">
+          <strong>정답: ②</strong><br>
+          이 시에서 '바람'은 '풀'을 눕히는 외부적 압력·억압으로, '풀'은 그 압박을 받으면서도 '바람보다 먼저 일어나는' 민중 혹은 억압받는 존재를 상징합니다. 단순히 자연 현상만이 아닌, 사회적 억압과 저항의 이미지가 담겨 있습니다.
+        </div>
+      </div>
+
+      <!-- 5번 -->
+      <div class="q-block" id="qb5">
+        <div class="q-num-row">
+          <div class="q-number">5</div>
+          <span class="q-score-tag">10점</span>
+        </div>
+        <p class="q-text">위 시의 '바람보다도 더 빨리 눕는다 / 바람보다도 더 빨리 울고 / 바람보다도 먼저 일어난다'에서 사용된 표현 기법과 그 효과를 설명한 것으로 <strong>적절하지 않은 것</strong>은?</p>
+        <ul class="options" id="q5opts">
+          <li><button class="opt-btn" onclick="select(5,0)"><span class="opt-mark">①</span>'바람보다도'의 반복을 통해 리듬감이 형성되고 있다.</button></li>
+          <li><button class="opt-btn" onclick="select(5,1)"><span class="opt-mark">②</span>대구(對句) 형식으로 풀의 행동이 점층적으로 제시되고 있다.</button></li>
+          <li><button class="opt-btn" onclick="select(5,2)"><span class="opt-mark">③</span>'눕는다→울고→일어난다'의 순서로 수난과 저항의 과정을 담고 있다.</button></li>
+          <li><button class="opt-btn" onclick="select(5,3)"><span class="opt-mark">④</span>역설적 표현으로 풀이 바람보다 강하다는 사실의 모순을 드러내고 있다.</button></li>
+          <li><button class="opt-btn" onclick="select(5,4)"><span class="opt-mark">⑤</span>'먼저 일어난다'는 표현에서 외부의 억압에 굴하지 않는 생명력이 드러난다.</button></li>
+        </ul>
+        <div class="exp-box" id="exp5">
+          <strong>정답: ④</strong><br>
+          이 시구에서 역설적 표현은 사용되지 않았습니다. '바람보다 먼저 일어난다'는 표현은 모순이 아닌, 풀의 강인한 생명력과 저항 의지를 직접적으로 표현한 것입니다. 나머지는 모두 시구에 실제로 나타난 표현 효과를 적절하게 설명하고 있습니다.
+        </div>
+      </div>
+
+      <!-- 6번 -->
+      <div class="q-block" id="qb6">
+        <div class="q-num-row">
+          <div class="q-number">6</div>
+          <span class="q-score-tag">10점</span>
+        </div>
+        <p class="q-text">위 시의 주제로 <strong>가장 적절한 것</strong>은?</p>
+        <ul class="options" id="q6opts">
+          <li><button class="opt-btn" onclick="select(6,0)"><span class="opt-mark">①</span>자연의 변화에 무심하게 적응하는 풀의 생태를 관찰하고 있다.</button></li>
+          <li><button class="opt-btn" onclick="select(6,1)"><span class="opt-mark">②</span>바람과 풀이 조화를 이루는 자연의 아름다움을 예찬하고 있다.</button></li>
+          <li><button class="opt-btn" onclick="select(6,2)"><span class="opt-mark">③</span>억압을 받아도 굴하지 않고 끝내 일어서는 민중의 강인한 생명력과 저항을 노래한다.</button></li>
+          <li><button class="opt-btn" onclick="select(6,3)"><span class="opt-mark">④</span>현실에 절망하며 소극적으로 굴복하는 인간의 나약함을 비판하고 있다.</button></li>
+          <li><button class="opt-btn" onclick="select(6,4)"><span class="opt-mark">⑤</span>풀이 바람에 쓰러지는 반복적 과정을 통해 삶의 허무함을 전달하고 있다.</button></li>
+        </ul>
+        <div class="exp-box" id="exp6">
+          <strong>정답: ③</strong><br>
+          이 시는 '풀'을 민중에 비유하여, 억압(바람)에 의해 눕고 울지만 바람보다 먼저 일어나는 강인한 생명력과 저항 의지를 형상화하고 있습니다. 단순한 자연 묘사가 아닌, 사회적 의미가 담긴 시입니다.
+        </div>
+      </div>
+    </div>
+
+    <hr class="q-divider">
+
+    <!-- ══ 지문 3: [7~10번] 두 작품 비교 ══ -->
+    <div class="passage-block">
+      <div class="passage-header">
+        <span class="passage-tag">지문 3</span>
+        <span class="passage-range">7~10번 공통 지문 (두 작품 비교)</span>
+      </div>
+      <div class="two-poem">
+        <div class="poem-wrap" style="margin-bottom:0">
+          <div class="poem-title">(가)</div>
+          <div class="poem-author">시험용 창작 현대시 — 봄</div>
+          <div class="poem-text">먼 산이 부른다
+이름 없는 꽃들이
+눈물처럼 피어오른다
+
+어머니, 어머니
+그 목소리가
+흙 속 깊은 곳에서 들린다
+
+봄은 해마다 와서
+이 돌 위에 이끼를 올리고
+서러운 이름 하나를 더한다
+
+나는 기다린다
+아직 오지 않는 것들을
+아직 말하지 못한 것들을</div>
+        </div>
+        <div class="poem-wrap" style="margin-bottom:0">
+          <div class="poem-title">(나)</div>
+          <div class="poem-author">시험용 창작 현대시 — 가을</div>
+          <div class="poem-text">낙엽은 간다
+지지 않으려 하지만
+결국 바람 앞에 무릎 꿇는다
+
+아버지, 아버지
+그 목소리가
+낙엽과 함께 쓸린다
+
+가을은 해마다 와서
+이 마당에 침묵을 깔고
+흔적 없는 이름 하나를 지운다
+
+나는 보낸다
+이미 온 것들을
+이미 말해 버린 것들을</div>
+        </div>
+      </div>
+      <div class="poem-note" style="margin-top:14px">
+        ※ (가)와 (나)는 각각 독립된 시이지만 유사한 구조와 대비적 의미를 지닙니다. 비교 감상 시 형식적 구조와 내용적 차이에 주목하세요.
+      </div>
+
+      <!-- 7번 -->
+      <div class="q-block" id="qb7">
+        <div class="q-num-row">
+          <div class="q-number">7</div>
+          <span class="q-score-tag">10점</span>
+        </div>
+        <p class="q-text">(가)와 (나)의 공통점으로 <strong>가장 적절한 것</strong>은?</p>
+        <ul class="options" id="q7opts">
+          <li><button class="opt-btn" onclick="select(7,0)"><span class="opt-mark">①</span>화자가 자연 현상을 통해 돌아가신 부모에 대한 그리움을 표현하고 있다.</button></li>
+          <li><button class="opt-btn" onclick="select(7,1)"><span class="opt-mark">②</span>계절의 변화를 통해 사회적 모순을 비판하고 있다.</button></li>
+          <li><button class="opt-btn" onclick="select(7,2)"><span class="opt-mark">③</span>화자가 미래에 대한 강한 의지와 희망을 표현하고 있다.</button></li>
+          <li><button class="opt-btn" onclick="select(7,3)"><span class="opt-mark">④</span>자연의 반복적 순환을 통해 삶의 허무함만을 노래하고 있다.</button></li>
+          <li><button class="opt-btn" onclick="select(7,4)"><span class="opt-mark">⑤</span>대화체 형식과 감탄사를 활용하여 친밀한 분위기를 형성하고 있다.</button></li>
+        </ul>
+        <div class="exp-box" id="exp7">
+          <strong>정답: ①</strong><br>
+          (가)는 봄과 어머니, (나)는 가을과 아버지를 연결하여 자연 현상(계절)을 매개로 돌아가신 부모에 대한 그리움을 표현하고 있다는 것이 두 시의 핵심 공통점입니다. ②는 사회적 비판이 없고, ③은 미래 의지가 약합니다. ④는 허무함만이 아닙니다.
+        </div>
+      </div>
+
+      <!-- 8번 -->
+      <div class="q-block" id="qb8">
+        <div class="q-num-row">
+          <div class="q-number">8</div>
+          <span class="q-score-tag">10점</span>
+        </div>
+        <p class="q-text">(가)와 (나)의 차이점에 대한 설명으로 <strong>적절하지 않은 것</strong>은?</p>
+        <ul class="options" id="q8opts">
+          <li><button class="opt-btn" onclick="select(8,0)"><span class="opt-mark">①</span>(가)의 '기다린다'와 (나)의 '보낸다'는 대비적 행위로, 화자의 심리적 지향이 다름을 보여 준다.</button></li>
+          <li><button class="opt-btn" onclick="select(8,1)"><span class="opt-mark">②</span>(가)의 '피어오른다'와 (나)의 '쓸린다'는 각각 생성과 소멸의 이미지를 형성한다.</button></li>
+          <li><button class="opt-btn" onclick="select(8,2)"><span class="opt-mark">③</span>(가)는 봄을, (나)는 가을을 배경으로 하여 계절적 이미지가 대비된다.</button></li>
+          <li><button class="opt-btn" onclick="select(8,3)"><span class="opt-mark">④</span>(가)는 '이름을 더한다', (나)는 '이름을 지운다'고 하여 기억과 망각의 대비를 이룬다.</button></li>
+          <li><button class="opt-btn" onclick="select(8,4)"><span class="opt-mark">⑤</span>(가)의 화자는 현실을 비관하며 도피하고, (나)의 화자는 현실을 수용하며 극복하고 있다.</button></li>
+        </ul>
+        <div class="exp-box" id="exp8">
+          <strong>정답: ⑤</strong><br>
+          (가)의 화자는 '기다린다'고 하며 미래 지향적 자세를 보이고, (나)의 화자는 '보낸다'며 이미 지나간 것들을 떠나보내는 수용의 태도를 보입니다. (가)가 현실 도피, (나)가 극복이라는 설명은 시의 내용에 맞지 않습니다.
+        </div>
+      </div>
+
+      <!-- 9번 -->
+      <div class="q-block" id="qb9">
+        <div class="q-num-row">
+          <div class="q-number">9</div>
+          <span class="q-score-tag">10점</span>
+        </div>
+        <p class="q-text">(가)의 '봄은 해마다 와서 / 이 돌 위에 이끼를 올리고 / 서러운 이름 하나를 더한다'에 대한 감상으로 <strong>가장 적절한 것</strong>은?</p>
+        <ul class="options" id="q9opts">
+          <li><button class="opt-btn" onclick="select(9,0)"><span class="opt-mark">①</span>봄이 올 때마다 무덤에 이끼가 자라고 세월이 흐르면서 그리운 이의 부재가 더욱 깊어짐을 표현한다.</button></li>
+          <li><button class="opt-btn" onclick="select(9,1)"><span class="opt-mark">②</span>봄마다 새로운 사람을 만나 이름이 하나씩 늘어나는 인생의 기쁨을 노래한다.</button></li>
+          <li><button class="opt-btn" onclick="select(9,2)"><span class="opt-mark">③</span>이끼는 자연의 생명력을, '서러운 이름'은 새로운 희망을 상징한다.</button></li>
+          <li><button class="opt-btn" onclick="select(9,3)"><span class="opt-mark">④</span>봄이 반복될수록 슬픔이 치유되어 화자가 위안을 얻고 있음을 나타낸다.</button></li>
+          <li><button class="opt-btn" onclick="select(9,4)"><span class="opt-mark">⑤</span>봄의 아름다운 자연 묘사를 통해 이별의 고통에서 완전히 벗어났음을 표현한다.</button></li>
+        </ul>
+        <div class="exp-box" id="exp9">
+          <strong>정답: ①</strong><br>
+          '이 돌'은 무덤의 비석, '이끼'는 세월의 흐름을 상징하며, '서러운 이름 하나를 더한다'는 세월이 흘러도 여전히 슬픔이 쌓여 간다는 의미입니다. 봄이 반복되어도 슬픔이 더해질 뿐 위안을 얻거나 고통에서 벗어나는 것이 아닙니다.
+        </div>
+      </div>
+
+      <!-- 10번 -->
+      <div class="q-block" id="qb10">
+        <div class="q-num-row">
+          <div class="q-number">10</div>
+          <span class="q-score-tag">10점</span>
+        </div>
+        <p class="q-text"><보기>를 참고하여 (가)와 (나)를 감상한 내용으로 <strong>적절하지 않은 것</strong>은?</p>
+        <div class="q-box">
+          <strong>〈보 기〉</strong><br>
+          서정시에서 자연물은 흔히 화자의 내면 감정을 투영하거나 대비시키는 객관적 상관물로 기능한다. (가)와 (나)는 각각 봄과 가을이라는 상반된 계절을 통해 비슷한 정서적 체험(부모의 부재)을 서로 다른 방향성으로 형상화하고 있다. 또한 두 시는 3연 '계절은 해마다 와서 ~' 구조에서 시간의 반복성을 활용하여 상실의 감각을 심화시킨다.
+        </div>
+        <ul class="options" id="q10opts">
+          <li><button class="opt-btn" onclick="select(10,0)"><span class="opt-mark">①</span>(가)의 '꽃들이 피어오른다'와 (나)의 '낙엽이 쓸린다'는 각각 봄과 가을의 자연물이 화자의 내면 정서를 반영하는 객관적 상관물로 기능한다.</button></li>
+          <li><button class="opt-btn" onclick="select(10,1)"><span class="opt-mark">②</span>두 시 모두 '해마다' 반복되는 계절의 귀환을 통해 부모의 부재가 지속되는 상실감을 심화시키고 있다.</button></li>
+          <li><button class="opt-btn" onclick="select(10,2)"><span class="opt-mark">③</span>(가)는 봄(생성)과 (나)는 가을(소멸)을 배경으로 하여 동일한 상실 경험을 서로 다른 계절적 이미지로 형상화하고 있다.</button></li>
+          <li><button class="opt-btn" onclick="select(10,3)"><span class="opt-mark">④</span>〈보기〉에 따르면 (가)와 (나)에서 자연물은 화자의 슬픔과 무관하게 단순히 아름다운 배경으로만 기능한다.</button></li>
+          <li><button class="opt-btn" onclick="select(10,4)"><span class="opt-mark">⑤</span>(가)와 (나)의 마지막 연에서 '기다린다'와 '보낸다'는 화자의 서로 다른 방향성—미래 지향과 과거 수용—을 보여 준다.</button></li>
+        </ul>
+        <div class="exp-box" id="exp10">
+          <strong>정답: ④</strong><br>
+          〈보기〉는 자연물이 화자의 내면 감정을 투영하는 객관적 상관물로 기능한다고 설명합니다. 따라서 ④의 '화자의 슬픔과 무관하게 단순한 배경으로만 기능한다'는 〈보기〉의 내용과 정반대이므로 적절하지 않습니다.
+        </div>
+      </div>
+
+    </div>
+    <!-- ── 제출 버튼 (하단) ── -->
+    <div style="text-align:center;padding-top:20px">
+      <button class="submit-btn" style="padding:14px 40px;font-size:.9rem" onclick="submitExam()">답안 제출 및 채점 →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════ 타임업 오버레이 ════ -->
+<div id="timeup">
+  <div style="background:#1c1917;border:2px solid #dc2626;border-radius:12px;padding:40px;text-align:center;max-width:340px;margin:20px">
+    <div style="font-size:3rem;margin-bottom:12px">⏰</div>
+    <div style="font-family:var(--sans);font-size:1.3rem;font-weight:700;color:white;margin-bottom:8px">시간이 종료되었습니다!</div>
+    <div style="font-family:var(--sans);color:#a8a29e;font-size:.85rem;margin-bottom:24px">지금까지 선택한 답안으로 자동 채점합니다.</div>
+    <button onclick="submitExam()" style="font-family:var(--sans);background:#dc2626;color:white;border:none;padding:12px 32px;border-radius:4px;font-size:.9rem;font-weight:700;cursor:pointer">결과 확인 →</button>
+  </div>
+</div>
+
+<!-- ════ 결과 ════ -->
+<div id="result">
+  <div style="max-width:700px;margin:0 auto;padding:40px 20px;text-align:center">
+    <div style="font-family:var(--sans);font-size:.75rem;letter-spacing:3px;color:#78716c;margin-bottom:16px">채점 완료</div>
+    <div id="gradeDisp" style="font-size:5rem;font-weight:900;line-height:1;margin-bottom:6px;background:linear-gradient(135deg,#f59e0b,#fbbf24);-webkit-background-clip:text;-webkit-text-fill-color:transparent"></div>
+    <div style="font-family:var(--sans);color:#78716c;font-size:.85rem;margin-bottom:36px;letter-spacing:1px">점 / 100점</div>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:32px">
+      <div style="background:rgba(255,255,255,.06);border:1px solid #3d3832;border-radius:8px;padding:18px 10px">
+        <div id="rCorrect" style="font-size:2rem;font-weight:700;color:#fdfaf5"></div>
+        <div style="font-family:var(--sans);font-size:.7rem;color:#78716c;margin-top:4px;letter-spacing:1px">정 답</div>
+      </div>
+      <div style="background:rgba(255,255,255,.06);border:1px solid #3d3832;border-radius:8px;padding:18px 10px">
+        <div id="rWrong" style="font-size:2rem;font-weight:700;color:#f87171"></div>
+        <div style="font-family:var(--sans);font-size:.7rem;color:#78716c;margin-top:4px;letter-spacing:1px">오 답</div>
+      </div>
+      <div style="background:rgba(255,255,255,.06);border:1px solid #3d3832;border-radius:8px;padding:18px 10px">
+        <div id="rSkip" style="font-size:2rem;font-weight:700;color:#a8a29e"></div>
+        <div style="font-family:var(--sans);font-size:.7rem;color:#78716c;margin-top:4px;letter-spacing:1px">미 응시</div>
+      </div>
+    </div>
+
+    <div id="rMsg" style="background:rgba(180,83,9,.12);border:1px solid rgba(180,83,9,.3);border-radius:8px;padding:18px;margin-bottom:32px;font-family:var(--sans);font-size:.9rem;color:#fbbf24;line-height:1.8"></div>
+
+    <!-- OMR 결과 -->
+    <div style="font-family:var(--sans);font-size:.75rem;letter-spacing:2px;color:#78716c;margin-bottom:14px">문항별 결과</div>
+    <div id="omrGrid" style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:32px"></div>
+
+    <button onclick="reviewExam()" style="font-family:var(--sans);background:white;color:#1c1917;border:none;padding:13px 36px;border-radius:4px;font-size:.88rem;font-weight:700;cursor:pointer;margin-right:12px;transition:all .2s" onmouseover="this.style.background='#f5efe6'" onmouseout="this.style.background='white'">해설 보기 →</button>
+  </div>
+</div>
+
+<script>
+const TOTAL_SEC = 20 * 60;
+const ANSWERS  = {1:2, 2:3, 3:2, 4:1, 5:3, 6:2, 7:0, 8:4, 9:0, 10:3};
+const SCORES   = {1:10,2:10,3:10,4:10,5:10,6:10,7:10,8:10,9:10,10:10};
+
+let selected = {};
+let timeLeft = TOTAL_SEC;
+let timerID  = null;
+let submitted = false;
+
+/* 시험 시작 */
+function startExam(){
+  document.getElementById('cover').style.display='none';
+  document.getElementById('exam').style.display='block';
+  buildDots();
+  timerID = setInterval(tick, 1000);
+  window.scrollTo(0,0);
+}
+
+/* 답안 점 생성 */
+function buildDots(){
+  const c = document.getElementById('answerDots');
+  c.innerHTML = '';
+  for(let i=1;i<=10;i++){
+    const d=document.createElement('div');
+    d.className='ans-dot';d.id='dot'+i;d.textContent=i;
+    d.onclick=()=>scrollToQ(i);
+    c.appendChild(d);
+  }
+}
+
+function scrollToQ(n){
+  const el=document.getElementById('qb'+n);
+  if(el) el.scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+/* 타이머 */
+function tick(){
+  if(submitted) return;
+  timeLeft--;
+  updateTimer();
+  const pct=(TOTAL_SEC-timeLeft)/TOTAL_SEC*100;
+  document.getElementById('progressFill').style.width=pct+'%';
+  if(timeLeft<=0){
+    clearInterval(timerID);
+    document.getElementById('timeup').style.display='flex';
+  }
+}
+
+function updateTimer(){
+  const m=Math.floor(timeLeft/60);
+  const s=timeLeft%60;
+  const str=(m<10?'0'+m:m)+':'+(s<10?'0'+s:s);
+  const el=document.getElementById('timerDisplay');
+  el.textContent=str;
+  el.className='timer'+(timeLeft<=300?' warn':'')+(timeLeft<=60?' danger':'');
+}
+
+/* 선택 */
+function select(q, opt){
+  if(submitted) return;
+  selected[q]=opt;
+  // 버튼 스타일
+  const opts=document.querySelectorAll('#q'+q+'opts .opt-btn');
+  opts.forEach((b,i)=>{
+    b.classList.toggle('selected',i===opt);
+  });
+  // 점 업데이트
+  document.getElementById('dot'+q).classList.add('done');
+  // 제출 버튼 활성화
+  const cnt=Object.keys(selected).length;
+  document.getElementById('submitBtn').disabled=cnt<1;
+}
+
+/* 제출 */
+function submitExam(){
+  if(submitted) return;
+  submitted=true;
+  clearInterval(timerID);
+  document.getElementById('timeup').style.display='none';
+  showResult();
+}
+
+function showResult(){
+  document.getElementById('exam').style.display='none';
+  document.getElementById('result').style.display='block';
+
+  let correct=0, wrong=0, skip=0, totalScore=0;
+  const omr=document.getElementById('omrGrid');
+  omr.innerHTML='';
+
+  for(let i=1;i<=10;i++){
+    const ans=ANSWERS[i];
+    const my=selected[i];
+    const labels=['①','②','③','④','⑤'];
+    let cls='skip', icon='—', score=0;
+    if(my===undefined){ skip++; }
+    else if(my===ans){ correct++; score=SCORES[i]; totalScore+=score; cls='ok'; icon=labels[my]+'✓';}
+    else{ wrong++; cls='no'; icon=labels[my]+'✗'; }
+
+    const d=document.createElement('div');
+    d.style.cssText='background:rgba(255,255,255,.04);border:1px solid #3d3832;border-radius:6px;padding:12px 8px;text-align:center';
+    d.innerHTML=`<div style="font-family:var(--sans);font-size:.68rem;color:#78716c;margin-bottom:4px">${i}번</div>
+      <div style="font-size:1rem;font-weight:700;color:${cls==='ok'?'#4ade80':cls==='no'?'#f87171':'#78716c'}">${icon}</div>
+      <div style="font-family:var(--sans);font-size:.65rem;color:#78716c;margin-top:3px">${score}점</div>`;
+    omr.appendChild(d);
+  }
+
+  document.getElementById('gradeDisp').textContent=totalScore;
+  document.getElementById('rCorrect').textContent=correct+'/10';
+  document.getElementById('rWrong').textContent=wrong;
+  document.getElementById('rSkip').textContent=skip;
+
+  const msgs={
+    100:'🏆 만점! 서정 시 완전 정복! 문학 실력이 최상입니다.',
+    90:'🎉 우수! 거의 완벽해요. 틀린 문제만 다시 확인하세요.',
+    80:'👍 양호! 기본기가 탄탄합니다. 한두 문제만 더 집중하면 돼요.',
+    70:'📖 보통. 표현 기법과 화자 파악을 다시 정리해 보세요.',
+    60:'💪 분발! 시어의 의미와 비교 감상 파트를 집중 복습하세요.',
+    0:'📚 기초부터! 서정 시의 기본 개념(화자, 이미지, 표현법)부터 다시 잡아요.',
+  };
+  const grade=totalScore>=100?100:totalScore>=90?90:totalScore>=80?80:totalScore>=70?70:totalScore>=60?60:0;
+  document.getElementById('rMsg').textContent=msgs[grade];
+  window.scrollTo(0,0);
+}
+
+/* 해설 보기 */
+function reviewExam(){
+  document.getElementById('result').style.display='none';
+  document.getElementById('exam').style.display='block';
+
+  // 모든 보기에 정답/오답 표시
+  for(let i=1;i<=10;i++){
+    const ans=ANSWERS[i];
+    const my=selected[i];
+    const opts=document.querySelectorAll('#q'+i+'opts .opt-btn');
+    opts.forEach((b,j)=>{
+      b.disabled=true;
+      b.classList.remove('selected');
+      if(j===ans) b.classList.add(j===my?'correct':'show-answer');
+      else if(j===my) b.classList.add('wrong');
+    });
+    // 해설 펼치기
+    const exp=document.getElementById('exp'+i);
+    if(exp) exp.classList.add('show');
+  }
+  window.scrollTo(0,0);
+}
+</script>
+</body>
+</html>
