@@ -38,13 +38,13 @@
 
     .card { background: var(--card); border-radius: 16px; padding: 30px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); margin-bottom: 20px; }
     
-    /* 섹션 전환용 클래스 */
+    /* 섹션 전환 */
     .section { display: none; animation: fadeIn 0.4s ease; }
     .section.active { display: block; }
     .hidden { display: none !important; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-    /* 공통 테이블 & 퀴즈 (한국사, 정보) */
+    /* 일반 테이블 & 퀴즈 (한국사, 정보) */
     table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 0.95rem; }
     th, td { padding: 12px; border: 1px solid #e2e8f0; text-align: center; }
     th { background: #f8fafc; font-weight: bold; }
@@ -55,7 +55,7 @@
     .btn-check-gen { background: var(--dark); color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer; width: 100%; font-weight: bold; }
     .ans-content-gen { display: none; margin-top: 10px; color: var(--primary); font-weight: 800; background: #eff6ff; padding: 10px; border-radius: 6px; }
 
-    /* 국어 모의고사 전용 CBT 스타일 (화면 꽉 차게) */
+    /* 국어 모의고사 CBT 레이아웃 */
     .exam-nav { display: flex; gap: 8px; overflow-x: auto; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid #e2e8f0; }
     .exam-btn { padding: 8px 14px; border: 1px solid var(--korean-color); background: white; color: var(--korean-color); border-radius: 20px; cursor: pointer; font-weight: bold; white-space: nowrap; font-size: 0.9rem; }
     .exam-btn:hover, .exam-btn.active { background: var(--korean-color); color: white; }
@@ -72,8 +72,8 @@
     .title-theme1 { color: var(--korean-color); background: #f5f3ff; }
     .title-theme2 { color: var(--korean-theme2); background: #fdf4ff; }
 
-    .q-item { margin-bottom: 30px; background: white; padding: 25px; border-radius: 10px; border: 1px solid #e2e8f0; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
-    .q-text { font-weight: bold; margin-bottom: 15px; font-size: 1.05rem; line-height: 1.5; }
+    .q-item { margin-bottom: 30px; background: white; padding: 25px; border-radius: 10px; border: 1px solid #e2e8f0; }
+    .q-text { font-weight: bold; margin-bottom: 15px; font-size: 1.05rem; }
     .q-options label { display: block; margin-bottom: 8px; cursor: pointer; padding: 10px 12px; border-radius: 6px; transition: 0.2s; border: 1px solid transparent; }
     .q-options label:hover { background: #f1f5f9; border-color: #cbd5e0; }
     .q-options input { margin-right: 10px; }
@@ -100,8 +100,8 @@
 
     <div id="content-korean">
         <div class="tabs">
-            <div id="tab-theme1" class="tab theme-k1 active" onclick="switchKoreanTheme(1)">🌙 &lt;별 헤는 밤&gt; 테마 (10제)</div>
-            <div id="tab-theme2" class="tab theme-k2" onclick="switchKoreanTheme(2)">🤝 &lt;방문객&gt; 테마 (10제)</div>
+            <div id="tab-theme1" class="tab theme-k1 active" onclick="switchKoreanTheme(1)">🌙 &lt;별 헤는 밤&gt; 테마</div>
+            <div id="tab-theme2" class="tab theme-k2" onclick="switchKoreanTheme(2)">🤝 &lt;방문객&gt; 테마</div>
         </div>
         <div class="card" id="korean-card" style="border-top: 5px solid var(--korean-color); padding: 20px;">
             <div class="exam-nav" id="exam-nav"></div>
@@ -114,68 +114,43 @@
 
     <div id="content-history" class="hidden">
         <div class="tabs">
-            <div class="tab active" onclick="openSubTab(event, 'history-content', 'content-history')">📖 핵심 요약</div>
-            <div class="tab" onclick="openSubTab(event, 'history-test', 'content-history')">🔥 실전 테스트</div>
+            <div class="tab active" onclick="openSubTab(event, 'history-content-section', 'content-history')">📖 핵심 요약</div>
+            <div class="tab" onclick="openSubTab(event, 'history-test-section', 'content-history')">🔥 실전 테스트</div>
         </div>
-        <div id="history-content" class="section active">
-            <div class="card" style="border-top: 5px solid var(--primary);">
-                <h3>근대 개혁과 국권 침탈 정리</h3>
-                <div style="margin-top: 15px; line-height: 1.8;">
-                    <p><b>1. 흥선대원군의 정책:</b> 경복궁 중건(당백전, 원납전), 서원 철폐, 호포제</p>
-                    <p><b>2. 개항 과정:</b> 강화도 조약(1876) → 조미수호통상조약(1882, 거중조정, 최혜국 대우)</p>
-                    <p><b>3. 근대적 개혁:</b> 갑오개혁(신분제, 과거제 폐지), 광무개혁(구본신참, 지계 발급)</p>
-                    <p><b>4. 의병 투쟁:</b> 을미의병(단발령) → 을사의병(신돌석) → 정미의병(군대 해산, 13도 창의군)</p>
-                </div>
+        <div id="history-content-section" class="section active">
             </div>
-            <div class="card">
-                <h3>주요 사건 연도 확인</h3>
-                <table>
-                    <tr><th>사건명</th><th>연도</th><th>핵심 내용</th></tr>
-                    <tr><td>강화도 조약</td><td>1876</td><td>최초의 근대적 조약</td></tr>
-                    <tr><td>갑신정변</td><td>1884</td><td>우정총국, 급진 개화파</td></tr>
-                    <tr><td>동학 농민 운동</td><td>1894</td><td>집강소 설치, 폐정 개혁안</td></tr>
-                    <tr><td>을사늑약</td><td>1905</td><td>외교권 박탈, 통감부 설치</td></tr>
-                </table>
-            </div>
-        </div>
-        <div id="history-test" class="section">
+        <div id="history-test-section" class="section">
             <div class="quiz-container" id="history-quiz-box"></div>
         </div>
     </div>
 
     <div id="content-info" class="hidden">
         <div class="tabs">
-            <div class="tab active" onclick="openSubTab(event, 'info-note', 'content-info')">📖 핵심 요약</div>
-            <div class="tab" onclick="openSubTab(event, 'info-test', 'content-info')">🔥 실전 테스트</div>
+            <div class="tab active" onclick="openSubTab(event, 'info-content-section', 'content-info')">📖 핵심 요약</div>
+            <div class="tab" onclick="openSubTab(event, 'info-test-section', 'content-info')">🔥 실전 테스트</div>
         </div>
-        <div id="info-note" class="section active">
-            <div class="card" style="border-top: 5px solid var(--info-color);">
-                <h3>데이터 보안 및 알고리즘</h3>
-                <div style="margin-top:15px; line-height:1.8;">
-                    <p>• <b>피싱/파밍:</b> 위장 홈페이지 및 가짜 사이트를 통한 개인정보 탈취</p>
-                    <p>• <b>블록체인:</b> 디지털 서명을 통한 데이터 위변조 방지 기술</p>
-                    <p>• <b>MST 알고리즘:</b> 최소 신장 트리를 구하는 크루스칼, 프림 알고리즘</p>
-                    <p>• <b>삽입 정렬:</b> 정렬되지 않은 데이터를 적절한 위치에 삽입하는 방식</p>
-                    <p>• <b>개인정보:</b> 다른 정보와 '결합'하여 식별 가능한 정보도 포함됨</p>
-                </div>
+        <div id="info-content-section" class="section active">
             </div>
-        </div>
-        <div id="info-test" class="section">
+        <div id="info-test-section" class="section">
             <div class="quiz-container" id="info-quiz-box"></div>
         </div>
     </div>
 </div>
 
-<script src="./data.js"></script>
+<script src="./info.js"></script>
+<script src="./history.js"></script>
+<script src="./korean.js"></script>
 
 <script>
-    // ==========================================
-    // 앱 제어 로직 (데이터는 data.js에서 가져옴)
-    // ==========================================
-    
-    // 일반 과목 퀴즈 렌더링 (한국사, 정보)
+    // --------------------------------------------------------
+    // 앱 제어 로직 (데이터 기반 동적 렌더링)
+    // --------------------------------------------------------
+
+    // 1. 일반 과목 퀴즈 생성 (한국사, 정보)
     function initGenQuiz(id, data) {
-        document.getElementById(id).innerHTML = data.map((d,i)=>`
+        const box = document.getElementById(id);
+        if(!box || !data) return;
+        box.innerHTML = data.map((d, i) => `
             <div class="quiz-item-gen">
                 <p><b>Q${i+1}.</b> ${d.q}</p>
                 <input type="text" class="answer-input" placeholder="답안 입력">
@@ -185,7 +160,7 @@
         `).join('');
     }
 
-    // 세부 탭 스위치
+    // 2. 세부 탭 전환
     function openSubTab(evt, targetId, parentId) {
         const p = document.getElementById(parentId);
         p.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
@@ -194,9 +169,8 @@
         evt.currentTarget.classList.add('active');
     }
 
-    // 메인 과목 스위치
+    // 3. 메인 과목 전환 (버그 수정 완료)
     let currentKorTheme = 1;
-
     function switchSubject(subject) {
         document.querySelectorAll('.subject-item').forEach(el => el.classList.remove('active'));
         document.getElementById('content-korean').classList.add('hidden');
@@ -204,27 +178,26 @@
         document.getElementById('content-info').classList.add('hidden');
 
         const title = document.getElementById('main-title');
-
         if(subject === 'korean') {
             document.getElementById('side-korean').classList.add('active');
             document.getElementById('content-korean').classList.remove('hidden');
             title.innerText = "국어 모의고사";
-            title.style.borderLeftColor = currentKorTheme === 1 ? 'var(--korean-color)' : 'var(--korean-theme2)';
+            title.style.borderLeftColor = (currentKorTheme === 1) ? 'var(--korean-color)' : 'var(--korean-theme2)';
             switchKoreanTheme(currentKorTheme);
         } else if(subject === 'history') {
             document.getElementById('side-history').classList.add('active');
             document.getElementById('content-history').classList.remove('hidden');
             title.innerText = "한국사 정리";
-            title.style.borderLeftColor = "var(--primary)";
+            title.style.borderLeftColor = 'var(--primary)';
         } else if(subject === 'info') {
             document.getElementById('side-info').classList.add('active');
             document.getElementById('content-info').classList.remove('hidden');
             title.innerText = "정보 정리";
-            title.style.borderLeftColor = "var(--info-color)";
+            title.style.borderLeftColor = 'var(--info-color)';
         }
     }
 
-    // 국어 테마 스위치
+    // 4. 국어 테마 전환
     function switchKoreanTheme(themeId) {
         currentKorTheme = themeId;
         const t1 = document.getElementById('tab-theme1'), t2 = document.getElementById('tab-theme2');
@@ -243,48 +216,47 @@
         }
     }
 
-    // 모의고사 네비게이션
+    // 5. 국어 회차 버튼 생성
     function renderExamNav(data, themeId) {
         const nav = document.getElementById('exam-nav');
         nav.innerHTML = '';
         data.forEach((ex, idx) => {
             const btn = document.createElement('button');
             btn.className = `exam-btn ${themeId===2?'theme2':''}`;
-            if(idx===0) btn.classList.add('active');
-            btn.innerText = ex.title.split(':')[0]; // 버튼에 "1회"만 표시
+            if(idx === 0) btn.classList.add('active');
+            btn.innerText = ex.title.split(':')[0];
             btn.onclick = () => loadExam(data, idx, btn, themeId);
             nav.appendChild(btn);
         });
         loadExam(data, 0, nav.firstChild, themeId);
     }
 
-    // 문제 불러오기
+    // 6. 국어 지문 & 문제 로드
     function loadExam(data, idx, btn, themeId) {
         document.querySelectorAll('.exam-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
-        
         const ex = data[idx];
         document.getElementById('passage-pane').innerHTML = ex.passage;
-        
         const qPane = document.getElementById('question-pane');
-        const color = themeId === 1 ? 'var(--korean-color)' : 'var(--korean-theme2)';
+        const color = (themeId === 1) ? 'var(--korean-color)' : 'var(--korean-theme2)';
+        const btnClass = (themeId === 1) ? 'btn-theme1' : 'btn-theme2';
+
         qPane.innerHTML = `<h3 style="margin-bottom:15px; color:${color}; font-size:1.3rem;">📝 ${ex.title}</h3>`;
-        
         ex.questions.forEach((q, qIdx) => {
             let opts = q.options.map((opt, oIdx) => `<label><input type="radio" name="q_${ex.id}_${qIdx}" value="${oIdx}"> <b>${oIdx+1})</b> ${opt}</label>`).join('');
             qPane.innerHTML += `
                 <div class="q-item">
                     <div class="q-text">${q.q}</div>
                     <div class="q-options">${opts}</div>
-                    <button class="btn-check-kor ${themeId===1?'btn-theme1':'btn-theme2'}" onclick="checkAns(this, ${q.a}, '${q.exp.replace(/'/g, "\\'")}')">정답 확인</button>
+                    <button class="btn-check-kor ${btnClass}" onclick="checkKorAns(this, ${q.a}, '${q.exp.replace(/'/g, "\\'")}')">정답 확인</button>
                     <div class="ans-content-kor"></div>
                 </div>
             `;
         });
     }
 
-    // 정답 체크
-    function checkAns(btn, correctIdx, exp) {
+    // 7. 국어 정답 체크
+    function checkKorAns(btn, correctIdx, exp) {
         const qItem = btn.parentElement;
         let selected = -1;
         qItem.querySelectorAll('input').forEach((r, i) => { if(r.checked) selected = i; });
@@ -303,10 +275,15 @@
         }
     }
 
-    // 초기 화면 설정
+    // 초기 실행
     window.onload = () => {
-        initGenQuiz('history-quiz-box', historyData);
-        initGenQuiz('info-quiz-box', infoData);
+        // .js 파일에서 불러온 요약 HTML 주입
+        if(typeof infoSummaryHTML !== 'undefined') document.getElementById('info-content-section').innerHTML = infoSummaryHTML;
+        if(typeof historySummaryHTML !== 'undefined') document.getElementById('history-content-section').innerHTML = historySummaryHTML;
+        
+        initGenQuiz('info-quiz-box', typeof infoData !== 'undefined' ? infoData : []);
+        initGenQuiz('history-quiz-box', typeof historyData !== 'undefined' ? historyData : []);
+        
         switchSubject('korean');
     };
 </script>
