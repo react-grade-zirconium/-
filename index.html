@@ -3,95 +3,91 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>통합 학습 포털</title>
+<title>통합 학습 포털 MAX</title>
 <style>
     :root {
-        --primary: #2563eb;
-        --dark: #1e293b;
-        --bg: #f1f5f9;
-        --card: #ffffff;
-        --info-color: #0d9488;
-        --korean-color: #8b5cf6;
-        --korean-theme2: #d946ef;
+        --primary: #2563eb; --dark: #1e293b; --bg: #f8fafc; --card: #ffffff;
+        --info-color: #0d9488; --korean-color: #8b5cf6; --korean-theme2: #d946ef;
     }
-
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: 'Pretendard', 'Malgun Gothic', sans-serif; background: var(--bg); color: var(--dark); display: flex; min-height: 100vh; overflow: hidden; }
 
     /* 사이드바 */
-    .sidebar { width: 240px; background: var(--dark); color: white; display: flex; flex-direction: column; height: 100vh; z-index: 1000; flex-shrink: 0; }
-    .sidebar-header { padding: 30px 20px; font-size: 1.5rem; font-weight: 800; border-bottom: 1px solid rgba(255,255,255,0.1); text-align: center; }
+    .sidebar { width: 250px; background: var(--dark); color: white; display: flex; flex-direction: column; height: 100vh; z-index: 1000; flex-shrink: 0; box-shadow: 2px 0 10px rgba(0,0,0,0.1); }
+    .sidebar-header { padding: 30px 20px; font-size: 1.6rem; font-weight: 900; border-bottom: 1px solid rgba(255,255,255,0.1); text-align: center; letter-spacing: 1px; color: #60a5fa; }
     .subject-list { flex: 1; padding: 20px 0; overflow-y: auto; }
-    .subject-item { padding: 15px 25px; cursor: pointer; transition: 0.3s; opacity: 0.7; display: flex; align-items: center; gap: 10px; }
+    .subject-item { padding: 16px 25px; cursor: pointer; transition: 0.3s; opacity: 0.7; display: flex; align-items: center; gap: 12px; font-size: 1.05rem; }
+    .subject-item:hover { opacity: 0.9; background: rgba(255,255,255,0.05); }
     .subject-item.active { opacity: 1; background: var(--primary); font-weight: bold; }
 
     /* 메인 컨텐츠 영역 */
     .main-content { flex: 1; padding: 40px; height: 100vh; overflow-y: auto; position: relative; }
-    .subject-title { font-size: 2rem; margin-bottom: 20px; border-left: 6px solid var(--primary); padding-left: 15px; transition: 0.3s; }
+    .subject-title { font-size: 2.2rem; font-weight: 800; margin-bottom: 25px; border-left: 8px solid var(--primary); padding-left: 18px; transition: 0.3s; }
 
     /* 공통 탭 메뉴 */
     .tabs { display: flex; gap: 10px; margin-bottom: 25px; border-bottom: 2px solid #e2e8f0; overflow-x: auto; flex-shrink: 0; }
-    .tab { padding: 12px 20px; cursor: pointer; font-weight: 600; color: #64748b; white-space: nowrap; transition: 0.2s; }
-    .tab.active { color: var(--primary); border-bottom: 3px solid var(--primary); }
+    .tab { padding: 12px 24px; cursor: pointer; font-size: 1rem; font-weight: 700; color: #64748b; white-space: nowrap; transition: 0.2s; border-radius: 8px 8px 0 0; }
+    .tab:hover { background: #f1f5f9; }
+    .tab.active { color: var(--primary); border-bottom: 3px solid var(--primary); background: white; }
     .tab.theme-k1.active { color: var(--korean-color); border-bottom: 3px solid var(--korean-color); }
     .tab.theme-k2.active { color: var(--korean-theme2); border-bottom: 3px solid var(--korean-theme2); }
 
-    .card { background: var(--card); border-radius: 16px; padding: 30px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); margin-bottom: 20px; }
+    .card { background: var(--card); border-radius: 16px; padding: 35px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); margin-bottom: 25px; line-height: 1.7; font-size: 1.05rem; }
     
-    /* 섹션 전환 */
     .section { display: none; animation: fadeIn 0.4s ease; }
     .section.active { display: block; }
     .hidden { display: none !important; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
     /* 일반 테이블 & 퀴즈 (한국사, 정보) */
-    table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 0.95rem; }
-    th, td { padding: 12px; border: 1px solid #e2e8f0; text-align: center; }
-    th { background: #f8fafc; font-weight: bold; }
-    
-    .quiz-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 20px; }
-    .quiz-item-gen { background: #f8fafc; border: 1px solid #e2e8f0; padding: 20px; border-radius: 12px; }
-    .answer-input { width: 100%; padding: 12px; border: 1px solid #cbd5e0; border-radius: 8px; margin: 10px 0; }
-    .btn-check-gen { background: var(--dark); color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer; width: 100%; font-weight: bold; }
-    .ans-content-gen { display: none; margin-top: 10px; color: var(--primary); font-weight: 800; background: #eff6ff; padding: 10px; border-radius: 6px; }
+    .quiz-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 20px; }
+    .quiz-item-gen { background: white; border: 1px solid #e2e8f0; padding: 25px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
+    .quiz-item-gen p b { color: var(--primary); font-size: 1.1rem; }
+    .answer-input { width: 100%; padding: 14px; border: 1px solid #cbd5e0; border-radius: 8px; margin: 15px 0; font-size: 1rem; }
+    .answer-input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
+    .btn-check-gen { background: var(--dark); color: white; border: none; padding: 14px; border-radius: 8px; cursor: pointer; width: 100%; font-weight: bold; font-size: 1rem; transition: 0.2s; }
+    .btn-check-gen:hover { background: #334155; }
+    .ans-content-gen { display: none; margin-top: 15px; color: var(--primary); font-weight: 800; background: #eff6ff; padding: 15px; border-radius: 8px; font-size: 1.05rem; }
 
     /* 국어 모의고사 CBT 레이아웃 */
-    .exam-nav { display: flex; gap: 8px; overflow-x: auto; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid #e2e8f0; }
-    .exam-btn { padding: 8px 14px; border: 1px solid var(--korean-color); background: white; color: var(--korean-color); border-radius: 20px; cursor: pointer; font-weight: bold; white-space: nowrap; font-size: 0.9rem; }
-    .exam-btn:hover, .exam-btn.active { background: var(--korean-color); color: white; }
+    .exam-nav { display: flex; gap: 10px; overflow-x: auto; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #e2e8f0; }
+    .exam-btn { padding: 10px 18px; border: 2px solid var(--korean-color); background: white; color: var(--korean-color); border-radius: 30px; cursor: pointer; font-weight: 800; white-space: nowrap; font-size: 0.95rem; transition: 0.2s; }
+    .exam-btn:hover, .exam-btn.active { background: var(--korean-color); color: white; box-shadow: 0 4px 10px rgba(139,92,246,0.3); }
     .exam-btn.theme2 { border-color: var(--korean-theme2); color: var(--korean-theme2); }
-    .exam-btn.theme2:hover, .exam-btn.theme2.active { background: var(--korean-theme2); color: white; }
+    .exam-btn.theme2:hover, .exam-btn.theme2.active { background: var(--korean-theme2); color: white; box-shadow: 0 4px 10px rgba(217,70,239,0.3); }
 
-    .exam-container { display: flex; gap: 20px; height: calc(100vh - 280px); min-height: 500px; }
-    .passage-pane { flex: 1.2; background: white; border: 1px solid #cbd5e0; border-radius: 12px; padding: 30px; overflow-y: auto; line-height: 1.8; font-size: 1rem; box-shadow: inset 0 0 10px rgba(0,0,0,0.02); }
-    .question-pane { flex: 1; background: #f8fafc; border: 1px solid #cbd5e0; border-radius: 12px; padding: 25px; overflow-y: auto; }
+    .exam-container { display: flex; gap: 25px; height: calc(100vh - 280px); min-height: 600px; }
+    .passage-pane { flex: 1.2; background: white; border: 1px solid #cbd5e0; border-radius: 16px; padding: 40px; overflow-y: auto; line-height: 1.9; font-size: 1.05rem; box-shadow: inset 0 0 15px rgba(0,0,0,0.02); }
+    .question-pane { flex: 1; background: #f8fafc; border: 1px solid #cbd5e0; border-radius: 16px; padding: 30px; overflow-y: auto; }
     
-    .poem-box { margin-bottom: 40px; }
-    .poem-title { font-weight: bold; margin-bottom: 15px; padding: 8px 12px; border-radius: 5px; display: inline-block; font-size: 1.05rem; }
-    .poem-content { padding: 0 15px; }
-    .title-theme1 { color: var(--korean-color); background: #f5f3ff; }
-    .title-theme2 { color: var(--korean-theme2); background: #fdf4ff; }
+    .poem-box { margin-bottom: 50px; }
+    .poem-title { font-weight: 900; margin-bottom: 20px; padding: 10px 15px; border-radius: 8px; display: inline-block; font-size: 1.15rem; letter-spacing: -0.5px; }
+    .poem-content { padding: 0 20px; color: #334155; }
+    .title-theme1 { color: #5b21b6; background: #ede9fe; }
+    .title-theme2 { color: #86198f; background: #fae8ff; }
 
-    .q-item { margin-bottom: 30px; background: white; padding: 25px; border-radius: 10px; border: 1px solid #e2e8f0; }
-    .q-text { font-weight: bold; margin-bottom: 15px; font-size: 1.05rem; }
-    .q-options label { display: block; margin-bottom: 8px; cursor: pointer; padding: 10px 12px; border-radius: 6px; transition: 0.2s; border: 1px solid transparent; }
+    .q-item { margin-bottom: 35px; background: white; padding: 30px; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
+    .q-text { font-weight: 800; margin-bottom: 20px; font-size: 1.1rem; color: #0f172a; line-height: 1.5; }
+    .q-options label { display: flex; align-items: flex-start; margin-bottom: 12px; cursor: pointer; padding: 12px 15px; border-radius: 8px; transition: 0.2s; border: 1px solid transparent; background: #f8fafc; }
     .q-options label:hover { background: #f1f5f9; border-color: #cbd5e0; }
-    .q-options input { margin-right: 10px; }
+    .q-options input { margin-right: 12px; margin-top: 4px; transform: scale(1.2); }
     
-    .btn-check-kor { color: white; border: none; padding: 12px 15px; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; transition: 0.2s; margin-top: 10px; }
+    .btn-check-kor { color: white; border: none; padding: 14px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; transition: 0.2s; margin-top: 15px; font-size: 1rem; }
     .btn-theme1 { background: var(--korean-color); }
+    .btn-theme1:hover { background: #7c3aed; }
     .btn-theme2 { background: var(--korean-theme2); }
-    .ans-content-kor { display: none; margin-top: 15px; padding: 15px; border-radius: 8px; font-size: 0.95rem; line-height: 1.6; }
+    .btn-theme2:hover { background: #c026d3; }
+    .ans-content-kor { display: none; margin-top: 20px; padding: 20px; border-radius: 8px; font-size: 1rem; line-height: 1.7; border-left: 4px solid; }
 </style>
 </head>
 <body>
 
 <div class="sidebar">
-    <div class="sidebar-header">STUDY HUB</div>
+    <div class="sidebar-header">STUDY MAX</div>
     <div class="subject-list">
-        <div id="side-korean" class="subject-item active" onclick="switchSubject('korean')">📖 <span>국어 (모의고사)</span></div>
-        <div id="side-history" class="subject-item" onclick="switchSubject('history')">📚 <span>한국사</span></div>
-        <div id="side-info" class="subject-item" onclick="switchSubject('info')">💻 <span>정보</span></div>
+        <div id="side-korean" class="subject-item active" onclick="switchSubject('korean')">📖 <span>국어 (수능형)</span></div>
+        <div id="side-history" class="subject-item" onclick="switchSubject('history')">📚 <span>한국사 (심화)</span></div>
+        <div id="side-info" class="subject-item" onclick="switchSubject('info')">💻 <span>정보 (알고리즘)</span></div>
     </div>
 </div>
 
@@ -103,7 +99,7 @@
             <div id="tab-theme1" class="tab theme-k1 active" onclick="switchKoreanTheme(1)">🌙 &lt;별 헤는 밤&gt; 테마</div>
             <div id="tab-theme2" class="tab theme-k2" onclick="switchKoreanTheme(2)">🤝 &lt;방문객&gt; 테마</div>
         </div>
-        <div class="card" id="korean-card" style="border-top: 5px solid var(--korean-color); padding: 20px;">
+        <div class="card" id="korean-card" style="border-top: 6px solid var(--korean-color); padding: 25px;">
             <div class="exam-nav" id="exam-nav"></div>
             <div class="exam-container">
                 <div class="passage-pane" id="passage-pane"></div>
@@ -114,11 +110,10 @@
 
     <div id="content-history" class="hidden">
         <div class="tabs">
-            <div class="tab active" onclick="openSubTab(event, 'history-content-section', 'content-history')">📖 핵심 요약</div>
-            <div class="tab" onclick="openSubTab(event, 'history-test-section', 'content-history')">🔥 실전 테스트</div>
+            <div class="tab active" onclick="openSubTab(event, 'history-content-section', 'content-history')">📖 핵심 통합 요약</div>
+            <div class="tab" onclick="openSubTab(event, 'history-test-section', 'content-history')">🔥 실전 20제</div>
         </div>
-        <div id="history-content-section" class="section active">
-            </div>
+        <div id="history-content-section" class="section active"></div>
         <div id="history-test-section" class="section">
             <div class="quiz-container" id="history-quiz-box"></div>
         </div>
@@ -126,11 +121,10 @@
 
     <div id="content-info" class="hidden">
         <div class="tabs">
-            <div class="tab active" onclick="openSubTab(event, 'info-content-section', 'content-info')">📖 핵심 요약</div>
-            <div class="tab" onclick="openSubTab(event, 'info-test-section', 'content-info')">🔥 실전 테스트</div>
+            <div class="tab active" onclick="openSubTab(event, 'info-content-section', 'content-info')">📖 3단원 완벽 요약</div>
+            <div class="tab" onclick="openSubTab(event, 'info-test-section', 'content-info')">🔥 실전 20제</div>
         </div>
-        <div id="info-content-section" class="section active">
-            </div>
+        <div id="info-content-section" class="section active"></div>
         <div id="info-test-section" class="section">
             <div class="quiz-container" id="info-quiz-box"></div>
         </div>
@@ -142,25 +136,21 @@
 <script src="./korean.js"></script>
 
 <script>
-    // --------------------------------------------------------
-    // 앱 제어 로직 (데이터 기반 동적 렌더링)
-    // --------------------------------------------------------
-
-    // 1. 일반 과목 퀴즈 생성 (한국사, 정보)
+    // --- 1. 일반 과목 퀴즈 렌더러 ---
     function initGenQuiz(id, data) {
         const box = document.getElementById(id);
         if(!box || !data) return;
         box.innerHTML = data.map((d, i) => `
             <div class="quiz-item-gen">
                 <p><b>Q${i+1}.</b> ${d.q}</p>
-                <input type="text" class="answer-input" placeholder="답안 입력">
-                <button class="btn-check-gen" onclick="this.nextElementSibling.style.display='block'">정답 확인</button>
-                <p class="ans-content-gen">정답: ${d.a}</p>
+                <input type="text" class="answer-input" placeholder="정답을 입력하세요">
+                <button class="btn-check-gen" onclick="this.nextElementSibling.style.display='block'">정답 확인하기</button>
+                <div class="ans-content-gen">🎯 <b>정답:</b> ${d.a}</div>
             </div>
         `).join('');
     }
 
-    // 2. 세부 탭 전환
+    // --- 2. 탭 전환 로직 ---
     function openSubTab(evt, targetId, parentId) {
         const p = document.getElementById(parentId);
         p.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
@@ -169,7 +159,7 @@
         evt.currentTarget.classList.add('active');
     }
 
-    // 3. 메인 과목 전환 (버그 수정 완료)
+    // --- 3. 메인 과목 전환 로직 ---
     let currentKorTheme = 1;
     function switchSubject(subject) {
         document.querySelectorAll('.subject-item').forEach(el => el.classList.remove('active'));
@@ -187,17 +177,17 @@
         } else if(subject === 'history') {
             document.getElementById('side-history').classList.add('active');
             document.getElementById('content-history').classList.remove('hidden');
-            title.innerText = "한국사 정리";
+            title.innerText = "한국사 통합 정리";
             title.style.borderLeftColor = 'var(--primary)';
         } else if(subject === 'info') {
             document.getElementById('side-info').classList.add('active');
             document.getElementById('content-info').classList.remove('hidden');
-            title.innerText = "정보 정리";
+            title.innerText = "정보 (알고리즘과 프로그래밍)";
             title.style.borderLeftColor = 'var(--info-color)';
         }
     }
 
-    // 4. 국어 테마 전환
+    // --- 4. 국어 테마 및 문제 로직 ---
     function switchKoreanTheme(themeId) {
         currentKorTheme = themeId;
         const t1 = document.getElementById('tab-theme1'), t2 = document.getElementById('tab-theme2');
@@ -207,17 +197,17 @@
             t1.classList.add('active'); t2.classList.remove('active');
             card.style.borderTopColor = 'var(--korean-color)';
             title.style.borderLeftColor = 'var(--korean-color)';
-            renderExamNav(theme1Exams, 1);
+            renderExamNav(window.theme1Exams, 1);
         } else {
             t2.classList.add('active'); t1.classList.remove('active');
             card.style.borderTopColor = 'var(--korean-theme2)';
             title.style.borderLeftColor = 'var(--korean-theme2)';
-            renderExamNav(theme2Exams, 2);
+            renderExamNav(window.theme2Exams, 2);
         }
     }
 
-    // 5. 국어 회차 버튼 생성
     function renderExamNav(data, themeId) {
+        if(!data) return;
         const nav = document.getElementById('exam-nav');
         nav.innerHTML = '';
         data.forEach((ex, idx) => {
@@ -231,7 +221,6 @@
         loadExam(data, 0, nav.firstChild, themeId);
     }
 
-    // 6. 국어 지문 & 문제 로드
     function loadExam(data, idx, btn, themeId) {
         document.querySelectorAll('.exam-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
@@ -241,21 +230,20 @@
         const color = (themeId === 1) ? 'var(--korean-color)' : 'var(--korean-theme2)';
         const btnClass = (themeId === 1) ? 'btn-theme1' : 'btn-theme2';
 
-        qPane.innerHTML = `<h3 style="margin-bottom:15px; color:${color}; font-size:1.3rem;">📝 ${ex.title}</h3>`;
+        qPane.innerHTML = `<h3 style="margin-bottom:20px; color:${color}; font-size:1.4rem;">📝 ${ex.title}</h3>`;
         ex.questions.forEach((q, qIdx) => {
-            let opts = q.options.map((opt, oIdx) => `<label><input type="radio" name="q_${ex.id}_${qIdx}" value="${oIdx}"> <b>${oIdx+1})</b> ${opt}</label>`).join('');
+            let opts = q.options.map((opt, oIdx) => `<label><input type="radio" name="q_${ex.id}_${qIdx}" value="${oIdx}"> <span style="font-weight:bold; margin-right:8px;">${oIdx+1})</span> ${opt}</label>`).join('');
             qPane.innerHTML += `
                 <div class="q-item">
-                    <div class="q-text">${q.q}</div>
+                    <div class="q-text">${qIdx+1}. ${q.q}</div>
                     <div class="q-options">${opts}</div>
-                    <button class="btn-check-kor ${btnClass}" onclick="checkKorAns(this, ${q.a}, '${q.exp.replace(/'/g, "\\'")}')">정답 확인</button>
+                    <button class="btn-check-kor ${btnClass}" onclick="checkKorAns(this, ${q.a}, '${q.exp.replace(/'/g, "\\'")}')">정답 및 해설 확인</button>
                     <div class="ans-content-kor"></div>
                 </div>
             `;
         });
     }
 
-    // 7. 국어 정답 체크
     function checkKorAns(btn, correctIdx, exp) {
         const qItem = btn.parentElement;
         let selected = -1;
@@ -265,25 +253,29 @@
 
         if(selected === -1) {
             ansDiv.innerHTML = `⚠️ <b>보기를 선택해주세요!</b>`;
-            ansDiv.style.background = "#fee2e2"; ansDiv.style.color = "#ef4444";
+            ansDiv.style.background = "#fee2e2"; ansDiv.style.borderColor = "#ef4444"; ansDiv.style.color = "#b91c1c";
         } else if(selected === correctIdx) {
-            ansDiv.innerHTML = `⭕ <b>정답!</b><br><br><span style="color:#475569;">[해설] ${exp}</span>`;
-            ansDiv.style.background = "#eff6ff"; ansDiv.style.color = "var(--primary)";
+            ansDiv.innerHTML = `⭕ <b style="color:#15803d; font-size:1.1rem;">정답입니다!</b><br><br><span style="color:#334155;"><b>[해설]</b> ${exp}</span>`;
+            ansDiv.style.background = "#f0fdf4"; ansDiv.style.borderColor = "#22c55e";
         } else {
-            ansDiv.innerHTML = `❌ <b>오답 (정답: ${correctIdx+1}번)</b><br><br><span style="color:#475569;">[해설] ${exp}</span>`;
-            ansDiv.style.background = "#fee2e2"; ansDiv.style.color = "#ef4444";
+            ansDiv.innerHTML = `❌ <b style="color:#b91c1c; font-size:1.1rem;">오답입니다. (정답: ${correctIdx+1}번)</b><br><br><span style="color:#334155;"><b>[해설]</b> ${exp}</span>`;
+            ansDiv.style.background = "#fef2f2"; ansDiv.style.borderColor = "#ef4444";
         }
     }
 
-    // 초기 실행
+    // --- 5. 초기 로딩 시 데이터 바인딩 (안전 장치 추가) ---
     window.onload = () => {
-        // .js 파일에서 불러온 요약 HTML 주입
-        if(typeof infoSummaryHTML !== 'undefined') document.getElementById('info-content-section').innerHTML = infoSummaryHTML;
-        if(typeof historySummaryHTML !== 'undefined') document.getElementById('history-content-section').innerHTML = historySummaryHTML;
-        
-        initGenQuiz('info-quiz-box', typeof infoData !== 'undefined' ? infoData : []);
-        initGenQuiz('history-quiz-box', typeof historyData !== 'undefined' ? historyData : []);
-        
+        // 정보 데이터 로드
+        if(window.infoSummaryHTML) document.getElementById('info-content-section').innerHTML = window.infoSummaryHTML;
+        if(window.infoData) initGenQuiz('info-quiz-box', window.infoData);
+        else document.getElementById('info-quiz-box').innerHTML = "<p>info.js 파일을 찾을 수 없습니다.</p>";
+
+        // 한국사 데이터 로드
+        if(window.historySummaryHTML) document.getElementById('history-content-section').innerHTML = window.historySummaryHTML;
+        if(window.historyData) initGenQuiz('history-quiz-box', window.historyData);
+        else document.getElementById('history-quiz-box').innerHTML = "<p>history.js 파일을 찾을 수 없습니다.</p>";
+
+        // 시작 과목
         switchSubject('korean');
     };
 </script>
