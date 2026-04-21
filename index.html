@@ -5,32 +5,36 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>통합 학습 포털 MAX</title>
 <style>
-    :root {
-        --primary: #2563eb; --dark: #1e293b; --bg: #f8fafc; --card: #ffffff;
-        --korean-color: #b45309; --info-color: #0d9488; --climate-color: #f59e0b;
+    :root { 
+        --primary: #2563eb; --dark: #1e293b; --bg: #f8fafc; 
+        --kor-color: #b45309; /* 국어 테마색 */
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: 'Pretendard', sans-serif; background: var(--bg); display: flex; height: 100vh; overflow: hidden; }
 
-    /* 사이드바 */
+    /* 좌측 사이드바 */
     .sidebar { width: 250px; background: var(--dark); color: white; display: flex; flex-direction: column; height: 100vh; flex-shrink: 0; }
-    .sidebar-header { padding: 30px 20px; font-size: 1.6rem; font-weight: 900; border-bottom: 1px solid rgba(255,255,255,0.1); text-align: center; color: #60a5fa; }
+    .sidebar-header { padding: 30px 20px; font-size: 1.5rem; font-weight: 900; border-bottom: 1px solid rgba(255,255,255,0.1); text-align: center; color: #60a5fa; }
     .subject-list { flex: 1; padding: 20px 0; }
-    .subject-item { padding: 16px 25px; cursor: pointer; transition: 0.3s; opacity: 0.6; display: flex; align-items: center; gap: 12px; }
+    .subject-item { padding: 18px 25px; cursor: pointer; transition: 0.3s; opacity: 0.6; }
+    .subject-item:hover { background: rgba(255,255,255,0.05); opacity: 1; }
     .subject-item.active { opacity: 1; background: var(--primary); font-weight: bold; }
 
-    /* 메인 컨텐츠 */
-    .main-content { flex: 1; padding: 30px; display: flex; flex-direction: column; }
-    .subject-title { font-size: 1.8rem; font-weight: 800; margin-bottom: 20px; border-left: 8px solid var(--primary); padding-left: 15px; }
+    /* 메인 영역 */
+    .main-content { flex: 1; padding: 25px; display: flex; flex-direction: column; }
+    
+    /* 국어 전용 회차 선택바 (국어 탭일 때만 보임) */
+    .nav-bar { display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap; }
+    .nav-btn { 
+        padding: 8px 18px; border: 2px solid var(--kor-color); background: white; 
+        color: var(--kor-color); border-radius: 20px; cursor: pointer; font-weight: 800; font-size: 0.85rem; 
+    }
+    .nav-btn.active { background: var(--kor-color); color: white; }
 
-    /* 국어 회차 메뉴 */
-    .exam-nav { display: flex; gap: 8px; margin-bottom: 15px; flex-wrap: wrap; }
-    .exam-btn { padding: 8px 15px; border: 2px solid var(--korean-color); background: white; color: var(--korean-color); border-radius: 20px; cursor: pointer; font-weight: 800; font-size: 0.8rem; }
-    .exam-btn.active { background: var(--korean-color); color: white; }
-
-    /* 프레임 컨테이너 */
-    .frame-wrapper { flex: 1; background: white; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); overflow: hidden; }
+    /* 파일이 담기는 상자 */
+    .frame-box { flex: 1; background: white; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); overflow: hidden; }
     iframe { width: 100%; height: 100%; border: none; }
+    
     .hidden { display: none !important; }
 </style>
 </head>
@@ -47,59 +51,50 @@
 </div>
 
 <div class="main-content">
-    <h1 id="main-title" class="subject-title">국어 서정 시 모의고사</h1>
-
-    <div id="kor-menu" class="exam-nav">
-        <button class="exam-btn active" onclick="loadKor(1, this)">제1회차</button>
-        <button class="exam-btn" onclick="loadKor('2_3', this)">제2·3회차</button>
-        <button class="exam-btn" onclick="loadKor(4, this)">제4회차</button>
-        <button class="exam-btn" onclick="loadKor(5, this)">제5회차</button>
+    <div id="kor-nav" class="nav-bar">
+        <button class="nav-btn active" onclick="loadKor(1, this)">제1회</button>
+        <button class="nav-btn" onclick="loadKor('2_3', this)">제2·3회</button>
+        <button class="nav-btn" onclick="loadKor(4, this)">제4회</button>
     </div>
 
-    <div class="frame-wrapper">
+    <div class="frame-box">
         <iframe id="mainFrame" src="./korean_set1.html"></iframe>
     </div>
 </div>
 
 <script>
+    // 과목 전환 (파일 경로만 바꿈)
     function switchSubject(subject) {
         document.querySelectorAll('.subject-item').forEach(el => el.classList.remove('active'));
         document.getElementById(`side-${subject}`).classList.add('active');
         
-        const title = document.getElementById('main-title');
-        const korMenu = document.getElementById('kor-menu');
         const frame = document.getElementById('mainFrame');
+        const korNav = document.getElementById('kor-nav');
 
-        korMenu.classList.add('hidden');
+        // 국어일 때만 회차 메뉴 보이기
+        korNav.classList.add('hidden');
 
         if(subject === 'korean') {
-            title.innerText = "국어 서정 시 모의고사";
-            title.style.borderLeftColor = 'var(--korean-color)';
-            korMenu.classList.remove('hidden');
+            korNav.classList.remove('hidden');
             frame.src = "./korean_set1.html";
         } else if(subject === 'climate') {
-            title.innerText = "사회 (기후와 인간 생활)";
-            title.style.borderLeftColor = 'var(--climate-color)';
             frame.src = "./climate_interactive.html";
         } else if(subject === 'history') {
-            title.innerText = "한국사 인터랙티브 학습";
-            title.style.borderLeftColor = 'var(--primary)';
             frame.src = "./history_interactive.html";
         } else if(subject === 'info') {
-            title.innerText = "정보 (알고리즘 및 프로그래밍)";
-            title.style.borderLeftColor = 'var(--info-color)';
             frame.src = "./mega_study.html";
         }
     }
 
+    // 국어 회차 변경
     function loadKor(num, btn) {
-        document.querySelectorAll('.exam-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         document.getElementById('mainFrame').src = `./korean_set${num}.html`;
     }
 
-    // 초기 설정
-    switchSubject('korean');
+    // 초기 실행
+    window.onload = () => switchSubject('korean');
 </script>
 </body>
 </html>
