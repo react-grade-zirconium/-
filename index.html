@@ -3,41 +3,49 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>한국사 시험 대비 — 파일 키워드 완벽 반영</title>
+<title>한국사 정리</title>
 <style>
     *{box-sizing:border-box;margin:0;padding:0}
     body{font-family:'Malgun Gothic',sans-serif;background:#f8fafc;color:#1e293b;font-size:14px;line-height:1.7}
-    .header{background:#1e293b;color:white;padding:30px;text-align:center}
+    .header{background:#1e293b;color:white;padding:40px;text-align:center}
+    .header h1{font-size:2.2rem;letter-spacing:-1px}
+    
     .tabs{display:flex;background:white;border-bottom:2px solid #e2e8f0;position:sticky;top:0;z-index:100;overflow-x:auto}
-    .tab{padding:15px 20px;cursor:pointer;font-weight:700;color:#64748b;border-bottom:3px solid transparent;white-space:nowrap}
+    .tab{padding:15px 25px;cursor:pointer;font-weight:700;color:#64748b;border-bottom:3px solid transparent;white-space:nowrap}
     .tab.active{color:#2563eb;border-bottom:3px solid #2563eb}
+
     .container{max-width:1100px;margin:20px auto;padding:0 20px}
     .content-section{display:none}
     .content-section.active{display:block}
+
     .card{background:white;border-radius:12px;padding:25px;box-shadow:0 2px 10px rgba(0,0,0,0.05);margin-bottom:25px;border-top:5px solid #cbd5e0}
     .card.blue{border-top-color:#3b82f6}
     .card.red{border-top-color:#ef4444}
+    
     table{width:100%;border-collapse:collapse;margin:15px 0}
-    th,td{border:1px solid #e2e8f0;padding:10px;text-align:center}
+    th,td{border:1px solid #e2e8f0;padding:12px;text-align:center}
     th{background:#f8fafc}
-    .quiz-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:15px}
-    .quiz-item{background:white;border:1px solid #e2e8f0;padding:15px;border-radius:10px}
-    .btn-ans{background:#475569;color:white;border:none;padding:5px 12px;border-radius:4px;cursor:pointer;margin-top:10px}
-    .ans-content{display:none;margin-top:10px;color:#2563eb;font-weight:bold}
+
+    /* 퀴즈 스타일 */
+    .quiz-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+    .quiz-item{background:white;border:1px solid #e2e8f0;padding:20px;border-radius:12px;display:flex;flex-direction:column;gap:10px}
+    .answer-input{width:100%;padding:10px;border:1px solid #cbd5e0;border-radius:6px;font-size:0.9rem;outline:none}
+    .answer-input:focus{border-color:#3b82f6;box-shadow:0 0 0 2px rgba(59,130,246,0.1)}
+    .btn-check{background:#1e293b;color:white;border:none;padding:10px;border-radius:6px;cursor:pointer;font-weight:bold}
+    .ans-content{display:none;padding:10px;background:#f0f9ff;border-radius:6px;color:#2563eb;font-weight:bold;font-size:0.85rem}
 </style>
 </head>
 <body>
 
 <div class="header">
-    <h1>📝 한국사 정리 노트 데이터 완벽 반영</h1>
-    <p>최시원 정리 노트 & 씨마스 교과서 텍스트 기반</p>
+    <h1>한국사 정리</h1>
 </div>
 
 <div class="tabs">
     <div class="tab active" onclick="openTab(event, 'part1')">선사~여러 나라</div>
     <div class="tab" onclick="openTab(event, 'part2')">고려의 통치와 외교</div>
     <div class="tab" onclick="openTab(event, 'part3')">조선 초기~병자호란</div>
-    <div class="tab" onclick="openTab(event, 'quiz')">🔥 실전 퀴즈 30문</div>
+    <div class="tab" onclick="openTab(event, 'quiz')">🔥 실전 테스트 (30문항)</div>
 </div>
 
 <div class="container">
@@ -46,50 +54,31 @@
             <h3>1. 선사 시대</h3>
             <table>
                 <tr><th>구분</th><th>도구 및 생활</th><th>사회 및 신앙</th></tr>
-                <tr><td>구석기</td><td>뗀석기(주먹도끼, 찍개), 잔석기(긁개, 슴베찌르개), 이동, 막집</td><td>무리, 평등 사회</td></tr>
-                <tr><td>신석기</td><td>간석기, 빗살무늬토기, 가락바퀴(옷감), 정착</td><td>농경 시작, 씨족/부족, 애니/샤머니즘/토테미즘</td></tr>
-                <tr><td>청동기</td><td>비파형동검, 반달돌칼(벼농사), 고인돌, 미송리식 토기</td><td>계급(군장), 선민사상</td></tr>
-                <tr><td>철기</td><td>세형동검, 잔무늬거울, 명도전(중국 교류), 철제 무기/농기구</td><td>여러 나라의 성장 기틀</td></tr>
+                <tr><td>구석기</td><td>뗀석기(주먹도끼, 찍개), 잔석기(긁개, 슴베찌르개)</td><td>무리, 이동, 평등</td></tr>
+                <tr><td>신석기</td><td>간석기, 빗살무늬토기, 가락바퀴, 뼈바늘</td><td>농경 시작, 씨족/부족, 원시신앙</td></tr>
+                <tr><td>청동기</td><td>비파형동검, 반달돌칼, 고인돌, 미송리식 토기</td><td>계급(군장), 선민사상</td></tr>
+                <tr><td>철기</td><td>세형동검, 잔무늬거울, 명도전, 철제 무기/농기구</td><td>연맹 왕국 성장</td></tr>
             </table>
-        </div>
-        <div class="card">
-            <h3>2. 고조선 및 여러 나라</h3>
-            <p>• <b>고조선:</b> 왕위 세습, 관직(상, 대부, 장군), 위만조선(철기 수용, 중계 무역), 8조법</p>
-            <p>• <b>부여:</b> 5부족 연맹, 사출도, 영고(12월), 1책 12법, 우제점법</p>
-            <p>• <b>고구려:</b> 제가 회의, 서옥제, 동맹(10월)</p>
-            <p>• <b>동예:</b> 책화, 단궁, 과하마, 반어피, 무천(10월)</p>
-            <p>• <b>삼한:</b> 제정 분리(천군, 소도), 벼농사, 계절제(5, 10월)</p>
         </div>
     </div>
 
     <div id="part2" class="content-section">
         <div class="card blue">
-            <h3>3. 고려의 정치와 제도</h3>
-            <p>• <b>태조:</b> 사심관/기인 제도(호족 통제), 훈요 10조, 서경 중시(북진)</p>
-            <p>• <b>광종:</b> 노비안검법, 과거제, 백관 공복, 칭제건원</p>
-            <p>• <b>성종:</b> 시무 28조(최승로), 12목 지방관, 유교 통치</p>
-            <p>• <b>중앙 기구:</b> 2성 6부, 도병마사/식목도감(고려 독자), 대간(어사대+낭사: <b>서경, 간쟁, 봉박</b>)</p>
-        </div>
-        <div class="card red">
-            <h3>4. 대외 관계</h3>
-            <p>• <b>거란:</b> 서희(강동 6주), 강감찬(귀주대첩), 천리장성</p>
-            <p>• <b>여진:</b> 윤관(별무반: 신기/신보/항마군), 동북 9성</p>
-            <p>• <b>몽골:</b> 강화도 천도, 김윤후(처인성), 삼별초(진도/제주도), 원 간섭기(정동행성, 쌍성총관부)</p>
-            <p>• <b>공민왕:</b> 기철 세력 숙청, 쌍성총관부 탈환, 전민변정도감(신돈)</p>
+            <h3>2. 고려의 정치와 제도</h3>
+            <p>• <b>태조:</b> 사심관/기인 제도, 훈요 10조, 서경 중시</p>
+            <p>• <b>광종:</b> 노비안검법, 과거제, 백관 공복</p>
+            <p>• <b>성종:</b> 시무 28조, 12목 지방관 파견</p>
+            <p>• <b>중앙 기구:</b> 2성 6부, 도병마사/식목도감, 대간(<b>서경, 간쟁, 봉박</b>)</p>
         </div>
     </div>
 
     <div id="part3" class="content-section">
-        <div class="card blue">
-            <h3>5. 조선의 성립과 양란</h3>
+        <div class="card red">
+            <h3>3. 조선과 양란</h3>
             <p>• <b>태종:</b> 6조 직계제, 사병 혁파, 호패법</p>
-            <p>• <b>세종:</b> 의정부 서사제, 집현전, 훈민정음, 공법(전분 6등, 연분 9등)</p>
-            <p>• <b>세조:</b> 6조 직계제 부활, 직전법(현직 관리 수조권)</p>
-            <p>• <b>성종:</b> 홍문관, 경국대전 완성</p>
-            <hr style="margin:15px 0">
-            <p>• <b>임진왜란:</b> 훈련도감 설치, 이순신(해전), 의병</p>
-            <p>• <b>광해군:</b> 중립 외교(명/후금 사이), 대동법(경기도)</p>
-            <p>• <b>인조반정/호란:</b> 친명배금, 정묘호란(형제 맹약), 병자호란(남한산성, 삼전도의 굴욕)</p>
+            <p>• <b>세종:</b> 의정부 서사제, 집현전, 공법(전분 6등/연분 9등)</p>
+            <p>• <b>세조:</b> 6조 직계제, 직전법(현직 관리 수조권)</p>
+            <p>• <b>양란:</b> 훈련도감(임란), 중립 외교(광해군), 친명배금 및 병자호란(인조)</p>
         </div>
     </div>
 
@@ -127,10 +116,10 @@ const quizData = [
     {q: "고조선에서 사유 재산과 계급 사회를 보여주는 법은?", a: "8조법"},
     {q: "고려의 독자적인 군사 기구는?", a: "도병마사"},
     {q: "공민왕이 원나라로부터 탈환한 지역은?", a: "쌍성총관부"},
-    {q: "조선 시대 호구 파악을 위해 16세 이상 남자가 차고 다닌 것은?", a: "호패"},
+    {q: "조선 시대 16세 이상 남자가 차고 다닌 것은?", a: "호패"},
     {q: "임진왜란 중 직업 군인을 양성하기 위해 만든 부대는?", a: "훈련도감"},
     {q: "병자호란 때 인조가 피신하여 항전한 곳은?", a: "남한산성"},
-    {q: "병자호란의 결과 청과 맺은 관계는?", a: "군신 관계 (삼전도의 굴욕)"}
+    {q: "병자호란의 결과 청과 맺은 관계는?", a: "군신 관계"}
 ];
 
 function loadQuiz() {
@@ -140,8 +129,9 @@ function loadQuiz() {
         div.className = 'quiz-item';
         div.innerHTML = `
             <p><b>Q${index+1}. ${item.q}</b></p>
-            <button class="btn-ans" onclick="showAns(${index})">정답 확인</button>
-            <p class="ans-content" id="ans-${index}">${item.a}</p>
+            <input type="text" class="answer-input" placeholder="답안을 입력하세요" id="input-${index}">
+            <button class="btn-check" onclick="showAns(${index})">정답 확인</button>
+            <p class="ans-content" id="ans-${index}">정답: ${item.a}</p>
         `;
         container.appendChild(div);
     });
