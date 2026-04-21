@@ -12,61 +12,75 @@
         --card: #ffffff;
         --info-color: #0d9488;
         --korean-color: #8b5cf6;
-        --korean-theme2: #d946ef; /* 방문객 테마 포인트 컬러 */
+        --korean-theme2: #d946ef;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Pretendard', 'Malgun Gothic', sans-serif; background: var(--bg); color: var(--dark); display: flex; min-height: 100vh; }
+    body { font-family: 'Pretendard', 'Malgun Gothic', sans-serif; background: var(--bg); color: var(--dark); display: flex; min-height: 100vh; overflow: hidden; }
 
     /* 사이드바 */
-    .sidebar { width: 240px; background: var(--dark); color: white; display: flex; flex-direction: column; position: fixed; height: 100%; z-index: 1000; }
+    .sidebar { width: 240px; background: var(--dark); color: white; display: flex; flex-direction: column; height: 100vh; z-index: 1000; flex-shrink: 0; }
     .sidebar-header { padding: 30px 20px; font-size: 1.5rem; font-weight: 800; border-bottom: 1px solid rgba(255,255,255,0.1); text-align: center; }
-    .subject-list { flex: 1; padding: 20px 0; }
+    .subject-list { flex: 1; padding: 20px 0; overflow-y: auto; }
     .subject-item { padding: 15px 25px; cursor: pointer; transition: 0.3s; opacity: 0.7; display: flex; align-items: center; gap: 10px; }
     .subject-item.active { opacity: 1; background: var(--primary); font-weight: bold; }
 
-    /* 메인 컨텐츠 */
-    .main-content { flex: 1; margin-left: 240px; padding: 40px; height: 100vh; overflow-y: auto; }
+    /* 메인 컨텐츠 영역 */
+    .main-content { flex: 1; padding: 40px; height: 100vh; overflow-y: auto; }
     .subject-title { font-size: 2rem; margin-bottom: 20px; border-left: 6px solid var(--primary); padding-left: 15px; transition: 0.3s; }
 
     /* 탭 메뉴 */
-    .tabs { display: flex; gap: 10px; margin-bottom: 25px; border-bottom: 2px solid #e2e8f0; overflow-x: auto; }
+    .tabs { display: flex; gap: 10px; margin-bottom: 25px; border-bottom: 2px solid #e2e8f0; overflow-x: auto; flex-shrink: 0; }
     .tab { padding: 12px 20px; cursor: pointer; font-weight: 600; color: #64748b; white-space: nowrap; transition: 0.2s; }
-    .tab.active { color: var(--korean-color); border-bottom: 3px solid var(--korean-color); }
-    .tab.theme2.active { color: var(--korean-theme2); border-bottom: 3px solid var(--korean-theme2); }
+    .tab.active { color: var(--primary); border-bottom: 3px solid var(--primary); }
+    .tab.theme-k1.active { color: var(--korean-color); border-bottom: 3px solid var(--korean-color); }
+    .tab.theme-k2.active { color: var(--korean-theme2); border-bottom: 3px solid var(--korean-theme2); }
 
-    .card { background: var(--card); border-radius: 16px; padding: 30px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); margin-bottom: 20px; transition: 0.3s; }
+    .card { background: var(--card); border-radius: 16px; padding: 30px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); margin-bottom: 20px; }
+    .section { display: none; animation: fadeIn 0.4s ease; }
+    .section.active { display: block; }
     
-    /* 국어 모의고사 CBT 스타일 */
-    .exam-nav { display: flex; gap: 8px; overflow-x: auto; margin-bottom: 20px; padding-bottom: 10px; }
-    .exam-btn { padding: 8px 14px; border: 1px solid var(--korean-color); background: white; color: var(--korean-color); border-radius: 20px; cursor: pointer; font-weight: bold; white-space: nowrap; transition: 0.2s; font-size: 0.9rem; }
+    /* 기본 테이블/퀴즈 (한국사, 정보) */
+    table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 0.95rem; }
+    th, td { padding: 12px; border: 1px solid #e2e8f0; text-align: center; }
+    th { background: #f8fafc; font-weight: bold; }
+    
+    .quiz-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 20px; }
+    .quiz-item-gen { background: #f8fafc; border: 1px solid #e2e8f0; padding: 20px; border-radius: 12px; }
+    .answer-input { width: 100%; padding: 12px; border: 1px solid #cbd5e0; border-radius: 8px; margin: 10px 0; }
+    .btn-check-gen { background: var(--dark); color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer; width: 100%; font-weight: bold; }
+    .ans-content-gen { display: none; margin-top: 10px; color: var(--primary); font-weight: 800; background: #eff6ff; padding: 10px; border-radius: 6px; }
+
+    /* 국어 모의고사 전용 CBT 스타일 (화면 꽉 차게 변경) */
+    .exam-nav { display: flex; gap: 8px; overflow-x: auto; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid #e2e8f0; }
+    .exam-btn { padding: 8px 14px; border: 1px solid var(--korean-color); background: white; color: var(--korean-color); border-radius: 20px; cursor: pointer; font-weight: bold; white-space: nowrap; font-size: 0.9rem; }
     .exam-btn:hover, .exam-btn.active { background: var(--korean-color); color: white; }
-    
-    /* 방문객 테마 버튼 스타일 */
     .exam-btn.theme2 { border-color: var(--korean-theme2); color: var(--korean-theme2); }
     .exam-btn.theme2:hover, .exam-btn.theme2.active { background: var(--korean-theme2); color: white; }
 
-    .exam-container { display: flex; gap: 20px; height: 650px; }
-    .passage-pane { flex: 1; background: white; border: 1px solid #e2e8f0; border-radius: 12px; padding: 25px; overflow-y: auto; line-height: 1.8; font-size: 0.95rem; }
-    .question-pane { flex: 1; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 25px; overflow-y: auto; }
+    .exam-container { display: flex; gap: 20px; height: calc(100vh - 280px); min-height: 500px; }
+    .passage-pane { flex: 1.2; background: white; border: 1px solid #cbd5e0; border-radius: 12px; padding: 30px; overflow-y: auto; line-height: 1.8; font-size: 1rem; box-shadow: inset 0 0 10px rgba(0,0,0,0.02); }
+    .question-pane { flex: 1; background: #f8fafc; border: 1px solid #cbd5e0; border-radius: 12px; padding: 25px; overflow-y: auto; }
     
-    .poem-title { font-weight: bold; margin-top: 20px; margin-bottom: 10px; padding: 5px 10px; border-radius: 5px; display: inline-block; }
+    .poem-box { margin-bottom: 40px; }
+    .poem-title { font-weight: bold; margin-bottom: 15px; padding: 8px 12px; border-radius: 5px; display: inline-block; font-size: 1.05rem; }
+    .poem-content { padding: 0 15px; }
     .title-theme1 { color: var(--korean-color); background: #f5f3ff; }
     .title-theme2 { color: var(--korean-theme2); background: #fdf4ff; }
 
-    .q-item { margin-bottom: 25px; background: white; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0; }
-    .q-text { font-weight: bold; margin-bottom: 15px; font-size: 1.05rem; }
-    .q-options label { display: block; margin-bottom: 10px; cursor: pointer; padding: 8px 12px; border-radius: 6px; transition: 0.2s; border: 1px solid transparent; }
+    .q-item { margin-bottom: 30px; background: white; padding: 25px; border-radius: 10px; border: 1px solid #e2e8f0; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+    .q-text { font-weight: bold; margin-bottom: 15px; font-size: 1.05rem; line-height: 1.5; }
+    .q-options label { display: block; margin-bottom: 8px; cursor: pointer; padding: 10px 12px; border-radius: 6px; transition: 0.2s; border: 1px solid transparent; }
     .q-options label:hover { background: #f1f5f9; border-color: #cbd5e0; }
-
-    .btn-check { color: white; border: none; padding: 10px 15px; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; transition: 0.2s; }
+    .q-options input { margin-right: 10px; }
+    
+    .btn-check-kor { color: white; border: none; padding: 12px 15px; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; transition: 0.2s; margin-top: 10px; }
     .btn-theme1 { background: var(--korean-color); }
     .btn-theme2 { background: var(--korean-theme2); }
-    
-    .ans-content { display: none; margin-top: 15px; padding: 15px; border-radius: 8px; font-size: 0.95rem; line-height: 1.6; }
+    .ans-content-kor { display: none; margin-top: 15px; padding: 15px; border-radius: 8px; font-size: 0.95rem; line-height: 1.6; }
 
-    /* 타 과목 숨김용 클래스 */
     .hidden { display: none !important; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 </style>
 </head>
 <body>
@@ -74,9 +88,9 @@
 <div class="sidebar">
     <div class="sidebar-header">STUDY HUB</div>
     <div class="subject-list">
+        <div id="side-korean" class="subject-item active" onclick="switchSubject('korean')">📖 <span>국어 (모의고사)</span></div>
         <div id="side-history" class="subject-item" onclick="switchSubject('history')">📚 <span>한국사</span></div>
         <div id="side-info" class="subject-item" onclick="switchSubject('info')">💻 <span>정보</span></div>
-        <div id="side-korean" class="subject-item active" onclick="switchSubject('korean')">📖 <span>국어</span></div>
     </div>
 </div>
 
@@ -85,241 +99,291 @@
 
     <div id="content-korean">
         <div class="tabs">
-            <div id="tab-theme1" class="tab active" onclick="switchKoreanTheme(1)">🌙 윤동주 &lt;별 헤는 밤&gt; 연계 10제</div>
-            <div id="tab-theme2" class="tab theme2" onclick="switchKoreanTheme(2)">🤝 정현종 &lt;방문객&gt; 연계 10제</div>
+            <div id="tab-theme1" class="tab theme-k1 active" onclick="switchKoreanTheme(1)">🌙 &lt;별 헤는 밤&gt; 테마 (10제)</div>
+            <div id="tab-theme2" class="tab theme-k2" onclick="switchKoreanTheme(2)">🤝 &lt;방문객&gt; 테마 (10제)</div>
         </div>
-        
-        <div class="card" id="korean-card" style="border-top: 5px solid var(--korean-color);">
+        <div class="card" id="korean-card" style="border-top: 5px solid var(--korean-color); padding: 20px;">
             <div class="exam-nav" id="exam-nav"></div>
-            
             <div class="exam-container">
                 <div class="passage-pane" id="passage-pane"></div>
                 <div class="question-pane" id="question-pane"></div>
             </div>
         </div>
     </div>
-    
-    <div id="content-history" class="hidden"><p style="padding:50px;">(한국사 콘텐츠 영역 - 이전과 동일)</p></div>
-    <div id="content-info" class="hidden"><p style="padding:50px;">(정보 콘텐츠 영역 - 이전과 동일)</p></div>
+
+    <div id="content-history" class="hidden">
+        <div class="tabs">
+            <div class="tab active" onclick="openSubTab(event, 'history-content', 'content-history')">📖 핵심 요약</div>
+            <div class="tab" onclick="openSubTab(event, 'history-test', 'content-history')">🔥 실전 테스트</div>
+        </div>
+        <div id="history-content" class="section active">
+            <div class="card" style="border-top: 5px solid var(--primary);">
+                <h3>주요 사건 연도 확인</h3>
+                <table>
+                    <tr><th>사건명</th><th>연도</th><th>핵심 내용</th></tr>
+                    <tr><td>강화도 조약</td><td>1876</td><td>최초의 근대적 조약</td></tr>
+                    <tr><td>갑신정변</td><td>1884</td><td>우정총국, 급진 개화파</td></tr>
+                    <tr><td>동학 농민 운동</td><td>1894</td><td>집강소 설치, 폐정 개혁안</td></tr>
+                    <tr><td>을사늑약</td><td>1905</td><td>외교권 박탈, 통감부 설치</td></tr>
+                </table>
+            </div>
+        </div>
+        <div id="history-test" class="section">
+            <div class="quiz-container" id="history-quiz-box"></div>
+        </div>
+    </div>
+
+    <div id="content-info" class="hidden">
+        <div class="tabs">
+            <div class="tab active" onclick="openSubTab(event, 'info-note', 'content-info')">📖 핵심 요약</div>
+            <div class="tab" onclick="openSubTab(event, 'info-test', 'content-info')">🔥 실전 테스트</div>
+        </div>
+        <div id="info-note" class="section active">
+            <div class="card" style="border-top: 5px solid var(--info-color);">
+                <h3>데이터 보안 및 알고리즘</h3>
+                <p>• <b>피싱/파밍:</b> 개인정보 탈취 범죄<br>• <b>블록체인:</b> 디지털 서명을 통한 위변조 방지<br>• <b>MST 알고리즘:</b> 크루스칼, 프림 알고리즘</p>
+            </div>
+        </div>
+        <div id="info-test" class="section">
+            <div class="quiz-container" id="info-quiz-box"></div>
+        </div>
+    </div>
 </div>
 
 <script>
     // ==========================================
-    // 데이터 1: <별 헤는 밤> 테마 (10세트) - 압축본
+    // 1. 국어 모의고사 세트 데이터 (시 전문 + 10문제)
     // ==========================================
-    const poemTheme1 = `<div class="poem-title title-theme1">(가) 윤동주, &lt;별 헤는 밤&gt;</div>별 하나에 추억과 / 별 하나에 사랑과 / 별 하나에 쓸쓸함과<br>별 하나에 동경과 / 별 하나에 시와 / 별 하나에 어머니, 어머니,<br>(중략)<br>내 이름자 묻힌 언덕 위에도 자랑처럼 풀이 무성할 거외다.<br><br>`;
     
-    const theme1Exams = [
-        {
-            id: 1, title: "1회(그리움)",
-            passage: poemTheme1 + `<div class="poem-title title-theme1">(나) 백석, &lt;흰 바람벽이 있어&gt;</div>오늘 저녁 이 좁다란 방의 흰 바람벽에 / 어쩐지 쓸쓸한 것만이 오고 간다.<br><br><div class="poem-title title-theme1">(다) 정지용, &lt;향수&gt;</div>얼룩백이 황소가 / 해설피 금빛 게으른 울음을 우는 곳, / - 그곳이 차마 꿈엔들 잊힐리야.`,
-            questions: [{ q: "1. (가)~(다)의 공통점으로 가장 적절한 것은?", options: ["과거의 잘못 반성", "부재하는 대상에 대한 그리움", "자연물의 변화 안타까움", "부정적 현실 저항", "이상향 체념"], a: 1, exp: "모두 어머니, 고향 등 부재하는 대상과 공간을 향한 깊은 그리움을 노래하고 있습니다." }]
-        },
-        // (토큰 절약을 위해 2~10회는 1회차 스타일로 간소화, 실제로는 위에서 제공한 10세트 전체가 들어감)
-        { id: 2, title: "2회(자아성찰)", passage: poemTheme1 + `<div class="poem-title title-theme1">(나) 윤동주, &lt;쉽게 씌어진 시&gt;</div>인생은 살기 어렵다는데 / 시가 이렇게 쉽게 씌어지는 것은 / 부끄러운 일이다.<br>`, questions: [{ q: "1. 화자의 주된 태도는?", options: ["타인 무관심", "현실 순응", "치열한 자아 성찰", "운명 낙관", "절대자 의지"], a: 2, exp: "두 시 모두 부끄러움을 바탕으로 한 깊은 자아 성찰이 드러납니다." }] }
-        // ... (3회~10회 생략 처리 없이 10개 세트 모두 배열에 넣으실 수 있습니다)
-    ];
-    // 10세트 구색을 맞추기 위한 반복 채움 (실제 서비스시 위에서 만든 데이터로 대체)
-    for(let i=3; i<=10; i++) { theme1Exams.push({ id: i, title: i+"회(심화)", passage: poemTheme1 + `(나) 관련 시<br><br>(다) 관련 시`, questions: [{ q: i+"번 문제", options: ["1번","2번","3번","4번","5번"], a: 0, exp: "해설" }] }); }
+    // [테마 1: 별 헤는 밤] 지문 전문
+    const theme1_passage_1 = `
+        <div class="poem-box">
+            <div class="poem-title title-theme1">(가) 윤동주, &lt;별 헤는 밤&gt;</div>
+            <div class="poem-content">
+                계절이 지나가는 하늘에는<br>가을로 가득 차 있습니다.<br><br>
+                나는 아무 걱정도 없이<br>가을 속의 별들을 다 헤일 듯합니다.<br><br>
+                가슴 속에 하나 둘 새겨지는 별을<br>이제 다 못 헤는 것은<br>쉬이 아침이 오는 까닭이요,<br>내일 밤이 남은 까닭이요,<br>아직 나의 청춘이 다하지 않은 까닭입니다.<br><br>
+                별 하나에 추억과<br>별 하나에 사랑과<br>별 하나에 쓸쓸함과<br>별 하나에 동경과<br>별 하나에 시와<br>별 하나에 어머니, 어머니,<br><br>
+                어머님, 나는 별 하나에 아름다운 말 한마디씩 불러 봅니다. 소학교 때 책상을 같이 했던 아이들의 이름과, 패, 경, 옥, 이런 이국 소녀들의 이름과, 벌써 아기 어머니 된 계집애들의 이름과, 가난한 이웃 사람들의 이름과, 비둘기, 강아지, 토끼, 노새, 노루, '프랑시스 잠', '라이너 마리아 릴케' 이런 시인의 이름을 불러 봅니다.<br><br>
+                이네들은 너무나 멀리 있습니다.<br>별이 아스라이 멀듯이.<br><br>
+                어머님,<br>그리고 당신은 멀리 북간도에 계십니다.<br><br>
+                나는 무엇인지 그리워<br>이 많은 별빛이 내린 언덕 위에<br>내 이름자를 써 보고<br>흙으로 덮어 버리었습니다.<br><br>
+                따는 밤을 세워 우는 벌레는<br>부끄러운 이름을 슬퍼하는 까닭입니다.<br><br>
+                그러나 겨울이 지나고 나의 별에도 봄이 오면<br>무덤 위에 파란 잔디가 피어나듯이<br>내 이름자 묻힌 언덕 위에도 자랑처럼 풀이 무성할 거외다.
+            </div>
+        </div>
+        <div class="poem-box">
+            <div class="poem-title title-theme1">(나) 백석, &lt;흰 바람벽이 있어&gt;</div>
+            <div class="poem-content">
+                오늘 저녁 이 좁다란 방의 흰 바람벽에<br>어쩐지 쓸쓸한 것만이 오고 간다.<br>이 흰 바람벽에<br>희미한 십오촉 전등이 지치운 불빛을 내어던지고<br>때글은 다 낡은 무명샤쯔가 어두운 그림자를 쉬이고<br>그리고 또 달디단 따끈한 감주나 한잔 먹고 싶다고 생각하는 내 가지가지 외로운 생각이 헤매인다.<br><br>
+                그런데 이것은 또 어인 일인가<br>이 흰 바람벽에<br>내 가난한 늙은 어머니가 있다.<br>내 가난한 늙은 어머니가<br>이렇게 시퍼러둥둥하니 추운 날인데 차디찬 물에 손을 담그고 무이며 배추를 씻고 있다.<br><br>
+                또 내 사랑하는 사람이 있다.<br>내 사랑하는 어여쁜 사람이<br>어느 먼 앞대 조용한 개포동네에 가서<br>낮이면 신나게 수루를 치고 저녁이면 빈대떡을 부쳐 먹고 산다.<br>(하략)
+            </div>
+        </div>
+        <div class="poem-box">
+            <div class="poem-title title-theme1">(다) 정지용, &lt;향수&gt;</div>
+            <div class="poem-content">
+                넓은 벌 동쪽 끝으로<br>옛이야기 지줄대는 실개천이 휘돌아 나가고,<br>얼룩백이 황소가<br>해설피 금빛 게으른 울음을 우는 곳,<br>— 그곳이 차마 꿈엔들 잊힐 리야.<br><br>
+                질화로에 재가 식어지면<br>비인 밭에 밤바람 소리 말을 달리고,<br>엷은 졸음에 겨운 늙으신 아버지가<br>짚베개를 돋아 고이시는 곳,<br>— 그곳이 차마 꿈엔들 잊힐 리야.<br><br>
+                흙에서 자란 내 마음<br>파아란 하늘 빛이 그립어<br>함부로 쏜 화살을 찾으려<br>풀섶 이슬에 함초롬 휘적시던 곳,<br>— 그곳이 차마 꿈엔들 잊힐 리야.<br>(하략)
+            </div>
+        </div>
+    `;
 
-    // ==========================================
-    // 데이터 2: <방문객> 테마 (10세트) - 신규
-    // ==========================================
-    const poemTheme2 = `
-        <div class="poem-title title-theme2">(가) 정현종, &lt;방문객&gt;</div>
-        사람이 온다는 건 / 실은 어마어마한 일이다.<br>
-        그는 / 그의 과거와 / 현재와 / 그리고 / 그의 미래와 함께 오기 때문이다.<br>
-        한 사람의 일생이 오기 때문이다.<br><br>
-        부서지기 쉬운 / 그래서 부서지기도 했을 / 마음이 오는 것이다—<br>
-        그 갈피를 / 아마 바람은 더듬어볼 수 있을 / 마음,<br>
-        내 마음이 그런 바람을 흉내낸다면 / 필경 환대가 될 것이다.<br><br>
+    const theme1Exams = [
+        { 
+            id: 1, title: "1회: 그리움과 성찰 (10문항)", 
+            passage: theme1_passage_1, 
+            questions: [
+                { q: "1. (가)~(다)의 공통점으로 가장 적절한 것은?", options: ["현재의 부정적 상황을 극복하려는 강한 의지가 드러난다.", "부재하는 대상이나 공간에 대한 그리움을 감각적으로 형상화하고 있다.", "자연물의 변화를 통해 시간의 흐름에 따른 안타까움을 드러낸다.", "세속적 가치를 거부하고 이상향을 향유하려는 태도가 나타난다.", "화자의 경험을 객관화하여 대상과의 갈등을 해소하고 있다."], a: 1, exp: "(가)는 북간도에 계신 어머니 등, (나)는 늙은 어머니와 사랑하는 사람, (다)는 고향에 대한 그리움을 다양한 심상으로 표현하고 있습니다." },
+                { q: "2. (가)의 '별'과 (나)의 '흰 바람벽'에 대한 설명으로 가장 적절한 것은?", options: ["모두 화자가 현실을 도피할 수 있는 환상적 공간이다.", "모두 화자가 자신의 내면과 그리운 대상들을 마주하게 하는 매개체이다.", "모두 화자의 도덕적 결백을 증명하기 위해 설정된 자연물이다.", "(가)의 '별'은 이상을, (나)의 '흰 바람벽'은 절망을 상징한다.", "(가)의 '별'은 과거를, (나)의 '흰 바람벽'은 미래를 암시한다."], a: 1, exp: "화자는 '별'과 '흰 바람벽'을 매개로 하여 추억 속의 얼굴들을 떠올리고 내면의 고독과 성찰을 이끌어냅니다." },
+                { q: "3. (가)에 대한 이해로 적절하지 않은 것은?", options: ["1연의 '가을'은 쓸쓸함과 성찰의 분위기를 조성한다.", "'별 하나에'를 반복하여 리듬감을 형성하고 화자의 애틋한 정서를 강조한다.", "산문적 진술을 통해 유년 시절의 다양한 추억을 구체적으로 열거하고 있다.", "'부끄러운 이름'은 현실에 적극적으로 대응하지 못하는 자아에 대한 반성이다.", "화자는 '봄'이 오기를 거부하며 현재의 '겨울'에 머무르기를 소망한다."], a: 4, exp: "화자는 '겨울이 지나고 나의 별에도 봄이 오면'이라며 광복(조국의 봄)과 부활에 대한 긍정적인 기대와 확신을 보이고 있습니다." },
+                { q: "4. (다)의 각 연 끝에 반복되는 후렴구('그곳이 차마 꿈엔들 잊힐 리야')의 효과로 거리가 먼 것은?", options: ["연과 연을 구분하여 시의 구조적 안정감을 준다.", "고향에 대한 그리움이라는 시적 주제를 강조한다.", "화자의 정서를 절제하여 객관적인 분위기를 형성한다.", "운율을 형성하여 시적 리듬감을 살려준다.", "각 연의 끝에 배치되어 화자의 애절한 정서를 통일감 있게 전달한다."], a: 2, exp: "후렴구는 그리움의 정서를 억누르는(절제) 것이 아니라, 오히려 고조시키고 극대화하는 역할을 합니다." },
+                { q: "5. (나)의 표현상 특징으로 가장 적절한 것은?", options: ["명사로 시상을 마무리하여 여운을 남기고 있다.", "반어적 표현을 통해 화자의 비애감을 강조하고 있다.", "시각적 이미지를 활용하여 화자의 내면 풍경을 구체화하고 있다.", "대화체를 활용하여 대상과의 친밀감을 드러내고 있다.", "역설적 발상을 통해 대상의 모순된 속성을 지적하고 있다."], a: 2, exp: "'흰 바람벽'에 비치는 '지치운 불빛', '어두운 그림자', '시퍼러둥둥하니' 등 시각적 이미지를 통해 화자의 외롭고 쓸쓸한 내면을 형상화하고 있습니다." },
+                { q: "6. (가)의 '밤'과 (다)의 '밤바람 소리'가 갖는 공통적 분위기는?", options: ["고독하고 스산한 분위기", "역동적이고 희망찬 분위기", "평화롭고 안락한 분위기", "현실 도피적이고 환상적인 분위기", "종교적 경건함이 묻어나는 분위기"], a: 0, exp: "(가)의 밤은 홀로 별을 헤는 고독과 성찰의 시간이며, (다)의 밤바람 소리는 비인 밭을 달리는 스산하고 쓸쓸한 분위기를 자아냅니다." },
+                { q: "7. (가)에서 화자의 시선 이동으로 적절한 것은?", options: ["땅 → 하늘 → 무덤", "하늘(별) → 내면(추억) → 땅(언덕)", "언덕 → 북간도 → 하늘", "내면 → 하늘 → 타국", "하늘 → 무덤 → 하늘"], a: 1, exp: "화자의 시선은 가을 하늘의 '별'에서 시작해, 별을 매개로 과거의 '추억(내면)'으로 이동했다가, 다시 현실의 '언덕(땅)'으로 돌아와 이름자를 씁니다." },
+                { q: "8. (다)의 '금빛 게으른 울음'에 쓰인 감각적 심상과 가장 유사한 것은?", options: ["푸른 하늘에 닿을 듯한 종소리", "차디찬 물에 손을 담그고", "눈물보다 짠 슬픔", "붉은 해가 지는 저녁", "바람이 서늘하게 불어온다"], a: 0, exp: "'금빛 게으른 울음'은 청각의 시각화(공감각적 심상)입니다. 보기 1번의 '푸른 하늘에 닿을 듯한 종소리' 역시 청각(종소리)의 시각화(푸른)입니다." },
+                { q: "9. (가)의 '흙으로 덮어 버리었습니다'에 담긴 화자의 심리로 적절한 것은?", options: ["부끄러운 자아를 숨기고 싶은 마음", "과거의 아름다운 추억을 영원히 보존하려는 마음", "미래에 대한 희망을 파종하려는 의지", "타인에 대한 적대감의 표출", "자연에 동화되고자 하는 무위자연의 태도"], a: 0, exp: "식민지 현실 속에서 무기력하게 살아가는 자신의 이름자를 쓴 후, 부끄러움을 느끼고 흙으로 덮어 지우려는 행위입니다." },
+                { q: "10. <보기>를 참고하여 (나)를 감상한 것으로 적절하지 않은 것은?<br>[보기: 백석의 시는 상실감과 고독을 기저로 하면서도, 운명에 순응하며 맑고 깨끗하게 살아가려는 화자의 태도가 드러난다.]", options: ["'좁다란 방'은 화자가 처한 가난하고 고독한 현실 공간이군.", "'감주나 한잔 먹고 싶다'는 소박한 소망을 통해 위안을 얻으려는 모습이군.", "'시퍼러둥둥하니 추운 날'은 어머니가 겪는 삶의 고단함을 보여주는군.", "'외로운 생각이 헤매인다'는 운명을 개척하지 못하는 타인에 대한 원망이군.", "어머니와 사랑하는 사람을 떠올리는 것은 외로움을 견디는 화자만의 방식이군."], a: 3, exp: "화자의 외로움은 타인에 대한 원망이 아니라, 식민지 시대 지식인으로서 겪는 본질적인 고독과 가난에 대한 쓸쓸함입니다." }
+            ] 
+        }
+    ];
+    // 2~10회 더미 추가 (틀 유지)
+    for(let i=2; i<=10; i++) theme1Exams.push({ id: i, title: i+"회: <별 헤는 밤> 테마 (준비중)", passage: `<div style="padding:50px; text-align:center; color:#64748b;">${i}회차 시 전문이 들어갈 자리입니다.<br>(UI/UX 확인용 틀)</div>`, questions: [{ q: i+"회 연습문제", options: ["1","2","3","4","5"], a: 0, exp: "해설 준비중" }]});
+
+
+    // [테마 2: 방문객] 지문 전문
+    const theme2_passage_1 = `
+        <div class="poem-box">
+            <div class="poem-title title-theme2">(가) 정현종, &lt;방문객&gt;</div>
+            <div class="poem-content">
+                사람이 온다는 건<br>실은 어마어마한 일이다.<br>그는<br>그의 과거와<br>현재와<br>그리고<br>그의 미래와 함께 오기 때문이다.<br>한 사람의 일생이 오기 때문이다.<br><br>
+                부서지기 쉬운<br>그래서 부서지기도 했을<br>마음이 오는 것이다—<br>그 갈피를<br>아마 바람은 더듬어볼 수 있을<br>마음,<br>내 마음이 그런 바람을 흉내낸다면<br>필경 환대가 될 것이다.
+            </div>
+        </div>
+        <div class="poem-box">
+            <div class="poem-title title-theme2">(나) 김춘수, &lt;꽃&gt;</div>
+            <div class="poem-content">
+                내가 그의 이름을 불러 주기 전에는<br>그는 다만<br>하나의 몸짓에 지나지 않았다.<br><br>
+                내가 그의 이름을 불러 주었을 때<br>그는 나에게로 와서<br>꽃이 되었다.<br><br>
+                내가 그의 이름을 불러 준 것처럼<br>나의 이 빛깔과 향기에 알맞은<br>누가 나의 이름을 불러 다오.<br>그에게로 가서 나도<br>그의 꽃이 되고 싶다.<br><br>
+                우리들은 모두<br>무엇이 되고 싶다.<br>너는 나에게 나는 너에게<br>잊혀지지 않는 하나의 눈짓이 되고 싶다.
+            </div>
+        </div>
+        <div class="poem-box">
+            <div class="poem-title title-theme2">(다) 곽재구, &lt;사평역에서&gt;</div>
+            <div class="poem-content">
+                막차는 좀처럼 오지 않았다<br>대합실 밖에는 밤새 송이눈이 쌓이고<br>흰 보라 수수꽃 눈시린 유리창마다<br>톱밥 난로가 지펴지고 있었다.<br>그믐처럼 몇은 졸고<br>몇은 감기에 쿨럭이고<br>그리웠던 순간들을 생각하며 나는<br>한 줌의 톱밥을 불빛 속에 던져주었다.<br><br>
+                내면 깊숙이 할 말들은 가득해도<br>청색의 손바닥을 불빛 속에 적셔두고<br>모두들 아무 말도 하지 않았다<br>산다는 것이 때론 술에 취한 듯<br>한 두릅의 굴비 한 광주리의 사과를<br>만지작거리며 귀향하는 기분으로<br>침묵해야 한다는 것을<br>모두들 알고 있었다.<br>오래 앓은 수침 소리<br>쓴 약 같은 입술 반쯤 열어<br>눈 내리는 밤을 향해<br>나는 한 줌의 눈물을 불빛 속에 던져주었다.
+            </div>
+        </div>
     `;
 
     const theme2Exams = [
-        {
-            id: 1, title: "1회(만남의 의미)",
-            passage: poemTheme2 + `
-                <div class="poem-title title-theme2">(나) 김춘수, &lt;꽃&gt;</div>
-                내가 그의 이름을 불러 주기 전에는 / 그는 다만 / 하나의 몸짓에 지나지 않았다.<br>
-                내가 그의 이름을 불러 주었을 때 / 그는 나에게로 와서 / 꽃이 되었다.<br><br>
-                <div class="poem-title title-theme2">(다) 황동규, &lt;즐거운 편지&gt;</div>
-                내 그대를 생각함은 항상 그대가 앉아 있는 배경에서 해가 지고 바람이 부는 일처럼 사소한 일일 것이나 언젠가 그대가 한없이 괴로움 속을 헤매일 때에 오랫동안 전해 오던 그 사소함으로 그대를 불러 보리라.
-            `,
+        { 
+            id: 1, title: "1회: 인연과 환대 (10문항)", 
+            passage: theme2_passage_1, 
             questions: [
-                { q: "1. (가)~(다)의 공통점으로 가장 적절한 것은?", options: ["이별의 상황을 가정하여 슬픔을 극대화하고 있다.", "타인이라는 존재가 지니는 거대한 의미와 애정을 드러내고 있다.", "자연의 섭리를 통해 인간의 유한함을 깨닫고 있다.", "부정적인 현실을 극복하려는 강한 의지를 표출하고 있다.", "절대자를 향한 희생적 사랑과 경외감을 노래하고 있다."], a: 1, exp: "(가)는 방문객의 일생, (나)는 이름 부르기를 통한 존재의 꽃, (다)는 사소하지만 영원한 사랑을 통해 타인에 대한 애정과 의미를 드러냅니다." },
-                { q: "2. (가)의 '환대'와 가장 유사한 태도를 (나), (다)에서 찾을 때 적절한 것은?", options: ["(나)의 '몸짓', (다)의 '눈'", "(나)의 '이름을 불러 줌', (다)의 '사소함으로 그대를 부름'", "(나)의 '잊혀지지 않는 하나의 눈짓', (다)의 '해가 지고'", "(나)의 '나의 빛깔과 향기', (다)의 '기다림의 자세'", "(나)의 '무엇이 되고 싶다', (다)의 '진실로 진실로'"], a: 1, exp: "'환대'는 타인의 마음을 이해하고 받아들이는 태도입니다. 이는 대상을 가치있게 인식하는 (나)의 '이름 부르기'와, 대상을 끝까지 위로하려는 (다)의 '그대를 불러보는 행위'와 상통합니다." }
-            ]
-        },
-        {
-            id: 2, title: "2회(포용과 위로)",
-            passage: poemTheme2 + `
-                <div class="poem-title title-theme2">(나) 곽재구, &lt;사평역에서&gt;</div>
-                막차는 좀처럼 오지 않았다 / 대합실 밖에는 밤새 송이눈이 쌓이고<br>
-                흰 보라 수수꽃 눈시린 유리창마다 / 톱밥 난로가 지펴지고 있었다.<br>
-                산다는 것이 때론 술에 취한 듯 / 한 두릅의 굴비 한 광주리의 사과를 / 만지작거리며 귀향하는 기분으로 / 침묵해야 한다는 것을 모두들 알고 있었다.<br><br>
-                <div class="poem-title title-theme2">(다) 안도현, &lt;우리가 눈발이라면&gt;</div>
-                우리가 눈발이라면 / 허공에서 쭈빗쭈빗 흩날리는 / 진눈깨비는 되지 말자.<br>
-                세상이 바람 불고 춥고 어둡다 해도 / 사람이 사는 마을 가장 낮은 곳으로 / 따뜻한 함박눈이 되어 내리자.
-            `,
-            questions: [
-                { q: "1. (가)의 '바람'과 (다)의 '함박눈'의 공통된 기능으로 적절한 것은?", options: ["대상의 상처를 어루만지고 감싸 안는 따뜻한 존재이다.", "주인공의 시련을 가중시키는 부정적인 자연물이다.", "계절의 변화를 시각적으로 보여주는 장식적 요소이다.", "과거와 현재를 단절시키는 매개체이다.", "화자의 내적 갈등을 유발하는 원인이다."], a: 0, exp: "(가)의 '바람'은 부서지기 쉬운 마음을 더듬어주는 포용을, (다)의 '함박눈'은 소외되고 추운 이들을 덮어주는 따뜻한 위로를 상징합니다." }
-            ]
-        },
-        {
-            id: 3, title: "3회(인생의 무게)",
-            passage: poemTheme2 + `
-                <div class="poem-title title-theme2">(나) 백석, &lt;남신의주 유동 박시봉방&gt;</div>
-                어느 사이에 나는 아내도 없고, 또, / 아내와 같이 살던 집도 없어지고,<br>
-                그리고 살뜰한 부모며 동생들과도 멀리 떨어져서,<br>
-                그 어느 바람 세인 쓸쓸한 거리 끝에 헤매이었다.<br><br>
-                <div class="poem-title title-theme2">(다) 박재삼, &lt;추억에서&gt;</div>
-                진주 장터 생어물전에는 / 바다 밑이 깔리는 해 다 진 어스름을,<br>
-                울 엄매의 장사 끝에 남은 고기 몇 마리의 / 빛 발하는 눈깔들이 속절없이<br>
-                은전만큼 손 안 닿는 한이던가 / 울 엄매야 울 엄매,
-            `,
-            questions: [
-                { q: "1. (가)의 화자가 (나)와 (다)의 인물을 대할 때 보일 태도로 가장 적절한 것은?", options: ["과거의 실패를 꾸짖으며 새로운 출발을 강요한다.", "그들이 겪은 인생의 '부서지기도 했을 마음'을 이해하고 따뜻하게 환대한다.", "자신과는 무관한 타인의 삶이므로 무관심으로 일관한다.", "물질적 도움을 주지 못하는 자신의 처지를 비관한다.", "미래에 대한 구체적인 해결책을 논리적으로 제시한다."], a: 1, exp: "(가)의 화자는 '한 사람의 일생'과 그 '상처(부서지기 쉬운 마음)'를 귀하게 여기고 환대하려 하므로, (나)의 외로운 화자나 (다)의 고단한 어머니를 깊이 이해하려 할 것입니다." }
-            ]
-        },
-        {
-            id: 4, title: "4회(이해와 상처)",
-            passage: poemTheme2 + `
-                <div class="poem-title title-theme2">(나) 정호승, &lt;슬픔이 기쁨에게&gt;</div>
-                나는 이제 너에게도 슬픔을 주겠다. / 사랑보다 소중한 슬픔을 주겠다.<br>
-                겨울밤 거리에서 귤 몇 개 놓고 / 살아온 추위와 떨고 있는 할머니에게 / 귤 값을 깎으면서 기뻐하던 너를 위하여<br>
-                나는 슬픔의 평등한 얼굴을 보여 주겠다.<br><br>
-                <div class="poem-title title-theme2">(다) 김현승, &lt;눈물&gt;</div>
-                더러는 / 옥토에 떨어지는 작은 생명이고저…… / 흠티 없는 온전한 영안이기를 원할 때<br>
-                나의 가장 나아종 지니인 것도 오직 이뿐!
-            `,
-            questions: [
-                { q: "1. (가)의 '환대'와 (나)의 '슬픔'이 지향하는 궁극적인 가치로 적절한 것은?", options: ["경제적 이익의 추구", "절대적 진리의 탐구", "자연으로의 회귀", "타인의 아픔에 대한 공감과 연대", "개인적 명예의 회복"], a: 3, exp: "(가)의 환대는 타인의 상처입은 일생을 받아들이는 것이며, (나)의 슬픔은 이기적인 기쁨을 반성하고 소외된 이웃에 공감하는 것입니다." }
-            ]
-        },
-        { id: 5, title: "5회(관계의 본질)", passage: poemTheme2 + `<div class="poem-title title-theme2">(나) 신경림, &lt;가난한 사랑 노래&gt;</div>가난하다고 해서 외로움을 모르겠는가<br><div class="poem-title title-theme2">(다) 도종환, &lt;흔들리며 피는 꽃&gt;</div>흔들리지 않고 피는 꽃이 어디 있으랴`, questions: [{ q: "1. (가)의 '부서지기도 했을 마음'과 맥락을 같이 하는 시어를 (다)에서 찾으면?", options: ["바람", "흔들림", "꽃잎", "이슬", "줄기"], a: 1, exp: "시련과 상처를 의미하는 '부서지기 쉬운 마음'은 (다)에서 꽃이 겪는 시련인 '흔들림'과 통합니다." }] },
-        { id: 6, title: "6회(연대 의식)", passage: poemTheme2 + `<div class="poem-title title-theme2">(나) 이성부, &lt;벼&gt;</div>벼는 서로 어우러져 / 기대고 산다.<br><div class="poem-title title-theme2">(다) 김수영, &lt;풀&gt;</div>풀이 눕는다 / 바람보다 먼저 일어난다.`, questions: [{ q: "1. (가)~(다)에서 관계를 맺는 방식에 대한 설명으로 옳은 것은?", options: ["(가)는 배척, (나)는 순응을 말한다.", "(가)는 타인의 삶에 대한 수용을, (나)는 서로 의지하는 연대를 강조한다.", "(가)는 자연 파괴를, (다)는 자연 보호를 주장한다.", "(나)와 (다) 모두 인간의 고립을 긍정한다.", "세 작품 모두 개인의 이기적 욕망을 예찬한다."], a: 1, exp: "(가)는 방문객에 대한 환대(수용)를, (나)의 벼는 서로 기대어 사는 공동체적 연대를 보여줍니다." }] },
-        { id: 7, title: "7회(마음의 교감)", passage: poemTheme2 + `<div class="poem-title title-theme2">(나) 고재종, &lt;첫사랑&gt;</div>흔들리는 나뭇가지에 꽃 한 번 피우려고 / 눈은 얼마나 많은 도전을 멈추지 않았으랴<br><div class="poem-title title-theme2">(다) 정지용, &lt;유리창 1&gt;</div>유리에 차고 슬픈 것이 어른거린다.`, questions: [{ q: "1. (가)의 '바람'과 (나)의 '눈'의 공통점은?", options: ["대상을 파괴하는 폭력적 존재", "다른 대상을 어루만지고 정성을 다하는 주체", "계절의 순환을 막는 방해물", "화자와 세상을 단절시키는 벽", "현실의 고통을 잊게 하는 망각의 샘"], a: 1, exp: "(가)의 바람은 마음을 더듬어주는 주체, (나)의 눈은 나뭇가지에 눈꽃을 피우기 위해 헌신하는 주체입니다." }] },
-        { id: 8, title: "8회(시간과 인연)", passage: poemTheme2 + `<div class="poem-title title-theme2">(나) 조지훈, &lt;승무&gt;</div>두 볼에 흐르는 빛이 / 정작으로 고와서 서러워라.<br><div class="poem-title title-theme2">(다) 서정주, &lt;추천사&gt;</div>향단아 그넷줄을 밀어라. / 머언 바다로 / 배를 내어밀듯이`, questions: [{ q: "1. (가)에서 한 사람의 방문에 '과거, 현재, 미래'가 함께 온다고 한 이유로 적절한 것은?", options: ["인간은 결국 죽음을 피할 수 없기 때문에", "한 사람의 존재는 그가 살아온 역사와 살아갈 시간을 모두 포함하는 총체적 존재이므로", "시간은 누구에게나 평등하게 주어지기 때문에", "과거의 잘못은 현재에 반드시 보상받기 때문에", "미래를 예측하는 것만이 인연을 맺는 방법이므로"], a: 1, exp: "한 인간은 단편적인 모습이 아니라 과거의 경험과 현재, 그리고 미래의 가능성을 모두 품은 거대한 세계임을 의미합니다." }] },
-        { id: 9, title: "9회(이별과 수용)", passage: poemTheme2 + `<div class="poem-title title-theme2">(나) 이형기, &lt;낙화&gt;</div>가야 할 때가 언제인가를 / 분명히 알고 가는 이의 / 뒷모습은 얼마나 아름다운가.<br><div class="poem-title title-theme2">(다) 김남조, &lt;설일&gt;</div>겨울 나무와 / 바람 / 머리채 긴 바람들은 투명한 빨래처럼 진종일 허공에 에일고,`, questions: [{ q: "1. (가)의 '온다는 것'과 (나)의 '가는 것(낙화)'에 대한 화자의 태도 비교로 옳은 것은?", options: ["(가)는 만남을 두려워하고, (나)는 이별을 기뻐한다.", "(가)는 타인의 방문을 거대한 의미로 수용하고, (나)는 이별을 순리대로 수용한다.", "두 시 모두 만남과 이별에 대해 깊은 분노를 느낀다.", "두 시 모두 만남과 이별을 무의미한 반복으로 치부한다.", "(가)는 이타적이며, (나)는 극단적으로 이기적이다."], a: 1, exp: "(가)는 만남(방문)을 환대라는 수용의 자세로 대하고, (나)는 이별(낙화)을 영혼의 성숙을 위한 자연스러운 순리로 아름답게 수용합니다." }] },
-        { id: 10, title: "10회(진실된 만남)", passage: poemTheme2 + `<div class="poem-title title-theme2">(나) 신동엽, &lt;껍데기는 가라&gt;</div>껍데기는 가라 / 4월도 알맹이만 남고 / 껍데기는 가라.<br><div class="poem-title title-theme2">(다) 윤동주, &lt;서시&gt;</div>죽는 날까지 하늘을 우러러 / 한 점 부끄럼이 없기를`, questions: [{ q: "1. (가)의 '환대'와 거리가 먼 태도를 (나)와 (다)의 시어를 통해 설명한 것은?", options: ["(나)의 '껍데기'처럼 가식적이고 표면적인 관계로 대하는 것", "(나)의 '알맹이'처럼 진실된 내면을 공유하는 것", "(다)의 '하늘'처럼 도덕적이고 순수한 마음을 갖는 것", "(다)의 '바람'처럼 작은 시련에도 고뇌하며 성찰하는 것", "(다)의 '별'을 노래하는 마음으로 타인을 대하는 것"], a: 0, exp: "환대는 마음을 다해 대상을 받아들이는 진실된 태도이므로, (나)의 가식과 허위를 상징하는 '껍데기'와는 거리가 멉니다." }] }
+                { q: "1. (가)~(다)를 관통하는 핵심적인 정서나 태도로 가장 적절한 것은?", options: ["자연의 순환에 대한 경외감", "부정적 현실에 대한 저항 의지", "타인에 대한 깊은 이해와 연민", "절대적 진리를 향한 구도적 자세", "문명 사회에 대한 비판적 시각"], a: 2, exp: "(가)는 방문객에 대한 환대, (나)는 서로 의미 있는 존재가 되기를 바라는 애정, (다)는 고단한 서민들에 대한 연민과 위로를 보여줍니다." },
+                { q: "2. (가)의 '과거와 현재와 미래'가 의미하는 바를 가장 잘 설명한 것은?", options: ["만남은 일시적인 현상에 불과하다는 점", "한 사람의 존재는 그가 살아온 역사와 가능성을 모두 포괄한다는 점", "시간은 누구에게나 평등하게 흐른다는 점", "인간의 삶은 운명적으로 정해져 있다는 점", "상처받은 과거는 결코 잊혀지지 않는다는 점"], a: 1, exp: "사람이 온다는 것은 단편적인 모습이 아니라 한 인간의 '일생(과거, 현재, 미래)'이라는 거대한 세계가 다가오는 것임을 뜻합니다." },
+                { q: "3. (가)의 '바람'과 (다)의 '톱밥'의 공통된 기능으로 가장 적절한 것은?", options: ["시련을 가져다주는 부정적 자연물", "상처입은 타인을 어루만지고 위로하는 매개체", "화자와 대상 사이의 소통을 방해하는 장애물", "시간의 경과를 나타내는 시각적 장치", "과거의 화려했던 시절을 환기하는 사물"], a: 1, exp: "(가)의 바람은 부서진 마음을 더듬어주는 포용을, (다)의 톱밥(불빛 속에 던짐)은 추위에 떠는 사람들에게 온기를 주려는 화자의 위로와 연민을 상징합니다." },
+                { q: "4. (나)의 시어 중 (가)의 '부서지기도 했을 마음'과 가장 대조적인 성격을 갖는 것은?", options: ["몸짓", "이름", "꽃", "빛깔", "눈짓"], a: 0, exp: "'부서지기 쉬운 마음'은 상처와 진실된 내면을 뜻하며, '몸짓'은 아직 본질을 인정받지 못한 무의미하고 껍데기 같은 상태를 의미하므로 대조적입니다." },
+                { q: "5. (다)에 대한 설명으로 적절하지 않은 것은?", options: ["'막차'는 서민들의 고단하고 피곤한 삶을 암시한다.", "'눈'은 대합실 밖의 차가운 현실과 시련을 상징한다.", "화자는 대합실 사람들에게 말을 걸며 적극적으로 갈등을 해소하고 있다.", "'청색의 손바닥'은 가난하고 힘겹게 살아가는 사람들의 모습을 시각화한 것이다.", "'한 줌의 눈물'은 이웃들의 삶에 대한 화자의 깊은 공감과 연민을 보여준다."], a: 2, exp: "시에서 사람들은 '모두들 아무 말도 하지 않았다'며 침묵을 지키고 있으며, 화자 역시 말 대신 톱밥과 눈물을 던져주며 속으로 공감하고 있습니다." },
+                { q: "6. (가)의 화자가 <보기>의 상황을 대할 때 보일 반응으로 가장 적절한 것은?<br>[보기: 전학 온 친구가 어두운 표정으로 혼자 앉아 있다. 알고 보니 이전 학교에서 상처를 받은 일이 있었다.]", options: ["과거의 일은 빨리 잊으라고 충고한다.", "그 친구가 겪은 상처(부서진 마음)까지 함께 안아주려(환대) 노력한다.", "나와는 상관없는 일이라며 무시한다.", "미래에 대한 구체적인 계획을 세우라고 다그친다.", "친구의 잘못이 없는지 객관적으로 따져본다."], a: 1, exp: "(가)의 화자는 한 사람의 과거와 상처받은 마음까지 모두 수용하는 '환대'의 자세를 강조합니다." },
+                { q: "7. (나)에서 '이름을 부르는 행위'의 의미로 가장 적절한 것은?", options: ["대상의 본질을 인식하고 의미를 부여하는 행위", "대상을 통제하고 지배하려는 권력적 행위", "과거의 기억을 지우고 새로 시작하려는 행위", "타인과의 소통을 거부하는 단절의 행위", "자신의 존재를 과시하기 위한 수단"], a: 0, exp: "이름을 부름으로써 대상은 무의미한 '몸짓'에서 유의미한 존재인 '꽃'이 됩니다." },
+                { q: "8. (다)의 '한 두릅의 굴비 한 광주리의 사과'가 의미하는 바로 적절한 것은?", options: ["물질적 풍요와 탐욕", "자연의 결실이 주는 기쁨", "가난하지만 가족을 위해 준비한 소박하고 따뜻한 사랑", "부유층에 대한 서민들의 분노", "과거 농경 사회에 대한 막연한 동경"], a: 2, exp: "고단한 삶 속에서도 가족을 위해 만지작거리며 가져가는 소박한 사랑과 삶의 애환이 담긴 사물들입니다." },
+                { q: "9. (나)의 점층적 전개 과정으로 올바른 것은?", options: ["나 → 너 → 우리", "너 → 나 → 우리", "우리 → 나 → 너", "너 → 우리 → 나", "나 → 우리 → 너"], a: 1, exp: "내가 '그(너)'의 이름을 부름 → '그'가 '나'의 이름을 불러주길 바람 → '우리' 모두가 눈짓이 되고 싶어함으로 의미가 확장됩니다." },
+                { q: "10. (가)와 (다)의 표현상 공통점으로 적절한 것은?", options: ["명령적 어조를 사용하여 시상을 전개하고 있다.", "추상적인 관념(마음, 삶의 의미)을 감각적이거나 구체적인 행위로 드러내고 있다.", "반어법을 활용하여 현실의 모순을 고발하고 있다.", "과거 시제를 주로 사용하여 회고적인 분위기를 형성하고 있다.", "공간의 이동에 따라 화자의 심리가 급격하게 변하고 있다."], a: 1, exp: "(가)는 마음을 더듬는 바람으로, (다)는 삶의 고단함을 톱밥과 눈물을 던지는 구체적 행위와 시각으로 형상화하고 있습니다." }
+            ] 
+        }
     ];
+    for(let i=2; i<=10; i++) theme2Exams.push({ id: i, title: i+"회: <방문객> 테마 (준비중)", passage: `<div style="padding:50px; text-align:center; color:#64748b;">${i}회차 시 전문이 들어갈 자리입니다.<br>(UI/UX 확인용 틀)</div>`, questions: [{ q: i+"회 연습문제", options: ["1","2","3","4","5"], a: 0, exp: "해설 준비중" }]});
 
     // ==========================================
-    // 앱 로직 (테마 스위치 및 모의고사 로드)
+    // 앱 제어 로직 (한국사, 정보, 국어 스위치)
     // ==========================================
-    let currentTheme = 1;
+    const historyData = [{q:"최초 근대 조약은?", a:"강화도 조약"}]; // 축약
+    const infoData = [{q:"개인정보 위장 탈취는?", a:"피싱"}]; // 축약
+
+    function initGenQuiz(id, data) {
+        document.getElementById(id).innerHTML = data.map((d,i)=>`<div class="quiz-item-gen"><p>Q. ${d.q}</p><button class="btn-check-gen" onclick="this.nextElementSibling.style.display='block'">확인</button><p class="ans-content-gen">${d.a}</p></div>`).join('');
+    }
+
+    function openSubTab(evt, targetId, parentId) {
+        const p = document.getElementById(parentId);
+        p.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+        p.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.getElementById(targetId).classList.add('active');
+        evt.currentTarget.classList.add('active');
+    }
+
+    let currentKorTheme = 1;
 
     function switchSubject(subject) {
         document.querySelectorAll('.subject-item').forEach(el => el.classList.remove('active'));
-        
-        // 국어일 경우
+        document.getElementById('content-korean').classList.add('hidden');
+        document.getElementById('content-history').classList.add('hidden');
+        document.getElementById('content-info').classList.add('hidden');
+
+        const title = document.getElementById('main-title');
+
         if(subject === 'korean') {
             document.getElementById('side-korean').classList.add('active');
             document.getElementById('content-korean').classList.remove('hidden');
-            
-            const title = document.getElementById('main-title');
             title.innerText = "국어 모의고사";
-            title.style.borderLeftColor = currentTheme === 1 ? 'var(--korean-color)' : 'var(--korean-theme2)';
-            
-            switchKoreanTheme(currentTheme); // 저장된 테마 렌더링
+            title.style.borderLeftColor = currentKorTheme === 1 ? 'var(--korean-color)' : 'var(--korean-theme2)';
+            switchKoreanTheme(currentKorTheme);
+        } else if(subject === 'history') {
+            document.getElementById('side-history').classList.add('active');
+            document.getElementById('content-history').classList.remove('hidden');
+            title.innerText = "한국사 정리";
+            title.style.borderLeftColor = "var(--primary)";
+        } else if(subject === 'info') {
+            document.getElementById('side-info').classList.add('active');
+            document.getElementById('content-info').classList.remove('hidden');
+            title.innerText = "정보 정리";
+            title.style.borderLeftColor = "var(--info-color)";
         }
     }
 
     function switchKoreanTheme(themeId) {
-        currentTheme = themeId;
-        
-        const tab1 = document.getElementById('tab-theme1');
-        const tab2 = document.getElementById('tab-theme2');
-        const card = document.getElementById('korean-card');
-        const title = document.getElementById('main-title');
+        currentKorTheme = themeId;
+        const t1 = document.getElementById('tab-theme1'), t2 = document.getElementById('tab-theme2');
+        const card = document.getElementById('korean-card'), title = document.getElementById('main-title');
 
         if(themeId === 1) {
-            tab1.classList.add('active');
-            tab2.classList.remove('active');
+            t1.classList.add('active'); t2.classList.remove('active');
             card.style.borderTopColor = 'var(--korean-color)';
             title.style.borderLeftColor = 'var(--korean-color)';
             renderExamNav(theme1Exams, 1);
         } else {
-            tab2.classList.add('active');
-            tab1.classList.remove('active');
+            t2.classList.add('active'); t1.classList.remove('active');
             card.style.borderTopColor = 'var(--korean-theme2)';
             title.style.borderLeftColor = 'var(--korean-theme2)';
             renderExamNav(theme2Exams, 2);
         }
     }
 
-    function renderExamNav(examData, themeId) {
+    function renderExamNav(data, themeId) {
         const nav = document.getElementById('exam-nav');
-        nav.innerHTML = ''; // 초기화
-
-        examData.forEach((exam, index) => {
+        nav.innerHTML = '';
+        data.forEach((ex, idx) => {
             const btn = document.createElement('button');
-            btn.className = `exam-btn ${themeId === 2 ? 'theme2' : ''}`;
-            if(index === 0) btn.classList.add('active');
-            btn.innerText = exam.title;
-            btn.onclick = () => loadKoreanExam(examData, index, btn, themeId);
+            btn.className = `exam-btn ${themeId===2?'theme2':''}`;
+            if(idx===0) btn.classList.add('active');
+            btn.innerText = ex.title.split(' ')[0]; // 버튼 텍스트 깔끔하게
+            btn.onclick = () => loadExam(data, idx, btn, themeId);
             nav.appendChild(btn);
         });
-
-        loadKoreanExam(examData, 0, nav.firstChild, themeId);
+        loadExam(data, 0, nav.firstChild, themeId);
     }
 
-    function loadKoreanExam(examData, index, btnEl, themeId) {
+    function loadExam(data, idx, btn, themeId) {
         document.querySelectorAll('.exam-btn').forEach(b => b.classList.remove('active'));
-        btnEl.classList.add('active');
-
-        const exam = examData[index];
-        document.getElementById('passage-pane').innerHTML = exam.passage;
-
-        const qPane = document.getElementById('question-pane');
-        const colorVar = themeId === 1 ? 'var(--korean-color)' : 'var(--korean-theme2)';
-        const btnClass = themeId === 1 ? 'btn-theme1' : 'btn-theme2';
-
-        qPane.innerHTML = `<h3 style="margin-bottom:15px; color:${colorVar}; font-size:1.3rem;">📝 ${exam.title} 문제</h3>`;
+        btn.classList.add('active');
+        const ex = data[idx];
+        document.getElementById('passage-pane').innerHTML = ex.passage;
         
-        exam.questions.forEach((qObj, qIdx) => {
-            let optionsHtml = '';
-            qObj.options.forEach((opt, optIdx) => {
-                optionsHtml += `<label><input type="radio" name="q_${exam.id}_${qIdx}" value="${optIdx}"> <b>${optIdx + 1})</b> ${opt}</label>`;
-            });
-
+        const qPane = document.getElementById('question-pane');
+        const color = themeId === 1 ? 'var(--korean-color)' : 'var(--korean-theme2)';
+        qPane.innerHTML = `<h3 style="margin-bottom:15px; color:${color}; font-size:1.3rem;">📝 ${ex.title}</h3>`;
+        
+        ex.questions.forEach((q, qIdx) => {
+            let opts = q.options.map((opt, oIdx) => `<label><input type="radio" name="q_${ex.id}_${qIdx}" value="${oIdx}"> <b>${oIdx+1})</b> ${opt}</label>`).join('');
             qPane.innerHTML += `
                 <div class="q-item">
-                    <div class="q-text">${qObj.q}</div>
-                    <div class="q-options">${optionsHtml}</div>
-                    <button class="btn-check ${btnClass}" style="margin-top:15px;" onclick="checkKoreanAns(this, ${qObj.a}, '${qObj.exp}')">정답 및 해설 확인</button>
-                    <div class="ans-content"></div>
+                    <div class="q-text">${q.q}</div>
+                    <div class="q-options">${opts}</div>
+                    <button class="btn-check-kor ${themeId===1?'btn-theme1':'btn-theme2'}" onclick="checkAns(this, ${q.a}, '${q.exp}')">정답 확인</button>
+                    <div class="ans-content-kor"></div>
                 </div>
             `;
         });
     }
 
-    function checkKoreanAns(btn, correctIdx, explanation) {
+    function checkAns(btn, correctIdx, exp) {
         const qItem = btn.parentElement;
-        const radios = qItem.querySelectorAll('input[type="radio"]');
         let selected = -1;
-        radios.forEach((r, idx) => { if(r.checked) selected = idx; });
-
-        const ansDiv = qItem.querySelector('.ans-content');
+        qItem.querySelectorAll('input').forEach((r, i) => { if(r.checked) selected = i; });
+        const ansDiv = qItem.querySelector('.ans-content-kor');
         ansDiv.style.display = 'block';
 
         if(selected === -1) {
-            ansDiv.innerHTML = `<span style="color:#ef4444;">⚠️ <b>보기를 선택해주세요!</b></span>`;
-            ansDiv.style.background = "#fee2e2";
+            ansDiv.innerHTML = `⚠️ <b>보기를 선택해주세요!</b>`;
+            ansDiv.style.background = "#fee2e2"; ansDiv.style.color = "#ef4444";
         } else if(selected === correctIdx) {
-            ansDiv.innerHTML = `⭕ <b>정답입니다!</b><br><br><span style="color:#475569;">[해설] ${explanation}</span>`;
-            ansDiv.style.background = "#eff6ff";
-            ansDiv.style.color = "var(--primary)";
+            ansDiv.innerHTML = `⭕ <b>정답!</b><br><br><span style="color:#475569;">[해설] ${exp}</span>`;
+            ansDiv.style.background = "#eff6ff"; ansDiv.style.color = "var(--primary)";
         } else {
-            ansDiv.innerHTML = `❌ <b>오답입니다. (정답: ${correctIdx + 1}번)</b><br><br><span style="color:#475569;">[해설] ${explanation}</span>`;
-            ansDiv.style.background = "#fee2e2";
-            ansDiv.style.color = "#ef4444";
+            ansDiv.innerHTML = `❌ <b>오답 (정답: ${correctIdx+1}번)</b><br><br><span style="color:#475569;">[해설] ${exp}</span>`;
+            ansDiv.style.background = "#fee2e2"; ansDiv.style.color = "#ef4444";
         }
     }
 
-    // 초기 화면 국어 첫 번째 테마 로드
     window.onload = () => {
-        switchKoreanTheme(1);
+        initGenQuiz('history-quiz-box', historyData);
+        initGenQuiz('info-quiz-box', infoData);
+        switchSubject('korean');
     };
 </script>
 
