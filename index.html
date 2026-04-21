@@ -41,13 +41,6 @@
     .hidden { display: none !important; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-    /* 일반 퀴즈 스타일 (한국사) */
-    .quiz-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 20px; }
-    .quiz-item-gen { background: white; border: 1px solid #e2e8f0; padding: 25px; border-radius: 12px; }
-    .answer-input { width: 100%; padding: 12px; border: 1px solid #cbd5e0; border-radius: 8px; margin: 15px 0; font-size: 1rem; }
-    .btn-check-gen { background: var(--dark); color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer; width: 100%; font-weight: bold; }
-    .ans-content-gen { display: none; margin-top: 15px; color: var(--primary); font-weight: bold; background: #eff6ff; padding: 15px; border-radius: 8px; }
-
     /* 국어 모의고사 UI */
     .exam-nav { display: flex; gap: 10px; overflow-x: auto; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #e2e8f0; }
     .exam-btn { padding: 10px 18px; border: 2px solid var(--korean-color); background: white; color: var(--korean-color); border-radius: 30px; cursor: pointer; font-weight: 800; white-space: nowrap; }
@@ -218,13 +211,8 @@
         </div>
     </div>
 
-    <div id="content-history" class="hidden">
-        <div class="tabs">
-            <div class="tab active" onclick="openSubTab(event, 'history-content-section', 'content-history')">📖 핵심 통합 요약</div>
-            <div class="tab" onclick="openSubTab(event, 'history-test-section', 'content-history')">🔥 실전 20제</div>
-        </div>
-        <div id="history-content-section" class="section active"></div>
-        <div id="history-test-section" class="section"><div class="quiz-container" id="history-quiz-box"></div></div>
+    <div id="content-history" class="hidden" style="height: calc(100vh - 120px);">
+        <iframe src="./history_interactive.html" style="width: 100%; height: 100%; border: none; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.03);"></iframe>
     </div>
 
     <div id="content-info" class="hidden" style="height: calc(100vh - 120px);">
@@ -233,13 +221,12 @@
 
 </div>
 
-<script src="./history.js"></script>
 <script src="./korean.js"></script>
 <script src="./climate.js"></script>
 
 <script>
     // ========================================================
-    // 1. 공통 및 일반 과목 로직 (국어, 한국사, 정보)
+    // 1. 공통 및 일반 과목 로직 (국어, 기후)
     // ========================================================
     function openSubTab(evt, targetId, parentId) {
         const p = document.getElementById(parentId);
@@ -266,7 +253,7 @@
             title.innerText = "사회 (기후와 인간 생활)";
             title.style.borderLeftColor = 'var(--climate-color)';
         } else if(subject === 'history') {
-            title.innerText = "한국사 통합 정리";
+            title.innerText = "한국사 (고대~근대 통합 정리)";
             title.style.borderLeftColor = 'var(--primary)';
         } else if(subject === 'info') {
             title.innerText = "정보 (III+V 단원 완벽 정리)";
@@ -339,19 +326,6 @@
         }
     }
 
-    // 한국사 주관식 렌더러
-    function initGenQuiz(id, data) {
-        const box = document.getElementById(id);
-        if(!box || !data) return;
-        box.innerHTML = data.map((d, i) => `
-            <div class="quiz-item-gen">
-                <p><b>Q${i+1}.</b> ${d.q}</p>
-                <input type="text" class="answer-input" placeholder="정답 입력">
-                <button class="btn-check-gen" onclick="this.nextElementSibling.style.display='block'">정답 확인</button>
-                <div class="ans-content-gen">🎯 <b>정답:</b> ${d.a}</div>
-            </div>
-        `).join('');
-    }
 
     // ========================================================
     // 2. 사회(기후) - 타이머 객관식 퀴즈 로직
@@ -559,10 +533,6 @@
     // 초기화 로직 (모든 과목 데이터 연동)
     // ========================================================
     window.onload = () => {
-        // 한국사 데이터 바인딩
-        if(window.historySummaryHTML) document.getElementById('history-content-section').innerHTML = window.historySummaryHTML;
-        if(window.historyData) initGenQuiz('history-quiz-box', window.historyData);
-
         // 사회(기후) 데이터 바인딩
         if(window.climateSummaryHTML) document.getElementById('cli-concept').innerHTML = window.climateSummaryHTML;
         if(window.climateQuizData) {
@@ -570,8 +540,8 @@
             initCliQuiz('q3', 'cli_box_q3'); initCliQuiz('q4', 'cli_box_q4'); initCliQuiz('q5', 'cli_box_q5');
         }
 
-        // 시작 과목 설정 (기본은 국어로 설정)
-        switchSubject('korean');
+        // 시작 과목 설정 (기본은 한국사로 설정해서 바로 확인 가능하게 함)
+        switchSubject('history');
     };
 </script>
 </body>
