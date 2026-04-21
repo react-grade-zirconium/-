@@ -3,66 +3,85 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>통합 학습 포털 MAX</title>
+<title>통합 학습 포털</title>
 <style>
     :root {
-        --primary: #2563eb; --dark: #1e293b; --bg: #f1f5f9; --card: #ffffff;
-        --info-color: #2d3748; --korean-color: #8b5cf6;
+        --primary: #2563eb;
+        --dark: #1e293b;
+        --bg: #f1f5f9;
+        --card: #ffffff;
+        --info-color: #0d9488;
+        --korean-color: #8b5cf6;
+        --korean-theme2: #d946ef;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Pretendard', 'Malgun Gothic', sans-serif; background: var(--bg); color: var(--dark); display: flex; height: 100vh; overflow: hidden; }
+    body { font-family: 'Pretendard', 'Malgun Gothic', sans-serif; background: var(--bg); color: var(--dark); display: flex; min-height: 100vh; overflow: hidden; }
 
     /* 사이드바 */
-    .sidebar { width: 220px; background: var(--dark); color: white; display: flex; flex-direction: column; flex-shrink: 0; }
-    .sidebar-header { padding: 25px 20px; font-size: 1.4rem; font-weight: 800; border-bottom: 1px solid rgba(255,255,255,0.1); text-align: center; }
-    .subject-list { flex: 1; padding: 15px 0; }
-    .subject-item { padding: 15px 25px; cursor: pointer; transition: 0.2s; opacity: 0.7; font-weight: bold; }
-    .subject-item.active { opacity: 1; background: var(--primary); }
+    .sidebar { width: 240px; background: var(--dark); color: white; display: flex; flex-direction: column; height: 100vh; z-index: 1000; flex-shrink: 0; }
+    .sidebar-header { padding: 30px 20px; font-size: 1.5rem; font-weight: 800; border-bottom: 1px solid rgba(255,255,255,0.1); text-align: center; }
+    .subject-list { flex: 1; padding: 20px 0; overflow-y: auto; }
+    .subject-item { padding: 15px 25px; cursor: pointer; transition: 0.3s; opacity: 0.7; display: flex; align-items: center; gap: 10px; }
+    .subject-item.active { opacity: 1; background: var(--primary); font-weight: bold; }
 
     /* 메인 컨텐츠 영역 */
-    .main-content { flex: 1; padding: 30px; overflow-y: auto; }
-    .subject-title { font-size: 1.8rem; margin-bottom: 20px; border-left: 6px solid var(--primary); padding-left: 15px; }
+    .main-content { flex: 1; padding: 40px; height: 100vh; overflow-y: auto; position: relative; }
+    .subject-title { font-size: 2rem; margin-bottom: 20px; border-left: 6px solid var(--primary); padding-left: 15px; transition: 0.3s; }
 
-    /* 탭 메뉴 */
-    .tabs { display: flex; gap: 8px; margin-bottom: 20px; border-bottom: 2px solid #e2e8f0; }
-    .tab { padding: 10px 18px; cursor: pointer; font-weight: 600; color: #64748b; }
+    /* 공통 탭 메뉴 */
+    .tabs { display: flex; gap: 10px; margin-bottom: 25px; border-bottom: 2px solid #e2e8f0; overflow-x: auto; flex-shrink: 0; }
+    .tab { padding: 12px 20px; cursor: pointer; font-weight: 600; color: #64748b; white-space: nowrap; transition: 0.2s; }
     .tab.active { color: var(--primary); border-bottom: 3px solid var(--primary); }
+    .tab.theme-k1.active { color: var(--korean-color); border-bottom: 3px solid var(--korean-color); }
+    .tab.theme-k2.active { color: var(--korean-theme2); border-bottom: 3px solid var(--korean-theme2); }
 
-    .card { background: var(--card); border-radius: 12px; padding: 25px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); margin-bottom: 20px; }
-    .section { display: none; animation: fadeIn 0.3s ease; }
+    .card { background: var(--card); border-radius: 16px; padding: 30px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); margin-bottom: 20px; }
+    
+    /* 섹션 전환용 클래스 */
+    .section { display: none; animation: fadeIn 0.4s ease; }
     .section.active { display: block; }
-    
-    /* 일반 테이블 / 리스트 (한국사, 정보) */
-    table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 0.9rem; }
-    th, td { padding: 10px; border: 1px solid #e2e8f0; text-align: center; }
-    th { background: #f8fafc; font-weight: bold; }
-    .text-box { background: #f8fafc; padding: 20px; border-radius: 10px; line-height: 1.7; border-left: 4px solid var(--primary); }
-
-    /* 60문제 전용 CBT 퀴즈 리스트 */
-    .quiz-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 15px; }
-    .quiz-box { background: white; border: 1px solid #e2e8f0; padding: 15px; border-radius: 8px; }
-    .q-title { font-weight: bold; margin-bottom: 10px; color: #1e293b; font-size: 0.95rem; }
-    .q-input { width: 100%; padding: 8px; border: 1px solid #cbd5e0; border-radius: 5px; margin-bottom: 8px; }
-    .q-btn { width: 100%; padding: 8px; background: var(--dark); color: white; border: none; border-radius: 5px; cursor: pointer; font-weight:bold; }
-    .q-ans { display: none; margin-top: 10px; padding: 8px; background: #eff6ff; color: var(--primary); font-weight: 800; border-radius: 5px; font-size:0.9rem;}
-
-    /* 국어 모의고사 CBT 레이아웃 */
-    .exam-nav { display: flex; gap: 6px; margin-bottom: 15px; overflow-x:auto; }
-    .exam-btn { padding: 6px 12px; border: 1px solid var(--korean-color); background: white; color: var(--korean-color); border-radius: 20px; cursor: pointer; font-weight: bold; }
-    .exam-btn.active { background: var(--korean-color); color: white; }
-    .exam-container { display: flex; gap: 20px; height: 65vh; min-height: 550px; }
-    .passage-pane { flex: 1.2; background: white; border: 1px solid #cbd5e0; border-radius: 12px; padding: 25px; overflow-y: auto; line-height: 1.8; font-size: 0.95rem; }
-    .question-pane { flex: 1; background: #f8fafc; border: 1px solid #cbd5e0; border-radius: 12px; padding: 20px; overflow-y: auto; }
-    .poem-title { font-weight: bold; margin: 15px 0 10px 0; color: var(--korean-color); background: #f5f3ff; padding: 5px 10px; border-radius: 5px; display: inline-block; }
-    
-    .q-item-kor { background: white; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0; margin-bottom: 20px; }
-    .q-options label { display: block; margin-bottom: 5px; cursor: pointer; padding: 8px; transition: 0.2s; border-radius: 5px; }
-    .q-options label:hover { background: #f1f5f9; }
-    .ans-kor { display: none; margin-top: 10px; padding: 10px; border-radius: 5px; line-height: 1.5; font-size: 0.9rem; }
-
     .hidden { display: none !important; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* 공통 테이블 & 퀴즈 (한국사, 정보) */
+    table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 0.95rem; }
+    th, td { padding: 12px; border: 1px solid #e2e8f0; text-align: center; }
+    th { background: #f8fafc; font-weight: bold; }
+    
+    .quiz-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 20px; }
+    .quiz-item-gen { background: #f8fafc; border: 1px solid #e2e8f0; padding: 20px; border-radius: 12px; }
+    .answer-input { width: 100%; padding: 12px; border: 1px solid #cbd5e0; border-radius: 8px; margin: 10px 0; }
+    .btn-check-gen { background: var(--dark); color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer; width: 100%; font-weight: bold; }
+    .ans-content-gen { display: none; margin-top: 10px; color: var(--primary); font-weight: 800; background: #eff6ff; padding: 10px; border-radius: 6px; }
+
+    /* 국어 모의고사 전용 CBT 스타일 (화면 꽉 차게) */
+    .exam-nav { display: flex; gap: 8px; overflow-x: auto; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid #e2e8f0; }
+    .exam-btn { padding: 8px 14px; border: 1px solid var(--korean-color); background: white; color: var(--korean-color); border-radius: 20px; cursor: pointer; font-weight: bold; white-space: nowrap; font-size: 0.9rem; }
+    .exam-btn:hover, .exam-btn.active { background: var(--korean-color); color: white; }
+    .exam-btn.theme2 { border-color: var(--korean-theme2); color: var(--korean-theme2); }
+    .exam-btn.theme2:hover, .exam-btn.theme2.active { background: var(--korean-theme2); color: white; }
+
+    .exam-container { display: flex; gap: 20px; height: calc(100vh - 280px); min-height: 500px; }
+    .passage-pane { flex: 1.2; background: white; border: 1px solid #cbd5e0; border-radius: 12px; padding: 30px; overflow-y: auto; line-height: 1.8; font-size: 1rem; box-shadow: inset 0 0 10px rgba(0,0,0,0.02); }
+    .question-pane { flex: 1; background: #f8fafc; border: 1px solid #cbd5e0; border-radius: 12px; padding: 25px; overflow-y: auto; }
+    
+    .poem-box { margin-bottom: 40px; }
+    .poem-title { font-weight: bold; margin-bottom: 15px; padding: 8px 12px; border-radius: 5px; display: inline-block; font-size: 1.05rem; }
+    .poem-content { padding: 0 15px; }
+    .title-theme1 { color: var(--korean-color); background: #f5f3ff; }
+    .title-theme2 { color: var(--korean-theme2); background: #fdf4ff; }
+
+    .q-item { margin-bottom: 30px; background: white; padding: 25px; border-radius: 10px; border: 1px solid #e2e8f0; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+    .q-text { font-weight: bold; margin-bottom: 15px; font-size: 1.05rem; line-height: 1.5; }
+    .q-options label { display: block; margin-bottom: 8px; cursor: pointer; padding: 10px 12px; border-radius: 6px; transition: 0.2s; border: 1px solid transparent; }
+    .q-options label:hover { background: #f1f5f9; border-color: #cbd5e0; }
+    .q-options input { margin-right: 10px; }
+    
+    .btn-check-kor { color: white; border: none; padding: 12px 15px; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; transition: 0.2s; margin-top: 10px; }
+    .btn-theme1 { background: var(--korean-color); }
+    .btn-theme2 { background: var(--korean-theme2); }
+    .ans-content-kor { display: none; margin-top: 15px; padding: 15px; border-radius: 8px; font-size: 0.95rem; line-height: 1.6; }
 </style>
 </head>
 <body>
@@ -70,17 +89,21 @@
 <div class="sidebar">
     <div class="sidebar-header">STUDY HUB</div>
     <div class="subject-list">
-        <div id="side-korean" class="subject-item active" onclick="switchSubject('korean')">📖 국어 (모의고사)</div>
-        <div id="side-history" class="subject-item" onclick="switchSubject('history')">📚 한국사</div>
-        <div id="side-info" class="subject-item" onclick="switchSubject('info')">💻 정보</div>
+        <div id="side-korean" class="subject-item active" onclick="switchSubject('korean')">📖 <span>국어 (모의고사)</span></div>
+        <div id="side-history" class="subject-item" onclick="switchSubject('history')">📚 <span>한국사</span></div>
+        <div id="side-info" class="subject-item" onclick="switchSubject('info')">💻 <span>정보</span></div>
     </div>
 </div>
 
 <div class="main-content">
-    <h1 id="main-title" class="subject-title" style="border-color: var(--korean-color);">국어 모의고사</h1>
+    <h1 id="main-title" class="subject-title" style="border-left-color: var(--korean-color);">국어 모의고사</h1>
 
     <div id="content-korean">
-        <div class="card" style="border-top: 5px solid var(--korean-color);">
+        <div class="tabs">
+            <div id="tab-theme1" class="tab theme-k1 active" onclick="switchKoreanTheme(1)">🌙 &lt;별 헤는 밤&gt; 테마 (10제)</div>
+            <div id="tab-theme2" class="tab theme-k2" onclick="switchKoreanTheme(2)">🤝 &lt;방문객&gt; 테마 (10제)</div>
+        </div>
+        <div class="card" id="korean-card" style="border-top: 5px solid var(--korean-color); padding: 20px;">
             <div class="exam-nav" id="exam-nav"></div>
             <div class="exam-container">
                 <div class="passage-pane" id="passage-pane"></div>
@@ -91,280 +114,201 @@
 
     <div id="content-history" class="hidden">
         <div class="tabs">
-            <div class="tab active" onclick="openSub(event, 'hist-note', 'content-history')">📖 전범위 개념 노트</div>
-            <div class="tab" onclick="openSub(event, 'hist-quiz', 'content-history')">🔥 한국사 하드코어 30제</div>
+            <div class="tab active" onclick="openSubTab(event, 'history-content', 'content-history')">📖 핵심 요약</div>
+            <div class="tab" onclick="openSubTab(event, 'history-test', 'content-history')">🔥 실전 테스트</div>
         </div>
-        
-        <div id="hist-note" class="section active">
+        <div id="history-content" class="section active">
             <div class="card" style="border-top: 5px solid var(--primary);">
-                <h3>1. 선사 시대 ~ 고대 국가</h3>
-                <div class="text-box">
-                    <p><b>• 구석기/신석기:</b> 뗀석기(주먹도끼), 이동 생활 / 간석기(가락바퀴, 뼈바늘), 빗살무늬토기, 정착 생활, 원시 신앙</p>
-                    <p><b>• 청동기:</b> 비파형 동검, 고인돌, 사유 재산 및 계급 발생 (군장 출현)</p>
-                    <p><b>• 부여/고구려:</b> 사출도(마가·우가·저가·구가), 영고(12월) / 제가 회의, 서옥제, 동맹</p>
-                    <p><b>• 동예/삼한:</b> 책화, 단궁, 과하마, 무천 / 제정 분리(천군과 소도), 벼농사 발달</p>
+                <h3>근대 개혁과 국권 침탈 정리</h3>
+                <div style="margin-top: 15px; line-height: 1.8;">
+                    <p><b>1. 흥선대원군의 정책:</b> 경복궁 중건(당백전, 원납전), 서원 철폐, 호포제</p>
+                    <p><b>2. 개항 과정:</b> 강화도 조약(1876) → 조미수호통상조약(1882, 거중조정, 최혜국 대우)</p>
+                    <p><b>3. 근대적 개혁:</b> 갑오개혁(신분제, 과거제 폐지), 광무개혁(구본신참, 지계 발급)</p>
+                    <p><b>4. 의병 투쟁:</b> 을미의병(단발령) → 을사의병(신돌석) → 정미의병(군대 해산, 13도 창의군)</p>
                 </div>
             </div>
-            <div class="card" style="border-top: 5px solid var(--primary);">
-                <h3>2. 고려의 체제 정비와 외교</h3>
-                <div class="text-box">
-                    <p><b>• 고려 초기:</b> 태조(사심관·기인 제도), 광종(노비안검법, 과거제), 성종(최승로 시무 28조, 12목 파견)</p>
-                    <p><b>• 대간:</b> 어사대+낭사로 구성. <b>서경, 간쟁, 봉박</b>의 권한을 가짐 (왕권 견제)</p>
-                    <p><b>• 이민족 항쟁:</b> 거란(서희 강동 6주, 강감찬 귀주대첩) → 여진(윤관 별무반, 동북 9성) → 몽골(강화도 천도, 삼별초)</p>
-                </div>
-            </div>
-            <div class="card" style="border-top: 5px solid var(--primary);">
-                <h3>3. 조선 초기 ~ 근대 국가 수립</h3>
-                <div class="text-box">
-                    <p><b>• 조선 초기:</b> 태종(6조 직계제), 세종(의정부 서사제, 공법), 세조(직전법), 성종(경국대전)</p>
-                    <p><b>• 흥선대원군:</b> 왕권 강화(경복궁 중건, 당백전 발행, 서원 철폐), 통상 수교 거부 정책</p>
-                    <p><b>• 개항:</b> 강화도 조약(1876, 최초 근대적 조약) → 조미수호통상조약(1882, 최혜국 대우)</p>
-                    <p><b>• 국권 침탈:</b> 동학 농민 운동(폐정 개혁안) → 을사늑약(1905, 외교권 박탈) → 정미7조약(군대 해산) → 의병 투쟁</p>
-                </div>
+            <div class="card">
+                <h3>주요 사건 연도 확인</h3>
+                <table>
+                    <tr><th>사건명</th><th>연도</th><th>핵심 내용</th></tr>
+                    <tr><td>강화도 조약</td><td>1876</td><td>최초의 근대적 조약</td></tr>
+                    <tr><td>갑신정변</td><td>1884</td><td>우정총국, 급진 개화파</td></tr>
+                    <tr><td>동학 농민 운동</td><td>1894</td><td>집강소 설치, 폐정 개혁안</td></tr>
+                    <tr><td>을사늑약</td><td>1905</td><td>외교권 박탈, 통감부 설치</td></tr>
+                </table>
             </div>
         </div>
-        
-        <div id="hist-quiz" class="section">
-            <h3 style="margin-bottom:15px;">🔥 한국사 개념 확인 30제</h3>
-            <div class="quiz-grid" id="hist-quiz-box"></div>
+        <div id="history-test" class="section">
+            <div class="quiz-container" id="history-quiz-box"></div>
         </div>
     </div>
 
     <div id="content-info" class="hidden">
         <div class="tabs">
-            <div class="tab active" onclick="openSub(event, 'info-note', 'content-info')">📖 mega_study 원본 자료</div>
-            <div class="tab" onclick="openSub(event, 'info-quiz', 'content-info')">🔥 정보 하드코어 30제</div>
+            <div class="tab active" onclick="openSubTab(event, 'info-note', 'content-info')">📖 핵심 요약</div>
+            <div class="tab" onclick="openSubTab(event, 'info-test', 'content-info')">🔥 실전 테스트</div>
         </div>
-        
         <div id="info-note" class="section active">
             <div class="card" style="border-top: 5px solid var(--info-color);">
-                <h3>📦 III.1 문제분해와 모델링</h3>
-                <div class="text-box">
-                    <p>• <b>문제 분석:</b> 현재 상태와 목표 상태 확인, 요구 사항과 제약 조건 정의.</p>
-                    <p>• <b>추상화:</b> 복잡한 문제를 단순화. 불필요한 요소 제거, 핵심 요소 추출(가장 중요한 단계).</p>
-                    <p>• <b>문제 분해 4단계:</b> 작은 문제로 분해 → 해결 가능성 판단 → 각각 해결 → 합쳐서 큰 문제 해결</p>
-                </div>
-            </div>
-            <div class="card" style="border-top: 5px solid var(--info-color);">
-                <h3>🔧 III.2 알고리즘과 정렬/탐색</h3>
-                <div class="text-box">
-                    <p>• <b>제어구조:</b> 순차 구조, 선택 구조(마름모), 반복 구조</p>
-                    <p>• <b>순서도:</b> 처리(사각형), 조건(마름모), 터미널(둥근 사각형), 입출력(평행사변형)</p>
-                    <p>• <b>정렬:</b> 선택 정렬(알맞은 값 선택 이동), 삽입 정렬, 버블 정렬(이웃 교환), 합병 정렬, 퀵 정렬(피벗)</p>
-                    <p>• <b>탐색:</b> 순차 탐색, 이진 탐색(반드시 정렬됨), 다익스트라(음수 불가), 벨먼-포드(음수 가능), 크루스칼/프림(최소 신장 트리)</p>
-                </div>
-            </div>
-            <div class="card" style="border-top: 5px solid var(--info-color);">
-                <h3>🔒 V.2 정보 보호 및 V.4 디지털 윤리</h3>
-                <div class="text-box">
-                    <p>• <b>개인 정보:</b> 이름, 주민번호 뿐만 아니라 다른 정보와 '결합'하여 식별 가능한 정보도 포함.</p>
-                    <p>• <b>피싱(Phishing):</b> 이메일 등으로 위장 홈페이지 유도 후 탈취 / <b>파밍(Pharming):</b> 악성코드로 가짜 사이트 유도</p>
-                    <p>• <b>블록체인:</b> 새로운 블록 추가 시 고유 디지털 서명이 변경되어 위변조 불가능</p>
-                    <p>• <b>연산자 우선순위:</b> 괄호 > 거듭제곱(**) > 곱셈/나눗셈 > 덧셈/뺄셈 > 비교연산자 > 논리연산자(not > and > or)</p>
+                <h3>데이터 보안 및 알고리즘</h3>
+                <div style="margin-top:15px; line-height:1.8;">
+                    <p>• <b>피싱/파밍:</b> 위장 홈페이지 및 가짜 사이트를 통한 개인정보 탈취</p>
+                    <p>• <b>블록체인:</b> 디지털 서명을 통한 데이터 위변조 방지 기술</p>
+                    <p>• <b>MST 알고리즘:</b> 최소 신장 트리를 구하는 크루스칼, 프림 알고리즘</p>
+                    <p>• <b>삽입 정렬:</b> 정렬되지 않은 데이터를 적절한 위치에 삽입하는 방식</p>
+                    <p>• <b>개인정보:</b> 다른 정보와 '결합'하여 식별 가능한 정보도 포함됨</p>
                 </div>
             </div>
         </div>
-
-        <div id="info-quiz" class="section">
-            <h3 style="margin-bottom:15px;">🔥 정보 개념 확인 30제</h3>
-            <div class="quiz-grid" id="info-quiz-box"></div>
+        <div id="info-test" class="section">
+            <div class="quiz-container" id="info-quiz-box"></div>
         </div>
     </div>
 </div>
 
+<script src="./data.js"></script>
+
 <script>
     // ==========================================
-    // 1. 한국사 30문제 데이터
+    // 앱 제어 로직 (데이터는 data.js에서 가져옴)
     // ==========================================
-    const historyData = [
-        {q:"구석기 시대의 대표적인 뗀석기 이름은?", a:"주먹도끼"},
-        {q:"신석기 시대에 옷감을 만들 때 사용한 도구는?", a:"가락바퀴, 뼈바늘"},
-        {q:"청동기 시대 계급 사회 발생을 보여주는 대표적 무덤은?", a:"고인돌"},
-        {q:"고조선 사회상을 보여주는 8개 조항의 법은?", a:"8조법"},
-        {q:"부여에서 4명의 족장이 다스리던 구역은?", a:"사출도"},
-        {q:"고구려의 혼인 풍습(데릴사위제)의 명칭은?", a:"서옥제"},
-        {q:"동예에서 다른 부족 경계 침범 시 변상하는 제도는?", a:"책화"},
-        {q:"삼한 사회에서 소도를 관할하던 제사장의 직함은?", a:"천군"},
-        {q:"고려 태조가 호족 견제를 위해 실시한 제도는?", a:"사심관 제도, 기인 제도"},
-        {q:"고려 광종이 호족의 노비를 풀어준 제도는?", a:"노비안검법"},
-        {q:"고려 성종 때 최승로가 건의한 유교 정치 개혁안은?", a:"시무 28조"},
-        {q:"고려 대간이 갖는 권한 중 관리 임명에 동의하는 권한은?", a:"서경(권)"},
-        {q:"고려 시대 거란의 1차 침입 때 서희가 획득한 영토는?", a:"강동 6주"},
-        {q:"윤관이 여진 정벌을 위해 조직한 특수 부대는?", a:"별무반"},
-        {q:"공민왕 때 친원파를 숙청하고 불법 농장을 개혁한 기구는?", a:"전민변정도감"},
-        {q:"조선 태종이 왕권 강화를 위해 실시한 통치 체제는?", a:"6조 직계제"},
-        {q:"조선 세종 때 왕권과 신권의 조화를 이룬 제도는?", a:"의정부 서사제"},
-        {q:"조선 세조 때 현직 관리에게만 수조권을 준 제도는?", a:"직전법"},
-        {q:"조선 성종 때 완성된 최고의 법전은?", a:"경국대전"},
-        {q:"흥선대원군이 경복궁 중건을 위해 찍어낸 화폐는?", a:"당백전"},
-        {q:"1876년 조선이 일본과 맺은 최초의 근대적 조약은?", a:"강화도 조약"},
-        {q:"조선이 서양과 최초로 맺은 조약(최혜국 대우 포함)은?", a:"조미수호통상조약"},
-        {q:"1884년 김옥균 등 급진 개화파가 일으킨 정변은?", a:"갑신정변"},
-        {q:"동학 농민군이 전주 화약 이후 설치한 자치 기구는?", a:"집강소"},
-        {q:"동학 농민군이 정부에 요구한 개혁안의 이름은?", a:"폐정 개혁안"},
-        {q:"1894년 신분제와 과거제가 폐지된 개혁은?", a:"갑오개혁"},
-        {q:"대한제국이 '구본신참'을 원칙으로 추진한 개혁은?", a:"광무개혁"},
-        {q:"1905년 일본이 대한제국의 외교권을 강탈한 조약은?", a:"을사늑약"},
-        {q:"정미7조약에 의한 군대 해산 이후 결성된 의병 부대는?", a:"13도 창의군"},
-        {q:"광해군이 명나라와 후금 사이에서 펼친 외교 정책은?", a:"중립 외교"}
-    ];
-
-    // ==========================================
-    // 2. 정보 30문제 데이터
-    // ==========================================
-    const infoData = [
-        {q:"문제를 해결하기 위해 불필요한 요소를 제거하는 과정은?", a:"추상화"},
-        {q:"문제 분해의 4단계 중 두 번째 단계는 무엇의 여부 판단인가?", a:"해결 가능성 여부"},
-        {q:"알고리즘 제어구조 3가지는 순차, 반복, 그리고 무엇인가?", a:"선택 구조"},
-        {q:"순서도 기호 중 마름모(◇)가 의미하는 것은?", a:"조건"},
-        {q:"순서도 기호 중 평행사변형(//)이 의미하는 것은?", a:"입·출력"},
-        {q:"정렬되지 않은 데이터 중 위치에 알맞은 값을 찾아 이동하는 정렬은?", a:"선택 정렬"},
-        {q:"이웃해 있는 두 값을 비교하여 교환하는 정렬은?", a:"버블 정렬"},
-        {q:"기준값(피벗)을 설정하여 앞뒤로 분류하는 정렬은?", a:"퀵 정렬"},
-        {q:"반드시 정렬된 데이터에서만 사용할 수 있는 탐색 방법은?", a:"이진 탐색"},
-        {q:"최단 경로 알고리즘 중 음수 가중치를 처리할 수 없는 것은?", a:"다익스트라 알고리즘"},
-        {q:"최소 신장 트리(MST)를 구하는 대표적인 두 알고리즘은?", a:"크루스칼, 프림"},
-        {q:"문자열(str)은 시퀀스 자료형이다. 맞으면 O, 틀리면 X", a:"O"},
-        {q:"파이썬 산술 연산자 중 // 가 의미하는 것은?", a:"몫"},
-        {q:"논리 연산자 and, or, not 중 우선순위가 가장 높은 것은?", a:"not"},
-        {q:"산술, 비교, 논리 연산자 중 가장 먼저 계산되는 것은?", a:"산술 연산자"},
-        {q:"개인 정보는 다른 정보와 쉽게 [  ]하여 알아볼 수 있는 정보도 포함한다.", a:"결합"},
-        {q:"이메일을 통해 위장 홈페이지로 유도하여 정보를 탈취하는 범죄는?", a:"피싱(Phishing)"},
-        {q:"악성코드 감염으로 정상 주소를 입력해도 가짜 사이트로 유도되는 범죄는?", a:"파밍(Pharming)"},
-        {q:"분산 저장 기술로 데이터 위변조가 불가능한 기술은?", a:"블록체인"},
-        {q:"침입 탐지 시스템(IDS)은 잘못된 통신을 직접 차단한다. (O/X)", a:"X (탐지만 수행)"},
-        {q:"대량의 데이터를 수집 분석하여 의사결정을 돕는 직업은?", a:"데이터 과학자"},
-        {q:"[1, 2, 3]과 같이 순서가 있는 파이썬 군집 자료형은?", a:"리스트(list)"},
-        {q:"가상 경험 시스템을 개발하는 직업은 가상(증강)현실 [  ]이다.", a:"설계자"},
-        {q:"의사 코드는 자연어보다 정밀하고 프로그램 코드보다는 직관적이다. (O/X)", a:"O"},
-        {q:"데이터를 크기 순으로 나열하는 것을 무엇이라 하는가?", a:"정렬"},
-        {q:"크루스칼 알고리즘은 전체 [  ]에서 가중치가 작은 순서대로 선택한다.", a:"간선"},
-        {q:"선택 정렬이 버블 정렬보다 교환 횟수 측면에서 효율적이다. (O/X)", a:"O"},
-        {q:"IoT는 사물 [  ]의 약자이다.", a:"인터넷"},
-        {q:"클라우드 환경에서 서비스를 구축하고 유지 보수하는 기술자는?", a:"클라우드 서비스 기술자"},
-        {q:"디지털 사회에서 윤리 의식 변화만이 사이버 폭력을 근본적으로 해결할 수 있다. (O/X)", a:"O"}
-    ];
-
-    // 한국사 & 정보 퀴즈 렌더링 함수
-    function renderGenQuiz(boxId, dataArr) {
-        const box = document.getElementById(boxId);
-        let html = "";
-        dataArr.forEach((d, i) => {
-            html += `
-            <div class="quiz-box">
-                <div class="q-title">Q${i+1}. ${d.q}</div>
-                <input type="text" class="q-input" placeholder="정답 입력">
-                <button class="q-btn" onclick="this.nextElementSibling.style.display='block'">정답 확인</button>
-                <div class="q-ans">${d.a}</div>
-            </div>`;
-        });
-        box.innerHTML = html;
+    
+    // 일반 과목 퀴즈 렌더링 (한국사, 정보)
+    function initGenQuiz(id, data) {
+        document.getElementById(id).innerHTML = data.map((d,i)=>`
+            <div class="quiz-item-gen">
+                <p><b>Q${i+1}.</b> ${d.q}</p>
+                <input type="text" class="answer-input" placeholder="답안 입력">
+                <button class="btn-check-gen" onclick="this.nextElementSibling.style.display='block'">정답 확인</button>
+                <p class="ans-content-gen">정답: ${d.a}</p>
+            </div>
+        `).join('');
     }
 
-    // ==========================================
-    // 3. 국어 모의고사 10문제씩 3세트 완벽 구현
-    // ==========================================
-    const poemData = `
-        <div class="poem-title">(가) 윤동주, &lt;별 헤는 밤&gt;</div>
-        계절이 지나가는 하늘에는 가을로 가득 차 있습니다.<br>나는 아무 걱정도 없이 가을 속의 별들을 다 헤일 듯합니다.<br>별 하나에 추억과 별 하나에 사랑과 별 하나에 어머니, 어머니,<br>(중략)<br>그러나 겨울이 지나고 나의 별에도 봄이 오면 무덤 위에 파란 잔디가 피어나듯이 내 이름자 묻힌 언덕 위에도 자랑처럼 풀이 무성할 거외다.<br><br>
-        <div class="poem-title">(나) 백석, &lt;흰 바람벽이 있어&gt;</div>
-        오늘 저녁 이 좁다란 방의 흰 바람벽에 어쩐지 쓸쓸한 것만이 오고 간다.<br>내 가난한 늙은 어머니가 있다. 또 내 사랑하는 사람이 있다.<br>(중략) 이 흰 바람벽엔 내 쓸쓸한 얼굴을 쳐다보며 이러한 글자들이 지나간다.<br>나는 이 세상에서 가난하고 외롭고 높고 쓸쓸하니 살아가도록 태어났다.<br><br>
-        <div class="poem-title">(다) 정지용, &lt;향수&gt;</div>
-        넓은 벌 동쪽 끝으로 옛이야기 지줄대는 실개천이 휘돌아 나가고,<br>얼룩백이 황소가 해설피 금빛 게으른 울음을 우는 곳,<br>— 그곳이 차마 꿈엔들 잊힐 리야.
-    `;
+    // 세부 탭 스위치
+    function openSubTab(evt, targetId, parentId) {
+        const p = document.getElementById(parentId);
+        p.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+        p.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.getElementById(targetId).classList.add('active');
+        evt.currentTarget.classList.add('active');
+    }
 
-    // 각 세트당 10문제씩 꽉 채움
-    const korExams = [
-        {
-            title: "제1회 (그리움과 성찰)", passage: poemData,
-            questions: [
-                {q:"1. (가)~(다)의 공통점은?", opts:["미래 낙관","부재하는 대상에 대한 그리움","자연물 통한 계절감","현실 비판","세속 거부"], a:1, exp:"모두 어머니, 사랑하는 사람, 고향 등을 그리워함."},
-                {q:"2. (가)의 '별'과 (나)의 '흰 바람벽'의 기능은?", opts:["과거 단절","미래 암시","내면과 기억을 마주하게 하는 매개체","현실 도피","종교적 구원"], a:2, exp:"별과 흰 바람벽을 보며 과거 추억과 대상을 떠올림."},
-                {q:"3. (가)에 대한 이해로 틀린 것은?", opts:["가을은 쓸쓸한 분위기","산문적 진술로 추억 나열","부끄러운 이름은 자아 반성","봄이 오기를 거부함","어머니를 애타게 부름"], a:3, exp:"봄(조국 광복)이 오기를 간절히 바라고 있음."},
-                {q:"4. (다)의 후렴구 효과가 아닌 것은?", opts:["운율 형성","구조적 안정감","주제 강조","정서 절제로 객관화","통일감 부여"], a:3, exp:"정서를 절제하지 않고 극대화시켜 전달함."},
-                {q:"5. (나)의 '흰 바람벽'에 비치는 심상으로 가장 두드러진 것은?", opts:["시각적 심상","후각적 심상","미각적 심상","역설적 표현","대화체"], a:0, exp:"지치운 불빛, 어두운 그림자 등 시각적 이미지가 두드러짐."},
-                {q:"6. (가)의 시선 이동으로 알맞은 것은?", opts:["하늘→내면→땅","땅→바다→하늘","과거→미래→현재","내면→하늘→타국","무덤→하늘→언덕"], a:0, exp:"별(하늘)→추억(내면)→언덕(땅)으로 이동함."},
-                {q:"7. (다)의 '금빛 게으른 울음'의 표현 방식은?", opts:["공감각적 심상","영탄법","반어법","설의법","대구법"], a:0, exp:"청각(울음)의 시각화(금빛)인 공감각적 심상임."},
-                {q:"8. (가)의 '흙으로 덮어 버리었습니다'의 의미는?", opts:["농사 준비","부끄러운 자아 은폐","과거 보존","타인 공격","무위자연"], a:1, exp:"부끄러운 자신의 이름을 지우고 숨기고 싶은 마음임."},
-                {q:"9. (나)의 화자 태도로 알맞은 것은?", opts:["현실 개벽","운명 순응 속 고결함 유지","타인 원망","극단적 비관","절대자 의지"], a:1, exp:"가난하지만 외롭고 높고 쓸쓸하게 살겠다는 순응과 고결함."},
-                {q:"10. (다)의 주제로 가장 알맞은 것은?", opts:["농촌 계몽","고향에 대한 애절한 그리움","어린 시절에 대한 후회","자연 보호","도시 문명 비판"], a:1, exp:"잃어버린 고향을 향한 지극한 향수임."}
-            ]
-        },
-        {
-            title: "제2회 (자아 탐구 심화)", passage: poemData,
-            questions: [
-                {q:"1. (가)의 '이름자'가 상징하는 바는?", opts:["사회적 지위","반성과 성찰을 요구하는 자아","타인과의 갈등","물질적 부","순수한 자연"], a:1, exp:"이름자는 성찰의 대상이 되는 식민지 지식인의 자아임."},
-                {q:"2. (나)에서 화자가 느끼는 근본적 정서는?", opts:["분노","질투","환희","외로움과 쓸쓸함","맹목적 기대"], a:3, exp:"좁은 방에서 가난과 고독, 쓸쓸함을 느낌."},
-                {q:"3. (다)의 시각적 요소가 아닌 것은?", opts:["넓은 벌","얼룩백이 황소","지줄대는 실개천","파아란 하늘","풀섶 이슬"], a:2, exp:"지줄대는 실개천은 청각적 요소가 강함."},
-                {q:"4. (가)의 '겨울'이 의미하는 바는?", opts:["생명의 탄생","식민지 치하의 암울한 현실","과거의 영광","종교적 시련","개인적 질병"], a:1, exp:"일제 강점기라는 혹독한 시련기임."},
-                {q:"5. (나)의 '다 낡은 무명샤쯔'의 기능은?", opts:["화자의 가난하고 초라한 처지 대변","권력의 상징","이별의 매개체","종교적 의상","자연의 섭리"], a:0, exp:"시각적으로 가난함을 부각함."},
-                {q:"6. (다)의 '차마 꿈엔들 잊힐 리야'에 쓰인 수사법은?", opts:["설의법","반어법","도치법","대구법","은유법"], a:0, exp:"절대 잊을 수 없다는 뜻을 의문형으로 강조한 설의법임."},
-                {q:"7. (가)에서 화자가 이국 소녀들의 이름을 부르는 이유는?", opts:["외국 유학의 꿈","멀리 있는 것에 대한 막연한 동경과 그리움","외국어 연습","과시욕","현실 도피"], a:1, exp:"아스라이 멀리 있는 것들을 향한 애틋한 동경임."},
-                {q:"8. (나)의 화자는 자신의 운명을 어떻게 인식하는가?", opts:["저주받은 운명","하늘이 낸 높고 쓸쓸한 운명","개척 가능한 운명","타인에게 양도할 운명","무의미한 운명"], a:1, exp:"하늘이 사랑하여 외롭고 높고 쓸쓸하게 만들었다고 순응함."},
-                {q:"9. (다)에 나타난 향토적 정서와 가장 거리가 먼 시어는?", opts:["질화로","짚베개","실개천","얼룩백이 황소","화살"], a:4, exp:"화살은 유년 시절의 꿈과 호기심을 의미하며 향토물 자체는 아님."},
-                {q:"10. 세 작품의 공통적 어조는?", opts:["명령적 어조","냉소적 어조","애상적이고 고백적인 어조","격정적 어조","풍자적 어조"], a:2, exp:"모두 내면을 고백하며 슬픔과 그리움(애상)을 드러냄."}
-            ]
-        },
-        {
-            title: "제3회 (표현법과 시어 분석)", passage: poemData,
-            questions: [
-                {q:"1. (가)에 쓰이지 않은 표현 방법은?", opts:["반복법","비유법","열거법","반어법","의인법"], a:3, exp:"별 헤는 밤에는 속마음과 반대로 말하는 반어법은 쓰이지 않음."},
-                {q:"2. (나)에서 '글자들이 지나간다'는 표현의 의미는?", opts:["책을 읽는 중","영사기처럼 화자의 내면 의식이 투영됨","벽에 낙서가 있음","유령을 봄","과거로 시간 여행"], a:1, exp:"자신의 생각과 운명이 벽에 영사막처럼 비춰지는 것임."},
-                {q:"3. (다)의 1연에서 시각과 청각이 함께 쓰인 구절은?", opts:["넓은 벌 동쪽 끝","얼룩백이 황소가 금빛 게으른 울음을 우는 곳","질화로에 재가 식어지면","파아란 하늘 빛","함부로 쏜 화살"], a:1, exp:"황소(시각), 울음(청각), 금빛(시각)이 어우러진 공감각적 표현임."},
-                {q:"4. (가)의 '파란 잔디'가 상징하는 것은?", opts:["죽음","부활과 희망","가난","부유함","절망"], a:1, exp:"겨울을 이기고 무덤 위에 피어나는 부활과 생명력을 상징함."},
-                {q:"5. (나)의 공간적 배경이 주는 느낌은?", opts:["광활함","폐쇄적이고 단절된 고독","활기참","신성함","사치스러움"], a:1, exp:"'좁다란 방'은 외부와 단절된 고독한 내면 공간임."},
-                {q:"6. (가)에서 화자와 대조되는 자연물은?", opts:["별","가을","벌레","무덤","잔디"], a:2, exp:"화자는 이름 덮고 침묵하지만, 벌레는 밤새워 울고 있음."},
-                {q:"7. (나)에서 어머니가 하고 있는 일은?", opts:["바느질","차디찬 물에 무와 배추를 씻음","농사","기도","장사"], a:1, exp:"어머니의 고단한 삶을 구체적으로 보여줌."},
-                {q:"8. (다)에서 아버지를 묘사한 시어는?", opts:["질화로","짚베개를 돋아 고이시는","실개천","화살","풀섶"], a:1, exp:"가난한 농촌 아버지의 피곤한 모습을 형상화함."},
-                {q:"9. (가)의 '별 헤는 행위'의 궁극적 의미는?", opts:["천문학 연구","과거의 잃어버린 가치들을 하나씩 헤아리고 성찰함","시간 보내기","불면증 해소","타인에 대한 복수"], a:1, exp:"별을 매개로 소중했던 가치들을 되새기는 성찰적 행위임."},
-                {q:"10. 세 시인의 공통된 시대적 배경이 시에 미친 영향은?", opts:["일제 강점기의 상실감과 고향/가족 공동체 파괴가 투영됨","6.25 전쟁의 참상","산업화의 부작용","민주화에 대한 열망","조선 후기 신분제 동요"], a:0, exp:"모두 1930~40년대 일제 치하에서 고향, 가족, 정체성을 상실한 슬픔을 노래함."}
-            ]
+    // 메인 과목 스위치
+    let currentKorTheme = 1;
+
+    function switchSubject(subject) {
+        document.querySelectorAll('.subject-item').forEach(el => el.classList.remove('active'));
+        document.getElementById('content-korean').classList.add('hidden');
+        document.getElementById('content-history').classList.add('hidden');
+        document.getElementById('content-info').classList.add('hidden');
+
+        const title = document.getElementById('main-title');
+
+        if(subject === 'korean') {
+            document.getElementById('side-korean').classList.add('active');
+            document.getElementById('content-korean').classList.remove('hidden');
+            title.innerText = "국어 모의고사";
+            title.style.borderLeftColor = currentKorTheme === 1 ? 'var(--korean-color)' : 'var(--korean-theme2)';
+            switchKoreanTheme(currentKorTheme);
+        } else if(subject === 'history') {
+            document.getElementById('side-history').classList.add('active');
+            document.getElementById('content-history').classList.remove('hidden');
+            title.innerText = "한국사 정리";
+            title.style.borderLeftColor = "var(--primary)";
+        } else if(subject === 'info') {
+            document.getElementById('side-info').classList.add('active');
+            document.getElementById('content-info').classList.remove('hidden');
+            title.innerText = "정보 정리";
+            title.style.borderLeftColor = "var(--info-color)";
         }
-    ];
-
-    // 남은 4회~10회는 확장 가능한 틀(더미)만 추가하여 용량 문제 해결
-    for(let i=4; i<=10; i++){
-        korExams.push({
-            title: `제${i}회 (실전 대비 모의고사)`, passage: poemData,
-            questions: [
-                {q:`1. [제${i}회] (가)의 중심 소재는?`, opts:["별","달","해","구름","바람"], a:0, exp:"별입니다."},
-                {q:`2. [제${i}회] (나)의 공간은?`, opts:["바다","넓은 방","좁다란 방","하늘","산"], a:2, exp:"좁다란 방입니다."},
-                {q:`3. [제${i}회] 이 공간은 선생님이 언제든 채워넣을 수 있도록 10문제 틀이 완성되어 있습니다.`, opts:["확인1","확인2","확인3","확인4","확인5"], a:0, exp:"기능 확장용입니다."},
-                // UI 유지를 위해 4~10번 문항 생략 출력
-                {q:`... (4~10번 문제 영역) ...`, opts:["1","2","3","4","5"], a:0, exp:""}
-            ]
-        });
     }
 
-    function renderKorNav() {
+    // 국어 테마 스위치
+    function switchKoreanTheme(themeId) {
+        currentKorTheme = themeId;
+        const t1 = document.getElementById('tab-theme1'), t2 = document.getElementById('tab-theme2');
+        const card = document.getElementById('korean-card'), title = document.getElementById('main-title');
+
+        if(themeId === 1) {
+            t1.classList.add('active'); t2.classList.remove('active');
+            card.style.borderTopColor = 'var(--korean-color)';
+            title.style.borderLeftColor = 'var(--korean-color)';
+            renderExamNav(theme1Exams, 1);
+        } else {
+            t2.classList.add('active'); t1.classList.remove('active');
+            card.style.borderTopColor = 'var(--korean-theme2)';
+            title.style.borderLeftColor = 'var(--korean-theme2)';
+            renderExamNav(theme2Exams, 2);
+        }
+    }
+
+    // 모의고사 네비게이션
+    function renderExamNav(data, themeId) {
         const nav = document.getElementById('exam-nav');
         nav.innerHTML = '';
-        korExams.forEach((ex, idx) => {
+        data.forEach((ex, idx) => {
             const btn = document.createElement('button');
-            btn.className = `exam-btn ${idx===0 ? 'active':''}`;
-            btn.innerText = `제${idx+1}회`;
-            btn.onclick = () => loadKorExam(idx, btn);
+            btn.className = `exam-btn ${themeId===2?'theme2':''}`;
+            if(idx===0) btn.classList.add('active');
+            btn.innerText = ex.title.split(':')[0]; // 버튼에 "1회"만 표시
+            btn.onclick = () => loadExam(data, idx, btn, themeId);
             nav.appendChild(btn);
         });
-        loadKorExam(0, nav.firstChild);
+        loadExam(data, 0, nav.firstChild, themeId);
     }
 
-    function loadKorExam(idx, btn) {
+    // 문제 불러오기
+    function loadExam(data, idx, btn, themeId) {
         document.querySelectorAll('.exam-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
-        const ex = korExams[idx];
+        
+        const ex = data[idx];
         document.getElementById('passage-pane').innerHTML = ex.passage;
         
         const qPane = document.getElementById('question-pane');
-        let html = `<h3 style="margin-bottom:15px; color:var(--korean-color);">📝 ${ex.title}</h3>`;
+        const color = themeId === 1 ? 'var(--korean-color)' : 'var(--korean-theme2)';
+        qPane.innerHTML = `<h3 style="margin-bottom:15px; color:${color}; font-size:1.3rem;">📝 ${ex.title}</h3>`;
+        
         ex.questions.forEach((q, qIdx) => {
-            let opts = q.opts.map((opt, oIdx) => `<label><input type="radio" name="q_${idx}_${qIdx}" value="${oIdx}"> <b>${oIdx+1})</b> ${opt}</label>`).join('');
-            html += `
-            <div class="q-item-kor">
-                <div style="font-weight:bold; margin-bottom:10px; font-size:1.05rem;">${q.q}</div>
-                <div class="q-options">${opts}</div>
-                <button class="q-btn" style="background:var(--korean-color); margin-top:10px;" onclick="checkKorAns(this, ${q.a}, '${q.exp}')">정답 확인</button>
-                <div class="ans-kor"></div>
-            </div>`;
+            let opts = q.options.map((opt, oIdx) => `<label><input type="radio" name="q_${ex.id}_${qIdx}" value="${oIdx}"> <b>${oIdx+1})</b> ${opt}</label>`).join('');
+            qPane.innerHTML += `
+                <div class="q-item">
+                    <div class="q-text">${q.q}</div>
+                    <div class="q-options">${opts}</div>
+                    <button class="btn-check-kor ${themeId===1?'btn-theme1':'btn-theme2'}" onclick="checkAns(this, ${q.a}, '${q.exp.replace(/'/g, "\\'")}')">정답 확인</button>
+                    <div class="ans-content-kor"></div>
+                </div>
+            `;
         });
-        qPane.innerHTML = html
+    }
+
+    // 정답 체크
+    function checkAns(btn, correctIdx, exp) {
+        const qItem = btn.parentElement;
+        let selected = -1;
+        qItem.querySelectorAll('input').forEach((r, i) => { if(r.checked) selected = i; });
+        const ansDiv = qItem.querySelector('.ans-content-kor');
+        ansDiv.style.display = 'block';
+
+        if(selected === -1) {
+            ansDiv.innerHTML = `⚠️ <b>보기를 선택해주세요!</b>`;
+            ansDiv.style.background = "#fee2e2"; ansDiv.style.color = "#ef4444";
+        } else if(selected === correctIdx) {
+            ansDiv.innerHTML = `⭕ <b>정답!</b><br><br><span style="color:#475569;">[해설] ${exp}</span>`;
+            ansDiv.style.background = "#eff6ff"; ansDiv.style.color = "var(--primary)";
+        } else {
+            ansDiv.innerHTML = `❌ <b>오답 (정답: ${correctIdx+1}번)</b><br><br><span style="color:#475569;">[해설] ${exp}</span>`;
+            ansDiv.style.background = "#fee2e2"; ansDiv.style.color = "#ef4444";
+        }
+    }
+
+    // 초기 화면 설정
+    window.onload = () => {
+        initGenQuiz('history-quiz-box', historyData);
+        initGenQuiz('info-quiz-box', infoData);
+        switchSubject('korean');
+    };
+</script>
+</body>
+</html>
