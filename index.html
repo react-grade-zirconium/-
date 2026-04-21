@@ -1,52 +1,161 @@
----
-title: "[한국사] I. 전근대 시대의 전개 - 고대 국가의 성립과 발전"
-excerpt: "고구려, 백제, 신라 삼국의 성립과 통일 과정을 정리하고 문제를 풀어봅시다."
-categories:
-  - History
-tags:
-  - [한국사, 시험공부, 고대사]
-toc: true
-toc_sticky: true
----
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>한국사 시험 완벽 정리</title>
+    <style>
+        :root {
+            --primary-blue: #4a90e2;
+            --bg-gray: #f5f7f9;
+            --card-bg: #ffffff;
+            --text-dark: #333;
+            --accent-yellow: #fff9e6;
+            --border-yellow: #ffeeba;
+        }
+        body { font-family: 'Pretendard', sans-serif; background-color: var(--bg-gray); margin: 0; padding: 20px; color: var(--text-dark); }
+        .container { max-width: 900px; margin: 0 auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        
+        /* 헤더 부분 */
+        .header { text-align: center; margin-bottom: 30px; }
+        .header h1 { font-size: 24px; margin-bottom: 5px; }
+        .header p { color: #888; font-size: 14px; }
 
-## 📌 핵심 요약 정리
+        /* 탭 디자인 */
+        .tabs { display: flex; border-bottom: 2px solid #eee; margin-bottom: 25px; overflow-x: auto; white-space: nowrap; }
+        .tab { padding: 10px 20px; cursor: pointer; font-weight: bold; color: #666; border-bottom: 3px solid transparent; }
+        .tab.active { color: var(--primary-blue); border-bottom: 3px solid var(--primary-blue); }
 
-### 1. 삼국의 성립과 중앙 집권화
-* **고구려:** 태조왕 때 옥저 정복, 고국천왕 때 부자 상속제 확립 및 5부 개편을 통해 중앙 집권 국가의 기틀을 마련함.
-* **백제:** 고이왕 때 관등제를 정비하고 관복을 제정하였으며, 근초고왕 때 요서 지방 진출 및 마한 전 지역을 통합하며 전성기를 맞이함.
-* **신라:** 내물왕 때 김씨의 왕위 세습권 확립, '마립간' 칭호 사용. 광개토 대왕의 도움으로 왜를 격퇴하며 성장함.
+        /* 섹션 제목 */
+        .section-title { font-size: 18px; color: #2c3e50; margin: 20px 0 15px; display: flex; align-items: center; }
+        .section-title i { margin-right: 8px; }
 
-### 2. 가야 연맹의 변천
-* **금관가야:** 전기 가야 연맹의 주도권 장악 (해상 교역 발달).
-* **대가야:** 5세기 후반 후기 가야 연맹 주도, 진흥왕에 의해 멸망(562).
+        /* 핵심 흐름 박스 */
+        .flow-box { background: var(--accent-yellow); border: 1px solid var(--border-yellow); border-radius: 12px; padding: 15px; margin-bottom: 25px; }
+        .flow-box b { color: #d4a017; }
 
----
+        /* 카드 레이아웃 */
+        .grid-container { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
+        .card { background: #f8f9fa; border-radius: 15px; padding: 20px; border: 1px solid #eee; }
+        .card h3 { font-size: 16px; margin-top: 0; display: flex; align-items: center; }
+        .card h3 span { margin-right: 8px; }
 
-## ✍️ 확인 문제
+        /* 표 디자인 */
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; background: white; border-radius: 8px; overflow: hidden; }
+        th, td { border: 1px solid #eee; padding: 10px; font-size: 14px; text-align: left; }
+        th { background: #f1f3f5; font-weight: bold; }
 
-> **Q1. 다음 중 백제의 전성기를 이끌었으며, 요서 지방으로 진출하고 마한의 남은 세력을 통합한 왕은 누구인가요?**
+        /* 리스트 */
+        .step-list { padding-left: 20px; line-height: 1.8; font-size: 15px; }
+        .step-list li b { color: var(--primary-blue); }
 
-<details>
-<summary>정답 확인하기</summary>
-<div markdown="1">
-**정답: 근초고왕** **해설:** 근초고왕은 4세기 백제의 전성기를 이끈 왕으로, 남으로는 마한을 통합하고 북으로는 고구려를 공격하여 고국원왕을 전사시키기도 했습니다.
+        /* 퀴즈 섹션 */
+        .quiz-section { margin-top: 40px; border-top: 2px dashed #eee; padding-top: 30px; }
+        .quiz-card { background: #fff; border: 1.5px solid var(--primary-blue); border-radius: 12px; padding: 20px; margin-bottom: 15px; }
+        .answer-btn { background: var(--primary-blue); color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; margin-top: 10px; }
+        .answer-content { display: none; margin-top: 10px; padding: 10px; background: #eef5ff; border-radius: 5px; font-size: 14px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>📚 한국사 I 단원 완벽 정리</h1>
+        <p>씨마스 교과서 8~41p, 106~131p 핵심 요약 | 문제 총 5문항</p>
+    </div>
+
+    <div class="tabs">
+        <div class="tab active">I. 선사~고대</div>
+        <div class="tab">II. 고려 시대</div>
+        <div class="tab">📝 실전 퀴즈</div>
+    </div>
+
+    <div id="section1">
+        <div class="section-title">📦 1. 우리 역사의 시작과 고대 국가</div>
+        
+        <div class="flow-box">
+            💡 <b>핵심 흐름:</b> 구석기/신석기 → 청동기(국가 출현) → 고조선 건국 → 철기(여러 나라의 성장)
+        </div>
+
+        <div class="card" style="width: 100%; margin-bottom: 15px;">
+            <h3>📌 청동기 시대와 고조선</h3>
+            <table>
+                <tr>
+                    <th>구분</th>
+                    <th>주요 특징</th>
+                </tr>
+                <tr>
+                    <td>사회 구조</td>
+                    <td>생산력 증대 → 사유 재산 발생 → <b>계급 사회</b> 출현</td>
+                </tr>
+                <tr>
+                    <td>고조선</td>
+                    <td>비파형 동검, 탁자식 고인돌 분포로 세력 범위 짐작</td>
+                </tr>
+                <tr>
+                    <td>8조법</td>
+                    <td>생명 존중, 노동력 중시, 사유 재산과 계급의 존재 입증</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="grid-container">
+            <div class="card">
+                <h3>✂️ 부여와 고구려</h3>
+                <ul class="step-list">
+                    <li><b>부여:</b> 5부족 연맹, 영고(제천 행사), 사출도</li>
+                    <li><b>고구려:</b> 5부족 연맹, 동맹(제천 행사), 서옥제(풍습)</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3>🎨 삼한 (마한, 진한, 변한)</h3>
+                <ul class="step-list">
+                    <li><b>제정 분리:</b> 정치(군장)와 종교(천군)의 분리</li>
+                    <li><b>소도:</b> 신성 지역 존재 (천군이 다스림)</li>
+                    <li><b>경제:</b> 벼농사 발달, 변한의 철 수출</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="section2">
+        <div class="section-title">🛡️ 2. 고려의 성립과 체제 정비</div>
+        
+        <div class="card" style="width: 100%; margin-bottom: 15px;">
+            <h3>📍 고려 태조의 정책 (기틀 마련)</h3>
+            <ol class="step-list">
+                <li><b>민생 안정:</b> 취민유도(세금 감면), 흑창 설치</li>
+                <li><b>호족 포섭:</b> 정략결혼, 사심관·기인 제도 (통제와 회유)</li>
+                <li><b>북진 정책:</b> 서경 중시, 영토 확장 (청천강~영흥)</li>
+                <li><b>훈요 10조:</b> 후대 왕들이 지켜야 할 가르침</li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="quiz-section">
+        <div class="section-title">❓ 실전 테스트</div>
+        
+        <div class="quiz-card">
+            <p><b>Q1. 다음 중 고조선의 사회상을 알 수 있는 '8조법'의 내용으로 옳지 않은 것은?</b></p>
+            <p>1) 남을 죽인 자는 즉시 죽인다.<br>2) 남에게 상처를 입힌 자는 곡물로 갚는다.<br>3) 도둑질을 한 자는 노비로 삼는다.<br>4) 모든 백성은 평등하며 계급이 없다.</p>
+            <button class="answer-btn" onclick="toggleAnswer(1)">정답 확인</button>
+            <div id="ans1" class="answer-content">정답: <b>4번</b><br>해설: 8조법을 통해 노비의 존재와 사유 재산, 계급이 존재했음을 알 수 있습니다.</div>
+        </div>
+
+        <div class="quiz-card">
+            <p><b>Q2. 고려 광종이 호족의 세력을 약화시키고 왕권을 강화하기 위해 실시한 제도는?</b></p>
+            <button class="answer-btn" onclick="toggleAnswer(2)">정답 확인</button>
+            <div id="ans2" class="answer-content">정답: <b>노비안검법, 과거제</b><br>해설: 억울하게 노비가 된 자를 양인으로 해방시켜 호족의 경제/군사 기반을 약화시켰습니다.</div>
+        </div>
+    </div>
 </div>
-</details>
 
-> **Q2. 신라 내물왕 시기에 대한 설명으로 옳은 것을 모두 고르세요.**
-> * 가. '마립간'이라는 칭호를 처음 사용하였다.
-> * 나. 불교를 공인하여 사상을 통합하였다.
-> * 다. 왜의 침입을 물리치는 과정에서 고구려 광개토 대왕의 도움을 받았다.
+<script>
+    function toggleAnswer(id) {
+        const ans = document.getElementById('ans' + id);
+        ans.style.display = (ans.style.display === 'block') ? 'none' : 'block';
+    }
+</script>
 
-<details>
-<summary>정답 확인하기</summary>
-<div markdown="1">
-**정답: 가, 다** **해설:** 불교 공인은 법흥왕 시기의 업적입니다. 내물왕은 김씨 왕위 계승권을 확립하고 고구려의 도움으로 왜를 격퇴했습니다.
-</div>
-</details>
-
----
-
-## 🚀 학습 팁
-* **지도와 함께 보기:** 삼국의 전성기(4세기 백제, 5세기 고구려, 6세기 신라) 지도를 눈에 익히는 것이 중요합니다.
-* **금석문 정리:** 광개토 대왕릉비, 단양 신라 적성비 등 각 왕의 업적이 담긴 비석을 연치시켜 외우세요.
+</body>
+</html>
