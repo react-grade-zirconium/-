@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>기후 총정리 | 통합사회</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Noto Sans KR','Malgun Gothic',sans-serif;background:#f0f4f8;color:#1a202c;font-size:14px}
+
+/* ── HEADER ── */
+.app-header{background:linear-gradient(135deg,#1a4a6e 0%,#2d7a6e 100%);color:white;padding:20px;text-align:center}
+.app-header h1{font-size:1.45rem;margin-bottom:4px;font-weight:900}
+.app-header p{opacity:.85;font-size:.83rem}
+
+/* ── TABS ── */
+.tabs{display:flex;background:white;border-bottom:2px solid #e2e8f0;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.08);overflow-x:auto;flex-wrap:nowrap}
+.tab{padding:10px 13px;cursor:pointer;font-size:.75rem;font-weight:700;color:#64748b;border-bottom:3px solid transparent;white-space:nowrap;transition:all .2s;background:none;border-top:none;border-left:none;border-right:none;font-family:inherit}
+.tab.active{color:#2d7a6e;border-bottom-color:#2d7a6e;background:#f0faf8}
+.tab:hover{background:#f1f5f9;color:#2d7a6e}
+.tab-group{display:flex;border-right:2px solid #e2e8f0;flex-shrink:0}
+
+/* ── PAGE ── */
+.page{display:none;padding:16px;max-width:960px;margin:0 auto}
+.page.active{display:block}
+
+/* ── SECTION TITLE / BADGE ── */
+.page-header{margin-bottom:16px}
+.page-header h2{font-size:1.1rem;font-weight:800;color:#2d3748;margin-bottom:4px}
+.page-header p{font-size:.83rem;color:#64748b}
+.chapter-tag{display:inline-flex;align-items:center;gap:5px;font-size:.72rem;font-weight:700;letter-spacing:1px;color:#64748b;margin-bottom:6px}
+.unit-badge{display:inline-block;padding:2px 10px;border-radius:20px;font-size:.72rem;font-weight:700;margin-bottom:10px}
+.ub-trop{background:#fef3c7;color:#92400e}
+.ub-dry{background:#fef9c3;color:#713f12}
+.ub-temp{background:#dcfce7;color:#14532d}
+.ub-cont{background:#dbeafe;color:#1e3a8a}
+.ub-polar{background:#e0f2fe;color:#0c4a6e}
+.ub-alpine{background:#fae8ff;color:#6b21a8}
+
+/* ── CARD ── */
+.card{background:white;border-radius:12px;padding:16px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,.07);border-left:4px solid #4a5568}
+.card:hover{box-shadow:0 4px 12px rgba(0,0,0,.1)}
+.card.trop{border-left-color:#f97316}
+.card.dry{border-left-color:#eab308}
+.card.temp{border-left-color:#22c55e}
+.card.cont{border-left-color:#3b82f6}
+.card.polar{border-left-color:#0ea5e9}
+.card.alpine{border-left-color:#a855f7}
+.card.blue{border-left-color:#3182ce}
+.card.green{border-left-color:#38a169}
+.card.purple{border-left-color:#805ad5}
+.card.red{border-left-color:#e53e3e}
+.card.orange{border-left-color:#dd6b20}
+.card.teal{border-left-color:#319795}
+.card-header{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.chapter-pill{font-size:.7rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:2px 8px;border-radius:20px;background:#f1f5f9;color:#64748b}
+.card h2{font-size:1rem;font-weight:800;color:#1a202c;margin-bottom:8px}
+.card h3{font-size:.9rem;font-weight:700;color:#2d3748;margin:12px 0 6px}
+.card h3:first-child{margin-top:0}
+.card p,.card li{font-size:.83rem;line-height:1.75;color:#4a5568}
+.card ul{padding-left:18px}
+.card li{margin-bottom:3px}
+
+/* ── CLIMATE STRIPS ── */
+.climate-strip{border-left:3px solid;padding:12px 14px;border-radius:0 8px 8px 0;background:#f8fafc;margin-bottom:10px;font-size:.83rem;line-height:1.8;color:#4a5568}
+.strip-trop{border-color:#f97316}
+.strip-dry{border-color:#eab308}
+.strip-temp{border-color:#22c55e}
+.strip-cont{border-color:#3b82f6}
+.strip-polar{border-color:#0ea5e9}
+.strip-alpine{border-color:#a855f7}
+
+/* ── INFO / WARN BOX ── */
+.info-box{background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:11px 14px;font-size:.83rem;line-height:1.8;color:#1e3a8a;margin:8px 0}
+.info-box b{color:#1e40af}
+.warn-box{background:#fffbeb;border:1px solid #f6ad55;border-radius:8px;padding:11px 14px;font-size:.83rem;line-height:1.8;color:#744210;margin:8px 0}
+.warn-box b{color:#92400e}
+.tip-box{background:linear-gradient(135deg,#fffbeb,#fef3c7);border:1px solid #f6ad55;border-radius:10px;padding:11px 14px;margin-bottom:12px;font-size:.83rem;color:#744210;line-height:1.6}
+
+/* ── TABLE ── */
+table{width:100%;border-collapse:collapse;font-size:.8rem;margin-top:7px}
+th{background:#2d7a6e;color:white;padding:8px 9px;text-align:left}
+td{padding:7px 9px;border-bottom:1px solid #e2e8f0;vertical-align:top}
+tr:nth-child(even) td{background:#f9fafb}
+tr:hover td{background:#f0faf8}
+
+/* ── GRID ── */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+@media(max-width:640px){.grid2,.grid3{grid-template-columns:1fr}}
+
+/* ── BADGES / KEYWORDS ── */
+.badge{display:inline-block;padding:2px 8px;border-radius:20px;font-size:.72rem;font-weight:700;margin-right:3px}
+.keyword{display:inline-block;background:#f1f5f9;border:1px solid #e2e8f0;border-radius:5px;padding:2px 7px;font-size:.75rem;margin:2px;color:#4a5568}
+.hl{color:#2d7a6e;font-weight:700}
+
+/* ── CLIMATE SUB-CARD ── */
+.climate-card{background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:12px 14px;font-size:.83rem;line-height:1.8;color:#4a5568}
+.climate-card h3{font-size:.85rem;font-weight:700;margin-bottom:6px;margin-top:0;color:#2d3748}
+
+/* ── FILTER TABS ── */
+.filter-tabs{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap}
+.filter-btn{padding:6px 14px;border-radius:20px;border:1px solid #e2e8f0;background:#f8fafc;color:#64748b;font-family:inherit;font-size:.75rem;font-weight:600;cursor:pointer;transition:all .18s}
+.filter-btn:hover{border-color:#2d7a6e;color:#2d7a6e}
+.filter-btn.active{background:#2d7a6e;border-color:#2d7a6e;color:white;font-weight:700}
+.filter-btn.f-trop.active{background:#f97316;border-color:#f97316}
+.filter-btn.f-dry.active{background:#eab308;border-color:#eab308;color:#111}
+.filter-btn.f-temp.active{background:#22c55e;border-color:#22c55e;color:#111}
+.filter-btn.f-cont.active{background:#3b82f6;border-color:#3b82f6}
+.filter-btn.f-cold.active{background:#0ea5e9;border-color:#0ea5e9}
+.filter-btn.f-alpine.active{background:#a855f7;border-color:#a855f7}
+
+/* ── QUIZ ── */
+.quiz-wrap{max-width:720px}
+.quiz-topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;background:white;border:1px solid #e2e8f0;border-radius:10px;padding:12px 16px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.quiz-progress-label{font-size:.83rem;color:#64748b;font-weight:600}
+.quiz-score-pill{background:#f1f5f9;border:1px solid #e2e8f0;border-radius:20px;padding:4px 12px;font-size:.83rem;font-weight:700;color:#1a202c}
+.progress-bar-wrap{background:#e2e8f0;border-radius:6px;height:5px;margin-bottom:16px;overflow:hidden}
+.progress-bar-fill{height:100%;border-radius:6px;background:linear-gradient(90deg,#2d7a6e,#38a169);transition:width .4s}
+
+.q-card{background:white;border-radius:12px;padding:20px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,.07)}
+.q-num{font-size:.72rem;font-weight:700;letter-spacing:1px;color:#94a3b8;text-transform:uppercase;margin-bottom:8px}
+.q-text{font-size:.95rem;font-weight:600;line-height:1.7;margin-bottom:16px;color:#1a202c}
+.options{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+@media(max-width:560px){.options{grid-template-columns:1fr}}
+
+.opt-btn{padding:10px 13px;background:#f8fafc;border:2px solid #e2e8f0;border-radius:8px;color:#4a5568;font-size:.82rem;font-family:inherit;cursor:pointer;transition:all .15s;text-align:left;line-height:1.5}
+.opt-btn:hover:not(:disabled){border-color:#2d7a6e;background:#f0faf8;color:#2d7a6e}
+.opt-btn.correct{background:#f0fff4;border-color:#38a169;color:#276749;font-weight:700}
+.opt-btn.wrong{background:#fff5f5;border-color:#e53e3e;color:#c53030}
+.opt-btn:disabled{cursor:default}
+
+.explanation{background:#fffbeb;border:1px solid #f6ad55;border-left:3px solid #f6ad55;border-radius:0 8px 8px 0;padding:10px 13px;margin-top:10px;font-size:.8rem;line-height:1.7;color:#744210;display:none}
+.explanation.show{display:block}
+
+/* ── SUBJ INPUT ── */
+.subj-input{width:100%;padding:10px 13px;background:#f8fafc;border:2px solid #e2e8f0;border-radius:8px;color:#1a202c;font-family:inherit;font-size:.9rem;margin-bottom:8px;transition:border-color .15s}
+.subj-input:focus{outline:none;border-color:#2d7a6e}
+.subj-input::placeholder{color:#94a3b8}
+
+/* ── BUTTONS ── */
+.btn{padding:9px 20px;border:none;border-radius:8px;font-family:inherit;font-size:.83rem;font-weight:700;cursor:pointer;transition:all .18s}
+.btn-primary{background:#2d7a6e;color:white}
+.btn-primary:hover{background:#235f55}
+.btn-secondary{background:#f1f5f9;border:1px solid #e2e8f0;color:#64748b}
+.btn-secondary:hover{border-color:#cbd5e1;color:#1a202c}
+.btn-danger{background:#e53e3e;color:white}
+.btn-danger:hover{background:#c53030}
+
+/* ── RESULT BOX ── */
+.result-box{text-align:center;padding:40px 20px;background:white;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,.07)}
+.result-box .big-score{font-size:3.5rem;font-weight:900;color:#2d7a6e;line-height:1;margin-bottom:6px}
+.result-box .result-label{font-size:1rem;color:#64748b;margin-bottom:20px}
+
+/* ── GRAPH QUIZ ── */
+.graph-quiz-wrap{max-width:780px}
+.timer-outer{height:6px;background:#e2e8f0;border-radius:4px;overflow:hidden;margin-bottom:12px}
+.timer-inner{height:100%;border-radius:4px;transition:width 1s linear,background .4s}
+.timer-label{font-size:.75rem;color:#94a3b8;text-align:right;margin-bottom:2px}
+.graph-container{background:white;border:1px solid #e2e8f0;border-radius:12px;padding:18px;margin-bottom:14px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+canvas#climateGraph{width:100%;height:260px;display:block}
+.graph-options{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+.streak-badge{background:linear-gradient(135deg,#f97316,#eab308);color:#111;border-radius:20px;padding:3px 10px;font-size:.72rem;font-weight:700;margin-left:6px}
+.graph-answer-overlay{display:none;background:#fffbeb;border:1px solid #f6ad55;border-radius:8px;padding:12px;margin-top:8px;font-size:.83rem;line-height:1.7;color:#744210}
+.speed-result{text-align:center;padding:40px 20px;background:white;border:1px solid #e2e8f0;border-radius:12px}
+.speed-result .big{font-size:3rem;font-weight:900;color:#2d7a6e}
+
+/* ── MAP QUIZ ── */
+.map-quiz-wrap{max-width:880px}
+.map-container{position:relative;border-radius:12px;overflow:hidden;border:1px solid #e2e8f0;background:#f8fafc;width:100%;height:320px}
+.map-container iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none;display:block;pointer-events:none}
+.map-pin{position:absolute;left:50%;top:50%;transform:translate(-50%,-100%);animation:pinDrop .4s ease;z-index:10;pointer-events:none}
+@keyframes pinDrop{from{transform:translate(-50%,-130%) scale(.5);opacity:0}to{transform:translate(-50%,-100%) scale(1);opacity:1}}
+.pin-svg{width:32px;height:42px;filter:drop-shadow(0 3px 8px rgba(0,0,0,.4))}
+.map-options{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0}
+.question-info{background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:10px 14px;margin-bottom:12px;font-size:.85rem;color:#1e3a8a}
+.question-info strong{color:#1d4ed8}
+
+/* ── START SCREEN ── */
+.start-screen{text-align:center;padding:50px 20px;background:white;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.start-screen .start-icon{font-size:48px;margin-bottom:14px}
+.start-screen h2{font-size:1.4rem;font-weight:800;margin-bottom:8px;color:#1a202c}
+.start-screen p{font-size:.83rem;color:#64748b;margin-bottom:24px;line-height:1.7}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.fade-in{animation:fadeUp .3s ease}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:#f1f5f9}
+::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:4px}
+</style>
+</head>
+<body>
+
+<div class="app-header">
+  <h1>🌍 기후 총정리</h1>
+  <p>통합사회 · 기후와 생활 | 개념·객관식·주관식·고난도·게임 올인원</p>
+</div>
+
+<div class="tabs">
+  <div class="tab-group">
+    <button class="tab active" onclick="showPage('개념',this)">📖 개념 정리</button>
+  </div>
+  <div class="tab-group">
+    <button class="tab" onclick="showPage('객관식',this)">✅ 객관식 <small>50+</small></button>
+    <button class="tab" onclick="showPage('주관식',this)">✏️ 주관식 <small>20</small></button>
+    <button class="tab" onclick="showPage('고난도',this)">🔥 고난도 <small>15</small></button>
+  </div>
+  <div class="tab-group">
+    <button class="tab" onclick="showPage('그래프',this)">📊 그래프 퀴즈</button>
+    <button class="tab" onclick="showPage('지도',this)">🗺️ 지도 퀴즈</button>
+  </div>
+</div>
+
+  <!-- ===== PAGE: 개념정리 ===== -->
+  <div id="page-개념" class="page active">
+
+    <div class="card fade-in">
+      <div class="card-header">
+        <span class="chapter-pill">Chapter 1</span>
+      </div>
+      <h2>🌍 자연환경과 인간 생활</h2>
+      <div class="grid2" style="margin-top:14px;">
+        <div>
+          <h3>자연환경의 정의</h3>
+          <p>기후와 지형, 식생, 토양 등 인간 생활을 둘러싸고 있는 <span class="hl">자연계의 모든 요소</span>가 이루는 환경</p>
+          <div class="info-box" style="margin-top:10px;">
+            <b>자연환경의 역할</b><br>
+            • 삶의 터전: 음식, 도구, 에너지, 자원 등 생활의 <span class="hl">토대</span><br>
+            • 지역마다 자연환경이 다름 → 산업과 생활 모습도 다르게 나타남
+          </div>
+        </div>
+        <div>
+          <h3>기후의 정의</h3>
+          <p>특정한 지역에서 오랜 기간에 걸쳐 나타나는 <span class="hl">대기의 평균적인 상태</span></p>
+          <div class="info-box" style="margin-top:10px;">
+            <b>기후 vs 기상</b><br>
+            기후 = <span class="hl">30년</span> × 기상 (평균화)
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card fade-in">
+      <div class="card-header"><span class="chapter-pill">Chapter 2</span></div>
+      <h2>🌡️ 기후 요소와 기후 요인</h2>
+      <div class="grid2" style="margin-top:14px;">
+        <div class="climate-strip strip-trop">
+          <b style="color:#f97316;">기후 요소</b> — 지역별 기후의 특성을 설명하는 요소<br>
+          <div style="margin-top:8px;">
+            <span class="keyword">기온</span><span class="keyword">바람</span><span class="keyword">습도</span><span class="keyword">강수</span><span class="keyword">일조량</span>
+          </div>
+        </div>
+        <div class="climate-strip strip-dry">
+          <b style="color:#eab308;">기후 요인</b> — 기후 요소의 지역적 차이에 영향을 주는 요인<br>
+          <div style="margin-top:8px;">
+            <span class="keyword">위도</span><span class="keyword">해발고도</span><span class="keyword">수륙분포</span><span class="keyword">지형</span><span class="keyword">해류</span><span class="keyword">기단</span><span class="keyword">전선</span>
+          </div>
+        </div>
+      </div>
+      <div class="info-box" style="margin-top:12px;">
+        <b>🌞 세계의 기후 분포 원리</b><br>
+        위도대별로 받는 <span class="hl">태양 에너지의 열량 차이</span>에 따라 기온과 강수량 차이 발생<br>
+        → 고위도로 갈수록: 열대 → 건조 → 온대 → 냉대 → 한대 순서로 분포<br>
+        → 건조 기후는 다양한 기후 요인이 작용하여 위도와 상관없이 세계 곳곳에 분포
+      </div>
+    </div>
+
+    <div class="card fade-in">
+      <div class="card-header"><span class="chapter-pill">Chapter 3</span></div>
+      <h2>🗂️ 쾨펜의 기후 구분</h2>
+      <p style="font-size:13px;color:#94a3b8;margin-bottom:14px;">독일 기후학자 <b style="color:#2d7a6e;">쾨펜</b>이 세계의 <b>식생</b>을 기준으로 분류</p>
+      <table>
+        <tr><th>1차 구분</th><th>기준</th><th>2·3차 구분</th><th>핵심 특징</th></tr>
+        <tr>
+          <td><span class="badge" style="background:#fef3c7;color:#f97316;">열대 (A)</span></td>
+          <td>최한월 ≥ <span class="hl">18℃</span></td>
+          <td>열대 우림 / 사바나 / 몬순 / 열대 고산</td>
+          <td>연중 고온, 연교차 적음</td>
+        </tr>
+        <tr>
+          <td><span class="badge" style="background:#fef9c3;color:#eab308;">건조 (B)</span></td>
+          <td>연 강수량 500mm↓, 증발량 &gt; 강수량</td>
+          <td>스텝 / 사막</td>
+          <td>일교차 &gt; 연교차</td>
+        </tr>
+        <tr>
+          <td><span class="badge" style="background:#dcfce7;color:#22c55e;">온대 (C)</span></td>
+          <td>최한월 -3℃~18℃, 최난월 ≥ 10℃</td>
+          <td>서안해양성 / 지중해성 / 온대겨울건조 / 온난습윤</td>
+          <td>사계절 뚜렷, 인구 밀집</td>
+        </tr>
+        <tr>
+          <td><span class="badge" style="background:#dbeafe;color:#3b82f6;">냉대 (D)</span></td>
+          <td>최한월 &lt; -3℃, 최난월 ≥ 10℃</td>
+          <td>냉대 습윤 / 냉대 겨울 건조</td>
+          <td>타이가(침엽수림) 발달</td>
+        </tr>
+        <tr>
+          <td><span class="badge" style="background:#e0f2fe;color:#0ea5e9;">한대 (E)</span></td>
+          <td>최난월 &lt; <span class="hl">10℃</span></td>
+          <td>툰드라 / 빙설</td>
+          <td>인간 생활에 불리</td>
+        </tr>
+        <tr>
+          <td><span class="badge" style="background:#fae8ff;color:#a855f7;">고산 (H)</span></td>
+          <td>해발고도 높은 산지</td>
+          <td>온대 고산 / 열대 고산</td>
+          <td>같은 위도보다 기온 낮음</td>
+        </tr>
+      </table>
+      <div class="warn-box" style="margin-top:14px;">
+        <b>🌡️ 기온 기준 암기</b><br>
+        열대(최한) ≥ 18℃ &nbsp;|&nbsp; 온대(최한) -3℃~18℃ &nbsp;|&nbsp; 냉대(최한) &lt; -3℃, (최난) ≥ 10℃<br>
+        툰드라(최난) 0~10℃ &nbsp;|&nbsp; 빙설(최난) &lt; 0℃
+      </div>
+    </div>
+
+    <div class="card fade-in">
+      <div class="card-header"><span class="chapter-pill">Chapter 4</span></div>
+      <h2>🌴 열대 기후 (A)</h2>
+      <div class="climate-strip strip-trop">
+        <b style="color:#f97316;">[공통]</b> 최한월 ≥ 18℃, 연중 고온, <b>일교차 &gt; 연교차</b>
+      </div>
+      <div class="grid3" style="margin-top:12px;">
+        <div class="climate-card">
+          <h3 style="color:#f97316;">🌧️ 열대 우림</h3>
+          <p><b>강수:</b> 연중 많음, 스콜 자주<br>
+          <b>식생:</b> 열대우림(정글)<br>
+          <b>농업:</b> 이동식 화전, 플랜테이션<br>
+          <b>가옥:</b> 고상가옥(개방적)<br>
+          <b>음식:</b> 향신료, 기름 요리<br>
+          <b>분포:</b> 아마존, 동남아, 기니만</p>
+        </div>
+        <div class="climate-card">
+          <h3 style="color:#f97316;">🦒 사바나</h3>
+          <p><b>강수:</b> 뚜렷한 건기·우기<br>
+          ↳ 북반구 건기: 1월<br>
+          ↳ 남반구 건기: 7월<br>
+          <b>식생:</b> 사바나 초원<br>
+          <b>관광:</b> 야생동물 사파리<br>
+          <b>위치:</b> 열대우림 주변</p>
+        </div>
+        <div class="climate-card">
+          <h3 style="color:#f97316;">🌾 열대 계절풍(몬순)</h3>
+          <p><b>강수:</b> 짧은 건기 + 긴 우기<br>
+          우기 강수량 &gt; 열대우림<br>
+          <b>농업:</b> 2기작 가능<br>
+          <b>분포:</b> 주로 아시아<br>
+          <b>특징:</b> 벼 재배 발달</p>
+        </div>
+      </div>
+      <div class="info-box" style="margin-top:12px;">
+        <b>🌱 이동식 화전 vs 플랜테이션</b>
+        <table style="margin-top:8px;">
+          <tr><th>구분</th><th>이동식 화전</th><th>플랜테이션</th></tr>
+          <tr><td>성격</td><td>전통 농업</td><td>상업적 농업</td></tr>
+          <tr><td>방법</td><td>숲 태워 재→거름, 지력 소진 시 이동</td><td>선진국 자본·기술 + 현지 저렴 노동력</td></tr>
+          <tr><td>작물</td><td>카사바, 얌, 타로 (식량)</td><td>카카오, 바나나, 커피, 사탕수수 (기호)</td></tr>
+        </table>
+      </div>
+      <div class="climate-strip strip-alpine" style="margin-top:12px;">
+        <b style="color:#a855f7;">🏔️ 열대 고산(상춘기후)</b> — 연중 15℃ 내외, 연교차 작음·일교차 큼<br>
+        의복: 판초·챙 넓은 모자 / 생활: 감자·옥수수, 라마·알파카<br>
+        분포: 안데스(에콰도르 키토), 아프리카 동부 고원
+      </div>
+    </div>
+
+    <div class="card fade-in">
+      <div class="card-header"><span class="chapter-pill">Chapter 5</span></div>
+      <h2>🏜️ 건조 기후 (B)</h2>
+      <div class="climate-strip strip-dry">
+        <b style="color:#eab308;">[공통]</b> 연 강수량 500mm↓, 증발량 &gt; 강수량, <b>일교차 &gt; 연교차</b>
+      </div>
+      <div class="grid2" style="margin-top:12px;">
+        <div class="climate-card">
+          <h3 style="color:#eab308;">🏜️ 사막 기후</h3>
+          <p><b>강수:</b> 연 250mm↓, 식생 미약<br>
+          <b>의복:</b> 헐렁하고 긴 옷 (모래·햇볕 차단)<br>
+          <b>음식:</b> 밀과 육류 중심<br>
+          <b>가옥:</b> 흙벽돌집 — 두꺼운 벽, 평평한 지붕, 작은 창문, 좁은 골목<br>
+          <b>농업:</b> 오아시스·외래하천 이용, 유목<br>
+          <b>외래하천:</b> 발원지가 다른 지역인 하천 (나일강)</p>
+        </div>
+        <div class="climate-card">
+          <h3 style="color:#eab308;">🌾 스텝 기후</h3>
+          <p><b>강수:</b> 연 250~500mm, 키 작은 풀 초원<br>
+          <b>의복:</b> 가축 가죽·털 옷<br>
+          <b>음식:</b> 고기·젖 중심 (치즈 등)<br>
+          <b>가옥:</b> 이동식 천막집 (<b>게르/유르트</b>)<br>
+          <b>농업:</b> 유목 발달, 관개농업(밀)<br>
+          <b>분포:</b> 중앙아시아, 몽골 (대륙 내부)</p>
+        </div>
+      </div>
+      <div class="info-box" style="margin-top:10px;">
+        <b>📌 일교차 &gt; 연교차인 이유</b><br>
+        수분(수증기)이 부족 → 태양열 흡수·방출이 쉬움 → 낮과 밤의 기온차 극단적
+      </div>
+    </div>
+
+    <div class="card fade-in">
+      <div class="card-header"><span class="chapter-pill">Chapter 6</span></div>
+      <h2>🌿 온대 기후 (C)</h2>
+      <div class="climate-strip strip-temp">
+        <b style="color:#22c55e;">[공통]</b> 최한월 -3℃~18℃, 사계절 뚜렷, 기후 온화, <b>세계적 인구 밀집 지역</b>
+      </div>
+      <div class="grid2" style="margin-top:12px;">
+        <div class="climate-card">
+          <h3 style="color:#22c55e;">① 서안 해양성</h3>
+          <p><b>분포:</b> 서부 유럽, 북아메리카 북서 해안<br>
+          <b>강수:</b> 연중 고름 (편서풍)<br>
+          <b>특징:</b> 여름 서늘·겨울 온난<br>
+          <b>농업:</b> <b>낙농업</b> 발달 (서늘한 여름·목초)<br>
+          <b>연교차:</b> 서안 &lt; 동안</p>
+        </div>
+        <div class="climate-card">
+          <h3 style="color:#22c55e;">② 지중해성</h3>
+          <p><b>분포:</b> 남부 유럽, 북아프리카<br>
+          <b>특징:</b> <b>여름 고온 건조</b>, 겨울 온난 습윤<br>
+          <b>농업:</b> 여름 수목농업(올리브·포도·오렌지) / 겨울 밀<br>
+          <b>가옥:</b> 흰색 외벽 (햇볕 반사), 작은 창문<br>
+          <b>기타:</b> 비이아(이목) 발달</p>
+        </div>
+        <div class="climate-card">
+          <h3 style="color:#22c55e;">③ 온대 겨울 건조</h3>
+          <p><b>분포:</b> 동북아시아 (한국, 중국 내륙)<br>
+          <b>특징:</b> <b>여름 고온 다습</b>, 겨울 건조 (계절풍)<br>
+          <b>농업:</b> 벼농사 발달<br>
+          <b>연교차:</b> 큰 편 (25℃ 이상)</p>
+        </div>
+        <div class="climate-card">
+          <h3 style="color:#22c55e;">④ 온난 습윤</h3>
+          <p><b>분포:</b> 중국 남동부, 일본 남서부, 남아메리카 남동부<br>
+          <b>특징:</b> 여름 매우 덥고 습함<br>
+          강수의 계절 분포 비교적 고름<br>
+          겨울에도 비교적 온화</p>
+        </div>
+      </div>
+      <div class="info-box" style="margin-top:10px;">
+        <b>📌 편서풍과 지중해성 기후</b><br>
+        여름: 편서풍대가 고위도 이동 → 아열대 고압대 영향 → <b>건조</b><br>
+        겨울: 편서풍대가 저위도 이동 → 편서풍 영향 → <b>습윤</b>
+      </div>
+    </div>
+
+    <div class="card fade-in">
+      <div class="card-header"><span class="chapter-pill">Chapter 7</span></div>
+      <h2>🌲 냉대 & 한대 기후 (D·E)</h2>
+      <div class="grid2">
+        <div>
+          <div class="climate-strip strip-cont">
+            <b style="color:#3b82f6;">냉대 기후 (D)</b>
+            <p style="font-size:13px;line-height:1.8;margin-top:8px;">
+            <b>기준:</b> 최한월 &lt; -3℃, 최난월 ≥ 10℃<br>
+            <b>분포:</b> 러시아, 북유럽, 캐나다, 알래스카<br>
+            <b>식생:</b> <b>타이가</b>(침엽수림 — 소나무·전나무)<br>
+            <b>가옥:</b> 통나무집<br>
+            <b>산업:</b> 임업·제지·펄프 발달<br>
+            <b>구분:</b> 냉대 습윤 / 냉대 겨울 건조
+            </p>
+          </div>
+        </div>
+        <div>
+          <div class="climate-strip strip-polar">
+            <b style="color:#0ea5e9;">한대 기후 (E)</b>
+            <p style="font-size:13px;line-height:1.8;margin-top:8px;">
+            <b>기준:</b> 최난월 &lt; 10℃<br>
+            <b>분포:</b> 북극해 연안, 그린란드, 남극<br>
+            <b>의복:</b> 동물 가죽·털 — 두껍고 무거운 옷<br>
+            <b>음식:</b> 육류 중심 + <b>저장 음식</b>(냉동·훈제·건조)<br>
+            <b>생활:</b> 순록·운록 유목
+            </p>
+          </div>
+          <div class="climate-strip strip-polar" style="margin-top:8px;border-color:#6880a0;">
+            <b>툰드라:</b> 최난월 0~10℃, 이끼·풀, 고상가옥(<b>폐쇄적</b>)<br>
+            <b>빙설:</b> 최난월 &lt; 0℃, 연중 빙하, 이글루
+          </div>
+        </div>
+      </div>
+      <div class="warn-box" style="margin-top:10px;">
+        <b>📌 고상가옥 비교 (필수 암기)</b><br>
+        열대 고상가옥: 습기·벌레 피해 → <b>개방적</b> 구조<br>
+        툰드라 고상가옥: 영구동토층 위 — 눈 녹아도 무너지지 않도록 → <b>폐쇄적</b> 구조
+      </div>
+    </div>
+
+    <div class="card fade-in">
+      <div class="card-header"><span class="chapter-pill">Chapter 8</span></div>
+      <h2>⛰️ 고산 기후 (H)</h2>
+      <div class="climate-strip strip-alpine">
+        <b style="color:#a855f7;">[공통]</b> 해발고도 높은 산지 → 같은 위도보다 기온 낮음
+      </div>
+      <div class="grid2" style="margin-top:12px;">
+        <div class="climate-card">
+          <h3 style="color:#a855f7;">온대 고산</h3>
+          <p>한대 기후와 유사 → 인간 거주 어려움<br>
+          알프스, 히말라야, 칠레안 산맥</p>
+        </div>
+        <div class="climate-card">
+          <h3 style="color:#a855f7;">열대 고산 (상춘기후)</h3>
+          <p><b>분포:</b> 안데스(키토), 아프리카 동부 고원<br>
+          <b>특징:</b> 연중 봄처럼 온화, 연교차 작음·일교차 큼<br>
+          <b>의복:</b> 판초·챙 넓은 모자<br>
+          <b>생활:</b> 감자·옥수수, 라마·알파카<br>
+          <b>도시:</b> 연중 온화 → 고산 도시 발달</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card fade-in">
+      <div class="card-header"><span class="chapter-pill">개념</span></div>
+      <h2>💧 비열</h2>
+      <div class="info-box">
+        <b>비열의 정의:</b> 어떤 물질 1g의 온도를 1℃ 올리는 데 필요한 열량<br>
+        <b>수분 함유량 많을수록 비열이 크다</b> → 온도 변화가 완만
+      </div>
+      <p style="font-size:13px;margin-top:10px;line-height:1.8;color:#4a5568;">
+        물(바다) 비열 &gt; 육지 비열<br>
+        → 바다 주변: 온도 변화 완만 (<b>연교차 작음</b>)<br>
+        → 대륙 내부: 온도 변화 급격 (<b>연교차 큼</b>)
+      </p>
+    </div>
+
+  </div><!-- /page-개념 -->
+
+  <!-- ===== PAGE: 객관식 ===== -->
+  <div id="page-객관식" class="page">
+    <span class="unit-badge ub-temp">기후 문제풀이</span>
+    <div class="tip-box">💡 기후 유형별로 필터하여 풀어보세요.</div>
+    <div class="quiz-wrap">
+      <div class="filter-tabs" id="filter-tabs-obj">
+        <button class="filter-btn active" onclick="setClimateTab('obj','all',this)">전체</button>
+        <button class="filter-btn f-trop" onclick="setClimateTab('obj','열대',this)">🌴 열대</button>
+        <button class="filter-btn f-dry" onclick="setClimateTab('obj','건조',this)">🏜️ 건조</button>
+        <button class="filter-btn f-temp" onclick="setClimateTab('obj','온대',this)">🌿 온대</button>
+        <button class="filter-btn f-cold" onclick="setClimateTab('obj','냉대한대',this)">🌲 냉대·한대</button>
+        <button class="filter-btn f-alpine" onclick="setClimateTab('obj','고산',this)">⛰️ 고산</button>
+      </div>
+      <div class="quiz-topbar">
+        <span class="quiz-progress-label" id="obj-progress">1 / ? 문제</span>
+        <span class="quiz-score-pill" id="obj-score-badge">점수: 0</span>
+      </div>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" id="obj-progress-bar" style="width:0%"></div>
+      </div>
+      <div id="obj-quiz-area"></div>
+    </div>
+  </div>
+
+  <!-- ===== PAGE: 주관식 ===== -->
+  <div id="page-주관식" class="page">
+    <span class="unit-badge ub-cont">기후 문제풀이</span>
+    <div class="tip-box">💡 핵심 키워드를 직접 입력해 보세요.</div>
+    <div class="quiz-wrap">
+      <div class="filter-tabs" id="filter-tabs-subj">
+        <button class="filter-btn active" onclick="setClimateTab('subj','all',this)">전체</button>
+        <button class="filter-btn f-trop" onclick="setClimateTab('subj','열대',this)">🌴 열대</button>
+        <button class="filter-btn f-dry" onclick="setClimateTab('subj','건조',this)">🏜️ 건조</button>
+        <button class="filter-btn f-temp" onclick="setClimateTab('subj','온대',this)">🌿 온대</button>
+        <button class="filter-btn f-cold" onclick="setClimateTab('subj','냉대한대',this)">🌲 냉대·한대</button>
+        <button class="filter-btn f-alpine" onclick="setClimateTab('subj','고산',this)">⛰️ 고산</button>
+      </div>
+      <div class="quiz-topbar">
+        <span class="quiz-progress-label" id="subj-progress">1 / ? 문제</span>
+        <span class="quiz-score-pill" id="subj-score-badge">점수: 0</span>
+      </div>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" id="subj-progress-bar" style="width:0%"></div>
+      </div>
+      <div id="subj-quiz-area"></div>
+    </div>
+  </div>
+
+  <!-- ===== PAGE: 고난도 ===== -->
+  <div id="page-고난도" class="page">
+    <span class="unit-badge ub-trop">심화</span>
+    <div class="tip-box">💡 개념을 심층적으로 이해해야 풀 수 있는 문제들입니다.</div>
+    <div class="quiz-wrap">
+      <div class="quiz-topbar">
+        <span class="quiz-progress-label" id="hard-progress">1 / 15 문제</span>
+        <span class="quiz-score-pill" id="hard-score-badge">점수: 0</span>
+      </div>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" id="hard-progress-bar" style="width:0%"></div>
+      </div>
+      <div id="hard-quiz-area"></div>
+    </div>
+  </div>
+
+  <!-- ===== PAGE: 그래프 ===== -->
+  <div id="page-그래프" class="page">
+    <span class="unit-badge ub-alpine">게임</span>
+    <div class="tip-box">💡 기후 그래프(기온·강수)를 보고 기후 유형을 맞추세요! 무한 반복·연속 정답 시 보너스</div>
+    <div class="graph-quiz-wrap">
+      <div id="graph-game-area">
+        <div class="start-screen">
+          <div class="start-icon">📊</div>
+          <h2>기후 그래프 퀴즈</h2>
+          <p>기후 그래프(기온·강수)를 보고 기후 유형을 맞추세요!<br>문제 수 제한 없이 <b>무한 반복</b> · 연속 정답 시 보너스</p>
+          <button class="btn btn-primary" style="font-size:15px;padding:13px 36px;" onclick="startGraphGame()">시작하기 🚀</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== PAGE: 지도 ===== -->
+  <div id="page-지도" class="page">
+    <span class="unit-badge ub-polar">게임</span>
+    <div class="tip-box">💡 지도에 표시된 지점의 기후를 맞추세요! 10초 제한</div>
+    <div class="map-quiz-wrap">
+      <div id="map-game-area">
+        <div class="start-screen">
+          <div class="start-icon">🗺️</div>
+          <h2>세계 기후 지도 퀴즈</h2>
+          <p>지도에 표시된 지점의 기후를 맞추세요!<br>문제당 <b>10초</b> 제한</p>
+          <button class="btn btn-primary" style="font-size:15px;padding:13px 36px;" onclick="startMapGame()">시작하기 🚀</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+<script>
+// ── NAVIGATION ──
+function showPage(name, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-'+name).classList.add('active');
+  if(btn) btn.classList.add('active');
+  window.scrollTo(0,0);
+}
+
+// ── PROGRESS BAR HELPER ──
+function updateProgressBar(barId, done, total) {
+  const bar = document.getElementById(barId);
+  if(bar) bar.style.width = (total > 0 ? Math.round(done/total*100) : 0) + '%';
+}
+
+// ── QUIZ DATA ──
+const OBJ_QUESTIONS = [
+{cat:'열대', q:'열대 기후를 구분하는 기준은?', opts:['최난월 평균기온 18℃ 이상','최한월 평균기온 18℃ 이상','연 강수량 500mm 이상','최난월 평균기온 10℃ 이상'], ans:1, exp:'열대 기후(A)는 최한월 평균기온 18℃ 이상이 기준입니다.'},
+{cat:'열대', q:'열대 우림 기후 지역의 전통 가옥 형태는?', opts:['이글루','고상가옥','흙벽돌집','게르'], ans:1, exp:'고온다습한 열대 우림 기후 지역에서는 습기와 벌레를 피하고 통풍을 위해 개방적 구조의 고상가옥에 삽니다.'},
+{cat:'열대', q:'이동식 화전 농업에서 이동하는 이유는?', opts:['강수량 부족','지력이 소진되면','병충해 발생','기온이 낮아져서'], ans:1, exp:'화전(불태워 재→거름)으로 경작하지만 지력이 다하면 새로운 곳으로 이동합니다.'},
+{cat:'열대', q:'플랜테이션 농업의 특징이 아닌 것은?', opts:['선진국 자본·기술 이용','현지 저렴한 노동력 이용','전통적 자급자족 농업','카카오·커피 등 기호작물 재배'], ans:2, exp:'플랜테이션은 선진국 자본·기술+현지 노동력 결합의 상업적 농업입니다. 전통적 자급자족은 이동식 화전 농업의 특징입니다.'},
+{cat:'열대', q:'사바나 기후의 특징으로 옳은 것은?', opts:['연중 강수량이 고르다','뚜렷한 건기와 우기가 있다','최한월 기온이 0℃ 이하다','연중 눈이 내린다'], ans:1, exp:'사바나 기후는 뚜렷한 건기와 우기가 있으며, 키 큰 풀과 나무가 자라는 초원이 특징입니다.'},
+{cat:'열대', q:'열대 기후에서 연교차보다 일교차가 더 큰 이유는?', opts:['건조한 기후 때문','연중 기온이 높아 계절 변화가 작기 때문','해발고도가 높기 때문','강수량이 적기 때문'], ans:1, exp:'열대 기후는 연중 기온이 높아 계절에 따른 기온 변화(연교차)가 작고 낮과 밤의 기온차(일교차)가 상대적으로 큽니다.'},
+{cat:'열대', q:'사바나 기후가 관광산업 발달에 유리한 이유는?', opts:['온화한 기후와 아름다운 해변','다양한 야생 동물이 서식하는 초원','풍부한 임업 자원','고산 지형의 절경'], ans:1, exp:'사바나 기후 지역의 초원에는 다양한 야생 동물이 서식하여 사파리 등 관광산업이 발달합니다.'},
+{cat:'열대', q:'열대 우림 기후 지역 음식에 향신료가 발달한 이유는?', opts:['독특한 식문화 선호','방부 효과와 더운 기후에서 식욕 자극','기온이 낮아 체온 유지 필요','강수량이 적어 식재료 부족'], ans:1, exp:'열대 기후 지역은 기온이 높아 음식이 상하기 쉬우므로 방부 효과가 있는 향신료를 많이 사용합니다.'},
+{cat:'건조', q:'건조 기후의 연 강수량 기준은?', opts:['1000mm 미만','750mm 미만','500mm 미만','250mm 미만'], ans:2, exp:'건조 기후는 연 강수량 500mm 미만이며, 증발량이 강수량보다 많습니다.'},
+{cat:'건조', q:'사막 기후의 연 강수량 범위는?', opts:['0~250mm','250~500mm','500~750mm','750~1000mm'], ans:0, exp:'사막 기후는 연 강수량 0~250mm로, 식생 발달이 거의 없습니다.'},
+{cat:'건조', q:'스텝 기후의 연 강수량 범위는?', opts:['0~250mm','250~500mm','500~750mm','750~1000mm'], ans:1, exp:'스텝 기후는 연 강수량 250~500mm로, 키 작은 풀이 자라는 초원이 형성됩니다.'},
+{cat:'건조', q:'외래 하천에 대한 설명으로 옳은 것은?', opts:['건조 기후 지역에서 발원하는 하천','발원지가 다른 지역인 하천','지하수를 이용한 인공 수로','오아시스 주변의 소규모 하천'], ans:1, exp:'외래 하천은 강수량이 많은 다른 지역에서 발원하여 건조 기후 지역을 흐르는 하천입니다. 나일강이 대표적입니다.'},
+{cat:'건조', q:'사막 기후 지역의 전통 가옥 특징으로 옳지 않은 것은?', opts:['두꺼운 벽','평평한 지붕','바닥을 높인 고상 구조','좁은 골목'], ans:2, exp:'고상 구조는 열대 우림 기후 지역의 가옥 특징입니다. 사막 지역은 흙벽돌집(두꺼운 벽, 평평한 지붕, 좁은 골목)이 특징입니다.'},
+{cat:'건조', q:'건조 기후에서 일교차가 연교차보다 큰 이유는?', opts:['수분이 없어 낮에 급격히 뜨거워지고 밤에 급격히 식기 때문','계절에 따른 강수 차이 때문','지형 영향 때문','해류 영향 때문'], ans:0, exp:'건조 기후는 수분(수증기)이 부족하여 태양열을 흡수·방출하기 쉬워 낮과 밤의 기온차(일교차)가 매우 큽니다.'},
+{cat:'건조', q:'스텝 기후 지역의 이동식 주거 형태는?', opts:['이글루','게르(유르트)','고상가옥','흙벽돌집'], ans:1, exp:'스텝 기후 지역(중앙아시아, 몽골 등)에서는 이동식 생활에 적합한 천막집인 게르(유르트)에 삽니다.'},
+{cat:'건조', q:'건조 기후 지역의 농업 방식이 아닌 것은?', opts:['오아시스 농업','유목','관개농업','이동식 화전 농업'], ans:3, exp:'이동식 화전 농업은 열대 기후 지역의 전통 농업 방식입니다. 건조 기후 지역에서는 오아시스 농업, 유목, 관개농업이 발달합니다.'},
+{cat:'건조', q:'사막 기후 지역의 의복 특징은?', opts:['두껍고 무거운 옷','얇고 헐렁한 긴 옷','밝은 색의 짧은 옷','방수 기능의 비옷'], ans:1, exp:'사막 기후 지역에서는 모래바람과 강한 햇볕을 막기 위해 온몸을 감싸는 헐렁하고 긴 옷을 입습니다.'},
+{cat:'온대', q:'온대 기후의 최한월 평균기온 범위는?', opts:['-3℃ ~ 10℃','-3℃ ~ 18℃','0℃ ~ 18℃','0℃ ~ 25℃'], ans:1, exp:'온대 기후(C)는 최한월 평균기온이 -3℃ 이상 18℃ 미만입니다.'},
+{cat:'온대', q:'서안 해양성 기후의 주요 분포 지역은?', opts:['남부 유럽','서부 유럽','동북아시아','중앙아시아'], ans:1, exp:'서안 해양성 기후는 서부 유럽, 북아메리카 북서 해안 지역에 주로 분포합니다.'},
+{cat:'온대', q:'지중해성 기후의 여름 특징은?', opts:['고온 습윤','고온 건조','저온 습윤','저온 건조'], ans:1, exp:'지중해성 기후는 여름에 편서풍대가 고위도로 이동하여 건조 기후의 영향을 받아 고온 건조합니다.'},
+{cat:'온대', q:'서안 해양성 기후 지역에서 낙농업이 발달하는 이유는?', opts:['여름에 고온 건조하여 목초 생산 유리','서늘한 여름과 연중 고른 강수로 목초 재배 유리','겨울이 온난하여 가축 사육 유리','강수량이 적어 방목에 유리'], ans:1, exp:'서안 해양성 기후는 서늘한 여름과 연중 고른 강수로 목초 재배에 유리하여 낙농업이 발달합니다.'},
+{cat:'온대', q:'지중해성 기후 지역의 수목농업 작물이 아닌 것은?', opts:['올리브','포도','오렌지','쌀'], ans:3, exp:'지중해성 기후의 여름철 수목농업 작물은 올리브, 포도, 오렌지 등입니다. 쌀은 온대 겨울 건조 기후 지역의 작물입니다.'},
+{cat:'온대', q:'온대 겨울 건조 기후의 분포 지역은?', opts:['서부 유럽','남부 유럽','동북아시아(한국, 중국 내륙 등)','중앙아시아'], ans:2, exp:'온대 겨울 건조 기후는 계절풍(몬순)의 영향을 받는 동북아시아에 분포합니다.'},
+{cat:'온대', q:'연교차가 가장 작은 온대 기후는?', opts:['온대 겨울 건조 기후','지중해성 기후','서안 해양성 기후','온난 습윤 기후'], ans:2, exp:'서안 해양성 기후는 편서풍과 해류의 영향으로 연중 기온 변화가 작아 온대 기후 중 연교차가 가장 작습니다.'},
+{cat:'온대', q:'지중해성 기후 가옥 외벽을 흰색으로 칠하는 이유는?', opts:['전통적 미관 선호','햇볕을 반사하여 실내 온도를 낮추기 위해','습기를 차단하기 위해','바람을 막기 위해'], ans:1, exp:'지중해성 기후 지역의 강한 햇볕을 반사하여 실내를 시원하게 유지하기 위해 외벽을 흰색으로 칠합니다.'},
+{cat:'냉대한대', q:'냉대 기후의 기준으로 옳은 것은?', opts:['최한월 -3℃ 이상, 최난월 10℃ 이상','최한월 -3℃ 미만, 최난월 10℃ 이상','최난월 10℃ 미만','최한월 18℃ 이상'], ans:1, exp:'냉대 기후(D)는 최한월 평균기온 -3℃ 미만, 최난월 평균기온 10℃ 이상이 기준입니다.'},
+{cat:'냉대한대', q:'냉대 기후 지역의 대표적인 식생은?', opts:['사바나 초원','열대우림','타이가(침엽수림)','이끼와 풀'], ans:2, exp:'냉대 기후 지역에는 타이가라 불리는 대규모 침엽수림(소나무, 전나무 등)이 분포합니다.'},
+{cat:'냉대한대', q:'툰드라 기후의 기준은?', opts:['최난월 10℃ 이상','최난월 0℃~10℃','최난월 0℃ 미만','최한월 -3℃ 이상'], ans:1, exp:'툰드라 기후는 최난월 평균기온이 0℃ 이상 10℃ 미만입니다. 짧은 여름에 이끼와 풀이 자랍니다.'},
+{cat:'냉대한대', q:'빙설 기후의 기준은?', opts:['최난월 10℃ 미만','최난월 0℃ 미만','최난월 0℃~10℃','최한월 0℃ 미만'], ans:1, exp:'빙설 기후는 최난월 평균기온이 0℃ 미만으로, 연중 눈과 빙하가 녹지 않습니다.'},
+{cat:'냉대한대', q:'한대 기후 지역의 전통 음식 문화 특징은?', opts:['향신료 사용 요리','과일 중심 식단','육류 중심의 저장 음식(냉동, 훈제, 건조)','쌀 중심 식단'], ans:2, exp:'한대 기후 지역은 기온이 낮아 농업이 어려워 육류 중심의 식단이며, 저장을 위한 냉동·훈제·건조 방식이 발달합니다.'},
+{cat:'냉대한대', q:'툰드라 기후 지역의 가옥 특징은?', opts:['개방적 구조의 고상가옥','폐쇄적 구조의 고상가옥','흙벽돌집','이동식 게르'], ans:1, exp:'툰드라 기후 지역의 고상가옥은 영구동토층 위에 지어지며, 눈이 녹을 때 무너지지 않도록 폐쇄적 구조입니다.'},
+{cat:'냉대한대', q:'이글루에 대한 설명으로 옳은 것은?', opts:['툰드라 기후 지역의 임시 거처','냉대 기후 지역의 전통 가옥','사막 기후 지역의 천막집','열대 기후 지역의 고상가옥'], ans:0, exp:'이글루는 빙설 기후 지역(한대)에서 눈과 얼음으로 만든 임시 거처입니다.'},
+{cat:'고산', q:'열대 고산 기후(상춘기후)의 특징은?', opts:['연교차가 크고 일교차가 작다','연중 봄처럼 온화하고 일교차가 크다','연중 기온이 높고 강수량이 많다','겨울에 매우 춥고 여름에 덥다'], ans:1, exp:'열대 고산 기후는 상춘기후라 불리며 연중 약 15℃의 온화한 날씨와 작은 연교차, 큰 일교차가 특징입니다.'},
+{cat:'고산', q:'안데스 산맥 고산 지역에서 주로 사육하는 동물은?', opts:['낙타와 염소','야크와 순록','라마와 알파카','코끼리와 기린'], ans:2, exp:'안데스 산맥 등 열대 고산 기후 지역에서는 라마와 알파카를 주로 사육합니다.'},
+{cat:'고산', q:'고산 기후가 같은 위도보다 기온이 낮은 이유는?', opts:['바다와 멀어서','해발고도가 높아서','강수량이 많아서','식생이 풍부해서'], ans:1, exp:'해발고도가 높을수록 기온이 낮아지기 때문에, 같은 위도의 저지대보다 기온이 낮습니다.'},
+];
+
+const SUBJ_QUESTIONS = [
+{cat:'열대', q:'이동식 화전 농업에서 "이동"의 이유를 서술하시오.', ans:['지력이 다하면','토지가 척박해지면','지력 소진'], exp:'지력이 다하면(토지가 척박해지면) 다른 곳으로 이동하여 다시 화전을 일구기 때문입니다.'},
+{cat:'열대', q:'열대 우림 기후와 사바나 기후의 강수 패턴 차이를 서술하시오.', ans:['연중','건기','건기와 우기'], exp:'열대 우림은 연중 강수량이 고른 반면, 사바나 기후는 뚜렷한 건기와 우기가 있습니다.'},
+{cat:'열대', q:'열대 고산 기후를 "상춘기후"라고 부르는 이유를 서술하시오.', ans:['봄','온화','연중 15'], exp:'해발고도가 높아 기온이 낮아지므로, 열대에 위치하지만 연중 봄처럼 온화한 날씨(약 15℃)가 나타나기 때문입니다.'},
+{cat:'열대', q:'플랜테이션 농업의 두 가지 핵심 요소를 쓰시오.', ans:['선진국','자본','기술','노동력'], exp:'선진국의 자본·기술 + 현지 주민의 저렴한 노동력이 결합된 농업입니다.'},
+{cat:'열대', q:'사바나 기후 지역에서 남반구의 건기는 몇 월인지 쓰시오.', ans:['7월'], exp:'북반구 건기는 1월, 남반구 건기는 7월입니다. (계절이 반대)'},
+{cat:'열대', q:'열대 우림 기후 지역의 고상가옥이 개방적 구조인 이유를 쓰시오.', ans:['통풍','습기','벌레'], exp:'고온다습한 환경에서 습기와 벌레를 피하고 통풍을 원활하게 하기 위해 개방적 구조로 짓습니다.'},
+{cat:'건조', q:'외래 하천의 정의를 서술하시오.', ans:['발원지','다른 지역'], exp:'외래 하천은 강수량이 풍부한 다른 지역에서 발원하여 건조 기후 지역을 흐르는 하천입니다. 예: 나일강'},
+{cat:'건조', q:'건조 기후에서 일교차가 연교차보다 큰 이유를 서술하시오.', ans:['수분','수증기','비열'], exp:'건조 기후는 수분(수증기)이 부족하여 태양열을 쉽게 흡수하고 방출하기 때문에 낮과 밤의 기온차(일교차)가 극단적으로 커집니다.'},
+{cat:'건조', q:'스텝 기후 지역의 전통 이동식 가옥의 명칭은?', ans:['게르','유르트'], exp:'게르(유르트)는 스텝 기후 지역에서 유목 생활에 적합하게 만든 이동식 천막집입니다.'},
+{cat:'건조', q:'사막 기후 지역의 흙벽돌집에서 창문이 작은 이유를 서술하시오.', ans:['모래바람','햇볕','열기'], exp:'강한 햇볕과 모래바람, 외부의 뜨거운 열기가 집 안으로 들어오는 것을 차단하기 위해 창문을 작게 만듭니다.'},
+{cat:'온대', q:'지중해성 기후의 여름 농업 방식을 "수목농업"이라고 부르는 이유를 서술하시오.', ans:['올리브','포도','나무'], exp:'여름철 건조한 기후에도 견딜 수 있는 올리브, 포도, 오렌지 등의 과수(나무)를 재배하는 농업이기 때문입니다.'},
+{cat:'온대', q:'서안 해양성 기후에서 연교차가 작은 이유를 서술하시오.', ans:['편서풍','바다','해류','해양성'], exp:'편서풍과 난류(해류)의 영향으로 연중 해양의 영향을 받아 기온 변화가 완만하여 연교차가 작습니다.'},
+{cat:'온대', q:'지중해성 기후 지역의 전통 가옥 외벽을 흰색으로 칠하는 이유를 서술하시오.', ans:['햇볕','반사','시원'], exp:'강한 햇볕을 반사하여 실내 온도를 낮추고 시원하게 유지하기 위해서입니다.'},
+{cat:'온대', q:'온대 겨울 건조 기후 지역에서 벼농사가 발달하는 이유를 서술하시오.', ans:['여름','강수량','다습'], exp:'온대 겨울 건조 기후는 여름에 고온다습하여 벼농사에 필요한 충분한 강수량과 기온이 확보되기 때문입니다.'},
+{cat:'냉대한대', q:'냉대 기후 지역에서 임업이 발달하는 이유를 서술하시오.', ans:['타이가','침엽수림','삼림'], exp:'냉대 기후 지역에는 타이가(침엽수림)라는 광대한 산림이 분포하여 목재와 펄프 생산을 위한 임업이 발달합니다.'},
+{cat:'냉대한대', q:'툰드라 고상가옥이 폐쇄적 구조인 이유를 서술하시오.', ans:['영구동토층','눈','무너지'], exp:'영구동토층이 분포하여 봄에 눈이 녹을 때 집이 무너지지 않도록 하고, 추운 기후를 견디기 위해 폐쇄적 구조로 짓습니다.'},
+{cat:'냉대한대', q:'타이가의 의미와 대표 수종을 쓰시오.', ans:['침엽수림','소나무','전나무'], exp:'타이가는 냉대 기후 지역에 나타나는 대규모 침엽수림으로, 소나무와 전나무 등이 대표적입니다.'},
+{cat:'고산', q:'열대 고산 기후에서 일교차가 연교차보다 큰 이유를 서술하시오.', ans:['봄','상춘','연교차 작'], exp:'연중 봄처럼 온화한 날씨(상춘기후)가 이어져 계절 변화(연교차)가 작은 반면, 낮과 밤의 기온차는 상대적으로 크게 나타납니다.'},
+{cat:'고산', q:'고산 기후가 같은 위도의 다른 지역보다 기온이 낮은 이유를 쓰시오.', ans:['해발고도','고도'], exp:'해발고도가 높을수록 기온이 낮아지기 때문에, 같은 위도의 저지대보다 기온이 낮습니다.'},
+];
+
+const HARD_QUESTIONS = [
+{q:'다음 중 건조 기후(B)에 해당하지 않는 지역은?', opts:['사하라 사막','중앙아시아 몽골 지역','아마존 유역','미국 중부 대평원'], ans:2, exp:'아마존 유역은 열대 우림 기후 지역입니다. 건조 기후 지역은 사하라 사막, 중동, 중앙아시아, 오스트레일리아 내부 등입니다.'},
+{q:'서안 해양성 기후와 지중해성 기후의 공통점은?', opts:['여름에 건조함','겨울에 온난 습윤함','연중 강수 고름','여름에 고온 다습함'], ans:1, exp:'두 기후 모두 겨울에 온난 습윤합니다. 차이는 여름철로, 서안해양성은 서늘·습윤, 지중해성은 고온·건조합니다.'},
+{q:'냉대 기후(D)와 한대 기후(E)의 구분 기준은?', opts:['최한월 평균기온','최난월 평균기온 10℃','최난월 평균기온 0℃','연 강수량'], ans:1, exp:'냉대 기후는 최난월 평균기온 10℃ 이상, 한대 기후는 최난월 평균기온 10℃ 미만이 기준입니다.'},
+{q:'열대 우림 기후와 열대 계절풍 기후의 차이점으로 옳은 것은?', opts:['최한월 기온 차이','강수 계절 분포','식생 유형','가옥 형태'], ans:1, exp:'열대 우림은 연중 강수, 열대 계절풍은 짧은 건기+긴 우기. 우기 강수량은 열대 우림보다 많습니다.'},
+{q:'다음 중 기후 요인에 해당하는 것은?', opts:['기온','강수량','바람','수륙분포'], ans:3, exp:'기온, 강수량, 바람, 습도, 일조량은 기후 요소입니다. 수륙분포, 위도, 해발고도, 해류, 지형, 기단, 전선은 기후 요인입니다.'},
+{q:'이동식 화전 농업의 주요 재배 작물로 옳은 것은?', opts:['카카오, 커피, 바나나','카사바, 얌, 타로','올리브, 포도, 오렌지','밀, 옥수수, 감자'], ans:1, exp:'이동식 화전 농업은 카사바, 얌, 타로 등 전통적 식량 작물을 재배합니다. 카카오, 커피는 플랜테이션 작물입니다.'},
+{q:'툰드라 기후와 열대 우림 기후 지역의 고상가옥 차이점은?', opts:['재료 차이','구조(개방성) 차이','크기 차이','색깔 차이'], ans:1, exp:'열대 우림 고상가옥은 습기·통풍을 위해 개방적, 툰드라 고상가옥은 추위·동토층 때문에 폐쇄적 구조입니다.'},
+{q:'지중해성 기후 지역의 비이아(이목)에 대한 설명으로 옳은 것은?', opts:['계절에 따라 저지대와 고지대를 이동하는 유목','열대 초원에서의 방목','사막 지역의 오아시스 농업','냉대 기후의 순록 사육'], ans:0, exp:'비이아(이목)는 계절에 따라 저지대(겨울)와 고지대(여름)를 오가며 가축을 방목하는 지중해성 기후의 농목업 방식입니다.'},
+{q:'건조 기후에서 스텝 기후가 사막 기후보다 식생이 더 발달하는 이유는?', opts:['기온이 더 낮아서','강수량이 상대적으로 많아서(250~500mm)','토양이 더 비옥해서','해발고도가 더 높아서'], ans:1, exp:'스텝 기후는 연 250~500mm의 강수량으로 키 작은 풀이 자랄 수 있어 초원이 형성되지만, 사막은 250mm 미만으로 식생 발달이 어렵습니다.'},
+{q:'쾨펜이 기후 구분의 기준으로 "식생"을 선택한 이유는?', opts:['식생이 인간 생활에 직접 영향을 미치므로','식생은 기온과 강수량에 따라 분포가 비교적 뚜렷하게 구분되므로','식생이 기후보다 더 정확하게 측정 가능하므로','식생이 지형보다 더 중요한 기후 요소이므로'], ans:1, exp:'식생은 기온과 강수량에 따라 분포 지역이 비교적 뚜렷하게 구분되기 때문에 기후 구분의 기준으로 사용됩니다.'},
+{q:'다음 중 비열에 대한 설명으로 옳은 것은?', opts:['비열이 클수록 온도 변화가 크다','수분 함유량이 많을수록 비열이 크다','육지의 비열이 물보다 크다','비열이 작을수록 온도 변화가 작다'], ans:1, exp:'수분 함유량이 많을수록 비열이 큽니다. 비열이 클수록 온도 변화가 완만하고, 비열이 작을수록 온도 변화가 급격합니다.'},
+{q:'냉대 기후 지역에서 연교차가 큰 이유는?', opts:['해양의 영향이 강하므로','대륙 내부에 위치하여 해양의 영향이 적으므로','산맥의 영향으로 강수량이 적으므로','해발고도가 높아 기온이 낮으므로'], ans:1, exp:'냉대 기후는 대륙 내부나 고위도에 위치하여 해양의 영향이 적고, 겨울이 매우 추워 연교차가 큽니다.'},
+{q:'다음 기후 중 최한월 평균기온이 가장 낮은 것은?', opts:['열대 우림 기후','서안 해양성 기후','온대 겨울 건조 기후','냉대 습윤 기후'], ans:3, exp:'냉대 습윤 기후의 최한월 평균기온은 -3℃ 미만으로, 나머지 기후보다 낮습니다.'},
+{q:'A, B, C, D, E 기후 중 인구 밀도가 가장 높은 기후는?', opts:['A (열대 기후)','B (건조 기후)','C (온대 기후)','E (한대 기후)'], ans:2, exp:'온대 기후(C)는 기후가 온화하고 농경에 유리하여 세계에서 인구 밀도가 가장 높은 기후 지역입니다.'},
+{q:'열대 기후 지역에서 이동식 화전 농업을 "이동"하는 이유와 관련 있는 개념은?', opts:['관개시설 부족','척박한 토양(지력 소진)','강수량 부족','해충 피해'], ans:1, exp:'척박한 토양에서 숲을 불태워 재를 거름으로 활용하지만, 지력이 소진되면 새로운 곳으로 이동해야 합니다.'},
+];
+
+// ── QUIZ STATE ──
+let objState  = { cat:'all', qs:[], idx:0, score:0, answered:false };
+let subjState = { cat:'all', qs:[], idx:0, score:0, answered:false };
+let hardState = { qs:[], idx:0, score:0, answered:false };
+
+function shuffle(arr) {
+  let a=[...arr];
+  for(let i=a.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
+  return a;
+}
+function filterByCat(arr,cat){return cat==='all'?shuffle(arr):shuffle(arr.filter(q=>q.cat===cat));}
+
+// Filter tab clicks
+function setClimateTab(mode, cat, btn) {
+  const tabsId = mode==='obj'?'filter-tabs-obj':'filter-tabs-subj';
+  document.querySelectorAll('#'+tabsId+' .filter-btn').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  if(mode==='obj'){objState.cat=cat;restartObjQuiz();}
+  else{subjState.cat=cat;restartSubjQuiz();}
+}
+
+// ── OBJ QUIZ ──
+function restartObjQuiz(){
+  objState.qs=filterByCat(OBJ_QUESTIONS,objState.cat);
+  objState.idx=0;objState.score=0;objState.answered=false;
+  renderObjQuiz();
+}
+function renderObjQuiz(){
+  const total=objState.qs.length;
+  const done=objState.idx;
+  document.getElementById('obj-progress').textContent=`${done+1} / ${total} 문제`;
+  document.getElementById('obj-score-badge').textContent=`점수: ${objState.score}`;
+  updateProgressBar('obj-progress-bar', done, total);
+  if(objState.idx>=total){showObjResult();return;}
+  const q=objState.qs[objState.idx];
+  document.getElementById('obj-quiz-area').innerHTML=`<div class="q-card fade-in">
+    <div class="q-num">문제 ${objState.idx+1} · ${q.cat} 기후</div>
+    <div class="q-text">${q.q}</div>
+    <div class="options">
+      ${q.opts.map((o,i)=>`<button class="opt-btn" id="opt-obj-${i}" onclick="answerObj(${i})">${['①','②','③','④'][i]} ${o}</button>`).join('')}
+    </div>
+    <div id="obj-exp" class="explanation"></div>
+    <div id="obj-next-btn" style="display:none;margin-top:14px;">
+      <button class="btn btn-primary" onclick="nextObjQ()">${objState.idx+1<total?'다음 문제 →':'결과 보기'}</button>
+    </div>
+  </div>`;
+}
+function answerObj(i){
+  if(objState.answered)return;
+  objState.answered=true;
+  const q=objState.qs[objState.idx];
+  q.opts.forEach((_,j)=>{
+    const b=document.getElementById('opt-obj-'+j);
+    b.disabled=true;
+    if(j===q.ans)b.classList.add('correct');
+    if(j===i&&i!==q.ans)b.classList.add('wrong');
+  });
+  if(i===q.ans)objState.score++;
+  const exp=document.getElementById('obj-exp');
+  exp.classList.add('show');
+  exp.innerHTML=(i===q.ans?'✅ <b>정답!</b>':'❌ <b>오답</b>')+' — '+q.exp;
+  document.getElementById('obj-next-btn').style.display='block';
+}
+function nextObjQ(){objState.idx++;objState.answered=false;renderObjQuiz();}
+function showObjResult(){
+  const t=objState.qs.length;
+  document.getElementById('obj-quiz-area').innerHTML=`<div class="result-box fade-in">
+    <div class="big-score">${objState.score}/${t}</div>
+    <div class="result-label">${objState.score/t>=0.8?'🎉 훌륭해요!':objState.score/t>=0.5?'👍 잘했어요!':'💪 더 공부해요!'}</div>
+    <button class="btn btn-primary" onclick="restartObjQuiz()">🔄 다시 풀기</button>
+  </div>`;
+  updateProgressBar('obj-progress-bar', t, t);
+}
+
+// ── SUBJ QUIZ ──
+function restartSubjQuiz(){
+  subjState.qs=filterByCat(SUBJ_QUESTIONS,subjState.cat);
+  subjState.idx=0;subjState.score=0;subjState.answered=false;
+  renderSubjQuiz();
+}
+function renderSubjQuiz(){
+  const total=subjState.qs.length;
+  document.getElementById('subj-progress').textContent=`${subjState.idx+1} / ${total} 문제`;
+  document.getElementById('subj-score-badge').textContent=`점수: ${subjState.score}`;
+  updateProgressBar('subj-progress-bar', subjState.idx, total);
+  if(subjState.idx>=total){showSubjResult();return;}
+  const q=subjState.qs[subjState.idx];
+  document.getElementById('subj-quiz-area').innerHTML=`<div class="q-card fade-in">
+    <div class="q-num">주관식 ${subjState.idx+1} · ${q.cat} 기후</div>
+    <div class="q-text">${q.q}</div>
+    <input type="text" class="subj-input" id="subj-input" placeholder="답을 입력하세요..." onkeydown="if(event.key==='Enter')checkSubj()">
+    <div style="display:flex;gap:8px;margin-bottom:10px;">
+      <button class="btn btn-primary" onclick="checkSubj()">제출</button>
+      <button class="btn btn-secondary" onclick="showSubjAns()">정답 보기</button>
+    </div>
+    <div id="subj-exp" class="explanation"></div>
+    <div id="subj-next-btn" style="display:none;margin-top:14px;">
+      <button class="btn btn-primary" onclick="nextSubjQ()">${subjState.idx+1<total?'다음 문제 →':'결과 보기'}</button>
+    </div>
+  </div>`;
+  setTimeout(()=>{const el=document.getElementById('subj-input');if(el)el.focus();},100);
+}
+function checkSubj(){
+  if(subjState.answered)return;
+  subjState.answered=true;
+  const q=subjState.qs[subjState.idx];
+  const userAns=document.getElementById('subj-input').value.trim();
+  const correct=q.ans.some(kw=>userAns.includes(kw));
+  if(correct)subjState.score++;
+  const exp=document.getElementById('subj-exp');
+  exp.classList.add('show');
+  exp.innerHTML=(correct?'✅ <b>정답!</b>':'❌ <b>오답</b>')+` (키워드: ${q.ans.join(', ')}) — `+q.exp;
+  document.getElementById('subj-input').disabled=true;
+  document.getElementById('subj-next-btn').style.display='block';
+}
+function showSubjAns(){
+  if(subjState.answered)return;
+  subjState.answered=true;
+  const q=subjState.qs[subjState.idx];
+  const exp=document.getElementById('subj-exp');
+  exp.classList.add('show');
+  exp.innerHTML=`📖 <b>정답 키워드:</b> ${q.ans.join(', ')} — ${q.exp}`;
+  document.getElementById('subj-input').disabled=true;
+  document.getElementById('subj-next-btn').style.display='block';
+}
+function nextSubjQ(){subjState.idx++;subjState.answered=false;renderSubjQuiz();}
+function showSubjResult(){
+  const t=subjState.qs.length;
+  document.getElementById('subj-quiz-area').innerHTML=`<div class="result-box fade-in">
+    <div class="big-score">${subjState.score}/${t}</div>
+    <div class="result-label">${subjState.score/t>=0.8?'🎉 훌륭해요!':'💪 계속 도전!'}</div>
+    <button class="btn btn-primary" onclick="restartSubjQuiz()">🔄 다시 풀기</button>
+  </div>`;
+  updateProgressBar('subj-progress-bar', t, t);
+}
+
+// ── HARD QUIZ ──
+function restartHardQuiz(){
+  hardState.qs=shuffle(HARD_QUESTIONS);
+  hardState.idx=0;hardState.score=0;hardState.answered=false;
+  renderHardQuiz();
+}
+function renderHardQuiz(){
+  const total=hardState.qs.length;
+  document.getElementById('hard-progress').textContent=`${hardState.idx+1} / ${total} 문제`;
+  document.getElementById('hard-score-badge').textContent=`점수: ${hardState.score}`;
+  updateProgressBar('hard-progress-bar', hardState.idx, total);
+  if(hardState.idx>=total){showHardResult();return;}
+  const q=hardState.qs[hardState.idx];
+  document.getElementById('hard-quiz-area').innerHTML=`<div class="q-card fade-in">
+    <div class="q-num">🔥 고난도 ${hardState.idx+1}</div>
+    <div class="q-text">${q.q}</div>
+    <div class="options">
+      ${q.opts.map((o,i)=>`<button class="opt-btn" id="opt-hard-${i}" onclick="answerHard(${i})">${['①','②','③','④'][i]} ${o}</button>`).join('')}
+    </div>
+    <div id="hard-exp" class="explanation"></div>
+    <div id="hard-next-btn" style="display:none;margin-top:14px;">
+      <button class="btn btn-primary" onclick="nextHardQ()">${hardState.idx+1<total?'다음 문제 →':'결과 보기'}</button>
+    </div>
+  </div>`;
+}
+function answerHard(i){
+  if(hardState.answered)return;
+  hardState.answered=true;
+  const q=hardState.qs[hardState.idx];
+  q.opts.forEach((_,j)=>{
+    const b=document.getElementById('opt-hard-'+j);
+    b.disabled=true;
+    if(j===q.ans)b.classList.add('correct');
+    if(j===i&&i!==q.ans)b.classList.add('wrong');
+  });
+  if(i===q.ans)hardState.score++;
+  const exp=document.getElementById('hard-exp');
+  exp.classList.add('show');
+  exp.innerHTML=(i===q.ans?'✅ <b>정답!</b>':'❌ <b>오답</b>')+' — '+q.exp;
+  document.getElementById('hard-next-btn').style.display='block';
+}
+function nextHardQ(){hardState.idx++;hardState.answered=false;renderHardQuiz();}
+function showHardResult(){
+  const t=hardState.qs.length;
+  document.getElementById('hard-quiz-area').innerHTML=`<div class="result-box fade-in">
+    <div class="big-score">${hardState.score}/${t}</div>
+    <div class="result-label">${hardState.score/t>=0.8?'🔥 최고예요!':hardState.score/t>=0.5?'👍 선방했어요!':'💡 개념 복습 필요!'}</div>
+    <button class="btn btn-primary" onclick="restartHardQuiz()">🔄 다시 풀기</button>
+  </div>`;
+  updateProgressBar('hard-progress-bar', t, t);
+}
+
+// ── GRAPH QUIZ ──
+const CLIMATE_TYPES=[
+  {id:'tropical_rainforest',label:'열대 우림 기후',desc:'연중 고른 강수, 최한월 18℃ 이상',gen:()=>{const t=Array.from({length:12},()=>25+Math.random()*5);const p=Array.from({length:12},()=>150+Math.random()*150);return{temps:t,precip:p};}},
+  {id:'savanna_N',label:'사바나 기후 (북반구)',desc:'북반구: 6-9월 우기, 12-2월 건기',gen:()=>{const t=[22,24,26,28,28,26,25,25,26,25,23,22].map(v=>v+(Math.random()-.5)*3);const p=[10,10,20,30,80,200,250,230,160,60,20,10].map(v=>Math.max(0,v+(Math.random()-.5)*30));return{temps:t,precip:p};}},
+  {id:'savanna_S',label:'사바나 기후 (남반구)',desc:'남반구: 12-3월 우기, 6-8월 건기',gen:()=>{const t=[28,27,26,24,21,18,18,20,22,24,26,27].map(v=>v+(Math.random()-.5)*3);const p=[220,200,150,60,15,5,5,8,20,60,120,200].map(v=>Math.max(0,v+(Math.random()-.5)*25));return{temps:t,precip:p};}},
+  {id:'tropical_monsoon',label:'열대 계절풍(몬순) 기후',desc:'짧은 건기, 긴 우기. 우기 강수 집중',gen:()=>{const t=[22,23,25,27,28,27,26,26,26,25,24,22].map(v=>v+(Math.random()-.5)*2);const p=[20,15,30,60,180,350,400,380,280,100,40,15].map(v=>Math.max(0,v+(Math.random()-.5)*40));return{temps:t,precip:p};}},
+  {id:'alpine_tropical',label:'열대 고산 기후 (상춘기후)',desc:'연중 15℃ 내외, 연교차 매우 작음',gen:()=>{const b=13+Math.random()*3;const t=Array.from({length:12},()=>b+(Math.random()-.5)*2);const p=Array.from({length:12},()=>60+Math.random()*80);return{temps:t,precip:p};}},
+  {id:'desert',label:'사막 기후',desc:'연 강수량 0-250mm, 극단적 일교차',gen:()=>{const ph=Math.random()>.5?0:Math.PI;const t=Array.from({length:12},(_,i)=>20+18*Math.cos(i/11*Math.PI*2+ph)+(Math.random()-.5)*4);const p=Array.from({length:12},()=>Math.max(0,Math.random()*20));return{temps:t,precip:p};}},
+  {id:'steppe_N',label:'스텝 기후 (북반구)',desc:'연 250-500mm, 키 작은 풀 초원',gen:()=>{const t=[-5,0,7,14,20,25,27,26,20,12,3,-3].map(v=>v+(Math.random()-.5)*4);const p=Array.from({length:12},(_,i)=>Math.max(0,[15,15,20,30,45,55,50,45,35,25,18,12][i]+(Math.random()-.5)*15));return{temps:t,precip:p};}},
+  {id:'oceanic',label:'서안 해양성 기후',desc:'연중 고른 강수, 서늘한 여름·온난한 겨울',gen:()=>{const t=[4,5,8,11,14,17,18,18,15,11,7,4].map(v=>v+(Math.random()-.5)*2);const p=Array.from({length:12},()=>50+Math.random()*50);return{temps:t,precip:p};}},
+  {id:'mediterranean_N',label:'지중해성 기후 (북반구)',desc:'여름 고온건조, 겨울 온난습윤',gen:()=>{const t=[8,9,11,14,18,22,25,25,21,16,11,8].map(v=>v+(Math.random()-.5)*2);const p=[80,70,60,40,20,5,3,5,20,50,75,90].map(v=>Math.max(0,v+(Math.random()-.5)*20));return{temps:t,precip:p};}},
+  {id:'mediterranean_S',label:'지중해성 기후 (남반구)',desc:'남반구: 겨울(6-8월) 고온건조',gen:()=>{const t=[22,21,18,14,10,8,8,10,13,16,19,21].map(v=>v+(Math.random()-.5)*2);const p=[10,10,20,50,90,100,110,80,60,30,15,8].map(v=>Math.max(0,v+(Math.random()-.5)*20));return{temps:t,precip:p};}},
+  {id:'humid_continental_N',label:'온대 겨울 건조 기후 (북반구)',desc:'여름 고온다습, 겨울 건조. 계절풍 영향',gen:()=>{const t=[-4,0,6,14,19,24,26,25,19,12,4,-2].map(v=>v+(Math.random()-.5)*3);const p=[20,25,40,60,80,120,150,130,60,40,30,20].map(v=>Math.max(0,v+(Math.random()-.5)*20));return{temps:t,precip:p};}},
+  {id:'humid_subtropical',label:'온난 습윤 기후',desc:'여름 고온다습, 비교적 고른 강수',gen:()=>{const t=[5,7,11,16,21,25,28,28,23,17,11,6].map(v=>v+(Math.random()-.5)*2);const p=[60,70,90,100,120,180,200,180,130,80,60,55].map(v=>Math.max(0,v+(Math.random()-.5)*25));return{temps:t,precip:p};}},
+  {id:'subarctic',label:'냉대 기후',desc:'최한월 -3℃ 미만, 최난월 10℃ 이상. 연교차 매우 큼',gen:()=>{const t=[-20,-17,-10,0,8,14,16,14,8,0,-8,-17].map(v=>v+(Math.random()-.5)*4);const p=Array.from({length:12},(_,i)=>Math.max(0,[20,15,15,20,30,50,60,55,40,25,20,18][i]+(Math.random()-.5)*12));return{temps:t,precip:p};}},
+  {id:'tundra',label:'툰드라 기후',desc:'최난월 0-10℃. 짧은 여름에만 이끼·풀 자람',gen:()=>{const t=[-25,-23,-18,-8,0,5,7,5,0,-7,-16,-22].map(v=>v+(Math.random()-.5)*4);const p=Array.from({length:12},()=>Math.max(0,15+Math.random()*20));return{temps:t,precip:p};}},
+  {id:'icecap',label:'빙설 기후',desc:'최난월 0℃ 미만. 연중 눈·빙하 안 녹음',gen:()=>{const t=[-35,-33,-28,-20,-12,-5,-2,-4,-10,-20,-29,-34].map(v=>v+(Math.random()-.5)*4);const p=Array.from({length:12},()=>Math.max(0,5+Math.random()*10));return{temps:t,precip:p};}},
+];
+
+let graphGame={running:false,total:0,score:0,streak:0,answered:false,pool:[]};
+
+function _nextClimate(){
+  // 풀이 다 소진되면 다시 섞어서 보충 (무한 반복)
+  if(graphGame.pool.length===0) graphGame.pool=shuffle([...CLIMATE_TYPES]);
+  return graphGame.pool.pop();
+}
+
+function startGraphGame(){
+  graphGame.pool=shuffle([...CLIMATE_TYPES]);
+  graphGame.total=0;graphGame.score=0;graphGame.streak=0;graphGame.running=true;
+  renderGraphQuestion();
+}
+function renderGraphQuestion(){
+  const climate=_nextClimate();
+  const data=climate.gen();
+  graphGame.answered=false;
+  const pool=CLIMATE_TYPES.filter(c=>c.id!==climate.id);
+  const wrongs=shuffle(pool).slice(0,3);
+  const allOpts=shuffle([...wrongs,climate]);
+  const correctIdx=allOpts.findIndex(o=>o.id===climate.id);
+  document.getElementById('graph-game-area').innerHTML=`<div class="fade-in">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+      <div><span style="font-size:13px;color:#94a3b8;">문제 ${graphGame.total+1}</span>
+        ${graphGame.streak>=2?`<span class="streak-badge">🔥 ${graphGame.streak}연속!</span>`:''}</div>
+      <div class="quiz-score-pill" style="background:#f1f5f9;border:1px solid #e2e8f0;color:#1a202c;">점수: ${graphGame.score} / ${graphGame.total}</div>
+      <button class="btn btn-danger" style="font-size:12px;padding:6px 12px;" onclick="stopGraphGame()">종료</button>
+    </div>
+    <div class="graph-container">
+      <canvas id="climateGraph" width="720" height="260"></canvas>
+    </div>
+    <div class="graph-options">
+      ${allOpts.map((o,i)=>`<button class="opt-btn" id="gopt-${i}" onclick="answerGraph(${i},${correctIdx})">${o.label}</button>`).join('')}
+    </div>
+    <div class="graph-answer-overlay" id="g-overlay"></div>
+    <div id="g-next-btn" style="display:none;margin-top:14px;text-align:center;">
+      <button class="btn btn-primary" style="font-size:15px;padding:11px 36px;" onclick="renderGraphQuestion()">다음 문제 →</button>
+    </div>
+  </div>`;
+  drawClimateGraph(data.temps,data.precip);
+}
+function drawClimateGraph(temps,precip){
+  const canvas=document.getElementById('climateGraph');
+  if(!canvas)return;
+  const ctx=canvas.getContext('2d');
+  canvas.width=canvas.offsetWidth||680;
+  const W=canvas.width,H=canvas.height;
+  ctx.clearRect(0,0,W,H);
+  const months=['1','2','3','4','5','6','7','8','9','10','11','12'];
+  const pL=48,pR=54,pT=16,pB=36;
+  const pw=W-pL-pR,ph=H-pT-pB;
+  const maxP=Math.max(...precip,100);
+  const maxT=Math.max(...temps,30);
+  const minT=Math.min(...temps,-5);
+  const tRange=maxT-minT||1;
+  ctx.strokeStyle='rgba(0,0,0,0.06)';ctx.lineWidth=1;
+  for(let i=0;i<=4;i++){const y=pT+ph*i/4;ctx.beginPath();ctx.moveTo(pL,y);ctx.lineTo(pL+pw,y);ctx.stroke();}
+  const tTicks=[-40,-30,-20,-10,0,10,20,30,40].filter(t=>t>=minT-5&&t<=maxT+5);
+  ctx.fillStyle='#ff7040';ctx.font='11px sans-serif';ctx.textAlign='right';
+  tTicks.forEach(t=>{
+    const y=pT+ph*(1-(t-minT)/tRange);
+    if(y>=pT&&y<=pT+ph){ctx.fillText(t+'℃',pL-4,y+4);ctx.strokeStyle='rgba(249,115,22,0.15)';ctx.lineWidth=0.5;ctx.beginPath();ctx.moveTo(pL,y);ctx.lineTo(pL+pw,y);ctx.stroke();}
+  });
+  ctx.fillStyle='#4090f0';ctx.textAlign='left';
+  [0,100,200,300,400,500].filter(p=>p<=maxP+50).forEach(p=>{
+    const y=pT+ph*(1-p/maxP);
+    if(y>=pT&&y<=pT+ph)ctx.fillText(p+'mm',pL+pw+4,y+4);
+  });
+  ctx.fillStyle='rgba(0,0,0,0.5)';ctx.textAlign='center';ctx.font='11px sans-serif';
+  months.forEach((m,i)=>{const x=pL+pw*i/11;ctx.fillText(m,x,H-pB+16);});
+  const bw=pw/12*0.55;
+  months.forEach((_,i)=>{
+    const x=pL+pw*i/11;const bh=Math.max(1,ph*precip[i]/maxP);
+    ctx.fillStyle='rgba(64,144,240,0.45)';ctx.fillRect(x-bw/2,pT+ph-bh,bw,bh);
+  });
+  ctx.beginPath();ctx.strokeStyle='#ff7040';ctx.lineWidth=2.5;ctx.lineJoin='round';
+  temps.forEach((t,i)=>{const x=pL+pw*i/11;const y=pT+ph*(1-(t-minT)/tRange);i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);});
+  ctx.stroke();
+  temps.forEach((t,i)=>{
+    const x=pL+pw*i/11;const y=pT+ph*(1-(t-minT)/tRange);
+    ctx.beginPath();ctx.arc(x,y,3,0,Math.PI*2);ctx.fillStyle='#ff7040';ctx.fill();
+  });
+  if(minT<0&&maxT>0){
+    const zy=pT+ph*(1-(0-minT)/tRange);
+    ctx.strokeStyle='rgba(0,0,0,0.2)';ctx.lineWidth=1;ctx.setLineDash([4,4]);
+    ctx.beginPath();ctx.moveTo(pL,zy);ctx.lineTo(pL+pw,zy);ctx.stroke();ctx.setLineDash([]);
+    ctx.fillStyle='rgba(0,0,0,0.45)';ctx.textAlign='right';ctx.font='10px sans-serif';
+    ctx.fillText('0℃',pL-4,zy+4);
+  }
+}
+function answerGraph(i,correctIdx){
+  if(graphGame.answered)return;
+  graphGame.answered=true;
+  graphGame.total++;
+  const correct=i===correctIdx;
+  if(correct){graphGame.score++;graphGame.streak++;}else{graphGame.streak=0;}
+  for(let j=0;j<4;j++){const b=document.getElementById('gopt-'+j);if(b){b.disabled=true;if(j===correctIdx)b.classList.add('correct');if(j===i&&!correct)b.classList.add('wrong');}}
+  const ov=document.getElementById('g-overlay');
+  // 현재 문제의 기후 정보는 allOpts[correctIdx]에서 가져옴
+  const correctLabel=document.getElementById('gopt-'+correctIdx)?.textContent||'';
+  if(ov){ov.style.display='block';ov.innerHTML=(correct?'✅ <b>정답!</b>':'❌ <b>오답</b>')+` 정답: <b>${correctLabel}</b>`;}
+  document.getElementById('g-next-btn').style.display='block';
+}
+function stopGraphGame(){showGraphResult();}
+function showGraphResult(){
+  document.getElementById('graph-game-area').innerHTML=`<div class="speed-result fade-in">
+    <div style="font-size:20px;margin-bottom:12px;">📊 퀴즈 종료!</div>
+    <div class="big">${graphGame.score}<span style="font-size:26px;color:#94a3b8;">/${graphGame.total}</span></div>
+    <div style="color:#94a3b8;margin:8px 0 24px;">정답률: ${graphGame.total>0?Math.round(graphGame.score/graphGame.total*100):0}%</div>
+    <div style="font-size:14px;margin-bottom:20px;">${graphGame.score/Math.max(graphGame.total,1)>=0.8?'🏆 그래프 마스터!':'💪 더 연습해요!'}</div>
+    <button class="btn btn-primary" onclick="startGraphGame()">다시 도전 🔄</button>
+  </div>`;
+}
+
+// ── MAP QUIZ ──
+const MAP_QUESTIONS=[
+  {lat:-3,lon:-60,zoom:5,climate:'열대 우림 기후',opts:['열대 우림 기후','사막 기후','서안 해양성 기후','냉대 기후'],ans:0,exp:'아마존 유역 중심부로 연중 고온다습한 열대 우림 기후가 나타납니다.'},
+  {lat:-23,lon:15,zoom:5,climate:'사막 기후',opts:['사바나 기후','사막 기후','지중해성 기후','스텝 기후'],ans:1,exp:'남아프리카 나미브 사막 지역으로 연 강수량이 매우 적은 사막 기후입니다.'},
+  {lat:38,lon:15,zoom:5,climate:'지중해성 기후',opts:['서안 해양성 기후','온대 겨울 건조 기후','지중해성 기후','사바나 기후'],ans:2,exp:'지중해 연안으로 여름 고온건조, 겨울 온난습윤한 지중해성 기후입니다.'},
+  {lat:51,lon:2,zoom:5,climate:'서안 해양성 기후',opts:['지중해성 기후','서안 해양성 기후','냉대 기후','툰드라 기후'],ans:1,exp:'서부 유럽으로 편서풍과 난류의 영향으로 연중 강수가 고르고 온화한 서안 해양성 기후입니다.'},
+  {lat:37,lon:127,zoom:5,climate:'온대 겨울 건조 기후',opts:['서안 해양성 기후','지중해성 기후','온대 겨울 건조 기후','냉대 기후'],ans:2,exp:'동아시아(한국·중국)로 계절풍의 영향을 받아 여름 고온다습, 겨울 건조한 온대 겨울 건조 기후입니다.'},
+  {lat:24,lon:45,zoom:5,climate:'사막 기후',opts:['스텝 기후','사바나 기후','사막 기후','열대 우림 기후'],ans:2,exp:'아라비아 반도로 연 강수량이 극히 적은 사막 기후가 나타납니다.'},
+  {lat:45,lon:65,zoom:4,climate:'스텝 기후',opts:['냉대 기후','스텝 기후','온대 겨울 건조 기후','사막 기후'],ans:1,exp:'중앙아시아로 연 강수량 250~500mm의 스텝 기후가 나타나 유목 생활이 발달합니다.'},
+  {lat:0,lon:115,zoom:5,climate:'열대 우림 기후',opts:['사바나 기후','열대 계절풍 기후','열대 우림 기후','온대 겨울 건조 기후'],ans:2,exp:'동남아시아 중부로 연중 고온다습한 열대 우림 기후가 나타납니다.'},
+  {lat:14,lon:18,zoom:4,climate:'사바나 기후',opts:['사바나 기후','사막 기후','열대 우림 기후','온대 기후'],ans:0,exp:'아프리카 사헬 지대로 뚜렷한 건기와 우기가 있는 사바나 기후입니다.'},
+  {lat:62,lon:105,zoom:4,climate:'냉대 기후',opts:['툰드라 기후','냉대 기후','한대 기후','서안 해양성 기후'],ans:1,exp:'러시아 시베리아로 겨울이 매우 춥고 연교차가 큰 냉대 기후(타이가)가 나타납니다.'},
+  {lat:72,lon:25,zoom:4,climate:'툰드라 기후',opts:['냉대 기후','빙설 기후','툰드라 기후','한대 기후'],ans:2,exp:'북극해 연안으로 최난월 기온이 0~10℃인 툰드라 기후가 나타납니다.'},
+  {lat:-35,lon:-63,zoom:5,climate:'스텝 기후',opts:['사막 기후','사바나 기후','스텝 기후','온난 습윤 기후'],ans:2,exp:'남아메리카 팜파스 지역으로 연 강수량 250~500mm의 스텝 기후가 나타납니다.'},
+];
+
+let mapGame={idx:0,score:0,timer:null,timeLeft:10,answered:false,order:[]};
+
+function startMapGame(){
+  mapGame.order=shuffle([...Array(MAP_QUESTIONS.length).keys()]);
+  mapGame.idx=0;mapGame.score=0;
+  renderMapQuestion();
+}
+function renderMapQuestion(){
+  if(mapGame.idx>=mapGame.order.length){showMapResult();return;}
+  const q=MAP_QUESTIONS[mapGame.order[mapGame.idx]];
+  mapGame.answered=false;mapGame.timeLeft=10;
+  const bboxW=q.lon-8, bboxS=q.lat-5, bboxE=q.lon+8, bboxN=q.lat+5;
+  const iframeSrc=`https://www.openstreetmap.org/export/embed.html?bbox=${bboxW},${bboxS},${bboxE},${bboxN}&layer=mapnik&marker=${q.lat},${q.lon}`;
+  const hint=q.climate.substring(0,2);
+  const optBtns=q.opts.map((o,i)=>`<button class="opt-btn" id="mopt-${i}" onclick="answerMap(${i},${q.ans})">${o}</button>`).join('');
+  document.getElementById('map-game-area').innerHTML=`<div class="fade-in">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+      <span style="font-size:13px;color:#94a3b8;">문제 ${mapGame.idx+1}/${mapGame.order.length}</span>
+      <div class="quiz-score-pill" style="background:#f1f5f9;border:1px solid #e2e8f0;color:#1a202c;">점수: ${mapGame.score}</div>
+      <button class="btn btn-danger" style="font-size:12px;padding:6px 12px;" onclick="stopMapGame()">중단</button>
+    </div>
+    <div class="timer-label"><span id="m-time">${mapGame.timeLeft}</span>초</div>
+    <div class="timer-outer"><div class="timer-inner" id="m-bar" style="width:100%;background:#22c55e;"></div></div>
+    <div class="question-info">📍 표시된 지점의 기후 유형은? <strong>힌트: ${hint}...</strong></div>
+    <div class="map-container">
+      <iframe src="${iframeSrc}" loading="lazy" title="지도"></iframe>
+      <div class="map-pin">
+        <svg class="pin-svg" viewBox="0 0 24 32" fill="none">
+          <path d="M12 0C5.373 0 0 5.373 0 12c0 8.4 12 20 12 20s12-11.6 12-20C24 5.373 18.627 0 12 0z" fill="#e53e3e"/>
+          <circle cx="12" cy="12" r="5" fill="white"/>
+        </svg>
+      </div>
+    </div>
+    <div class="map-options">${optBtns}</div>
+    <div class="graph-answer-overlay" id="m-overlay"></div>
+  </div>`;
+  startMapTimer(q.ans);
+}
+function startMapTimer(correctIdx){
+  clearInterval(mapGame.timer);
+  mapGame.timer=setInterval(()=>{
+    mapGame.timeLeft--;
+    const el=document.getElementById('m-time');const bar=document.getElementById('m-bar');
+    if(el)el.textContent=mapGame.timeLeft;
+    if(bar){const pct=mapGame.timeLeft/10*100;bar.style.width=pct+'%';bar.style.background=pct>50?'#22c55e':pct>25?'#eab308':'#e53e3e';}
+    if(mapGame.timeLeft<=0){clearInterval(mapGame.timer);if(!mapGame.answered)timeoutMap(correctIdx);}
+  },1000);
+}
+function answerMap(i,correctIdx){
+  if(mapGame.answered)return;
+  mapGame.answered=true;clearInterval(mapGame.timer);
+  const q=MAP_QUESTIONS[mapGame.order[mapGame.idx]];
+  const correct=i===correctIdx;
+  if(correct)mapGame.score++;
+  for(let j=0;j<q.opts.length;j++){const b=document.getElementById('mopt-'+j);if(b){b.disabled=true;if(j===correctIdx)b.classList.add('correct');if(j===i&&!correct)b.classList.add('wrong');}}
+  const ov=document.getElementById('m-overlay');
+  if(ov){ov.style.display='block';ov.innerHTML=(correct?'✅ <b>정답!</b>':'❌ <b>오답</b>')+` 정답: <b>${q.climate}</b><br>${q.exp}`;}
+  setTimeout(()=>{mapGame.idx++;renderMapQuestion();},2500);
+}
+function timeoutMap(correctIdx){
+  mapGame.answered=true;
+  const q=MAP_QUESTIONS[mapGame.order[mapGame.idx]];
+  for(let j=0;j<q.opts.length;j++){const b=document.getElementById('mopt-'+j);if(b){b.disabled=true;if(j===correctIdx)b.classList.add('correct');}}
+  const ov=document.getElementById('m-overlay');
+  if(ov){ov.style.display='block';ov.innerHTML=`⏰ <b>시간 초과!</b> 정답: <b>${q.climate}</b><br>${q.exp}`;}
+  setTimeout(()=>{mapGame.idx++;renderMapQuestion();},2500);
+}
+function stopMapGame(){clearInterval(mapGame.timer);showMapResult();}
+function showMapResult(){
+  clearInterval(mapGame.timer);
+  document.getElementById('map-game-area').innerHTML=`<div class="speed-result fade-in">
+    <div style="font-size:20px;margin-bottom:12px;">🗺️ 퀴즈 종료!</div>
+    <div class="big">${mapGame.score}<span style="font-size:26px;color:#94a3b8;">/${mapGame.idx}</span></div>
+    <div style="color:#94a3b8;margin:8px 0 24px;">정답률: ${mapGame.idx>0?Math.round(mapGame.score/mapGame.idx*100):0}%</div>
+    <div style="font-size:14px;margin-bottom:20px;">${mapGame.score/Math.max(mapGame.idx,1)>=0.8?'🌍 지도 마스터!':'💪 지도 더 공부해요!'}</div>
+    <button class="btn btn-primary" onclick="startMapGame()">다시 도전 🔄</button>
+  </div>`;
+}
+
+// ── INIT ──
+restartObjQuiz();
+restartSubjQuiz();
+restartHardQuiz();
+</script>
+</body>
+</html>
