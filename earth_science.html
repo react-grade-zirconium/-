@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>통합과학 II-1단원 완벽 정리 — 경희고</title>
+<style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Malgun Gothic',sans-serif;background:#f0f4f8;color:#1a202c;font-size:14px;line-height:1.7}
+    .header{background:linear-gradient(135deg,#2c3e50 0%,#4ca1af 100%);color:white;padding:30px 20px;text-align:center}
+    .header h1{font-size:1.6rem;margin-bottom:8px}
+    .header p{opacity:0.85;font-size:0.9rem}
+    .tabs{display:flex;background:white;border-bottom:2px solid #e2e8f0;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.08);overflow-x:auto}
+    .tab{padding:15px 20px;cursor:pointer;font-size:0.9rem;font-weight:700;color:#64748b;border-bottom:3px solid transparent;white-space:nowrap;transition:all .2s}
+    .tab.active{color:#2c3e50;border-bottom-color:#2c3e50;background:#f8fafc}
+    .content-section{display:none;padding:20px;max-width:900px;margin:0 auto}
+    .content-section.active{display:block}
+    .card{background:white;border-radius:12px;padding:22px;margin-bottom:20px;box-shadow:0 2px 8px rgba(0,0,0,0.07)}
+    .card h2{color:#2c3e50;border-left:5px solid #4ca1af;padding-left:12px;margin-bottom:15px;font-size:1.15rem}
+    .card h3{color:#4ca1af;margin:15px 0 8px;font-size:1rem}
+    .card p{margin-bottom:10px;color:#334155}
+    .card ul{padding-left:20px}
+    .card ul li{margin-bottom:8px;color:#334155}
+    .highlight{background:#eef2ff;border-left:4px solid #6366f1;padding:12px 15px;border-radius:0 8px 8px 0;margin:10px 0;font-size:0.9rem}
+    .warn{background:#fff7ed;border-left:4px solid #f59e0b;padding:12px 15px;border-radius:0 8px 8px 0;margin:10px 0;font-size:0.9rem}
+    .tip{background:#f0fdf4;border-left:4px solid #22c55e;padding:12px 15px;border-radius:0 8px 8px 0;margin:10px 0;font-size:0.9rem}
+    table{width:100%;border-collapse:collapse;margin-top:12px;font-size:0.9rem}
+    th{background:#2c3e50;color:white;padding:10px;border:1px solid #ddd;text-align:center}
+    td{padding:10px;border:1px solid #ddd;text-align:center;vertical-align:middle}
+    tr:nth-child(even) td{background:#f8fafc}
+
+    /* 퀴즈 */
+    .quiz-container{background:#fff;padding:20px;border-radius:12px;border:1px solid #e2e8f0}
+    .quiz-container h2{color:#2c3e50;border-left:5px solid #4ca1af;padding-left:12px;margin-bottom:20px;font-size:1.15rem}
+    .quiz-score-bar{background:#edf2f7;border-radius:8px;padding:12px 16px;margin-bottom:20px;display:flex;align-items:center;gap:15px;font-weight:700;flex-wrap:wrap}
+    .score-num{font-size:1.4rem;color:#4ca1af}
+    .quiz-item{margin-bottom:18px;padding:15px;border-radius:10px;border:1px solid #e2e8f0;background:#fafafa}
+    .quiz-item.answered-correct{border-color:#48bb78;background:#f0fdf4}
+    .quiz-item.answered-wrong{border-color:#f56565;background:#fff5f5}
+    .quiz-q{font-weight:bold;margin-bottom:12px;color:#1a202c;font-size:0.95rem}
+    .quiz-tag{display:inline-block;font-size:0.75rem;background:#e2e8f0;color:#64748b;padding:2px 8px;border-radius:20px;margin-bottom:8px;font-weight:600}
+    .btn-group{display:flex;gap:10px;flex-wrap:wrap}
+    .btn-col{flex-direction:column;gap:8px}
+    .quiz-btn{padding:8px 20px;border:2px solid #e2e8f0;border-radius:6px;cursor:pointer;background:white;font-size:0.88rem;font-weight:600;transition:0.2s;color:#334155;text-align:left}
+    .quiz-btn:hover:not(:disabled){background:#edf2f7}
+    .quiz-btn.correct{background:#48bb78;color:white;border-color:#48bb78}
+    .quiz-btn.wrong{background:#f56565;color:white;border-color:#f56565}
+    .quiz-btn:disabled{cursor:default}
+    .explanation{margin-top:12px;padding:12px;background:#fffaf0;border-radius:8px;display:none;font-size:0.88rem;color:#334155;border-left:3px solid #f59e0b;line-height:1.6}
+    .reset-btn{margin-top:20px;padding:10px 25px;background:#2c3e50;color:white;border:none;border-radius:8px;cursor:pointer;font-size:0.9rem;font-weight:700}
+    .reset-btn:hover{background:#4ca1af}
+    .progress-bar{height:8px;background:#e2e8f0;border-radius:4px;margin-bottom:20px;overflow:hidden}
+    .progress-fill{height:100%;background:linear-gradient(90deg,#4ca1af,#2c3e50);border-radius:4px;transition:width 0.4s}
+    @media(max-width:600px){.header h1{font-size:1.3rem}.tab{padding:12px 14px;font-size:0.8rem}}
+</style>
+</head>
+<body>
+
+<div class="header">
+    <h1>📚 통합과학 II. 물질과 규칙성</h1>
+    <p>1. 우주와 원소의 생성 | 경희고등학교 학습자료</p>
+</div>
+
+<div class="tabs">
+    <div class="tab active" onclick="showTab(0)">🔬 1. 스펙트럼</div>
+    <div class="tab" onclick="showTab(1)">💥 2. 빅뱅 우주론</div>
+    <div class="tab" onclick="showTab(2)">⭐ 3. 별의 진화</div>
+    <div class="tab" onclick="showTab(3)">✍️ 복습 퀴즈</div>
+</div>
+
+<!-- 1. 스펙트럼 -->
+<div id="section0" class="content-section active">
+    <div class="card">
+        <h2>스펙트럼이란?</h2>
+        <p>빛을 프리즘이나 분광기로 파장별로 분리했을 때 나타나는 띠를 <strong>스펙트럼</strong>이라고 합니다. 빛의 파장에 따라 색깔이 달라지며, 이를 분석하면 빛을 낸 물질의 성분을 알 수 있습니다.</p>
+    </div>
+    <div class="card">
+        <h2>스펙트럼의 3가지 종류</h2>
+        <h3>① 연속 스펙트럼</h3>
+        <p>고온의 <strong>고체·액체·고압 기체</strong> 광원에서 방출되는 빛을 분광하면 나타납니다. 빨간색부터 보라색까지 <strong>끊김 없이 이어지는 무지개색 띠</strong>입니다.</p>
+        <div class="tip">✅ 예시: 백열전구, 용광로의 쇳물에서 나오는 빛</div>
+        <h3>② 방출(선) 스펙트럼</h3>
+        <p>고온·저압의 <strong>기체 원소</strong>에 에너지를 가하면 전자가 에너지를 흡수했다가 낮은 에너지 상태로 돌아오면서 특정 파장의 빛을 방출합니다. 검은 바탕에 <strong>밝은 색 선</strong>들이 나타납니다.</p>
+        <div class="tip">✅ 예시: 네온사인(네온), 수소 방전관 등</div>
+        <h3>③ 흡수(선) 스펙트럼</h3>
+        <p>고온의 광원에서 나온 빛이 저온의 기체를 통과할 때, 기체 원소가 자신의 고유 파장의 빛을 <strong>흡수</strong>하여 무지개색 바탕에 <strong>검은 선</strong>이 나타납니다.</p>
+        <div class="tip">✅ 예시: 태양 스펙트럼의 프라운호퍼선 — 태양 대기의 원소를 분석할 수 있음</div>
+        <div class="warn">⚠️ <strong>중요:</strong> 같은 원소의 방출·흡수 스펙트럼에서 선의 위치(파장)는 <strong>정확히 일치</strong>합니다.</div>
+    </div>
+    <div class="card">
+        <h2>스펙트럼과 원소 분석</h2>
+        <p>각 원소는 <strong>고유한 선 스펙트럼</strong>을 가집니다. 선의 위치·굵기·개수가 원소마다 다르기 때문에 지문처럼 원소를 구별하는 데 사용됩니다.</p>
+        <div class="highlight">💡 천문학자들은 별빛의 흡수 스펙트럼으로 수억 광년 밖 별의 구성 원소를 알아냅니다. 이를 통해 우주가 주로 <strong>수소(H)와 헬륨(He)</strong>으로 이루어져 있음을 밝혔습니다.</div>
+        <table>
+            <tr><th>종류</th><th>광원</th><th>모양</th><th>예시</th></tr>
+            <tr><td>연속 스펙트럼</td><td>고온 고체·액체</td><td>연속 무지개색</td><td>백열등</td></tr>
+            <tr><td>방출 스펙트럼</td><td>고온 저압 기체</td><td>검은 바탕+밝은 선</td><td>네온사인</td></tr>
+            <tr><td>흡수 스펙트럼</td><td>연속광→저온기체 통과</td><td>무지개 바탕+검은 선</td><td>태양 스펙트럼</td></tr>
+        </table>
+    </div>
+</div>
+
+<!-- 2. 빅뱅 우주론 -->
+<div id="section1" class="content-section">
+    <div class="card">
+        <h2>빅뱅 우주론 (Big Bang Theory)</h2>
+        <p>약 <strong>138억 년 전</strong>, 모든 물질과 에너지가 초고온·초고밀도의 한 점(특이점)에서 대폭발(빅뱅)이 일어났습니다. 이후 우주는 지금도 계속 팽창하고 있습니다.</p>
+        <div class="highlight">
+            💡 <strong>증거 ①</strong> 허블의 법칙: 먼 은하일수록 더 빠르게 멀어짐 → 우주 팽창<br><br>
+            💡 <strong>증거 ②</strong> 우주 배경 복사(CMB): 우주 전체에서 균일하게 관측되는 약 2.7K 마이크로파 → 빅뱅의 열에너지 흔적<br><br>
+            💡 <strong>증거 ③</strong> 수소:헬륨 질량비 ≈ 3:1로 이론값과 일치
+        </div>
+    </div>
+    <div class="card">
+        <h2>우주 초기 원소의 생성 과정</h2>
+        <table>
+            <tr><th>시기</th><th>온도</th><th>주요 사건</th></tr>
+            <tr><td>빅뱅 직후</td><td>10³²K 이상</td><td>쿼크, 전자, 광자 등 기본 입자 형성</td></tr>
+            <tr><td>약 1초 후</td><td>약 10¹⁰K</td><td>양성자, 중성자 형성</td></tr>
+            <tr><td>약 3분 후</td><td>약 10⁹K</td><td>헬륨 원자핵 형성 (수소:헬륨 질량비 ≈ 3:1)</td></tr>
+            <tr><td>약 38만 년 후</td><td>약 3,000K</td><td>수소·헬륨 원자 완성, 우주 배경 복사 발생</td></tr>
+            <tr><td>약 3억 년 후</td><td>수천K</td><td>별과 은하 형성 시작</td></tr>
+        </table>
+        <div class="warn">⚠️ 38만 년까지 우주는 너무 뜨거워 전자가 원자핵에 붙지 못하고 빛을 산란시켜 불투명했습니다. 38만 년 후 원자가 완성되며 빛이 직진하기 시작합니다.</div>
+    </div>
+</div>
+
+<!-- 3. 별의 진화 -->
+<div id="section2" class="content-section">
+    <div class="card">
+        <h2>별의 탄생</h2>
+        <p>우주 공간의 성운(수소·헬륨 가스와 먼지)이 중력에 의해 수축하면 온도와 밀도가 높아집니다. 중심부 온도가 약 <strong>1,000만 K</strong> 이상이 되면 수소 핵융합이 시작되어 별이 탄생합니다.</p>
+        <div class="tip">✅ 핵융합: 가벼운 원자핵 여러 개 → 무거운 원자핵 1개. 질량 결손이 에너지로 전환됩니다. (E=mc²)</div>
+    </div>
+    <div class="card">
+        <h2>핵융합과 원소의 생성 단계</h2>
+        <table>
+            <tr><th>별의 종류</th><th>핵융합 반응</th><th>생성 원소</th></tr>
+            <tr><td>주계열성 (태양급)</td><td>수소 → 헬륨</td><td>He</td></tr>
+            <tr><td>적색 거성</td><td>헬륨 → 탄소, 산소</td><td>C, O</td></tr>
+            <tr><td>초거성 (태양×8 이상)</td><td>탄소→네온→산소→규소→철</td><td>C~Fe</td></tr>
+            <tr><td>초신성 폭발</td><td>중성자 포획 반응</td><td>Fe보다 무거운 원소 (Au, Ag, U 등)</td></tr>
+        </table>
+        <div class="warn">⚠️ 별 내부 핵융합의 종착점은 <strong>철(Fe)</strong>입니다. 철은 핵자당 결합 에너지가 가장 커서 더 이상 에너지가 나오지 않습니다.</div>
+    </div>
+    <div class="card">
+        <h2>별의 진화 경로</h2>
+        <table>
+            <tr><th>단계</th><th>태양 질량 정도</th><th>태양 질량 8배 이상</th></tr>
+            <tr><td>주계열성</td><td colspan="2">수소 핵융합</td></tr>
+            <tr><td>거성 단계</td><td>적색 거성</td><td>초거성</td></tr>
+            <tr><td>최종 단계</td><td>백색 왜성</td><td>중성자별 또는 블랙홀</td></tr>
+        </table>
+        <div class="highlight">💡 초신성 폭발로 흩어진 원소들이 새 별·행성·생명체를 구성합니다. 우리 몸의 탄소·산소·철도 수십억 년 전 별의 잔해입니다.</div>
+    </div>
+</div>
+
+<!-- 퀴즈 -->
+<div id="section3" class="content-section">
+    <div class="quiz-container">
+        <h2>🧪 단원 종합 퀴즈 30문제</h2>
+        <div class="quiz-score-bar">
+            <span>점수:</span>
+            <span class="score-num" id="scoreDisplay">0 / 0</span>
+            <span id="scoreMsg"></span>
+            <span style="margin-left:auto;font-size:0.85rem;color:#64748b" id="progressText">0 / 30 완료</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+
+        <!-- ===== 스펙트럼 (1~10) ===== -->
+
+        <div class="quiz-item" id="q1">
+            <div class="quiz-tag">스펙트럼</div>
+            <p class="quiz-q">1. 연속 스펙트럼은 고온의 저압 기체에서 나타난다. (O/X)</p>
+            <div class="btn-group">
+                <button class="quiz-btn" onclick="ans(this,'q1',false,'❌ 틀렸습니다. 연속 스펙트럼은 고온의 고체·액체 또는 고압 기체에서 나타납니다. 고온·저압 기체에서는 방출(선) 스펙트럼이 나타납니다.')">O</button>
+                <button class="quiz-btn" onclick="ans(this,'q1',true,'✅ 정답! 연속 스펙트럼은 고온 고체·액체(또는 고압 기체)에서 나타납니다. 저압 기체는 방출 스펙트럼을 냅니다.')">X</button>
+            </div>
+            <div class="explanation" id="exp-q1"></div>
+        </div>
+
+        <div class="quiz-item" id="q2">
+            <div class="quiz-tag">스펙트럼</div>
+            <p class="quiz-q">2. 같은 원소의 방출·흡수 스펙트럼에서 선의 위치(파장)는 일치한다. (O/X)</p>
+            <div class="btn-group">
+                <button class="quiz-btn" onclick="ans(this,'q2',true,'✅ 정답! 같은 원소는 같은 파장의 빛을 방출하거나 흡수합니다. 방출은 밝은 선, 흡수는 검은 선으로 나타나지만 위치(파장)는 동일합니다.')">O</button>
+                <button class="quiz-btn" onclick="ans(this,'q2',false,'❌ 틀렸습니다. 방출과 흡수 스펙트럼의 선 위치(파장)는 완전히 일치합니다.')">X</button>
+            </div>
+            <div class="explanation" id="exp-q2"></div>
+        </div>
+
+        <div class="quiz-item" id="q3">
+            <div class="quiz-tag">스펙트럼</div>
+            <p class="quiz-q">3. 태양 스펙트럼(흡수 스펙트럼)에서 검은 선이 나타나는 이유는?</p>
+            <div class="btn-group btn-col">
+                <button class="quiz-btn" onclick="ans(this,'q3',false,'❌ 틀렸습니다. 태양 내부는 고온이라 연속 스펙트럼을 방출합니다.')">① 태양 내부가 저온이라서</button>
+                <button class="quiz-btn" onclick="ans(this,'q3',true,'✅ 정답! 태양 내부의 연속 스펙트럼 빛이 저온의 태양 대기 기체를 통과하며 특정 파장이 흡수되어 검은 선(프라운호퍼선)이 나타납니다.')">② 태양 대기의 저온 기체가 특정 파장을 흡수해서</button>
+                <button class="quiz-btn" onclick="ans(this,'q3',false,'❌ 틀렸습니다. 프리즘 굴절과는 관련이 없습니다.')">③ 빛이 프리즘을 통과하며 굴절되어서</button>
+                <button class="quiz-btn" onclick="ans(this,'q3',false,'❌ 틀렸습니다. 흑점은 검은 흡수선과 관련이 없습니다.')">④ 태양 흑점이 빛을 가로막아서</button>
+            </div>
+            <div class="explanation" id="exp-q3"></div>
+        </div>
+
+        <div class="quiz-item" id="q4">
+            <div class="quiz-tag">스펙트럼</div>
+            <p class="quiz-q">4. 선 스펙트럼을 이용하면 별의 구성 원소를 알 수 있다. (O/X)</p>
+            <div class="btn-group">
+                <button class="quiz-btn" onclick="ans(this,'q4',true,'✅ 정답! 각 원소는 고유한 파장의 빛을 흡수하므로, 별빛의 흡수 스펙트럼을 분석하면 별 대기에 어떤 원소가 있는지 알 수 있습니다.')">O</button>
+                <button class="quiz-btn" onclick="ans(this,'q4',false,'❌ 틀렸습니다. 선 스펙트럼은 원소마다 고유하여 별의 구성 원소 분석에 활용됩니다.')">X</button>
+            </div>
+            <div class="explanation" id="exp-q4"></div>
+        </div>
+
+        <div class="quiz-item" id="q5">
+            <div class="quiz-tag">스펙트럼</div>
+            <p class="quiz-q">5. 네온사인에서 나오는 빛의 스펙트럼 종류는?</p>
+            <div class="btn-group btn-col">
+                <button class="quiz-btn" onclick="ans(this,'q5',false,'❌ 틀렸습니다. 연속 스펙트럼은 고온 고체·액체 광원에서 나타납니다.')">① 연속 스펙트럼</button>
+                <button class="quiz-btn" onclick="ans(this,'q5',true,'✅ 정답! 네온사인은 저압의 네온 기체에 전류를 흘려 빛을 내는 방전관입니다. 고온·저압 기체에서 나타나는 방출(선) 스펙트럼의 대표적 예입니다.')">② 방출(선) 스펙트럼</button>
+                <button class="quiz-btn" onclick="ans(this,'q5',false,'❌ 틀렸습니다. 흡수 스펙트럼은 연속광이 저온 기체를 통과할 때 나타납니다.')">③ 흡수(선) 스펙트럼</button>
+            </div>
+            <div class="explanation" id="exp-q5"></div>
+        </div>
+
+        <div class="quiz-item" id="q6">
+            <div class="quiz-tag">스펙트럼</div>
+            <p class="quiz-q">6. 스펙트럼 분석을 통해 알 수 있는 것이 아닌 것은?</p>
+            <div class="btn-group btn-col">
+                <button class="quiz-btn" onclick="ans(this,'q6',false,'❌ 틀렸습니다. 스펙트럼 선의 패턴으로 원소의 종류를 알 수 있습니다.')">① 별을 구성하는 원소의 종류</button>
+                <button class="quiz-btn" onclick="ans(this,'q6',false,'❌ 틀렸습니다. 도플러 효과를 이용한 스펙트럼 분석으로 별의 이동 속도를 알 수 있습니다.')">② 별의 이동 속도 (도플러 효과 이용)</button>
+                <button class="quiz-btn" onclick="ans(this,'q6',true,'✅ 정답! 스펙트럼으로는 별의 질량을 직접 측정할 수 없습니다. 질량은 중력 효과나 이중성 분석 등 별도의 방법으로 구합니다.')">③ 별의 정확한 질량</button>
+                <button class="quiz-btn" onclick="ans(this,'q6',false,'❌ 틀렸습니다. 스펙트럼 선의 온도와 색깔로 별의 표면 온도를 추정할 수 있습니다.')">④ 별의 표면 온도</button>
+            </div>
+            <div class="explanation" id="exp-q6"></div>
+        </div>
+
+        <div class="quiz-item" id="q7">
+            <div class="quiz-tag">스펙트럼</div>
+            <p class="quiz-q">7. 방출 스펙트럼은 검은 바탕에 밝은 색 선이 나타난다. (O/X)</p>
+            <div class="btn-group">
+                <button class="quiz-btn" onclick="ans(this,'q7',true,'✅ 정답! 방출 스펙트럼은 기체 원소가 특정 파장의 빛을 방출할 때 어두운 배경에 밝은 선이 나타납니다.')">O</button>
+                <button class="quiz-btn" onclick="ans(this,'q7',false,'❌ 틀렸습니다. 검은 바탕에 밝은 선이 나타나는 것이 방출 스펙트럼입니다. 무지개 바탕에 검은 선이 나타나는 것은 흡수 스펙트럼입니다.')">X</button>
+            </div>
+            <div class="explanation" id="exp-q7"></div>
+        </div>
+
+        <div class="quiz-item" id="q8">
+            <div class="quiz-tag">스펙트럼</div>
+            <p class="quiz-q">8. 우주의 구성 원소를 분석하는 데 사용하는 것은?</p>
+            <div class="btn-group btn-col">
+                <button class="quiz-btn" onclick="ans(this,'q8',false,'❌ 틀렸습니다. 망원경은 빛을 모으는 도구이지만, 구성 원소 분석에는 스펙트럼 분석이 사용됩니다.')">① 망원경</button>
+                <button class="quiz-btn" onclick="ans(this,'q8',true,'✅ 정답! 선 스펙트럼(특히 흡수 스펙트럼)은 원소마다 고유하기 때문에 지문처럼 별과 은하의 구성 원소를 분석하는 데 사용됩니다.')">② 선 스펙트럼</button>
+                <button class="quiz-btn" onclick="ans(this,'q8',false,'❌ 틀렸습니다. 레이더는 전파를 이용한 탐지 장치로 원소 분석과 관련이 없습니다.')">③ 레이더</button>
+                <button class="quiz-btn" onclick="ans(this,'q8',false,'❌ 틀렸습니다. 적외선 카메라는 열 분포를 보는 도구입니다.')">④ 적외선 카메라</button>
+            </div>
+            <div class="explanation" id="exp-q8"></div>
+        </div>
+
+        <div class="quiz-item" id="q9">
+            <div class="quiz-tag">스펙트럼</div>
+            <p class="quiz-q">9. 원소 A의 방출 스펙트럼에 선이 4개 있다면 흡수 스펙트럼에도 같은 위치에 선이 4개 나타난다. (O/X)</p>
+            <div class="btn-group">
+                <button class="quiz-btn" onclick="ans(this,'q9',true,'✅ 정답! 같은 원소는 방출하는 파장과 흡수하는 파장이 동일합니다. 선의 위치와 개수 모두 일치합니다.')">O</button>
+                <button class="quiz-btn" onclick="ans(this,'q9',false,'❌ 틀렸습니다. 같은 원소의 방출·흡수 스펙트럼은 선의 위치와 개수가 동일합니다.')">X</button>
+            </div>
+            <div class="explanation" id="exp-q9"></div>
+        </div>
+
+        <div class="quiz-item" id="q10">
+            <div class="quiz-tag">스펙트럼</div>
+            <p class="quiz-q">10. 별빛을 분광 분석한 결과 수소의 흡수선이 나타났다. 이것이 의미하는 것은?</p>
+            <div class="btn-group btn-col">
+                <button class="quiz-btn" onclick="ans(this,'q10',false,'❌ 틀렸습니다. 흡수 스펙트럼은 별의 내부가 아니라 대기(저온 기체층)의 성분을 나타냅니다.')">① 별의 내부에 수소가 있다</button>
+                <button class="quiz-btn" onclick="ans(this,'q10',true,'✅ 정답! 흡수선은 별빛이 저온의 별 대기를 통과하며 해당 원소가 특정 파장을 흡수해서 나타납니다. 따라서 별 대기에 수소가 있음을 의미합니다.')">② 별의 대기에 수소가 있다</button>
+                <button class="quiz-btn" onclick="ans(this,'q10',false,'❌ 틀렸습니다. 흡수선의 유무로 별까지의 거리를 알 수는 없습니다.')">③ 별까지의 거리가 멀다</button>
+                <button class="quiz-btn" onclick="ans(this,'q10',false,'❌ 틀렸습니다. 수소의 흡수선 존재 여부로 별의 나이를 직접 알 수는 없습니다.')">④ 별의 나이가 많다</button>
+            </div>
+            <div class="explanation" id="exp-q10"></div>
+        </div>
+
+        <!-- ===== 빅뱅 우주론 (11~20) ===== -->
+
+        <div class="quiz-item" id="q11">
+            <div class="quiz-tag">빅뱅 우주론</div>
+            <p class="quiz-q">11. 빅뱅은 약 138억 년 전에 일어난 대폭발이다. (O/X)</p>
+            <div class="btn-group">
+                <button class="quiz-btn" onclick="ans(this,'q11',true,'✅ 정답! 현재 관측과 계산에 따르면 빅뱅은 약 138억 년 전에 일어난 것으로 추정됩니다.')">O</button>
+                <button class="quiz-btn" onclick="ans(this,'q11',false,'❌ 틀렸습니다. 빅뱅은 약 138억 년 전에 일어난 것으로 알려져 있습니다.')">X</button>
+            </div>
+            <div class="explanation" id="exp-q11"></div>
+        </div>
+
+        <div class="quiz-item" id="q12">
+            <div class="quiz-tag">빅뱅 우주론</div>
+            <p class="quiz-q">12. 빅뱅 직후 가장 먼저 만들어진 것은?</p>
+            <div class="btn-group btn-col">
+                <button class="quiz-btn" onclick="ans(this,'q12',false,'❌ 틀렸습니다. 헬륨 원자핵은 빅뱅 약 3분 후에 형성됩니다.')">① 헬륨 원자핵</button>
+                <button class="quiz-btn" onclick="ans(this,'q12',true,'✅ 정답! 빅뱅 직후 초고온 상태에서 쿼크, 전자, 광자 등의 기본 입자가 가장 먼저 만들어졌습니다.')">② 쿼크, 전자, 광자 등 기본 입자</button>
+                <button class="quiz-btn" onclick="ans(this,'q12',false,'❌ 틀렸습니다. 수소·헬륨 원자는 빅뱅 약 38만 년 후에 형성됩니다.')">③ 수소·헬륨 원자</button>
+                <button class="quiz-btn" onclick="ans(this,'q12',false,'❌ 틀렸습니다. 탄소·산소는 별 내부 핵융합으로 만들어집니다.')">④ 탄소·산소</button>
+            </div>
+            <div class="explanation" id="exp-q12"></div>
+        </div>
+
+        <div class="quiz-item" id="q13">
+            <div class="quiz-tag">빅뱅 우주론</div>
+            <p class="quiz-q">13. 빅뱅 후 약 3분에 헬륨 원자(원자핵+전자)가 완성되었다. (O/X)</p>
+            <div class="btn-group">
+                <button class="quiz-btn" onclick="ans(this,'q13',false,'❌ 틀렸습니다. 약 3분에는 헬륨 원자핵(양성자+중성자)만 형성되었습니다. 전자가 결합하여 중성 원자가 완성된 것은 약 38만 년 후입니다.')">O</button>
+                <button class="quiz-btn" onclick="ans(this,'q13',true,'✅ 정답! 약 3분에는 헬륨 원자핵만 형성됩니다. 중성 원자(핵+전자)가 완성되려면 약 38만 년을 기다려야 합니다.')">X</button>
+            </div>
+            <div class="explanation" id="exp-q13"></div>
+        </div>
+
+        <div class="quiz-item" id="q14">
+            <div class="quiz-tag">빅뱅 우주론</div>
+            <p class="quiz-q">14. 우주 배경 복사(CMB)는 우주 온도가 약 몇 K일 때 발생했는가?</p>
+            <div class="btn-group">
+                <button class="quiz-btn" onclick="ans(this,'q14',false,'❌ 틀렸습니다.')">① 300K</button>
+                <button class="quiz-btn" onclick="ans(this,'q14',false,'❌ 틀렸습니다.')">② 1,000K</button>
+                <button class="quiz-btn" onclick="ans(this,'q14',true,'✅ 정답! 빅뱅 약 38만 년 후, 온도가 약 3,000K로 낮아지며 전자가 원자핵에 결합하고 빛이 자유롭게 직진하면서 우주 배경 복사가 발생했습니다.')">③ 3,000K</button>
+                <button class="quiz-btn" onclick="ans(this,'q14',false,'❌ 틀렸습니다.')">④ 10,000K</button>
+            </div>
+            <div class="explanation" id="exp-q14"></div>
+        </div>
+
+        <div class="quiz-item" id="q15">
+            <div class="quiz-tag">빅뱅 우주론</div>
+            <p class="quiz-q">15. 빅뱅 우주론에서 수소:헬륨 질량비는 약 3:1이다. (O/X)</p>
+            <div class="btn-group">
+                <button class="quiz-btn" onclick="ans(this,'q15',true,'✅ 정답! 빅뱅 핵합성으로 전체 바리온의 약 75%는 수소, 25%는 헬륨이 됩니다. 이 비율은 현재 우주에서 관측되는 값과 일치합니다.')">O</button>
+                <button class="quiz-btn" onclick="ans(this,'q15',false,'❌ 틀렸습니다. 수소:헬륨의 질량비는 약 3:1(75%:25%)입니다.')">X</button>
+            </div>
+            <div class="explanation" id="exp-q15"></div>
+        </div>
+
+        <div class="quiz-item" id="q16">
+            <div class="quiz-tag">빅뱅 우주론</div>
+            <p class="quiz-q">16. 허블의 법칙에 따르면 멀리 있는 은하일수록 어떻게 움직이는가?</p>
+            <div class="btn-group btn-col">
+                <button class="quiz-btn" onclick="ans(this,'q16',false,'❌ 틀렸습니다. 가까운 은하들이 더 느리게 멀어집니다.')">① 더 느리게 멀어진다</button>
+                <button class="quiz-btn" onclick="ans(this,'q16',true,'✅ 정답! 허블의 법칙에 따르면 은하까지의 거리가 멀수록 후퇴 속도가 빠릅니다. 이는 우주가 팽창하고 있다는 증거입니다.')">② 더 빠르게 멀어진다</button>
+                <button class="quiz-btn" onclick="ans(this,'q16',false,'❌ 틀렸습니다. 은하들은 대체로 멀어지고 있습니다.')">③ 가까워진다</button>
+                <button class="quiz-btn" onclick="ans(this,'q16',false,'❌ 틀렸습니다. 은하는 거리에 관계없이 일정한 속도로 움직이지 않습니다.')">④ 거리에 관계없이 동일한 속도로 멀어진다</button>
+            </div>
+            <div class="explanation" id="exp-q16"></div>
+        </div>
+
+        <div class="quiz-item" id="q17">
+            <div class="quiz-tag">빅뱅 우주론</div>
+            <p class="quiz-q">17. 빅뱅 후 38만 년 이전에는 우주가 불투명했다. 그 이유는?</p>
+            <div class="btn-group btn-col">
+                <button class="quiz-btn" onclick="ans(this,'q17',false,'❌ 틀렸습니다. 별은 수억 년 후에야 탄생합니다.')">① 별빛이 우주를 가득 채워서</button>
+                <button class="quiz-btn" onclick="ans(this,'q17',true,'✅ 정답! 38만 년 이전에는 우주가 너무 뜨거워 자유 전자들이 빛을 산란시켜 빛이 직진하지 못했습니다. 원자가 형성되며 전자가 사라지자 빛이 직진할 수 있게 됩니다.')">② 자유 전자들이 빛을 산란시켜서</button>
+                <button class="quiz-btn" onclick="ans(this,'q17',false,'❌ 틀렸습니다. 먼지와 가스는 나중에 형성됩니다.')">③ 먼지와 가스가 빛을 막아서</button>
+                <button class="quiz-btn" onclick="ans(this,'q17',false,'❌ 틀렸습니다. 블랙홀은 별 진화 이후에 나타납니다.')">④ 블랙홀이 빛을 흡수해서</button>
+            </div>
+            <div class="explanation" id="exp-q17"></div>
+        </div>
+
+        <div class="quiz-item" id="q18">
+            <div class="quiz-tag">빅뱅 우주론</div>
+            <p class="quiz-q">18. 현재 우주 배경 복사의 온도는 약 2.7K이다. (O/X)</p>
+            <div class="btn-group">
+                <button class="quiz-btn" onclick="ans(this,'q18',true,'✅ 정답! 빅뱅 때 방출된 빛은 우주가 팽창하면서 파장이 길어져 현재 약 2.7K의 마이크로파로 관측됩니다.')">O</button>
+                <button class="quiz-btn" onclick="ans(this,'q18',false,'❌ 틀렸습니다. 우주 배경 복사는 현재 약 2.7K의 마이크로파로 관측됩니다.')">X</button>
+            </div>
+            <div class="explanation" id="exp-q18"></div>
+        </div>
+
+        <div class="quiz-item" id="q19">
+            <div class="quiz-tag">빅뱅 우주론</div>
+            <p class="quiz-q">19. 빅뱅 우주론의 증거로 옳은 것을 모두 고르면?<br><span style="font-weight:normal;font-size:0.88rem">ㄱ. 허블의 법칙 &nbsp; ㄴ. 우주 배경 복사 &nbsp; ㄷ. 수소:헬륨 질량비 3:1</span></p>
+            <div class="btn-group btn-col">
+                <button class="quiz-btn" onclick="ans(this,'q19',false,'❌ 틀렸습니다. ㄷ도 중요한 증거입니다.')">① ㄱ, ㄴ만</button>
+                <button class="quiz-btn" onclick="ans(this,'q19',false,'❌ 틀렸습니다. ㄱ도 중요한 증거입니다.')">② ㄴ, ㄷ만</button>
+                <button class="quiz-btn" onclick="ans(this,'q19',true,'✅ 정답! ㄱ(허블의 법칙), ㄴ(우주 배경 복사), ㄷ(수소:헬륨 비율) 모두 빅뱅 우주론의 핵심 증거입니다.')">③ ㄱ, ㄴ, ㄷ 모두</button>
+                <button class="quiz-btn" onclick="ans(this,'q19',false,'❌ 틀렸습니다. ㄱ만이 아니라 셋 모두 증거입니다.')">④ ㄱ만</button>
+            </div>
+            <div class="explanation" id="exp-q19"></div>
+        </div>
+
+        <div class="quiz-item" id="q20">
+            <div class="quiz-tag">빅뱅 우주론</div>
+            <p class="quiz-q">20. 빅뱅 후 별과 은하가 형성되기 시작한 시기는?</p>
+            <div class="btn-group btn-col">
+                <button class="quiz-btn" onclick="ans(this,'q20',false,'❌ 틀렸습니다. 약 3분은 헬륨 원자핵 형성 시기입니다.')">① 약 3분 후</button>
+                <button class="quiz-btn" onclick="ans(this,'q20',false,'❌ 틀렸습니다. 38만 년 후는 원자 형성과 우주 배경 복사 발생 시기입니다.')">② 약 38만 년 후</button>
+                <button class="quiz-btn" onclick="ans(this,'q20',true,'✅ 정답! 빅뱅 후 약 3억 년이 지나서야 수소·헬륨 가스가 중력으로 뭉쳐 최초의 별과 은하가 탄생하기 시작했습니다.')">③ 약 3억 년 후</button>
+                <button class="quiz-btn" onclick="ans(this,'q20',false,'❌ 틀렸습니다. 138억 년은 현재 우주의 나이입니다.')">④ 약 138억 년 후 (현재)</button>
+            </div>
+            <div class="explanation" id="exp-q20"></div>
+        </div>
+
+        <!-- ===== 별의 진화 (21~30) ===== -->
+
+        <div class="quiz-item" id="q21">
+            <div class="quiz-tag">별의 진화</div>
+            <p class="quiz-q">21. 주계열성에서 일어나는 핵융합 반응은?</p>
+            <div class="btn-group btn-col">
+                <button class="quiz-btn" onclick="ans(this,'q21',true,'✅ 정답! 주계열성에서는 수소 원자핵 4개가 융합하여 헬륨 원자핵 1개를 만드는 수소 핵융합이 일어납니다. 태양도 현재 주계열성 단계입니다.')">① 수소 → 헬륨</button>
+                <button class="quiz-btn" onclick="ans(this,'q21',false,'❌ 틀렸습니다. 헬륨→탄소 반응은 적색 거성 단계에서 일어납니다.')">② 헬륨 → 탄소</button>
+                <button class="quiz-btn" onclick="ans(this,'q21',false,'❌ 틀렸습니다. 탄소→산소 반응은 더 진화한 거성에서 일어납니다.')">③ 탄소 → 산소</button>
+                <button class="quiz-btn" onclick="ans(this,'q21',false,'❌ 틀렸습니다. 규소→철 반응은 초거성 말기에 일어납니다.')">④ 규소 → 철</button>
+            </div>
+            <div class="explanation" id="exp-q21"></div>
+        </div>
+
+        <div class="quiz-item" id="q22">
+            <div class="quiz-tag">별의 진화</div>
+            <p class="quiz-q">22. 별 내부 핵융합 반응으로 만들 수 있는 가장 무거운 원소는 철(Fe)이다. (O/X)</p>
+            <div class="btn-group">
+                <button class="quiz-btn" onclick="ans(this,'q22',true,'✅ 정답! 철은 핵자당 결합 에너지가 가장 커서 핵융합을 해도 에너지가 발생하지 않습니다. 따라서 별 내부 핵융합의 종착점은 철(Fe)입니다.')">O</button>
+                <button class="quiz-btn" onclick="ans(this,'q22',false,'❌ 틀렸습니다. 별 내부 핵융합의 종착점은 철(Fe)입니다. 금·우라늄은 초신성 폭발 때 만들어집니다.')">X</button>
+            </div>
+            <div class="explanation" id="exp-q22"></div>
+        </div>
+
+        <div class="quiz-item" id="q23">
+            <div class="quiz-tag">별의 진화</div>
+            <p class="quiz-q">23. 금(Au)과 우라늄(U)이 생성되는 곳은?</p>
+            <div class="btn-group btn-col">
+                <button class="quiz-btn" onclick="ans(this,'q23',false,'❌ 틀렸습니다. 주계열성에서는 수소→헬륨 반응만 일어납니다.')">① 주계열성 내부</button>
+                <button class="quiz-btn" onclick="ans(this,'q23',false,'❌ 틀렸습니다. 적색 거성에서는 C, O 정도까지만 생성됩니다.')">② 적색 거성 내부</button>
+                <button class="quiz-btn" onclick="ans(this,'q23',false,'❌ 틀렸습니다. 초거성 내부에서는 최대 철(Fe)까지 생성됩니다.')">③ 초거성 내부</button>
+                <button class="quiz-btn" onclick="ans(this,'q23',true,'✅ 정답! 철보다 무거운 원소(금, 은, 우라늄 등)는 초신성 폭발 시 발생하는 엄청난 에너지에 의한 중성자 포획 반응으로 생성됩니다.')">④ 초신성 폭발 시</button>
+            </div>
+            <div class="explanation" id="exp-q23"></div>
+        </div>
+
+        <div class="quiz-item" id="q24">
+            <div class="quiz-tag">별의 진화</div>
+            <p class="quiz-q">24. 태양 질량 정도의 별이 최종적으로 도달하는 단계는?</p>
+            <div class="btn-group btn-col">
+                <button class="quiz-btn" onclick="ans(this,'q24',false,'❌ 틀렸습니다. 블랙홀은 태양 질량의 약 25배 이상인 별의 최종 단계입니다.')">① 블랙홀</button>
+                <button class="quiz-btn" onclick="ans(this,'q24',false,'❌ 틀렸습니다. 중성자별은 태양 질량의 8~25배 정도인 별의 최종 단계입니다.')">② 중성자별</button>
+                <button class="quiz-btn" onclick="ans(this,'q24',true,'✅ 정답! 태양 질량 정도의 별은 적색 거성 → 행성상 성운 → 백색 왜성 순으로 진화합니다.')">③ 백색 왜성</button>
+                <button class="quiz-btn" onclick="ans(this,'q24',false,'❌ 틀렸습니다. 초신성 폭발은 태양 질량의 약 8배 이상인 별에서 일어납니다.')">④ 초신성</button>
+            </div>
+            <div class="explanation" id="exp-q24"></div>
+        </div>
+
+        <div class="quiz-item" id="q25">
+            <div class="quiz-tag">별의 진화</div>
+            <p class="quiz-q">25. 초신성 폭발은 질량이 태양의 약 8배 이상인 별에서 일어난다. (O/X)</p>
+            <div class="btn-group">
+                <button class="quiz-btn" onclick="ans(this,'q25',true,'✅ 정답! 태양 질량의 약 8배 이상인 무거운 별은 생애 말기에 급격한 중력 붕괴와 함께 초신성 폭발을 일으킵니다.')">O</button>
+                <button class="quiz-btn" onclick="ans(this,'q25',false,'❌ 틀렸습니다. 초신성 폭발은 태양 질량의 약 8배 이상인 별에서 일어납니다. 태양 정도의 별은 백색 왜성이 됩니다.')">X</button>
+            </div>
+            <div class="explanation" id="exp-q25"></div>
+        </div>
+
+        <div class="quiz-item" id="q26">
+            <div class="quiz-tag">별의 진화</div>
+            <p class="quiz-q">26. 핵융합 반응에서 에너지가 발생하는 이유는?</p>
+            <div class="btn-group btn-col">
+                <button class="quiz-btn" onclick="ans(this,'q26',false,'❌ 틀렸습니다. 온도 변화 자체가 에너지 발생 원인이 아닙니다.')">① 온도가 높아지기 때문에</button>
+                <button class="quiz-btn" onclick="ans(this,'q26',true,'✅ 정답! 핵융합 반응에서 반응 전후 질량의 합이 약간 줄어드는데(질량 결손), 이 줄어든 질량이 E=mc²에 따라 막대한 에너지로 전환됩니다.')">② 반응 전후 질량 차이(질량 결손)가 에너지로 전환되기 때문에</button>
+                <button class="quiz-btn" onclick="ans(this,'q26',false,'❌ 틀렸습니다. 화학 반응이 아닌 핵반응입니다.')">③ 화학 결합 에너지가 방출되기 때문에</button>
+                <button class="quiz-btn" onclick="ans(this,'q26',false,'❌ 틀렸습니다. 전자의 이동은 화학 반응과 관련됩니다.')">④ 전자가 이동하기 때문에</button>
+            </div>
+            <div class="explanation" id="exp-q26"></div>
+        </div>
+
+        <div class="quiz-item" id="q27">
+            <div class="quiz-tag">별의 진화</div>
+            <p class="quiz-q">27. 우리 몸을 구성하는 탄소(C)와 산소(O)는 빅뱅 때 만들어졌다. (O/X)</p>
+            <div class="btn-group">
+                <button class="quiz-btn" onclick="ans(this,'q27',false,'❌ 틀렸습니다. 탄소·산소는 빅뱅이 아닌 별 내부의 핵융합 반응으로 만들어졌습니다. 빅뱅 직후에는 수소와 헬륨만 생성되었습니다.')">O</button>
+                <button class="quiz-btn" onclick="ans(this,'q27',true,'✅ 정답! 탄소·산소는 적색 거성 단계에서 헬륨 핵융합으로 만들어집니다. 빅뱅 때는 수소와 헬륨만 생성되었습니다.')">X</button>
+            </div>
+            <div class="explanation" id="exp-q27"></div>
+        </div>
+
+        <div class="quiz-item" id="q28">
+            <div class="quiz-tag">별의 진화</div>
+            <p class="quiz-q">28. 별이 탄생하려면 성운 중심부 온도가 최소 약 얼마 이상 되어야 하는가?</p>
+            <div class="btn-group btn-col">
+                <button class="quiz-btn" onclick="ans(this,'q28',false,'❌ 틀렸습니다. 1,000K는 핵융합이 일어나기에 너무 낮은 온도입니다.')">① 약 1,000K</button>
+                <button class="quiz-btn" onclick="ans(this,'q28',false,'❌ 틀렸습니다. 100만 K는 수소 핵융합이 시작되기에 충분하지 않습니다.')">② 약 100만K</button>
+                <button class="quiz-btn" onclick="ans(this,'q28',true,'✅ 정답! 성운이 중력 수축하여 중심부 온도가 약 1,000만K(10⁷K) 이상이 되면 수소 핵융합이 시작되어 별이 탄생합니다.')">③ 약 1,000만K</button>
+                <button class="quiz-btn" onclick="ans(this,'q28',false,'❌ 틀렸습니다. 10억K는 별보다 훨씬 높은 온도입니다.')">④ 약 10억K</button>
+            </div>
+            <div class="explanation" id="exp-q28"></div>
+        </div>
+
+        <div class="quiz-item" id="q29">
+            <div class="quiz-tag">별의 진화</div>
+            <p class="quiz-q">29. 초신성 폭발 후 남은 잔해는 새로운 별과 행성의 재료가 된다. (O/X)</p>
+            <div class="btn-group">
+                <button class="quiz-btn" onclick="ans(this,'q29',true,'✅ 정답! 초신성 폭발로 우주 공간에 흩어진 다양한 원소들은 중력으로 다시 뭉쳐 새로운 별, 행성, 생명체의 재료가 됩니다. 태양계도 이런 과정으로 탄생했습니다.')">O</button>
+                <button class="quiz-btn" onclick="ans(this,'q29',false,'❌ 틀렸습니다. 초신성 폭발 잔해는 우주를 풍요롭게 하는 원소들을 공급하여 새로운 별과 행성의 재료가 됩니다.')">X</button>
+            </div>
+            <div class="explanation" id="exp-q29"></div>
+        </div>
+
+        <div class="quiz-item" id="q30">
+            <div class="quiz-tag">종합</div>
+            <p class="quiz-q">30. 다음 중 원소가 만들어진 장소와 원소를 올바르게 연결한 것은?</p>
+            <div class="btn-group btn-col">
+                <button class="quiz-btn" onclick="ans(this,'q30',false,'❌ 틀렸습니다. 탄소는 별 내부(적색 거성)에서 만들어집니다.')">① 빅뱅 직후 → 탄소(C)</button>
+                <button class="quiz-btn" onclick="ans(this,'q30',false,'❌ 틀렸습니다. 주계열성에서는 수소→헬륨 반응만 일어납니다.')">② 주계열성 내부 → 철(Fe)</button>
+                <button class="quiz-btn" onclick="ans(this,'q30',false,'❌ 틀렸습니다. 헬륨은 빅뱅 핵합성으로도 만들어지며, 초신성 폭발의 주요 산물이 아닙니다.')">③ 초신성 폭발 → 헬륨(He)</button>
+                <button class="quiz-btn" onclick="ans(this,'q30',true,'✅ 정답! 수소와 헬륨은 빅뱅 직후 핵합성으로, 탄소~철은 별 내부 핵융합으로, 금처럼 철보다 무거운 원소는 초신성 폭발로 만들어집니다.')">④ 초신성 폭발 → 금(Au)</button>
+            </div>
+            <div class="explanation" id="exp-q30"></div>
+        </div>
+
+        <button class="reset-btn" onclick="resetQuiz()">🔄 퀴즈 다시 풀기</button>
+    </div>
+</div>
+
+<script>
+    const TOTAL = 30;
+    let score = 0;
+    let answered = 0;
+
+    function showTab(index) {
+        document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',i===index));
+        document.querySelectorAll('.content-section').forEach((s,i)=>s.classList.toggle('active',i===index));
+    }
+
+    function ans(btn, qId, isCorrect, msg) {
+        const item = document.getElementById(qId);
+        if(item.dataset.done) return;
+        item.dataset.done = '1';
+        const exp = document.getElementById('exp-'+qId);
+        exp.style.display = 'block';
+        exp.innerText = msg;
+        item.querySelectorAll('.quiz-btn').forEach(b=>b.disabled=true);
+        if(isCorrect){
+            btn.classList.add('correct');
+            item.classList.add('answered-correct');
+            score++;
+        } else {
+            btn.classList.add('wrong');
+            item.classList.add('answered-wrong');
+        }
+        answered++;
+        updateScore();
+    }
+
+    function updateScore() {
+        document.getElementById('scoreDisplay').innerText = score + ' / ' + answered;
+        document.getElementById('progressText').innerText = answered + ' / ' + TOTAL + ' 완료';
+        document.getElementById('progressFill').style.width = (answered/TOTAL*100) + '%';
+        const pct = answered > 0 ? Math.round(score/answered*100) : 0;
+        let msg = '';
+        if(answered === TOTAL) {
+            if(pct === 100) msg = '🎉 만점! 완벽합니다!';
+            else if(pct >= 80) msg = '👍 훌륭해요!';
+            else if(pct >= 60) msg = '💪 조금 더 복습해봐요!';
+            else msg = '📖 개념을 다시 확인해보세요!';
+        } else {
+            if(pct === 100) msg = '🎉 지금까지 완벽!';
+            else if(pct >= 70) msg = '👍 잘하고 있어요!';
+            else msg = '💪 힘내요!';
+        }
+        document.getElementById('scoreMsg').innerText = msg;
+    }
+
+    function resetQuiz() {
+        score = 0; answered = 0;
+        document.getElementById('scoreDisplay').innerText = '0 / 0';
+        document.getElementById('scoreMsg').innerText = '';
+        document.getElementById('progressText').innerText = '0 / ' + TOTAL + ' 완료';
+        document.getElementById('progressFill').style.width = '0%';
+        for(let i=1; i<=TOTAL; i++){
+            const item = document.getElementById('q'+i);
+            delete item.dataset.done;
+            item.classList.remove('answered-correct','answered-wrong');
+            document.getElementById('exp-q'+i).style.display = 'none';
+            item.querySelectorAll('.quiz-btn').forEach(b=>{
+                b.disabled = false;
+                b.classList.remove('correct','wrong');
+            });
+        }
+    }
+</script>
+</body>
+</html>
