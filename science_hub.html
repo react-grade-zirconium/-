@@ -3,19 +3,66 @@
 <head>
 <meta charset="UTF-8">
 <style>
+    /* 과학 파트만의 시그니처 테마 컬러 */
     :root { --sci: #0891b2; --bg: #f8fafc; }
-    body { font-family: 'Pretendard', sans-serif; background: var(--bg); margin: 0; padding: 20px; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
     
-    /* 과학 내부 상단 메뉴 */
-    .nav { display: flex; gap: 10px; margin-bottom: 15px; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; }
-    .nav-btn { 
-        padding: 10px 20px; border: 2px solid var(--sci); background: white; color: var(--sci); 
-        border-radius: 25px; cursor: pointer; font-weight: 800; font-size: 0.9rem; transition: 0.2s;
+    body { 
+        font-family: 'Pretendard', sans-serif; 
+        background: var(--bg); 
+        margin: 0; 
+        padding: 20px; 
+        display: flex; 
+        flex-direction: column; 
+        height: 100vh; 
+        overflow: hidden; 
     }
-    .nav-btn.active { background: var(--sci); color: white; }
     
-    .content { flex: 1; border-radius: 12px; overflow: hidden; background: white; border: 1px solid #e2e8f0; }
-    iframe { width: 100%; height: 100%; border: none; }
+    /* 상단 서브 메뉴 (물/화/생/지) */
+    .nav { 
+        display: flex; 
+        gap: 10px; 
+        margin-bottom: 15px; 
+        border-bottom: 2px solid #e2e8f0; 
+        padding-bottom: 10px; 
+        flex-shrink: 0;
+    }
+    
+    .nav-btn { 
+        padding: 10px 22px; 
+        border: 2px solid var(--sci); 
+        background: white; 
+        color: var(--sci); 
+        border-radius: 25px; 
+        cursor: pointer; 
+        font-weight: 800; 
+        font-size: 0.95rem; 
+        transition: 0.2s;
+    }
+    
+    .nav-btn.active { 
+        background: var(--sci); 
+        color: white; 
+    }
+
+    .nav-btn:hover:not(.active) {
+        background: #ecfeff;
+    }
+    
+    /* 실제 과목 파일이 보일 영역 */
+    .content { 
+        flex: 1; 
+        border-radius: 16px; 
+        overflow: hidden; 
+        background: white; 
+        border: 1px solid #e2e8f0; 
+        box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+    }
+    
+    iframe { 
+        width: 100%; 
+        height: 100%; 
+        border: none; 
+    }
 </style>
 </head>
 <body>
@@ -33,10 +80,18 @@
 
 <script>
     function load(url, btn) {
+        // 버튼 활성화 상태 변경
         document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
+        
+        // iframe 경로 변경
         document.getElementById('sciFrame').src = "./" + url;
     }
+
+    // 메인(index.html)에서 과학 탭을 처음 눌렀을 때 기본값 설정
+    window.onload = () => {
+        // 필요 시 특정 과목을 기본으로 띄울 수 있습니다.
+    };
 </script>
 </body>
 </html>
