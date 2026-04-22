@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<style>
+    :root { --kor: #b45309; --bg: #fdfaf5; }
+    body { font-family: 'Pretendard', sans-serif; background: var(--bg); margin: 0; padding: 20px; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+    .nav { display: flex; gap: 10px; margin-bottom: 15px; border-bottom: 2px solid #d6c9b5; padding-bottom: 10px; }
+    .nav-btn { padding: 10px 20px; border: 2px solid var(--kor); background: white; color: var(--kor); border-radius: 25px; cursor: pointer; font-weight: 800; }
+    .nav-btn.active { background: var(--kor); color: white; }
+    .content { flex: 1; border-radius: 12px; overflow: hidden; background: white; border: 1px solid #d6c9b5; }
+    iframe { width: 100%; height: 100%; border: none; }
+</style>
+</head>
+<body>
+<div class="nav">
+    <button class="nav-btn active" onclick="load('korean_set1.html', this)">제1회</button>
+    <button class="nav-btn" onclick="load('korean_set2_3.html', this)">제2·3회</button>
+    <button class="nav-btn" onclick="load('korean_set4.html', this)">제4회</button>
+</div>
+<div class="content"><iframe id="korFrame" src="./korean_set1.html"></iframe></div>
+<script>
+    function load(url, btn) {
+        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('korFrame').src = "./" + url;
+    }
+</script>
+</body>
+</html>
