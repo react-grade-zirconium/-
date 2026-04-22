@@ -10,15 +10,14 @@
     body { font-family: 'Pretendard', sans-serif; background: var(--bg); display: flex; height: 100vh; overflow: hidden; }
 
     /* 사이드바 */
-    .sidebar { width: 250px; background: var(--dark); color: white; display: flex; flex-direction: column; height: 100vh; flex-shrink: 0; }
+    .sidebar { width: 250px; background: var(--dark); color: white; display: flex; flex-direction: column; flex-shrink: 0; }
     .sidebar-header { padding: 30px 20px; font-size: 1.5rem; font-weight: 900; border-bottom: 1px solid rgba(255,255,255,0.1); text-align: center; color: #60a5fa; }
     .subject-list { flex: 1; padding: 20px 0; }
-    .subject-item { padding: 18px 25px; cursor: pointer; transition: 0.3s; opacity: 0.6; display: flex; align-items: center; gap: 12px; }
-    .subject-item:hover { background: rgba(255,255,255,0.05); opacity: 1; }
+    .subject-item { padding: 18px 25px; cursor: pointer; transition: 0.3s; opacity: 0.6; }
     .subject-item.active { opacity: 1; background: var(--primary); font-weight: bold; }
 
     /* 메인 영역 */
-    .main-content { flex: 1; padding: 25px; display: flex; flex-direction: column; height: 100vh; }
+    .main-content { flex: 1; padding: 25px; display: flex; flex-direction: column; }
     .frame-box { flex: 1; background: white; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); overflow: hidden; }
     iframe { width: 100%; height: 100%; border: none; }
 </style>
@@ -30,8 +29,8 @@
     <div class="subject-list">
         <div id="side-korean" class="subject-item active" onclick="go('korean_hub.html', this)">📖 국어 모의고사</div>
         <div id="side-science" class="subject-item" onclick="go('science_hub.html', this)">🧪 통합과학</div>
-        <div id="side-climate" class="subject-item" onclick="go('climate_interactive.html', this)">🌍 사회 (기후)</div>
-        <div id="side-history" class="subject-item" onclick="go('history_interactive.html', this)">📚 한국사</div>
+        <div id="side-climate" class="subject-item" onclick="go('climate_interactive.html', this)">🌍 사회 (기후/지리)</div>
+        <div id="side-history" class="subject-item" onclick="go('history_interactive.html', this)">📚 한국사 (인터랙티브)</div>
         <div id="side-info" class="subject-item" onclick="go('mega_study.html', this)">💻 정보 (알고리즘)</div>
     </div>
 </div>
