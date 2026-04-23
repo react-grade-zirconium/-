@@ -1,0 +1,1472 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>통합사회 — 인간, 사회, 환경과 행복</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+
+:root {
+  --bg: #f5f3ef;
+  --paper: #fffef9;
+  --ink: #1e1a14;
+  --ink-mid: #5a5245;
+  --ink-light: #9a8f7f;
+  --line: #e4ddd0;
+  --hl-y: #fff0a0;
+  --hl-r: #ffe0d5;
+  --hl-b: #d5eaff;
+  --hl-g: #d5f5e0;
+
+  --c1: #2d6a5a;   /* 통합적 관점 — 딥 그린 */
+  --c1l: #e8f4f1;
+  --c2: #5b3e8a;   /* 행복 기준/의미 — 딥 퍼플 */
+  --c2l: #f0eaf9;
+  --c3: #8a4a2a;   /* 행복 조건 — 딥 테라코타 */
+  --c3l: #faf0e8;
+
+  --active: var(--c1);
+  --radius: 10px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  font-size: 13.5px;
+  line-height: 1.8;
+  min-height: 100vh;
+}
+
+/* ── 헤더 ── */
+header {
+  background: var(--ink);
+  padding: 22px 32px 0;
+  position: relative;
+  overflow: hidden;
+}
+header::before {
+  content: '';
+  position: absolute;
+  width: 300px; height: 300px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.03);
+  top: -120px; right: -60px;
+}
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding-bottom: 18px;
+}
+.header-title {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.3;
+}
+.header-sub {
+  font-size: 11px;
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.header-badge {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 6px;
+  padding: 6px 14px;
+  font-size: 11px;
+  color: rgba(255,255,255,0.6);
+}
+
+/* ── 구글 스타일 탭 ── */
+.tab-bar {
+  display: flex;
+  gap: 2px;
+  padding: 0 4px;
+  position: relative;
+}
+.tab-btn {
+  padding: 11px 22px;
+  border: none;
+  background: rgba(255,255,255,0.07);
+  color: rgba(255,255,255,0.5);
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 8px 8px 0 0;
+  transition: all 0.2s;
+  position: relative;
+  white-space: nowrap;
+}
+.tab-btn:hover { background: rgba(255,255,255,0.12); color: rgba(255,255,255,0.8); }
+.tab-btn.active {
+  background: var(--bg);
+  color: var(--ink);
+  font-weight: 700;
+}
+.tab-btn.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 12px; right: 12px;
+  height: 2px;
+  border-radius: 2px 2px 0 0;
+}
+.tab-btn[data-tab="0"].active { color: var(--c1); }
+.tab-btn[data-tab="0"].active::after { background: var(--c1); }
+.tab-btn[data-tab="1"].active { color: var(--c2); }
+.tab-btn[data-tab="1"].active::after { background: var(--c2); }
+.tab-btn[data-tab="2"].active { color: var(--c3); }
+.tab-btn[data-tab="2"].active::after { background: var(--c3); }
+
+/* ── 콘텐츠 ── */
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+main {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 32px 20px 80px;
+}
+
+/* ── 섹션 구분 ── */
+.section-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 32px 0 14px;
+}
+.section-label-icon {
+  width: 30px; height: 30px;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+.c1 .section-label-icon { background: var(--c1); color: #fff; }
+.c2 .section-label-icon { background: var(--c2); color: #fff; }
+.c3 .section-label-icon { background: var(--c3); color: #fff; }
+.section-label-text {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 16px;
+  font-weight: 700;
+}
+.section-label-line {
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+}
+
+/* ── 카드 ── */
+.card {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  margin-bottom: 16px;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+.card-head {
+  padding: 11px 18px;
+  font-weight: 700;
+  font-size: 12.5px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid var(--line);
+}
+.c1 .card-head { background: var(--c1l); color: var(--c1); }
+.c2 .card-head { background: var(--c2l); color: var(--c2); }
+.c3 .card-head { background: var(--c3l); color: var(--c3); }
+.card-body { padding: 14px 18px; }
+
+/* ── 테이블 ── */
+table { width: 100%; border-collapse: collapse; font-size: 12.5px; margin: 6px 0; }
+th { padding: 7px 11px; text-align: left; font-weight: 600; font-size: 11.5px; background: var(--line); }
+td { padding: 7px 11px; border-bottom: 1px solid var(--line); vertical-align: top; }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: rgba(0,0,0,0.015); }
+
+/* ── 하이라이트 ── */
+.hy { background: var(--hl-y); padding: 1px 4px; border-radius: 3px; font-weight: 600; }
+.hr { background: var(--hl-r); padding: 1px 4px; border-radius: 3px; font-weight: 700; color: #b03020; }
+.hb { background: var(--hl-b); padding: 1px 4px; border-radius: 3px; font-weight: 600; color: #1a5080; }
+.hg { background: var(--hl-g); padding: 1px 4px; border-radius: 3px; font-weight: 600; color: #1f6e30; }
+
+/* ── 박스 ── */
+.box { padding: 10px 14px; border-radius: 6px; margin: 8px 0; font-size: 12.5px; }
+.box-def { background: #f0f7f5; border-left: 3px solid var(--c1); }
+.box-key { background: #f4f0fa; border-left: 3px solid var(--c2); }
+.box-ex  { background: #fdf7e4; border-left: 3px solid #c8a030; }
+.box-warn { background: #fdf0ee; border-left: 3px solid #d04030; }
+
+/* ── 플로우 ── */
+.flow { display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin: 6px 0; font-size: 12px; }
+.fi { background: var(--line); padding: 3px 10px; border-radius: 4px; font-weight: 500; }
+.fa { color: #c04030; font-weight: 700; font-size: 14px; }
+
+/* ── 사상가 그리드 ── */
+.tgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px,1fr)); gap: 12px; margin: 8px 0; }
+.tcard {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px 14px;
+  background: var(--paper);
+  font-size: 12px;
+}
+.tname { font-family: 'Noto Serif KR', serif; font-weight: 700; font-size: 13px; margin-bottom: 3px; }
+.ttag { display: inline-block; font-size: 10px; background: var(--line); padding: 1px 7px; border-radius: 10px; color: var(--ink-mid); margin-left: 5px; }
+.tkw { font-weight: 700; color: var(--c2); margin: 4px 0; font-size: 12px; }
+.tdesc { color: var(--ink-mid); line-height: 1.7; }
+blockquote {
+  border-left: 2px solid #c8a030;
+  margin: 6px 0 0;
+  padding: 6px 12px;
+  background: #fffbef;
+  font-size: 11.5px;
+  color: var(--ink-mid);
+  font-style: italic;
+  line-height: 1.75;
+  border-radius: 0 5px 5px 0;
+}
+
+/* ── 리스트 ── */
+ul.dot { list-style: none; padding: 0; }
+ul.dot li { padding: 2px 0 2px 14px; position: relative; font-size: 12.5px; }
+ul.dot li::before { content: '·'; position: absolute; left: 0; font-weight: 700; color: #c8a030; }
+
+/* ── 비교 그리드 ── */
+.cgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 8px 0; }
+.cbox { border: 1px solid var(--line); border-radius: 6px; padding: 10px 12px; font-size: 12.5px; }
+.clabel { font-weight: 700; font-size: 10.5px; letter-spacing: 1px; margin-bottom: 5px; }
+
+/* ════════════════════════════
+   문제 섹션
+════════════════════════════ */
+.quiz-section {
+  margin-top: 40px;
+}
+.quiz-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 20px;
+  border-radius: 10px 10px 0 0;
+  border-bottom: none;
+}
+.c1 .quiz-header { background: var(--c1); }
+.c2 .quiz-header { background: var(--c2); }
+.c3 .quiz-header { background: var(--c3); }
+.quiz-header-title {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
+}
+.quiz-type-tabs {
+  display: flex;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-top: none;
+  border-bottom: none;
+}
+.quiz-type-btn {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  background: transparent;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.18s;
+  color: var(--ink-mid);
+  border-bottom: 2px solid transparent;
+}
+.quiz-type-btn.active { color: var(--ink); border-bottom-color: var(--ink); background: #fafaf6; }
+.quiz-type-btn:hover:not(.active) { background: var(--bg); }
+
+.quiz-panel { display: none; }
+.quiz-panel.active { display: block; }
+
+.quiz-list {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-top: none;
+  border-radius: 0 0 10px 10px;
+  padding: 16px 20px;
+}
+
+/* 객관식 */
+.mc-item {
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+}
+.mc-item:last-child { border-bottom: none; }
+.mc-num {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--ink-light);
+  margin-bottom: 4px;
+  letter-spacing: 1px;
+}
+.mc-q {
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.6;
+  margin-bottom: 10px;
+}
+.mc-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+.mc-opt {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 7px 10px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-size: 12px;
+  background: var(--bg);
+  line-height: 1.5;
+}
+.mc-opt:hover { border-color: var(--ink-mid); background: var(--paper); }
+.mc-opt.selected { border-color: var(--ink-mid); background: var(--hl-b); }
+.mc-opt.correct { border-color: #27ae60; background: var(--hl-g); }
+.mc-opt.wrong { border-color: #c0392b; background: var(--hl-r); }
+.opt-num {
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: var(--line);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px;
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.mc-feedback {
+  margin-top: 8px;
+  font-size: 11.5px;
+  padding: 6px 10px;
+  border-radius: 5px;
+  display: none;
+  line-height: 1.6;
+}
+.mc-feedback.show { display: block; }
+.mc-feedback.ok { background: var(--hl-g); color: #1a6030; }
+.mc-feedback.ng { background: var(--hl-r); color: #8a1a10; }
+
+/* OX */
+.ox-item {
+  padding: 13px 0;
+  border-bottom: 1px solid var(--line);
+}
+.ox-item:last-child { border-bottom: none; }
+.ox-q { font-size: 13px; font-weight: 500; line-height: 1.6; margin-bottom: 8px; }
+.ox-btns { display: flex; gap: 8px; }
+.ox-btn {
+  padding: 6px 20px;
+  border: 1.5px solid var(--line);
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 700;
+  background: var(--bg);
+  transition: all 0.15s;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+.ox-btn:hover { border-color: var(--ink-mid); }
+.ox-btn.o-btn:hover, .ox-btn.o-btn.selected { border-color: #27ae60; color: #27ae60; background: var(--hl-g); }
+.ox-btn.x-btn:hover, .ox-btn.x-btn.selected { border-color: #c0392b; color: #c0392b; background: var(--hl-r); }
+.ox-btn.correct { border-color: #27ae60; background: var(--hl-g); color: #1a6030; }
+.ox-btn.wrong { border-color: #c0392b; background: var(--hl-r); color: #8a1a10; }
+.ox-feedback { margin-top: 7px; font-size: 11.5px; padding: 5px 10px; border-radius: 5px; display: none; line-height: 1.6; }
+.ox-feedback.show { display: block; }
+.ox-feedback.ok { background: var(--hl-g); color: #1a6030; }
+.ox-feedback.ng { background: var(--hl-r); color: #8a1a10; }
+
+/* 고난도 */
+.hard-item {
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+}
+.hard-item:last-child { border-bottom: none; }
+.hard-badge {
+  display: inline-block;
+  font-size: 9.5px;
+  background: #fff0a0;
+  border: 1px solid #c8a030;
+  color: #7a5a00;
+  padding: 1px 8px;
+  border-radius: 10px;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+.hard-q { font-size: 13px; font-weight: 600; line-height: 1.65; margin-bottom: 10px; }
+.hard-textarea {
+  width: 100%;
+  min-height: 80px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 10px 12px;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 12.5px;
+  resize: vertical;
+  background: #fdfcf8;
+  line-height: 1.7;
+  color: var(--ink);
+  outline: none;
+  transition: border-color 0.15s;
+}
+.hard-textarea:focus { border-color: var(--ink-mid); }
+.hard-hint-btn {
+  margin-top: 8px;
+  padding: 4px 14px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: transparent;
+  font-size: 11.5px;
+  cursor: pointer;
+  font-family: 'Noto Sans KR', sans-serif;
+  color: var(--ink-mid);
+  transition: all 0.15s;
+}
+.hard-hint-btn:hover { border-color: var(--ink-mid); color: var(--ink); }
+.hard-hint {
+  margin-top: 6px;
+  font-size: 11.5px;
+  padding: 7px 12px;
+  background: var(--hl-y);
+  border-radius: 5px;
+  display: none;
+  line-height: 1.65;
+}
+.hard-hint.show { display: block; }
+
+/* 점수 표시 */
+.score-bar {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 10px 16px;
+  margin-bottom: 14px;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  flex-wrap: wrap;
+  font-size: 12px;
+}
+.score-num { font-weight: 700; font-size: 15px; }
+.score-label { color: var(--ink-light); font-size: 11px; }
+
+@media (max-width: 600px) {
+  .mc-options { grid-template-columns: 1fr; }
+  .tgrid { grid-template-columns: 1fr; }
+  .cgrid { grid-template-columns: 1fr; }
+  header { padding: 18px 16px 0; }
+  .tab-btn { padding: 10px 14px; font-size: 12px; }
+  main { padding: 20px 14px 60px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-top">
+    <div>
+      <div class="header-sub">통합사회 · Ⅱ단원</div>
+      <div class="header-title">인간, 사회, 환경과 행복</div>
+    </div>
+    <div class="header-badge">핵심 정리 + 문제 풀이</div>
+  </div>
+  <div class="tab-bar">
+    <button class="tab-btn active" data-tab="0" onclick="switchTab(0)">① 통합적 관점</button>
+    <button class="tab-btn" data-tab="1" onclick="switchTab(1)">② 행복의 기준과 의미</button>
+    <button class="tab-btn" data-tab="2" onclick="switchTab(2)">③ 행복을 실현하기 위한 조건</button>
+  </div>
+</header>
+
+<!-- ════════════════════════════════════════
+     TAB 0 : 통합적 관점
+════════════════════════════════════════ -->
+<div class="tab-content active" id="tab-0">
+<main>
+
+  <!-- 관점의 종류 -->
+  <div class="section-label c1">
+    <div class="section-label-icon">📌</div>
+    <div class="section-label-text">관점의 종류 (4가지)</div>
+    <div class="section-label-line"></div>
+  </div>
+  <div class="card c1">
+    <div class="card-head">4가지 관점 비교</div>
+    <div class="card-body">
+      <table>
+        <tr><th style="width:16%">관점</th><th style="width:28%">핵심 내용</th><th style="width:32%">주요 분석 요소</th><th>예시</th></tr>
+        <tr>
+          <td><span class="hy">① 시간적</span></td>
+          <td>역사적 배경·시대적 맥락<br>현재→미래, <strong>관계 파악, 추이→예측</strong></td>
+          <td>변화 흐름, 역사적 참고 사례</td>
+          <td>저출산</td>
+        </tr>
+        <tr>
+          <td><span class="hy">② 공간적</span></td>
+          <td>장소·지역·<strong>공간적 상호 작용</strong><br>분포 양상과 <span class="hy">형성 과정</span></td>
+          <td>이동과 네트워크, 특정·생활 요소(자연/인문), 변화 원인→영향, 인간·사회·환경 간 상호 관계 분석</td>
+          <td>희토류를 둘러싼 국가 간 갈등</td>
+        </tr>
+        <tr>
+          <td><span class="hy">③ 사회적</span></td>
+          <td>사회 구조+사회 제도 → 탐구 → 대안<br>정부와 시민 사회의 <span class="hy">역할</span></td>
+          <td>구조·제도·정책 바탕 관찰 → 개선점 파악 → 해결책 모색</td>
+          <td>장상 버스</td>
+        </tr>
+        <tr>
+          <td><span class="hy">④ 도덕적</span></td>
+          <td>도덕적 가치+규범 → <em>giving desirable direction</em></td>
+          <td>보편적 가치/원칙, 이해 관계의 상충, 권리 충돌</td>
+          <td>자율 주행 자동차 딜레마, 아동 노동</td>
+        </tr>
+      </table>
+      <div class="box box-key" style="margin-top:10px;">
+        <strong>사회 구조 vs 사회 제도</strong><br>
+        · <span class="hy">사회 구조</span> : 사회적 관계의 정형화된 <strong>틀</strong> (ex. 삼권 분립) → 인간에 미치는 영향<br>
+        · <span class="hy">사회 제도</span> : 사회적 행동을 이끄는 조직화된 <strong>관행·절차</strong> (ex. 헌법) → 인간에 미치는 영향
+      </div>
+      <div class="box box-ex" style="margin-top:6px;">
+        <strong>공간 구분</strong> : 공간 = 자연 + 인문<br>
+        · 희토류 : 생산·매장량 <span class="hy">편재</span> / 생산과 매장 비례 X / 생산·매장 ≠ 전기차 생산
+      </div>
+    </div>
+  </div>
+
+  <!-- 통합적 관점 필요성 -->
+  <div class="section-label c1">
+    <div class="section-label-icon">🔗</div>
+    <div class="section-label-text">통합적 관점의 필요성 & 적용</div>
+    <div class="section-label-line"></div>
+  </div>
+  <div class="card c1">
+    <div class="card-head">통합적 관점이란?</div>
+    <div class="card-body">
+      <div class="box box-def">
+        시간·공간·사회·윤리적 관점을 <span class="hy">통합</span>하여 복잡한 사회 현상을 <strong>근본적으로 이해</strong><br>
+        <em>→ 코끼리와 장님 : 일부만 보면 비약 / 일부를 통합해야 전체</em>
+      </div>
+      <table style="margin-top:10px;">
+        <tr><th style="width:16%">주제</th><th>①시간적</th><th>②공간적</th><th>③사회적</th><th>④윤리적</th></tr>
+        <tr>
+          <td><span class="hr">기후 위기</span></td>
+          <td>산업화 이후 온실가스↑ → 지표면 평균 온도↑ (임계 1.5℃)</td>
+          <td>일부 국가(배출) → 개발도상국 등 전 세계(피해)</td>
+          <td>제도(파리 협정 등) 마련</td>
+          <td>성장 중시 → 기후 위기</td>
+        </tr>
+        <tr>
+          <td><span class="hr">고령화</span></td>
+          <td>추이(성장세) → 예상(증가)</td>
+          <td>젊은층 이촌향도 → 도시 노년층 &lt; 농촌 노년층</td>
+          <td>노년 부양비↑ → 사회 복지 부담↑</td>
+          <td>가족만의 문제 → 가족+사회+정부 모두의 책임</td>
+        </tr>
+        <tr>
+          <td><span class="hr">AI 저작권</span></td>
+          <td>어떤 역사적 과정? 문제 발생의 시대적 배경?</td>
+          <td>인정/미인정 국가와 근거?</td>
+          <td>저작권은 어떤 법/제도? 범위?</td>
+          <td>desirable? 인간-AI 예술품 본질적으로 다른가?</td>
+        </tr>
+      </table>
+      <div class="box box-ex" style="margin-top:8px; font-size:12px;">
+        <strong>고령화 정책적 측면</strong> : 노후 소득 보완 (국민·주택 <span class="hy">연금</span>) &nbsp;|&nbsp;
+        <strong>가치관 측면</strong> : 공동체 의식
+      </div>
+    </div>
+  </div>
+
+  <!-- ─────────── 문제 섹션 ─────────── -->
+  <div class="quiz-section c1">
+    <div class="quiz-header c1">
+      <div class="quiz-header-title">✏️ 단원 1 문제 풀이</div>
+    </div>
+    <div class="quiz-type-tabs">
+      <button class="quiz-type-btn active" onclick="switchQuiz(0,0)">객관식 20</button>
+      <button class="quiz-type-btn" onclick="switchQuiz(0,1)">OX 10</button>
+      <button class="quiz-type-btn" onclick="switchQuiz(0,2)">고난도 10</button>
+    </div>
+
+    <!-- 객관식 -->
+    <div class="quiz-panel active" id="qp-0-0">
+      <div class="quiz-list">
+        <div class="score-bar">
+          <div><div class="score-num" id="mc-score-0">0</div><div class="score-label">맞힌 문항</div></div>
+          <div><div class="score-num" id="mc-total-0">0</div><div class="score-label">/ 20 풀었음</div></div>
+        </div>
+
+        <!-- Q1 -->
+        <div class="mc-item">
+          <div class="mc-num">Q 01</div>
+          <div class="mc-q">다음 중 <strong>시간적 관점</strong>에서 사회 현상을 바라보는 방식으로 가장 적절한 것은?</div>
+          <div class="mc-options">
+            <div class="mc-opt" onclick="checkMC(this,0,0,false)"><span class="opt-num">①</span>장소의 분포 양상과 형성 과정을 분석한다.</div>
+            <div class="mc-opt" onclick="checkMC(this,0,0,false)"><span class="opt-num">②</span>사회 구조와 제도가 개인에게 미치는 영향을 탐구한다.</div>
+            <div class="mc-opt" onclick="checkMC(this,0,0,true)"><span class="opt-num">③</span>역사적 배경과 변화의 추이를 파악하여 미래를 예측한다.</div>
+            <div class="mc-opt" onclick="checkMC(this,0,0,false)"><span class="opt-num">④</span>도덕적 가치와 규범을 기준으로 바람직한 방향을 모색한다.</div>
+          </div>
+          <div class="mc-feedback">✅ 시간적 관점은 역사적 배경과 시대적 맥락을 통해 현재→미래, 관계 파악, 추이→예측을 핵심으로 합니다.</div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="mc-item">
+          <div class="mc-num">Q 02</div>
+          <div class="mc-q">공간적 관점에서 희토류 문제를 분석할 때 틀린 설명은?</div>
+          <div class="mc-options">
+            <div class="mc-opt" onclick="checkMC(this,0,1,false)"><span class="opt-num">①</span>희토류는 지구상에 고르게 분포하지 않고 특정 지역에 편재되어 있다.</div>
+            <div class="mc-opt" onclick="checkMC(this,0,1,true)"><span class="opt-num">②</span>희토류 생산량이 많은 국가는 전기차 생산도 많다.</div>
+            <div class="mc-opt" onclick="checkMC(this,0,1,false)"><span class="opt-num">③</span>희토류 생산량과 매장량이 반드시 비례하지는 않는다.</div>
+            <div class="mc-opt" onclick="checkMC(this,0,1,false)"><span class="opt-num">④</span>희토류는 첨단 전자 제품 생산에 필수적인 자원이다.</div>
+          </div>
+          <div class="mc-feedback">❌ 희토류 생산·매장 ≠ 전기차 생산. 생산지와 소비지가 다를 수 있습니다.</div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="mc-item">
+          <div class="mc-num">Q 03</div>
+          <div class="mc-q">사회 구조에 대한 설명으로 옳은 것은?</div>
+          <div class="mc-options">
+            <div class="mc-opt" onclick="checkMC(this,0,2,false)"><span class="opt-num">①</span>사회적 행동을 이끄는 조직화된 관행과 절차이다.</div>
+            <div class="mc-opt" onclick="checkMC(this,0,2,true)"><span class="opt-num">②</span>사회적 관계의 정형화된 틀로, 삼권 분립이 대표적 예시다.</div>
+            <div class="mc-opt" onclick="checkMC(this,0,2,false)"><span class="opt-num">③</span>도덕적 가치와 규범을 체계화한 것이다.</div>
+            <div class="mc-opt" onclick="checkMC(this,0,2,false)"><span class="opt-num">④</span>헌법처럼 국가가 공식화한 법체계를 가리킨다.</div>
+          </div>
+          <div class="mc-feedback">✅ 사회 구조는 사회적 관계의 정형화된 틀(ex. 삼권 분립), 사회 제도는 조직화된 관행·절차(ex. 헌법)입니다.</div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="mc-item">
+          <div class="mc-num">Q 04</div>
+          <div class="mc-q">도덕적(윤리적) 관점의 핵심 기능으로 가장 적절한 것은?</div>
+          <div class="mc-options">
+            <div class="mc-opt" onclick="checkMC(this,0,3,false)"><span class="opt-num">①</span>변화의 추이를 분석하여 미래를 예측한다.</div>
+            <div class="mc-opt" onclick="checkMC(this,0,3,false)"><span class="opt-num">②</span>공간적 분포와 이동 패턴을 파악한다.</div>
+            <div class="mc-opt" onclick="checkMC(this,0,3,false)"><span class="opt-num">③</span>사회 제도와 구조의 문제점을 파악하고 대안을 탐구한다.</div>
+            <div class="mc-opt" onclick="checkMC(this,0,3,true)"><span class="opt-num">④</span>도덕적 가치와 규범을 통해 바람직한 방향(desirable direction)을 제시한다.</div>
+          </div>
+          <div class="mc-feedback">✅ 도덕적 관점 = 도덕적 가치 + 규범 → giving desirable direction.</div>
+        </div>
+
+        <!-- Q5 -->
+        <div class="mc-item">
+          <div class="mc-num">Q 05</div>
+          <div class="mc-q">아동 노동 문제를 도덕적 관점에서 분석할 때 핵심 기준은?</div>
+          <div class="mc-options">
+            <div class="mc-opt" onclick="checkMC(this,0,4,false)"><span class="opt-num">①</span>국가의 경제 성장률</div>
+            <div class="mc-opt" onclick="checkMC(this,0,4,true)"><span class="opt-num">②</span>인간존엄성</div>
+            <div class="mc-opt" onclick="checkMC(this,0,4,false)"><span class="opt-num">③</span>지역 간 소득 격차</div>
+            <div class="mc-opt" onclick="checkMC(this,0,4,false)"><span class="opt-num">④</span>역사적 노동 관행</div>
+          </div>
+          <div class="mc-feedback">✅ 아동 노동의 도덕적 기준 = 인간존엄성.</div>
+        </div>
+
+        <!-- Q6 -->
+        <div class="mc-item">
+          <div class="mc-num">Q 06</div>
+          <div class="mc-q">기후 위기를 <strong>사회적 관점</strong>에서 접근할 때 가장 적합한 분석 내용은?</div>
+          <div class="mc-options">
+            <div class="mc-opt" onclick="checkMC(this,0,5,false)"><span class="opt-num">①</span>산업화 이후 온실가스 농도 변화 추이를 살핀다.</div>
+            <div class="mc-opt" onclick="checkMC(this,0,5,false)"><span class="opt-num">②</span>배출국과 피해국의 지리적 분포를 파악한다.</div>
+            <div class="mc-opt" onclick="checkMC(this,0,5,true)"><span class="opt-num">③</span>파리 협정과 같은 국제적 제도·정책 마련 여부를 살핀다.</div>
+            <div class="mc-opt" onclick="checkMC(this,0,5,false)"><span class="opt-num">④</span>성장 중시 가치관이 기후 위기를 초래했는지 판단한다.</div>
+          </div>
+          <div class="mc-feedback">✅ 사회적 관점은 구조·제도·정책 바탕으로 관찰 → 파리 협정 등 제도 마련이 핵심입니다.</div>
+        </div>
+
+        <!-- Q7 -->
+        <div class="mc-item">
+          <div class="mc-num">Q 07</div>
+          <div class="mc-q">통합적 관점이 필요한 이유를 비유한 '코끼리와 장님' 이야기에서 핵심 교훈은?</div>
+          <div class="mc-options">
+            <div class="mc-opt" onclick="checkMC(this,0,6,false)"><span class="opt-num">①</span>각 관점 중 하나를 선택하면 더 깊이 분석할 수 있다.</div>
+            <div class="mc-opt" onclick="checkMC(this,0,6,true)"><span class="opt-num">②</span>일부만 보면 비약이 생기고, 여러 관점을 통합해야 전체를 이해할 수 있다.</div>
+            <div class="mc-opt" onclick="checkMC(this,0,6,false)"><span class="opt-num">③</span>도덕적 관점이 다른 관점보다 우월하다.</div>
+            <div class="mc-opt" onclick="checkMC(this,0,6,false)"><span class="opt-num">④</span>사회 현상은 시간적 관점만으로 충분히 분석된다.</div>
+          </div>
+          <div class="mc-feedback">✅ 통합적 관점 = 여러 관점 통합 → 복잡한 사회 현상 근본적 이해.</div>
+        </div>
+
+        <!-- Q8 -->
+        <div class="mc-item">
+          <div class="mc-num">Q 08</div>
+          <div class="mc-q">사회적 관점에서 '장상 버스(무상 버스)' 문제를 분석하면?</div>
+          <div class="mc-options">
+            <div class="mc-opt" onclick="checkMC(this,0,7,false)"><span class="opt-num">①</span>버스 노선의 지리적 분포와 이동 패턴을 분석한다.</div>
+            <div class="mc-opt" onclick="checkMC(this,0,7,false)"><span class="opt-num">②</span>교통 요금 역사적 변화를 추적한다.</div>
+            <div class="mc-opt" onclick="checkMC(this,0,7,true)"><span class="opt-num">③</span>시장 원리의 한계를 인식하고 제도·정책(법률)을 통해 교통 약자 이동권을 보장한다.</div>
+            <div class="mc-opt" onclick="checkMC(this,0,7,false)"><span class="opt-num">④</span>버스 이용 쾌락과 고통의 총합을 계산한다.</div>
+          </div>
+          <div class="mc-feedback">✅ 사회적 관점 → 제도·정책(법률)으로 의무화 → 교통 약자 이동권 보장.</div>
+        </div>
+
+        <!-- Q9 -->
+        <div class="mc-item">
+          <div class="mc-num">Q 09</div>
+          <div class="mc-q">자율 주행 자동차 딜레마에서 국토교통부 윤리 지침의 <strong>가치</strong> 항목으로 옳은 것은?</div>
+          <div class="mc-options">
+            <div class="mc-opt" onclick="checkMC(this,0,8,false)"><span class="opt-num">①</span>정보 기록·제공</div>
+            <div class="mc-opt" onclick="checkMC(this,0,8,true)"><span class="opt-num">②</span>손실 ↓, 생명 우선, 차별 ×</div>
+            <div class="mc-opt" onclick="checkMC(this,0,8,false)"><span class="opt-num">③</span>최대 다수의 최대 행복</div>
+            <div class="mc-opt" onclick="checkMC(this,0,8,false)"><span class="opt-num">④</span>이성의 명령에 따른 행동</div>
+          </div>
+          <div class="mc-feedback">✅ 가치 = 손실↓, 생명 우선, 차별× / 원칙 = 정보 기록·제공.</div>
+        </div>
+
+        <!-- Q10 -->
+        <div class="mc-item">
+          <div class="mc-num">Q 10</div>
+          <div class="mc-q">공간적 관점에서 분석하는 내용과 <strong>거리가 먼</strong> 것은?</div>
+          <div class="mc-options">
+            <div class="mc-opt" onclick="checkMC(this,0,9,false)"><span class="opt-num">①</span>위치와 장소, 분포 양상과 형성 과정</div>
+            <div class="mc-opt" onclick="checkMC(this,0,9,false)"><span class="opt-num">②</span>이동과 네트워크</div>
+            <div class="mc-opt" onclick="checkMC(this,0,9,false)"><span class="opt-num">③</span>인간·사회·환경 간 상호 관계</div>
+            <div class="mc-opt" onclick="checkMC(this,0,9,true)"><span class="opt-num">④</span>시대별 제도 변화와 역사적 맥락</div>
+          </div>
+          <div class="mc-feedback">✅ 시대별 제도 변화와 역사적 맥락은 시간적 관점입니다.</div>
+        </div>
+
+        <!-- Q11 -->
+        <div class="mc-item">
+          <div class="mc-num">Q 11</div>
+          <div class="mc-q">고령화 현상을 <strong>공간적 관점</strong>으로 분석한 내용으로 옳은 것은?</div>
+          <div class="mc-options">
+            <div class="mc-opt" onclick="checkMC(this,0,10,false)"><span class="opt-num">①</span>고령화의 역사적 추이와 미래 예상을 분석한다.</div>
+            <div class="mc-opt" onclick="checkMC(this,0,10,true)"><span class="opt-num">②</span>젊은층의 이촌향도로 도시 노년층보다 농촌 노년층이 많다.</div>
+            <div class="mc-opt" onclick="checkMC(this,0,10,false)"><span class="opt-num">③</span>노년 부양비 증가로 사회 복지 부담이 커진다.</div>
+            <div class="mc-opt" onclick="checkMC(this,0,10,false)"><span class="opt-num">④</span>고령화는 가족만의 문제가 아닌 사회와 정부의 책임이다.</div>
+          </div>
+          <div class="mc-feedback">✅ 공간적 관점 → 젊은층 이촌향도 → 도시 노년층 < 농촌 노년층 분포.</div>
+        </div>
+
+        <!-- Q12 -->
+        <div class="mc-item">
+          <div class="mc-num">Q 12</div>
+          <div class="mc-q">다음 중 사회 <strong>제도</strong>의 예시로 가장 적절한 것은?</div>
+          <div class="mc-options">
+            <div class="mc-opt" onclick="checkMC(this,0,11,false)"><span class="opt-num">①</span>삼권 분립</div>
+            <div class="mc-opt" onclick="checkMC(this,0,11,false)"><span class="opt-num">②</span>계층 구조</div>
+            <div class="mc-opt" onclick="checkMC(this,0,11,true)"><span class="opt-num">③</span>헌법</div>
+            <div class="mc-opt" onclick="checkMC(this,0,11,false)"><span class="opt-num">④</span>가족 구조</div>
+          </div>
+          <div class="mc-feedback">✅ 헌법은 사회적 행동을 이끄는 조직화된 관행·절차 = 사회 제도.</div>
+        </div>
+
+        <!-- Q13 -->
+        <div class="mc-item">
+          <div class="mc-num">Q 13</div>
+          <div class="mc-q">AI 저작권 문제를 <strong>시간적 관점</strong>으로 접근할 때 던지는 핵심 질문은?</div>
+          <div class="mc-options">
+            <div class="mc-opt" onclick="checkMC(this,0,12,true)"><span class="opt-num">①</span>AI 저작권 문제가 어떤 역사적 과정에서 발생했는가?</div>
+            <div class="mc-opt" onclick="checkMC(this,0,12,false)"><span class="opt-num">②</span>어떤 국가가 AI 저작권을 인정하고 그 근거는 무엇인가?</div>
+            <div class="mc-opt" onclick="checkMC(this,0,12,false)"><span class="opt-num">③</span>저작권을 규율하는 법·제도는 무엇인가?</div>
+            <div class="mc-opt" onclick="checkMC(this,0,12,false)"><span class="opt-num">④</span>인간 예술과 AI 예술은 본질적으로 다른가?</div>
+          </div>
+          <div class="mc-feedback">✅ 시간적 관점 → 역사적 과정·시대적 배경 질문.</div>
+        </div>
+
+        <!-- Q14 -->
+        <div class="mc-item">
+          <div class="mc-num">Q 14</div>
+          <div class="mc-q">통합적 관점이 개별 관점보다 우수한 이유로 가장 적절한 것은?</div>
+          <div class="mc-options">
+            <div class="mc-opt" onclick="checkMC(this,0,13,false)"><span class="opt-num">①</span>하나의 관점으로 사회 현상을 단순화할 수 있기 때문이다.</div>
+            <div class="mc-opt" onclick="checkMC(this,0,13,false)"><span class="opt-num">②</span>도덕적 관점이 다른 관점을 포괄하기 때문이다.</div>
+            <div class="mc-opt" onclick="checkMC(this,0,13,true)"><span class="opt-num">③</span>복잡한 사회 현상을 다양한 시각에서 근본적으로 이해할 수 있기 때문이다.</div>
+            <div class="mc-opt" onclick="checkMC(this,0,13,false)"><span class="opt-num">④</span>시간적 분석이 모든 문제의 원인을 밝혀주기 때문이다.</div>
+          </div>
+          <div class="mc-feedback">✅ 통합적 관점 = 복잡한 사회 현상 → 근본적 이해.</div>
+        </div>
+
+        <!-- Q15 -->
+        <div class="mc-item">
+          <div class="mc-num">Q 15</div>
+          <div class="mc-q">고령화를 윤리적 관점에서 분석한 내용은?</div>
+          <div class="mc-options">
+            <div class="mc-opt" onclick="checkMC(this,0,14,false)"><span class="opt-num">①</span>고령 인구 분포의 지역적 편차를 분석한다.</div>
+            <div class="mc-opt" onclick="checkMC(this,0,14,false)"><span class="opt-num">②</span>국민연금 제도의 효과를 검토한다.</div>
+            <div class="mc-opt" onclick="checkMC(this,0,14,false)"><span class="opt-num">③</span>고령화 추이와 미래 예측을 살핀다.</div>
+            <div class="mc-opt" onclick="checkMC(this,0,14,true)"><span class="opt-num">④</span>고령화를 가족만의 문제가 아닌 사회·정부 모두의 책임으로 본다.</div>
+          </div>
+          <div class="mc-feedback">✅ 윤리적 관점 → 누구의 책임인가(desirable direction) 판단.</div>
+        </div>
+
+        <!-- Q16 -->
+        <div class="mc-item">
+          <div class="mc-num">Q 16</div>
+          <div class="mc-q">다음 보기에서 <strong>사회적 관점</strong>에만 해당하는 분석은?</div>
+          <div class="mc-options">
+            <div class="mc-opt" onclick="checkMC(this,0,15,false)"><span class="opt-num">①</span>저출산의 역사적 배경과 원인 추이를 파악한다.</div>
+            <div class="mc-opt" onclick="checkMC(this,0,15,true)"><span class="opt-num">②</span>저출산 해결을 위한 정부 정책과 제도적 개선점을 모색한다.</div>
+            <div class="mc-opt" onclick="checkMC(this,0,15,false)"><span class="opt-num">③</span>저출산 문제가 가장 심각한 지역의 분포를 파악한다.</div>
+            <div class="mc-opt" onclick="checkMC(this,0,15,false)"><span class="opt-num">④</span>저출산이 인류의 가치·윤리적 문제와 연관되는지 살핀다.</div>
+          </div>
+          <div class="mc-feedback">✅ 사회적 관점 = 구조·제도·정책 바탕 분석 → 개선점·해결책 모색.</div>
+        </div>
+
+        <!-- Q17 -->
+        <div class="mc-item">
+          <div class="mc-num">Q 17</div>
+          <div class="mc-q">공간적 관점에서 '공간'을 구분하는 두 가지는?</div>
+          <div class="mc-options">
+            <div class="mc-opt" onclick="checkMC(this,0,16,false)"><span class="opt-num">①</span>물리적 공간 / 심리적 공간</div>
+            <div class="mc-opt" onclick="checkMC(this,0,16,true)"><span class="opt-num">②</span>자연 공간 / 인문 공간</div>
+            <div class="mc-opt" onclick="checkMC(this,0,16,false)"><span class="opt-num">③</span>도시 공간 / 농촌 공간</div>
+            <div class="mc-opt" onclick="checkMC(this,0,16,false)"><span class="opt-num">④</span>공적 공간 / 사적 공간</div>
+          </div>
+          <div class="mc-feedback">✅ 공간 = 자연 + 인문으로 구분합니다.</div>
+        </div>
+
+        <!-- Q18 -->
+        <div class="mc-item">
+          <div class="mc-num">Q 18</div>
+          <div class="mc-q">기후 위기를 <strong>윤리적 관점</strong>으로 분석한 것은?</div>
+          <div class="mc-options">
+            <div class="mc-opt" onclick="checkMC(this,0,17,false)"><span class="opt-num">①</span>온실가스 배출국과 피해국의 지리적 분포를 파악한다.</div>
+            <div class="mc-opt" onclick="checkMC(this,0,17,false)"><span class="opt-num">②</span>파리 협정 체결 과정을 제도적으로 분석한다.</div>
+            <div class="mc-opt" onclick="checkMC(this,0,17,false)"><span class="opt-num">③</span>산업화 이후 온실가스 농도 변화 추이를 살핀다.</div>
+            <div class="mc-opt" onclick="checkMC(this,0,17,true)"><span class="opt-num">④</span>성장 중시 가치관이 기후 위기를 초래했는지 판단한다.</div>
+          </div>
+          <div class="mc-feedback">✅ 윤리적 관점 = 성장 중시 가치관의 문제 여부 판단 = desirable direction.</div>
+        </div>
+
+        <!-- Q19 -->
+        <div class="mc-item">
+          <div class="mc-num">Q 19</div>
+          <div class="mc-q">다음 중 시간적 관점의 핵심 키워드가 <strong>아닌</strong> 것은?</div>
+          <div class="mc-options">
+            <div class="mc-opt" onclick="checkMC(this,0,18,false)"><span class="opt-num">①</span>역사적 배경</div>
+            <div class="mc-opt" onclick="checkMC(this,0,18,false)"><span class="opt-num">②</span>시대적 맥락</div>
+            <div class="mc-opt" onclick="checkMC(this,0,18,false)"><span class="opt-num">③</span>추이 → 예측</div>
+            <div class="mc-opt" onclick="checkMC(this,0,18,true)"><span class="opt-num">④</span>공간적 상호 작용</div>
+          </div>
+          <div class="mc-feedback">✅ 공간적 상호 작용은 공간적 관점의 키워드입니다.</div>
+        </div>
+
+        <!-- Q20 -->
+        <div class="mc-item">
+          <div class="mc-num">Q 20</div>
+          <div class="mc-q">AI 저작권을 <strong>사회적 관점</strong>으로 접근할 때 던지는 질문은?</div>
+          <div class="mc-options">
+            <div class="mc-opt" onclick="checkMC(this,0,19,false)"><span class="opt-num">①</span>AI 저작권 문제는 어떤 역사적 배경에서 나타났는가?</div>
+            <div class="mc-opt" onclick="checkMC(this,0,19,false)"><span class="opt-num">②</span>AI 저작물 인정 국가와 불인정 국가의 지리적 분포는?</div>
+            <div class="mc-opt" onclick="checkMC(this,0,19,true)"><span class="opt-num">③</span>저작권을 규율하는 법·제도와 저작권의 범위는 무엇인가?</div>
+            <div class="mc-opt" onclick="checkMC(this,0,19,false)"><span class="opt-num">④</span>인간 예술과 AI 예술은 본질적으로 다른가?</div>
+          </div>
+          <div class="mc-feedback">✅ 사회적 관점 = 어떤 법/제도? 저작권의 범위?</div>
+        </div>
+
+      </div>
+    </div><!-- /mc panel -->
+
+    <!-- OX -->
+    <div class="quiz-panel" id="qp-0-1">
+      <div class="quiz-list">
+        <div class="score-bar">
+          <div><div class="score-num" id="ox-score-0">0</div><div class="score-label">맞힌 문항</div></div>
+          <div><div class="score-num" id="ox-total-0">0</div><div class="score-label">/ 10 풀었음</div></div>
+        </div>
+        <div class="ox-item"><div class="mc-num">OX 01</div><div class="ox-q">시간적 관점은 장소의 분포 양상과 이동 네트워크를 분석하는 것이다.</div><div class="ox-btns"><button class="ox-btn o-btn" onclick="checkOX(this,false,'시간적 관점은 역사적 배경·추이 분석입니다. 장소·분포·네트워크는 공간적 관점입니다.')">O</button><button class="ox-btn x-btn" onclick="checkOX(this,true,'✅ 정확합니다.')">X</button></div><div class="ox-feedback"></div></div>
+        <div class="ox-item"><div class="mc-num">OX 02</div><div class="ox-q">사회 구조는 사회적 관계의 정형화된 틀이며, 삼권 분립이 대표적 예다.</div><div class="ox-btns"><button class="ox-btn o-btn" onclick="checkOX(this,true,'✅ 사회 구조 = 정형화된 틀 (삼권 분립 등).')">O</button><button class="ox-btn x-btn" onclick="checkOX(this,false,'사회 구조는 정형화된 틀 → 삼권 분립이 맞습니다.')">X</button></div><div class="ox-feedback"></div></div>
+        <div class="ox-item"><div class="mc-num">OX 03</div><div class="ox-q">헌법은 사회 제도의 예시이다.</div><div class="ox-btns"><button class="ox-btn o-btn" onclick="checkOX(this,true,'✅ 헌법은 조직화된 관행·절차 = 사회 제도.')">O</button><button class="ox-btn x-btn" onclick="checkOX(this,false,'헌법은 사회 제도의 예시가 맞습니다.')">X</button></div><div class="ox-feedback"></div></div>
+        <div class="ox-item"><div class="mc-num">OX 04</div><div class="ox-q">희토류 생산량이 많은 국가는 반드시 전기차 생산도 많다.</div><div class="ox-btns"><button class="ox-btn o-btn" onclick="checkOX(this,false,'생산·매장 ≠ 전기차 생산. 비례하지 않습니다.')">O</button><button class="ox-btn x-btn" onclick="checkOX(this,true,'✅ 희토류 생산·매장은 전기차 생산과 비례하지 않습니다.')">X</button></div><div class="ox-feedback"></div></div>
+        <div class="ox-item"><div class="mc-num">OX 05</div><div class="ox-q">도덕적 관점은 보편적 가치나 원칙을 기준으로 이해 관계의 상충과 권리 충돌을 분석한다.</div><div class="ox-btns"><button class="ox-btn o-btn" onclick="checkOX(this,true,'✅ 정확합니다.')">O</button><button class="ox-btn x-btn" onclick="checkOX(this,false,'도덕적 관점의 핵심은 보편적 가치/원칙, 이해 관계 상충, 권리 충돌 분석입니다.')">X</button></div><div class="ox-feedback"></div></div>
+        <div class="ox-item"><div class="mc-num">OX 06</div><div class="ox-q">통합적 관점은 시간·공간·사회·도덕적 관점 중 가장 효과적인 하나를 선택하는 것이다.</div><div class="ox-btns"><button class="ox-btn o-btn" onclick="checkOX(this,false,'통합적 관점은 네 가지 관점을 모두 통합하는 것입니다.')">O</button><button class="ox-btn x-btn" onclick="checkOX(this,true,'✅ 통합적 관점 = 4가지 관점 모두 통합.')">X</button></div><div class="ox-feedback"></div></div>
+        <div class="ox-item"><div class="mc-num">OX 07</div><div class="ox-q">고령화 현상을 윤리적 관점에서 보면 고령화는 가족만의 문제가 아닌 사회·정부 모두의 책임이다.</div><div class="ox-btns"><button class="ox-btn o-btn" onclick="checkOX(this,true,'✅ 윤리적 관점 → 가족+사회+정부 모두의 책임.')">O</button><button class="ox-btn x-btn" onclick="checkOX(this,false,'윤리적 관점에서는 고령화를 가족+사회+정부 모두의 책임으로 봅니다.')">X</button></div><div class="ox-feedback"></div></div>
+        <div class="ox-item"><div class="mc-num">OX 08</div><div class="ox-q">자율 주행 자동차 딜레마에서 도덕적 기준은 인간존엄성이다.</div><div class="ox-btns"><button class="ox-btn o-btn" onclick="checkOX(this,true,'✅ 아동 노동 예시와 동일하게 인간존엄성이 핵심입니다.')">O</button><button class="ox-btn x-btn" onclick="checkOX(this,false,'아동 노동·자율주행 모두 도덕적 기준 = 인간존엄성입니다.')">X</button></div><div class="ox-feedback"></div></div>
+        <div class="ox-item"><div class="mc-num">OX 09</div><div class="ox-q">기후 위기에서 온실가스를 주로 배출한 국가와 피해를 주로 받는 국가는 대체로 일치한다.</div><div class="ox-btns"><button class="ox-btn o-btn" onclick="checkOX(this,false,'공간적 관점: 배출국 ≠ 피해국. 일부 배출국 → 개발도상국 등 전 세계 피해.')">O</button><button class="ox-btn x-btn" onclick="checkOX(this,true,'✅ 배출국(일부 국가)과 피해국(개발도상국 등)은 일치하지 않습니다.')">X</button></div><div class="ox-feedback"></div></div>
+        <div class="ox-item"><div class="mc-num">OX 10</div><div class="ox-q">장상 버스 문제는 시장의 원리만으로는 도입이 어렵기 때문에 제도·정책(법률)을 통해 의무화하여 교통 약자 이동권을 보장해야 한다.</div><div class="ox-btns"><button class="ox-btn o-btn" onclick="checkOX(this,true,'✅ 사회적 관점의 핵심 예시입니다.')">O</button><button class="ox-btn x-btn" onclick="checkOX(this,false,'장상 버스 = 사회적 관점 → 제도·정책으로 이동권 보장.')">X</button></div><div class="ox-feedback"></div></div>
+      </div>
+    </div><!-- /ox panel -->
+
+    <!-- 고난도 -->
+    <div class="quiz-panel" id="qp-0-2">
+      <div class="quiz-list">
+        <div class="hard-item"><div class="hard-badge">★ 고난도 01</div><div class="hard-q">사회 구조와 사회 제도의 개념 차이를 설명하고, 각각 하나씩 구체적 예를 들어 비교하시오.</div><textarea class="hard-textarea" placeholder="여기에 답을 작성하세요..."></textarea><button class="hard-hint-btn" onclick="toggleHint(this)">💡 힌트 보기</button><div class="hard-hint">힌트: 구조 = 정형화된 틀(삼권 분립), 제도 = 조직화된 관행·절차(헌법)</div></div>
+        <div class="hard-item"><div class="hard-badge">★ 고난도 02</div><div class="hard-q">'코끼리와 장님' 비유를 활용하여 통합적 관점의 필요성을 설명하고, 기후 위기 문제에 네 가지 관점을 각각 적용하시오.</div><textarea class="hard-textarea" placeholder="여기에 답을 작성하세요..." style="min-height:110px;"></textarea><button class="hard-hint-btn" onclick="toggleHint(this)">💡 힌트 보기</button><div class="hard-hint">힌트: 일부만 보면 비약 → 전체 이해 필요. ①산업화 이후 온실가스 ②배출국≠피해국 ③파리 협정 ④성장 중시 가치관</div></div>
+        <div class="hard-item"><div class="hard-badge">★ 고난도 03</div><div class="hard-q">공간적 관점에서 희토류를 분석할 때, (가) 생산과 매장량의 관계, (나) 생산·매장과 전기차 생산의 관계를 각각 설명하시오.</div><textarea class="hard-textarea" placeholder="여기에 답을 작성하세요..."></textarea><button class="hard-hint-btn" onclick="toggleHint(this)">💡 힌트 보기</button><div class="hard-hint">힌트: (가) 생산과 매장 비례 X / (나) 생산·매장 ≠ 전기차 생산</div></div>
+        <div class="hard-item"><div class="hard-badge">★ 고난도 04</div><div class="hard-q">자율 주행 자동차 딜레마에서 국토교통부 윤리 지침의 '가치'와 '원칙' 항목을 구분하여 서술하고, 이것이 도덕적 관점의 어떤 특징을 보여주는지 설명하시오.</div><textarea class="hard-textarea" placeholder="여기에 답을 작성하세요..."></textarea><button class="hard-hint-btn" onclick="toggleHint(this)">💡 힌트 보기</button><div class="hard-hint">힌트: 가치=손실↓·생명 우선·차별× / 원칙=정보 기록·제공 → desirable direction 제시</div></div>
+        <div class="hard-item"><div class="hard-badge">★ 고난도 05</div><div class="hard-q">AI 저작권 문제를 4가지 관점으로 분석하고, 어느 관점이 가장 해결책 도출에 직접적인지 자신의 생각과 근거를 서술하시오.</div><textarea class="hard-textarea" placeholder="여기에 답을 작성하세요..." style="min-height:110px;"></textarea><button class="hard-hint-btn" onclick="toggleHint(this)">💡 힌트 보기</button><div class="hard-hint">힌트: ①역사적 과정 ②인정 국가 분포 ③저작권 법/제도 ④인간vs AI 예술 본질</div></div>
+        <div class="hard-item"><div class="hard-badge">★ 고난도 06</div><div class="hard-q">고령화 현상을 시간적·공간적·사회적·윤리적 관점으로 각각 분석하고, 정책적·가치관적 측면에서의 대응 방향을 논하시오.</div><textarea class="hard-textarea" placeholder="여기에 답을 작성하세요..." style="min-height:120px;"></textarea><button class="hard-hint-btn" onclick="toggleHint(this)">💡 힌트 보기</button><div class="hard-hint">힌트: ①성장세→증가 ②이촌향도→농촌 노년층↑ ③노년 부양비↑ ④가족→사회·정부 / 정책=연금, 가치관=공동체 의식</div></div>
+        <div class="hard-item"><div class="hard-badge">★ 고난도 07</div><div class="hard-q">사회적 관점에서 '정부와 시민 사회의 역할'이 중요한 이유를 설명하고, 장상 버스 사례를 통해 시장 원리의 한계와 제도의 필요성을 서술하시오.</div><textarea class="hard-textarea" placeholder="여기에 답을 작성하세요..."></textarea><button class="hard-hint-btn" onclick="toggleHint(this)">💡 힌트 보기</button><div class="hard-hint">힌트: 시장 원리만으로는 도입 어려움 → 제도·정책(법률)으로 의무화 → 교통 약자 이동권 보장</div></div>
+        <div class="hard-item"><div class="hard-badge">★ 고난도 08</div><div class="hard-q">도덕적 관점에서 '어떤 보편적 가치·원칙'을 탐구한다는 것의 의미를 공리주의와 의무론을 예로 들어 설명하시오.</div><textarea class="hard-textarea" placeholder="여기에 답을 작성하세요..."></textarea><button class="hard-hint-btn" onclick="toggleHint(this)">💡 힌트 보기</button><div class="hard-hint">힌트: 공리주의=최대 다수 최대 행복, 의무론=인간존엄성·보편적 의무 → 서로 다른 보편 가치 제시</div></div>
+        <div class="hard-item"><div class="hard-badge">★ 고난도 09</div><div class="hard-q">시간적 관점에서 '현재→미래, 관계 파악, 추이→예측'의 과정을 저출산 사례에 적용하여 구체적으로 설명하시오.</div><textarea class="hard-textarea" placeholder="여기에 답을 작성하세요..."></textarea><button class="hard-hint-btn" onclick="toggleHint(this)">💡 힌트 보기</button><div class="hard-hint">힌트: 현재 저출산 현황 → 역사적 배경 파악 → 추이 분석 → 미래 인구 예측</div></div>
+        <div class="hard-item"><div class="hard-badge">★ 고난도 10</div><div class="hard-q">특정 사회 현상을 하나 선택하여, 사회적 관점의 '구조·제도·정책 바탕으로 관찰 → 개선점 파악 → 해결책 모색' 과정을 구체적으로 적용하시오.</div><textarea class="hard-textarea" placeholder="여기에 답을 작성하세요..." style="min-height:110px;"></textarea><button class="hard-hint-btn" onclick="toggleHint(this)">💡 힌트 보기</button><div class="hard-hint">힌트: ex) 청년 실업 → 고용 구조 분석 → 제도적 문제점 파악 → 고용 정책 개선 방향</div></div>
+      </div>
+    </div><!-- /hard panel -->
+  </div><!-- /quiz-section -->
+
+</main>
+</div><!-- /tab-0 -->
+
+
+<!-- ════════════════════════════════════════
+     TAB 1 : 행복의 기준과 의미
+════════════════════════════════════════ -->
+<div class="tab-content" id="tab-1">
+<main>
+
+  <!-- 행복의 의미 -->
+  <div class="section-label c2">
+    <div class="section-label-icon">💡</div>
+    <div class="section-label-text">행복의 의미</div>
+    <div class="section-label-line"></div>
+  </div>
+  <div class="card c2">
+    <div class="card-head">행복이란 무엇인가</div>
+    <div class="card-body">
+      <div class="box box-key">
+        <strong>행복</strong> : 일상생활에서 충분한 만족감과 행복을 느끼는 상태 <span style="font-size:11.5px;color:var(--ink-mid)">(사람마다 다른 기준일 수 있음)</span>
+      </div>
+      <div class="box box-ex" style="margin-top:8px;">
+        <strong>아리스토텔레스</strong> : 행복은 다른 것의 수단이 아닌 <span class="hy">궁극적</span> 목적 → <span class="hr">最高善</span><br>
+        다양한 삶의 목적 → 행복으로 귀결
+      </div>
+      <div style="margin-top:10px; font-size:12.5px;">
+        <strong>행복의 기준 예시</strong> — 사람마다 다름:
+        <ul class="dot" style="margin-top:5px;">
+          <li>키케로 : 마음의 평온함</li>
+          <li>카를 힐티 : 일에 몰두</li>
+          <li>헬렌 켈러 : 가치 있는 삶</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 시대별 -->
+  <div class="section-label c2">
+    <div class="section-label-icon">⏳</div>
+    <div class="section-label-text">행복의 기준 — 시대별</div>
+    <div class="section-label-line"></div>
+  </div>
+  <div class="card c2">
+    <div class="card-head">시대에 따른 행복의 기준</div>
+    <div class="card-body">
+      <table>
+        <tr><th>시대</th><th>행복의 기준</th></tr>
+        <tr><td>선사 시대</td><td>식량 확보, 안전</td></tr>
+        <tr><td>고대 <span class="hy">그리스</span></td><td>이성 발휘 → 철학적 성찰 → <strong>지혜·덕</strong></td></tr>
+        <tr><td>고대 <span class="hy">헬레니즘</span></td><td>전쟁·사회적 불안에서 벗어나 <strong>마음의 평온</strong></td></tr>
+        <tr><td>중세</td><td><span class="hy">신앙</span> → 신의 구원</td></tr>
+        <tr><td>근대</td><td>산업혁명 → 시민 계급 성장 → <strong>기본권·자유·평등</strong></td></tr>
+        <tr><td>오늘날</td><td><span class="hy">경제·사회·환경적</span> 측면 등 다양한 요소</td></tr>
+      </table>
+      <div class="box box-ex" style="margin-top:8px; font-size:12px;">시대마다 <strong>희소한 가치·필요</strong>가 행복의 기준에 영향</div>
+    </div>
+  </div>
+
+  <!-- 지역별 -->
+  <div class="section-label c2">
+    <div class="section-label-icon">🌍</div>
+    <div class="section-label-text">행복의 기준 — 지역별</div>
+    <div class="section-label-line"></div>
+  </div>
+  <div class="card c2">
+    <div class="card-head">① 자연환경</div>
+    <div class="card-body">
+      <table>
+        <tr><th>구분</th><th>자연 환경</th><th>행복의 기준</th></tr>
+        <tr><td>건조 기후</td><td>식량·물 부족</td><td>풍부한 물과 식량</td></tr>
+        <tr><td><span class="hy">북유럽</span></td><td>일조량 부족</td><td>햇볕을 충분히 쬐는 것 (스웨덴 하지 축제)</td></tr>
+        <tr><td>자연재해 빈국</td><td>지진·홍수 등</td><td>안전한 삶의 공간 마련</td></tr>
+        <tr><td>고대 중국</td><td>농지 평탄·강 닮음 → 벼농사 발달</td><td>조화로운 인간 관계, 분수에 만족</td></tr>
+        <tr><td>고대 그리스</td><td>산봉·수렵·목축 → 해상 무역·상업 발달</td><td><span class="hy">정치적 자유(민주주의), 자율성(탁월성)</span></td></tr>
+      </table>
+    </div>
+  </div>
+  <div class="card c2">
+    <div class="card-head">② 인문환경</div>
+    <div class="card-body">
+      <table>
+        <tr><th>구분</th><th>행복의 기준</th></tr>
+        <tr><td>종교·민족 갈등 심한 지역</td><td>안전·평화</td></tr>
+        <tr><td>특정 계층 억압·차별 있는 지역</td><td>자유·평등</td></tr>
+        <tr><td><span class="hy">유교</span></td><td>도덕적 본성(의무) → 공동체 → 사회적 실천 → <strong>仁 실현</strong><br><small>仁 = 본질적 사랑, 인간다움, 도덕적 완성</small></td></tr>
+        <tr><td><span class="hy">불교</span></td><td>佛性 → 수행·중생 구제 → 무지·집착 탈피 → <strong>해탈의 경지</strong><br><small>佛性 = 본래부터 중생이 가진 부처가 될 근본 성품(잠재력)</small></td></tr>
+        <tr><td><span class="hy">도가</span></td><td>자연 그대로의 모습</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- 진정한 행복 -->
+  <div class="section-label c2">
+    <div class="section-label-icon">🎯</div>
+    <div class="section-label-text">삶의 목적과 진정한 행복</div>
+    <div class="section-label-line"></div>
+  </div>
+  <div class="card c2">
+    <div class="card-head">진정한 행복의 의미와 노력</div>
+    <div class="card-body">
+      <div class="cgrid">
+        <div class="cbox"><div class="clabel" style="color:#c0392b;">목적 無</div><ul class="dot"><li>감각적 쾌락 추구</li><li>현실 안주</li><li>힘든 일 회피</li></ul></div>
+        <div class="cbox"><div class="clabel" style="color:#27ae60;">목적 有</div><ul class="dot"><li>일상 속 행복</li><li>어려움을 이겨낼 수 있는 원동력</li></ul></div>
+      </div>
+      <div class="box box-warn" style="margin-top:10px;">
+        <strong>행복의 특징</strong> : <span class="hy">궁극적·지속적·정신적·잠재성 실현</span> → 선한 영향력, desirable 가치<br>
+        ↔ 일시적·감각적 즐거움만 추구 → <strong>'쾌락의 역설'</strong> (강도 높은 쾌락 원하게 됨 → 고통·권태 / like 마약 중독)<br>
+        → 자아실현적 행복관으로서는 진정한 행복이 아님
+      </div>
+      <div class="box box-def" style="margin-top:8px;">
+        <strong>진정한 행복을 위한 노력</strong> : 객관적 + 주관적 요소의 조화, 개인 + 공동체<br>
+        · 주거·소득·고용·수명 → 만족도·행복감<br>
+        · 의미 있는 목표 + 노력, 자기 삶에 대한 <span class="hy">반성·성찰</span> → 올바른 삶의 목적
+      </div>
+    </div>
+  </div>
+
+  <!-- 동양 사상가 -->
+  <div class="section-label c2">
+    <div class="section-label-icon">🏮</div>
+    <div class="section-label-text">동양 사상가들의 행복관</div>
+    <div class="section-label-line"></div>
+  </div>
+  <div class="card c2">
+    <div class="card-body" style="padding-top:16px;">
+      <div class="tgrid">
+        <div class="tcard"><div class="tname">공자 <span class="ttag">유교</span></div><div class="tkw">安貧樂道</div><div class="tdesc">부유하지 않더라도 편안한 마음으로 도를 즐기고 의롭게 삶</div><blockquote>"거친 음식을 먹고 맹물을 마시며 팔을 굽혀 배게로 삼더라도 의로운 삶이라면 행복은 그 속에 있다."</blockquote></div>
+        <div class="tcard"><div class="tname">노자 <span class="ttag">도가</span></div><div class="tkw">無爲自然</div><div class="tdesc">인위적 규범에서 벗어나 자연을 따라 유유자적하게 삶. 名利 추구 X, 才智 있어도 함부로 일 벌이지 않음</div><blockquote>"만족할 줄 알아야 행복할 수 있다."</blockquote></div>
+        <div class="tcard"><div class="tname">석가모니 <span class="ttag">불교</span></div><div class="tkw">生老病死 해방 / 열반</div><div class="tdesc">연기/인연 → 번뇌 소멸(무소유·불집착) → 바른 수행 → 해탈 → <strong>열반(최상의 행복)</strong><br>上求菩提 下化衆生</div></div>
+        <div class="tcard"><div class="tname">정약용 <span class="ttag">실학</span></div><div class="tkw">열복 &lt; 청복</div><div class="tdesc">열복(세속의 출세) &lt; 청복(청아한 삶의 일상 속 마음의 평화)</div><blockquote>"깊은 산속에서 삼베옷에 짚신을 신고 맑은 샘물에 발을 씻고 소나무에 기대어 시를 읊는 것으로 '청복'이다."</blockquote></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 서양 사상가 -->
+  <div class="section-label c2">
+    <div class="section-label-icon">🏛️</div>
+    <div class="section-label-text">서양 사상가들의 행복관</div>
+    <div class="section-label-line"></div>
+  </div>
+  <div class="card c2">
+    <div class="card-body" style="padding-top:16px;">
+      <div class="tgrid">
+        <div class="tcard"><div class="tname">아리스토텔레스 <span class="ttag">고대 그리스</span></div><div class="tkw">덕(Arete) — 탁월성</div><div class="tdesc">중용·이성의 기능을 탁월하게 발휘 → 덕 실현<br>덕 = 반복되는 실천, 선하게 만드는 습관 (탁월성)</div><blockquote>"인간의 기능을 훌륭하게 수행한다는 것은 이성적 활동을 잘 수행한다는 것이다."</blockquote></div>
+        <div class="tcard"><div class="tname">에피쿠로스 <span class="ttag">헬레니즘</span></div><div class="tkw">아타락시아 / 소극적 쾌락주의</div><div class="tdesc"><span class="hy">아타락시아</span> : 육체에 고통 없고 마음에 불안(동요)이 없는 상태<br>불만족으로부터 오는 정신적 고통 제거 → 진정한 쾌락</div><blockquote>"내가 말하는 쾌락은 몸에 고통이 없고 마음에 불안이 없는 상태이다."</blockquote></div>
+        <div class="tcard"><div class="tname">스토아 학파 <span class="ttag">헬레니즘</span></div><div class="tkw">부동심(아파테이아)</div><div class="tdesc">이성의 명령 → 자연, 즉 신(<span class="hy">우주의 질서</span>)을 따름<br>탐욕·공포·시기 등의 <span class="hy">정념</span>에서 벗어남 → <strong>아파테이아</strong>(고요·초연함)</div></div>
+        <div class="tcard"><div class="tname">아우구스티누스 <span class="ttag">중세</span></div><div class="tkw">현세 → 신앙 → 천국(지복)</div><div class="tdesc">현세 = 불완전한 행복 → 신앙을 통해 천국(지복)에서 완전한 행복 실현</div></div>
+        <div class="tcard"><div class="tname">제러미 벤담 <span class="ttag">근대</span></div><div class="tkw">양적 공리주의</div><div class="tdesc">쾌락의 총합 = 행복<br><span class="hy">최대 다수의 최대 행복</span> ⇒ 쾌락주의 행복론<br>↔ 질적 공리주의 (존 스튜어트 밀)</div></div>
+        <div class="tcard"><div class="tname">칸트 <span class="ttag">근대</span></div><div class="tkw">도덕적 의무 / 덕복일치</div><div class="tdesc">도덕 법칙에 따라 행동 = 진정한 행복의 토대<br>덕 + 행복의 일치 = 최고선<br>단순히 행복한 것이 아니라 <span class="hy">행복할 자격</span>을 갖추는 것</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── 문제 ─── -->
+  <div class="quiz-section c2">
+    <div class="quiz-header c2"><div class="quiz-header-title">✏️ 단원 2 문제 풀이</div></div>
+    <div class="quiz-type-tabs">
+      <button class="quiz-type-btn active" onclick="switchQuiz(1,0)">객관식 20</button>
+      <button class="quiz-type-btn" onclick="switchQuiz(1,1)">OX 10</button>
+      <button class="quiz-type-btn" onclick="switchQuiz(1,2)">고난도 10</button>
+    </div>
+
+    <!-- 객관식 -->
+    <div class="quiz-panel active" id="qp-1-0">
+      <div class="quiz-list">
+        <div class="score-bar"><div><div class="score-num" id="mc-score-1">0</div><div class="score-label">맞힌 문항</div></div><div><div class="score-num" id="mc-total-1">0</div><div class="score-label">/ 20 풀었음</div></div></div>
+
+        <div class="mc-item"><div class="mc-num">Q 01</div><div class="mc-q">아리스토텔레스가 행복을 '最高善'이라 부른 이유로 가장 적절한 것은?</div><div class="mc-options"><div class="mc-opt" onclick="checkMC(this,1,0,false)"><span class="opt-num">①</span>쾌락이 가장 큰 선이기 때문이다.</div><div class="mc-opt" onclick="checkMC(this,1,0,false)"><span class="opt-num">②</span>신의 구원이 궁극적 선이기 때문이다.</div><div class="mc-opt" onclick="checkMC(this,1,0,true)"><span class="opt-num">③</span>행복은 다른 것의 수단이 아닌 궁극적 목적이기 때문이다.</div><div class="mc-opt" onclick="checkMC(this,1,0,false)"><span class="opt-num">④</span>최대 다수의 이익을 실현하기 때문이다.</div></div><div class="mc-feedback">✅ 아리스토텔레스 : 행복 = 궁극적 목적 = 最高善.</div></div>
+
+        <div class="mc-item"><div class="mc-num">Q 02</div><div class="mc-q">에피쿠로스의 '아타락시아'에 대한 설명으로 옳은 것은?</div><div class="mc-options"><div class="mc-opt" onclick="checkMC(this,1,1,false)"><span class="opt-num">①</span>육체적 쾌락을 최대화하는 상태이다.</div><div class="mc-opt" onclick="checkMC(this,1,1,true)"><span class="opt-num">②</span>육체에 고통이 없고 마음에 불안(동요)이 없는 상태이다.</div><div class="mc-opt" onclick="checkMC(this,1,1,false)"><span class="opt-num">③</span>이성으로 우주의 질서를 따르는 상태이다.</div><div class="mc-opt" onclick="checkMC(this,1,1,false)"><span class="opt-num">④</span>신앙을 통해 신의 구원을 받는 상태이다.</div></div><div class="mc-feedback">✅ 아타락시아 = 육체에 고통 없고 마음에 불안(동요) 없는 상태.</div></div>
+
+        <div class="mc-item"><div class="mc-num">Q 03</div><div class="mc-q">정약용의 행복관에서 '청복(淸福)'의 의미는?</div><div class="mc-options"><div class="mc-opt" onclick="checkMC(this,1,2,false)"><span class="opt-num">①</span>돈·명예·권력을 통한 세속적 출세</div><div class="mc-opt" onclick="checkMC(this,1,2,false)"><span class="opt-num">②</span>최대 다수의 최대 행복</div><div class="mc-opt" onclick="checkMC(this,1,2,true)"><span class="opt-num">③</span>청아한 삶의 일상 속 마음의 평화</div><div class="mc-opt" onclick="checkMC(this,1,2,false)"><span class="opt-num">④</span>신의 구원을 통한 천국에서의 행복</div></div><div class="mc-feedback">✅ 청복 = 청아한 삶의 일상 속 마음의 평화 (열복 < 청복).</div></div>
+
+        <div class="mc-item"><div class="mc-num">Q 04</div><div class="mc-q">공자의 '안빈낙도(安貧樂道)'가 의미하는 행복관은?</div><div class="mc-options"><div class="mc-opt" onclick="checkMC(this,1,3,true)"><span class="opt-num">①</span>부유하지 않더라도 편안한 마음으로 도를 즐기고 의롭게 사는 것</div><div class="mc-opt" onclick="checkMC(this,1,3,false)"><span class="opt-num">②</span>인위적 규범에서 벗어나 자연을 따르는 것</div><div class="mc-opt" onclick="checkMC(this,1,3,false)"><span class="opt-num">③</span>쾌락의 총합을 극대화하는 것</div><div class="mc-opt" onclick="checkMC(this,1,3,false)"><span class="opt-num">④</span>불안과 고통 없는 평온한 상태를 추구하는 것</div></div><div class="mc-feedback">✅ 안빈낙도 = 부유하지 않더라도 편안한 마음으로 도를 즐기고 의롭게 삶.</div></div>
+
+        <div class="mc-item"><div class="mc-num">Q 05</div><div class="mc-q">불교에서 석가모니의 최상의 행복은?</div><div class="mc-options"><div class="mc-opt" onclick="checkMC(this,1,4,false)"><span class="opt-num">①</span>인(仁)의 실현</div><div class="mc-opt" onclick="checkMC(this,1,4,false)"><span class="opt-num">②</span>아타락시아</div><div class="mc-opt" onclick="checkMC(this,1,4,true)"><span class="opt-num">③</span>열반(涅槃)</div><div class="mc-opt" onclick="checkMC(this,1,4,false)"><span class="opt-num">④</span>지복(至福)</div></div><div class="mc-feedback">✅ 불교 최상의 행복 = 열반. 지복은 아우구스티누스(중세 기독교).</div></div>
+
+        <div class="mc-item"><div class="mc-num">Q 06</div><div class="mc-q">칸트의 행복관에서 핵심 개념은?</div><div class="mc-options"><div class="mc-opt" onclick="checkMC(this,1,5,false)"><span class="opt-num">①</span>최대 다수의 최대 행복</div><div class="mc-opt" onclick="checkMC(this,1,5,false)"><span class="opt-num">②</span>아타락시아</div><div class="mc-opt" onclick="checkMC(this,1,5,false)"><span class="opt-num">③</span>부동심(아파테이아)</div><div class="mc-opt" onclick="checkMC(this,1,5,true)"><span class="opt-num">④</span>행복할 자격 — 덕과 행복의 일치(최고선)</div></div><div class="mc-feedback">✅ 칸트 = 단순히 행복한 것이 아니라 행복할 자격을 갖추는 것 = 덕복일치 = 최고선.</div></div>
+
+        <div class="mc-item"><div class="mc-num">Q 07</div><div class="mc-q">스토아 학파에서 행복으로 가는 길을 방해하는 것은?</div><div class="mc-options"><div class="mc-opt" onclick="checkMC(this,1,6,false)"><span class="opt-num">①</span>이성적 사고</div><div class="mc-opt" onclick="checkMC(this,1,6,false)"><span class="opt-num">②</span>자연의 질서를 따르는 것</div><div class="mc-opt" onclick="checkMC(this,1,6,true)"><span class="opt-num">③</span>탐욕·공포·시기 등의 정념(情念)</div><div class="mc-opt" onclick="checkMC(this,1,6,false)"><span class="opt-num">④</span>쾌락의 추구</div></div><div class="mc-feedback">✅ 스토아 학파 = 정념(탐욕·공포·시기)에서 벗어남 → 부동심(아파테이아).</div></div>
+
+        <div class="mc-item"><div class="mc-num">Q 08</div><div class="mc-q">아리스토텔레스의 '덕(Arete)'에 대한 설명으로 옳은 것은?</div><div class="mc-options"><div class="mc-opt" onclick="checkMC(this,1,7,false)"><span class="opt-num">①</span>선천적으로 타고난 능력이다.</div><div class="mc-opt" onclick="checkMC(this,1,7,true)"><span class="opt-num">②</span>반복되는 실천을 통해 형성되는 선하게 만드는 습관이다.</div><div class="mc-opt" onclick="checkMC(this,1,7,false)"><span class="opt-num">③</span>신이 인간에게 부여한 도덕적 의무이다.</div><div class="mc-opt" onclick="checkMC(this,1,7,false)"><span class="opt-num">④</span>쾌락을 절제하는 능력이다.</div></div><div class="mc-feedback">✅ 덕(Arete) = 반복되는 실천, 선하게 만드는 습관 = 탁월성.</div></div>
+
+        <div class="mc-item"><div class="mc-num">Q 09</div><div class="mc-q">중세 시대의 행복의 기준은?</div><div class="mc-options"><div class="mc-opt" onclick="checkMC(this,1,8,false)"><span class="opt-num">①</span>기본권·자유·평등</div><div class="mc-opt" onclick="checkMC(this,1,8,false)"><span class="opt-num">②</span>마음의 평온</div><div class="mc-opt" onclick="checkMC(this,1,8,true)"><span class="opt-num">③</span>신앙을 통한 신의 구원</div><div class="mc-opt" onclick="checkMC(this,1,8,false)"><span class="opt-num">④</span>지혜·덕</div></div><div class="mc-feedback">✅ 중세 = 신앙 → 신의 구원.</div></div>
+
+        <div class="mc-item"><div class="mc-num">Q 10</div><div class="mc-q">유교에서 인(仁)의 의미로 <strong>틀린</strong> 것은?</div><div class="mc-options"><div class="mc-opt" onclick="checkMC(this,1,9,false)"><span class="opt-num">①</span>본질적 사랑</div><div class="mc-opt" onclick="checkMC(this,1,9,false)"><span class="opt-num">②</span>인간다움</div><div class="mc-opt" onclick="checkMC(this,1,9,false)"><span class="opt-num">③</span>도덕적 완성</div><div class="mc-opt" onclick="checkMC(this,1,9,true)"><span class="opt-num">④</span>무위자연의 삶</div></div><div class="mc-feedback">✅ 무위자연은 도가(노자)의 개념입니다. 仁 = 본질적 사랑·인간다움·도덕적 완성.</div></div>
+
+        <div class="mc-item"><div class="mc-num">Q 11</div><div class="mc-q">벤담의 공리주의와 밀의 공리주의의 차이점으로 옳은 것은?</div><div class="mc-options"><div class="mc-opt" onclick="checkMC(this,1,10,false)"><span class="opt-num">①</span>벤담은 질적 공리주의, 밀은 양적 공리주의를 주장한다.</div><div class="mc-opt" onclick="checkMC(this,1,10,true)"><span class="opt-num">②</span>벤담은 양적 공리주의(쾌락의 총합), 밀은 질적 공리주의(쾌락의 질적 차이)를 주장한다.</div><div class="mc-opt" onclick="checkMC(this,1,10,false)"><span class="opt-num">③</span>벤담은 도덕적 의무를 강조하고, 밀은 쾌락을 강조한다.</div><div class="mc-opt" onclick="checkMC(this,1,10,false)"><span class="opt-num">④</span>두 사람 모두 동일한 공리주의를 주장한다.</div></div><div class="mc-feedback">✅ 벤담=양적(쾌락의 총합) / 밀=질적(쾌락에 질적 차이 있음).</div></div>
+
+        <div class="mc-item"><div class="mc-num">Q 12</div><div class="mc-q">근대 시대의 행복의 기준으로 옳은 것은?</div><div class="mc-options"><div class="mc-opt" onclick="checkMC(this,1,11,false)"><span class="opt-num">①</span>신앙을 통한 구원</div><div class="mc-opt" onclick="checkMC(this,1,11,false)"><span class="opt-num">②</span>이성 발휘와 철학적 성찰</div><div class="mc-opt" onclick="checkMC(this,1,11,true)"><span class="opt-num">③</span>산업혁명 이후 시민 계급 성장 → 기본권·자유·평등</div><div class="mc-opt" onclick="checkMC(this,1,11,false)"><span class="opt-num">④</span>마음의 평온</div></div><div class="mc-feedback">✅ 근대 = 산업혁명 → 시민 계급 성장 → 기본권·자유·평등.</div></div>
+
+        <div class="mc-item"><div class="mc-num">Q 13</div><div class="mc-q">노자의 행복관에서 강조하는 것으로 <strong>틀린</strong> 것은?</div><div class="mc-options"><div class="mc-opt" onclick="checkMC(this,1,12,false)"><span class="opt-num">①</span>인위적 규범에서 벗어나는 것</div><div class="mc-opt" onclick="checkMC(this,1,12,false)"><span class="opt-num">②</span>자연을 따라 유유자적하게 사는 것</div><div class="mc-opt" onclick="checkMC(this,1,12,true)"><span class="opt-num">③</span>이성을 탁월하게 발휘하는 것</div><div class="mc-opt" onclick="checkMC(this,1,12,false)"><span class="opt-num">④</span>名利를 추구하지 않는 것</div></div><div class="mc-feedback">✅ 이성의 탁월한 발휘는 아리스토텔레스(덕)입니다. 노자 = 無爲自然.</div></div>
+
+        <div class="mc-item"><div class="mc-num">Q 14</div><div class="mc-q">'쾌락의 역설'이 의미하는 것은?</div><div class="mc-options"><div class="mc-opt" onclick="checkMC(this,1,13,false)"><span class="opt-num">①</span>쾌락을 추구할수록 덕이 증가한다.</div><div class="mc-opt" onclick="checkMC(this,1,13,true)"><span class="opt-num">②</span>일시적·감각적 즐거움만 추구하면 점점 강도 높은 쾌락을 원하게 되어 결국 고통·권태에 빠진다.</div><div class="mc-opt" onclick="checkMC(this,1,13,false)"><span class="opt-num">③</span>쾌락을 절제하면 더 큰 쾌락을 얻는다.</div><div class="mc-opt" onclick="checkMC(this,1,13,false)"><span class="opt-num">④</span>쾌락과 고통은 서로 독립적이다.</div></div><div class="mc-feedback">✅ 쾌락의 역설 = 감각적 즐거움 추구 → 강도 높은 쾌락 욕구 → 고통·권태 (like 마약 중독).</div></div>
+
+        <div class="mc-item"><div class="mc-num">Q 15</div><div class="mc-q">북유럽의 행복 기준을 설명하는 사례는?</div><div class="mc-options"><div class="mc-opt" onclick="checkMC(this,1,14,false)"><span class="opt-num">①</span>풍부한 물과 식량</div><div class="mc-opt" onclick="checkMC(this,1,14,true)"><span class="opt-num">②</span>햇볕을 충분히 쬐는 것 (스웨덴 하지 축제)</div><div class="mc-opt" onclick="checkMC(this,1,14,false)"><span class="opt-num">③</span>조화로운 인간 관계</div><div class="mc-opt" onclick="checkMC(this,1,14,false)"><span class="opt-num">④</span>정치적 자유와 자율성</div></div><div class="mc-feedback">✅ 북유럽 = 일조량 부족 → 햇볕 충분히 쬐는 것 = 행복의 기준. 스웨덴 하지 축제.</div></div>
+
+        <div class="mc-item"><div class="mc-num">Q 16</div><div class="mc-q">아우구스티누스의 행복관에서 현세를 어떻게 보는가?</div><div class="mc-options"><div class="mc-opt" onclick="checkMC(this,1,15,false)"><span class="opt-num">①</span>이성적 활동을 통해 완전한 행복을 실현할 수 있는 곳</div><div class="mc-opt" onclick="checkMC(this,1,15,false)"><span class="opt-num">②</span>쾌락을 최대로 누릴 수 있는 곳</div><div class="mc-opt" onclick="checkMC(this,1,15,true)"><span class="opt-num">③</span>불완전한 행복만 가능한 곳 → 신앙을 통해 천국(지복)에서 완전한 행복 실현</div><div class="mc-opt" onclick="checkMC(this,1,15,false)"><span class="opt-num">④</span>자연의 질서를 따름으로써 행복할 수 있는 곳</div></div><div class="mc-feedback">✅ 아우구스티누스 = 현세(불완전한 행복) → 신앙 → 천국(지복, 완전한 행복).</div></div>
+
+        <div class="mc-item"><div class="mc-num">Q 17</div><div class="mc-q">불교의 佛性(불성)에 대한 설명으로 옳은 것은?</div><div class="mc-options"><div class="mc-opt" onclick="checkMC(this,1,16,false)"><span class="opt-num">①</span>수행을 통해 새롭게 획득하는 능력</div><div class="mc-opt" onclick="checkMC(this,1,16,true)"><span class="opt-num">②</span>본래부터 중생이 가지고 있는 부처가 될 근본 성품(잠재력)</div><div class="mc-opt" onclick="checkMC(this,1,16,false)"><span class="opt-num">③</span>신이 인간에게 부여한 도덕적 본성</div><div class="mc-opt" onclick="checkMC(this,1,16,false)"><span class="opt-num">④</span>이성적 활동을 통해 발휘되는 덕성</div></div><div class="mc-feedback">✅ 佛性 = 본래부터 중생이 가지고 있는 부처가 될 근본 성품(잠재력).</div></div>
+
+        <div class="mc-item"><div class="mc-num">Q 18</div><div class="mc-q">행복의 특징으로 <strong>틀린</strong> 것은?</div><div class="mc-options"><div class="mc-opt" onclick="checkMC(this,1,17,false)"><span class="opt-num">①</span>궁극적이다.</div><div class="mc-opt" onclick="checkMC(this,1,17,false)"><span class="opt-num">②</span>지속적이다.</div><div class="mc-opt" onclick="checkMC(this,1,17,true)"><span class="opt-num">③</span>일시적·감각적이다.</div><div class="mc-opt" onclick="checkMC(this,1,17,false)"><span class="opt-num">④</span>잠재성을 실현하는 것이다.</div></div><div class="mc-feedback">✅ 행복의 특징 = 궁극적·지속적·정신적·잠재성 실현. 일시적·감각적은 '쾌락의 역설'에 해당합니다.</div></div>
+
+        <div class="mc-item"><div class="mc-num">Q 19</div><div class="mc-q">고대 그리스의 행복 기준으로 옳은 것은?</div><div class="mc-options"><div class="mc-opt" onclick="checkMC(this,1,18,false)"><span class="opt-num">①</span>식량 확보, 안전</div><div class="mc-opt" onclick="checkMC(this,1,18,false)"><span class="opt-num">②</span>마음의 평온</div><div class="mc-opt" onclick="checkMC(this,1,18,true)"><span class="opt-num">③</span>이성 발휘 → 철학적 성찰 → 지혜·덕</div><div class="mc-opt" onclick="checkMC(this,1,18,false)"><span class="opt-num">④</span>기본권·자유·평등</div></div><div class="mc-feedback">✅ 고대 그리스 = 이성 발휘 → 철학적 성찰 → 지혜·덕.</div></div>
+
+        <div class="mc-item"><div class="mc-num">Q 20</div><div class="mc-q">석가모니의 '上求菩提 下化衆生'의 의미는?</div><div class="mc-options"><div class="mc-opt" onclick="checkMC(this,1,19,false)"><span class="opt-num">①</span>위로는 재물을 구하고 아래로는 명예를 얻는 것</div><div class="mc-opt" onclick="checkMC(this,1,19,true)"><span class="opt-num">②</span>위로는 깨달음을 구하고 아래로는 중생을 구제하는 것</div><div class="mc-opt" onclick="checkMC(this,1,19,false)"><span class="opt-num">③</span>위로는 이성을 발휘하고 아래로는 쾌락을 절제하는 것</div><div class="mc-opt" onclick="checkMC(this,1,19,false)"><span class="opt-num">④</span>위로는 자연의 질서를 따르고 아래로는 인간의 욕망을 버리는 것</div></div><div class="mc-feedback">✅ 상구보리 하화중생 = 위로 깨달음을 구하고 아래로 중생을 구제한다.</div></div>
+
+      </div>
+    </div>
+
+    <!-- OX -->
+    <div class="quiz-panel" id="qp-1-1">
+      <div class="quiz-list">
+        <div class="score-bar"><div><div class="score-num" id="ox-score-1">0</div><div class="score-label">맞힌 문항</div></div><div><div class="score-num" id="ox-total-1">0</div><div class="score-label">/ 10 풀었음</div></div></div>
+        <div class="ox-item"><div class="mc-num">OX 01</div><div class="ox-q">아리스토텔레스는 행복을 다른 것의 수단이 아닌 궁극적 목적으로 보았다.</div><div class="ox-btns"><button class="ox-btn o-btn" onclick="checkOX(this,true,'✅ 아리스토텔레스 = 행복은 궁극적 목적 = 最高善.')">O</button><button class="ox-btn x-btn" onclick="checkOX(this,false,'')">X</button></div><div class="ox-feedback"></div></div>
+        <div class="ox-item"><div class="mc-num">OX 02</div><div class="ox-q">에피쿠로스는 육체적 쾌락을 최대화하는 것이 행복이라고 주장했다.</div><div class="ox-btns"><button class="ox-btn o-btn" onclick="checkOX(this,false,'에피쿠로스는 소극적 쾌락주의 — 고통·불안 없는 아타락시아를 강조했습니다.')">O</button><button class="ox-btn x-btn" onclick="checkOX(this,true,'✅ 에피쿠로스 = 소극적 쾌락주의(아타락시아). 육체적 쾌락 극대화 X.')">X</button></div><div class="ox-feedback"></div></div>
+        <div class="ox-item"><div class="mc-num">OX 03</div><div class="ox-q">스토아 학파는 이성을 통해 자연(우주의 질서)을 따르는 삶이 행복이라고 보았다.</div><div class="ox-btns"><button class="ox-btn o-btn" onclick="checkOX(this,true,'✅ 스토아 학파 = 이성의 명령 → 자연(우주의 질서) → 부동심(아파테이아).')">O</button><button class="ox-btn x-btn" onclick="checkOX(this,false,'')">X</button></div><div class="ox-feedback"></div></div>
+        <div class="ox-item"><div class="mc-num">OX 04</div><div class="ox-q">정약용은 열복(榮福)을 청복(淸福)보다 더 높게 평가하였다.</div><div class="ox-btns"><button class="ox-btn o-btn" onclick="checkOX(this,false,'정약용은 열복 < 청복으로 청복을 더 높이 평가했습니다.')">O</button><button class="ox-btn x-btn" onclick="checkOX(this,true,'✅ 정약용 = 열복 < 청복. 청복을 더 높게 평가.')">X</button></div><div class="ox-feedback"></div></div>
+        <div class="ox-item"><div class="mc-num">OX 05</div><div class="ox-q">칸트는 단순히 행복한 것보다 행복할 자격을 갖추는 것이 더 중요하다고 보았다.</div><div class="ox-btns"><button class="ox-btn o-btn" onclick="checkOX(this,true,'✅ 칸트 = 덕복일치 = 행복할 자격 = 最高善.')">O</button><button class="ox-btn x-btn" onclick="checkOX(this,false,'')">X</button></div><div class="ox-feedback"></div></div>
+        <div class="ox-item"><div class="mc-num">OX 06</div><div class="ox-q">시대마다 희소한 가치·필요가 행복의 기준에 영향을 미쳤다.</div><div class="ox-btns"><button class="ox-btn o-btn" onclick="checkOX(this,true,'✅ 정확합니다. 시대마다 희소한 가치·필요 → 행복의 기준 형성.')">O</button><button class="ox-btn x-btn" onclick="checkOX(this,false,'')">X</button></div><div class="ox-feedback"></div></div>
+        <div class="ox-item"><div class="mc-num">OX 07</div><div class="ox-q">불교의 佛性은 수행을 통해 새롭게 얻게 되는 성품이다.</div><div class="ox-btns"><button class="ox-btn o-btn" onclick="checkOX(this,false,'佛性은 본래부터 중생이 가지고 있는 부처가 될 근본 성품(잠재력)입니다.')">O</button><button class="ox-btn x-btn" onclick="checkOX(this,true,'✅ 佛性 = 본래부터 가지고 있는 성품(잠재력), 새로 얻는 것이 아님.')">X</button></div><div class="ox-feedback"></div></div>
+        <div class="ox-item"><div class="mc-num">OX 08</div><div class="ox-q">고대 그리스는 산봉·수렵·목축 등을 통해 해상 무역·상업이 발달하여 정치적 자유와 자율성이 행복의 기준이 되었다.</div><div class="ox-btns"><button class="ox-btn o-btn" onclick="checkOX(this,true,'✅ 정확합니다.')">O</button><button class="ox-btn x-btn" onclick="checkOX(this,false,'')">X</button></div><div class="ox-feedback"></div></div>
+        <div class="ox-item"><div class="mc-num">OX 09</div><div class="ox-q">아리스토텔레스의 덕(Arete)은 선천적으로 타고나는 것이다.</div><div class="ox-btns"><button class="ox-btn o-btn" onclick="checkOX(this,false,'덕(Arete) = 반복되는 실천을 통해 형성되는 습관입니다.')">O</button><button class="ox-btn x-btn" onclick="checkOX(this,true,'✅ 덕 = 반복되는 실천, 선하게 만드는 습관 → 후천적 형성.')">X</button></div><div class="ox-feedback"></div></div>
+        <div class="ox-item"><div class="mc-num">OX 10</div><div class="ox-q">감각적 쾌락만 추구하는 삶은 '쾌락의 역설'에 빠져 진정한 행복과 멀어질 수 있다.</div><div class="ox-btns"><button class="ox-btn o-btn" onclick="checkOX(this,true,'✅ 쾌락의 역설 = 일시적·감각적 쾌락만 추구 → 강도 높은 쾌락 원하게 됨 → 고통·권태.')">O</button><button class="ox-btn x-btn" onclick="checkOX(this,false,'')">X</button></div><div class="ox-feedback"></div></div>
+      </div>
+    </div>
+
+    <!-- 고난도 -->
+    <div class="quiz-panel" id="qp-1-2">
+      <div class="quiz-list">
+        <div class="hard-item"><div class="hard-badge">★ 고난도 01</div><div class="hard-q">아리스토텔레스의 '덕(탁월성)' 개념을 설명하고, 이것이 왜 반복적 실천을 통해 형성되어야 하는지 논하시오.</div><textarea class="hard-textarea" placeholder="여기에 답을 작성하세요..."></textarea><button class="hard-hint-btn" onclick="toggleHint(this)">💡 힌트 보기</button><div class="hard-hint">힌트: 덕 = 반복되는 실천, 선하게 만드는 습관(탁월성) → 이성의 기능을 탁월하게 발휘</div></div>
+        <div class="hard-item"><div class="hard-badge">★ 고난도 02</div><div class="hard-q">에피쿠로스의 '소극적 쾌락주의'와 벤담의 '양적 공리주의'를 비교하고, 두 사상의 공통점과 차이점을 서술하시오.</div><textarea class="hard-textarea" placeholder="여기에 답을 작성하세요..."></textarea><button class="hard-hint-btn" onclick="toggleHint(this)">💡 힌트 보기</button><div class="hard-hint">힌트: 공통=쾌락 중시 / 차이: 에피쿠로스=고통·불안 제거(소극), 벤담=쾌락 총합 극대화(양적)</div></div>
+        <div class="hard-item"><div class="hard-badge">★ 고난도 03</div><div class="hard-q">동양 사상가(공자·노자·석가모니·정약용) 중 하나를 선택하여 그 행복관이 현대 사회에 주는 시사점을 구체적 예를 들어 서술하시오.</div><textarea class="hard-textarea" placeholder="여기에 답을 작성하세요..." style="min-height:110px;"></textarea><button class="hard-hint-btn" onclick="toggleHint(this)">💡 힌트 보기</button><div class="hard-hint">힌트: ex) 공자-안빈낙도 → 현대의 물질만능주의 비판 / 노자-무위자연 → 과소비·환경 파괴 성찰</div></div>
+        <div class="hard-item"><div class="hard-badge">★ 고난도 04</div><div class="hard-q">칸트가 "단순히 행복한 것이 아니라 행복할 자격을 갖춰야 한다"고 말한 의미를 설명하고, 벤담의 관점과 비교하시오.</div><textarea class="hard-textarea" placeholder="여기에 답을 작성하세요..."></textarea><button class="hard-hint-btn" onclick="toggleHint(this)">💡 힌트 보기</button><div class="hard-hint">힌트: 칸트=덕복일치, 도덕 의무 이행 후 행복 / 벤담=쾌락의 총합=행복, 도덕보다 결과 중시</div></div>
+        <div class="hard-item"><div class="hard-badge">★ 고난도 05</div><div class="hard-q">'쾌락의 역설'을 설명하고, 이를 극복하기 위한 '진정한 행복'의 조건(객관적+주관적 요소, 개인+공동체)을 구체적으로 서술하시오.</div><textarea class="hard-textarea" placeholder="여기에 답을 작성하세요..."></textarea><button class="hard-hint-btn" onclick="toggleHint(this)">💡 힌트 보기</button><div class="hard-hint">힌트: 쾌락의 역설=강도 높은 쾌락→고통 / 진정한 행복=주거·소득·고용·수명+만족도·행복감+의미 있는 목표+반성·성찰</div></div>
+        <div class="hard-item"><div class="hard-badge">★ 고난도 06</div><div class="hard-q">자연환경이 지역의 행복 기준에 미치는 영향을 두 가지 이상의 사례를 들어 설명하고, 오늘날의 의의를 서술하시오.</div><textarea class="hard-textarea" placeholder="여기에 답을 작성하세요..."></textarea><button class="hard-hint-btn" onclick="toggleHint(this)">💡 힌트 보기</button><div class="hard-hint">힌트: 북유럽(일조량 부족→햇볕), 건조기후(물 부족→풍부한 물), 고대 그리스(해상무역→정치적 자유)</div></div>
+        <div class="hard-item"><div class="hard-badge">★ 고난도 07</div><div class="hard-q">불교의 연기(緣起) 사상이 번뇌 소멸과 열반으로 이어지는 논리적 과정을 단계별로 서술하시오.</div><textarea class="hard-textarea" placeholder="여기에 답을 작성하세요..."></textarea><button class="hard-hint-btn" onclick="toggleHint(this)">💡 힌트 보기</button><div class="hard-hint">힌트: 만물의 상호의존성(연기/인연) → 번뇌의 소멸(무소유·불집착) → 바른 수행 → 해탈 → 열반</div></div>
+        <div class="hard-item"><div class="hard-badge">★ 고난도 08</div><div class="hard-q">헬레니즘 시대에 에피쿠로스와 스토아 학파가 각각 다른 행복론을 제시한 사회적 배경을 설명하고, 두 관점을 비교하시오.</div><textarea class="hard-textarea" placeholder="여기에 답을 작성하세요..."></textarea><button class="hard-hint-btn" onclick="toggleHint(this)">💡 힌트 보기</button><div class="hard-hint">힌트: 헬레니즘=전쟁·사회적 불안 → 평온 추구 / 에피쿠로스=아타락시아(소극) / 스토아=아파테이아(이성·우주 질서)</div></div>
+        <div class="hard-item"><div class="hard-badge">★ 고난도 09</div><div class="hard-q">유교·불교·도가의 행복관을 비교하고, 세 사상의 공통점과 차이점을 논하시오.</div><textarea class="hard-textarea" placeholder="여기에 답을 작성하세요..." style="min-height:110px;"></textarea><button class="hard-hint-btn" onclick="toggleHint(this)">💡 힌트 보기</button><div class="hard-hint">힌트: 공통=물질적 욕망 초월 강조 / 유교=仁·사회적 실천, 불교=열반·무집착, 도가=무위자연</div></div>
+        <div class="hard-item"><div class="hard-badge">★ 고난도 10</div><div class="hard-q">행복의 기준은 시대와 지역에 따라 다르지만, 그럼에도 불구하고 공통적인 요소가 있다고 본다면 무엇인지 논하시오.</div><textarea class="hard-textarea" placeholder="여기에 답을 작성하세요..." style="min-height:110px;"></textarea><button class="hard-hint-btn" onclick="toggleHint(this)">💡 힌트 보기</button><div class="hard-hint">힌트: 희소한 가치 충족, 안전·자유, 의미 있는 관계, 자아실현 등 공통 요소 도출</div></div>
+      </div>
+    </div>
+  </div>
+
+</main>
+</div><!-- /tab-1 -->
+
+
+<!-- ════════════════════════════════════════
+     TAB 2 : 행복을 실현하기 위한 조건
+════════════════════════════════════════ -->
+<div class="tab-content" id="tab-2">
+<main>
+
+  <div class="section-label c3">
+    <div class="section-label-icon">🏡</div>
+    <div class="section-label-text">질 높은 정주 환경</div>
+    <div class="section-label-line"></div>
+  </div>
+  <div class="card c3">
+    <div class="card-head">정주 환경의 요소·필요성·노력</div>
+    <div class="card-body">
+      <div class="box box-def"><strong>정주 환경</strong> : 인간이 정착하여 살아가는 터전을 둘러싼 환경</div>
+      <table style="margin-top:10px;">
+        <tr><th>구분</th><th>내용</th></tr>
+        <tr><td><strong>요소</strong></td><td><strong>자연환경</strong> : 깨끗한 물·토양·대기 등<br><strong>인문환경</strong> : 안전·위생·교통·통신·문화·학교·교육·보건·의료 서비스 등</td></tr>
+        <tr><td><strong>필요성</strong></td><td>낙후되고 쾌적하지 않으면 기본적 삶의 문제 해결 불가 → 안락·행복 불가<br>→ 교육·문화·의료 등 다양한 혜택 제공 가능</td></tr>
+        <tr><td><strong>노력</strong></td><td>필수 기반 시설(주택·상하수도·교통·통신·교육 시설) 확충<br>문화 활동 시설·녹지 공간 확대</td></tr>
+      </table>
+      <div class="box box-ex" style="margin-top:10px; font-size:12px;">
+        <strong>이중환 《택리지》 가거지 4조건</strong><br>
+        <span class="hy">地理(지리)</span> : 풍수적 길지 &nbsp;|&nbsp; <span class="hy">生利(생리)</span> : 경제 활동 여건 &nbsp;|&nbsp; <span class="hy">人心(인심)</span> : 이웃 간의 정·풍습 &nbsp;|&nbsp; <span class="hy">山水(산수)</span> : 자연경관
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label c3">
+    <div class="section-label-icon">💰</div>
+    <div class="section-label-text">경제적 안정</div>
+    <div class="section-label-line"></div>
+  </div>
+  <div class="card c3">
+    <div class="card-head">경제적 안정의 의미와 과제</div>
+    <div class="card-body">
+      <div class="box box-def"><strong>경제적 안정</strong> : 생활에 필요한 재화나 서비스를 <span class="hy">안정적이고 일정하게</span> 누릴 수 있는 상태</div>
+      <table style="margin-top:8px;">
+        <tr><th>구분</th><th>내용</th></tr>
+        <tr><td><strong>요소</strong></td><td>일정 수준 이상의 소득을 꾸준히 얻을 수 있는 일자리 / 경제적 불평등 해소를 위한 정부의 복지 정책</td></tr>
+        <tr><td><strong>필요성</strong></td><td>빈곤 상황에서는 기본적 삶의 조건(의식주) 충족 어려움 / 경제적 안정 없이는 교육·문화·의료 수요 충족 불가</td></tr>
+        <tr><td><strong>노력 (개인)</strong></td><td>자기 계발, 적극적 직업 탐색과 경제 활동 참여</td></tr>
+        <tr><td><strong>노력 (국가)</strong></td><td>최저 임금 보장 / 사회 복지 제도 마련 (소득 격차 완화) / 국민 취업 지원 제도, 실업 급여</td></tr>
+      </table>
+      <div class="box box-warn" style="margin-top:10px; font-size:12px;">
+        <strong>이스털린의 역설(Easterlin Paradox)</strong><br>
+        연간 소득이 어느 수준에 이르면 정서적 행복감·삶의 만족도가 더 이상 증가하지 않음<br>
+        → 단기적으로는 소득↑ = 행복↑ 이지만, 장기적으로는 소득 변화 ≠ 행복 변화<br>
+        → 소득이 일정 수준 이상이면 반드시 더 행복한 것은 아님
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label c3">
+    <div class="section-label-icon">🗳️</div>
+    <div class="section-label-text">민주주의의 발전과 도덕적 실천</div>
+    <div class="section-label-line"></div>
+  </div>
+  <div class="card c3">
+    <div class="card-head">① 민주주의 발전</div>
+    <div class="card-body">
+      <div class="box box-def"><strong>민주주의</strong> : 주권자인 시민의 뜻에 따라 국가의 중요한 의사 결정을 해야 한다는 이념</div>
+      <table style="margin-top:8px;">
+        <tr><th>주체</th><th>노력</th></tr>
+        <tr><td><strong>국가</strong></td><td>의회 제도·복수 정당제·권력 분립 제도 등 민주적 제도 마련</td></tr>
+        <tr><td><strong>시민</strong></td><td>주인 의식·책임 의식 → 정책 결정 과정에 적극 참여 (투표, 공무 활동)<br>국가 정책이 시민 의견을 제대로 반영하는지 감시</td></tr>
+      </table>
+    </div>
+  </div>
+  <div class="card c3">
+    <div class="card-head">② 도덕적 실천</div>
+    <div class="card-body">
+      <div class="box box-def"><strong>도덕적 실천</strong> : 도덕적으로 사고하고 행동하는 것 = <span class="hy">도덕적 성찰</span>을 전제</div>
+      <div class="box box-key" style="margin-top:8px; font-size:12px;">
+        <strong>소크라테스의 도덕적 실천</strong>
+        <div class="flow" style="margin-top:6px;">
+          <span class="fi">知善惡 (참된 선과 악 앎)</span><span class="fa">→</span><span class="fi">덕 (올바른 실천)</span><span class="fa">→</span><span class="fi">복(幸) = 행복</span>
+        </div>
+        무지(無知)의 자각 → 도덕적 앎 → 행복<br>
+        "너 자신을 알라" = 자기 성찰 → 올바르게 살고자 하는 도덕적 요청
+      </div>
+      <div class="box box-ex" style="margin-top:8px; font-size:12px;">
+        <strong>헬퍼스 하이(Helper's High)</strong> : 봉사 활동 시 혈압↓, 엔도르핀↑ → 정신적 포만감<br>
+        → 개인과 공동체 모두의 행복을 증진하는 데 기여
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label c3">
+    <div class="section-label-icon">🌐</div>
+    <div class="section-label-text">행복한 삶 실현 — 국제 지표</div>
+    <div class="section-label-line"></div>
+  </div>
+  <div class="card c3">
+    <div class="card-head">국제 행복 지표</div>
+    <div class="card-body">
+      <table>
+        <tr><th>지표</th><th>주관 기관</th><th>측정 내용</th></tr>
+        <tr><td><span class="hy">인간 개발 지수 (HDI)</span></td><td>UNDP</td><td>1인당 국민 소득·교육 수준·문맹률·평균 수명 등</td></tr>
+        <tr><td><span class="hy">더 나은 삶 지수</span></td><td>OECD</td><td>삶·교육·안전·주거·소득·고용·만족도·환경·건강·균형·공동체 의식 11개 지표</td></tr>
+        <tr><td><span class="hy">세계 행복 보고서</span></td><td>UN</td><td>경제사회 지표 + 국민의 주관적 삶의 만족감 점수 합산</td></tr>
+      </table>
+      <div class="box box-warn" style="margin-top:10px; font-size:12px;">
+        <strong>우리나라의 더 나은 삶 지수 (2021년)</strong><br>
+        GDP : <span class="hy">25위</span> / 건강 기대 수명 : <span class="hy">3위</span> / 사회적 지지(어려움 시 도움) : <span class="hr">83위</span> / 인생 선택 자유 : <span class="hr">99위</span> / 정부 부패 인식 : 46위<br>
+        → 객관적 조건은 높지만, 주관적 만족도 지표는 낮음
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── 문제 ─── -->
+  <div class="quiz-section c3">
+    <div class="quiz-header c3"><div class="quiz-header-title">✏️ 단원 3 문제 풀이</div></div>
+    <div class="quiz-type-tabs">
+      <button class="quiz-type-btn active" onclick="switchQuiz(2,0)">객관식 20</button>
+      <button class="quiz-type-btn" onclick="switchQuiz(2,1)">OX 10</button>
+      <button class="quiz-type-btn" onclick="switchQuiz(2,2)">고난도 10</button>
+    </div>
+
+    <!-- 객관식 -->
+    <div class="quiz-panel active" id="qp-2-0">
+      <div class="quiz-list">
+        <div class="score-bar"><div><div class="score-num" id="mc-score-2">0</div><div class="score-label">맞힌 문항</div></div><div><div class="score-num" id="mc-total-2">0</div><div class="score-label">/ 20 풀었음</div></div></div>
+
+        <div class="mc-item"><div class="mc-num">Q 01</div><div class="mc-q">이중환 《택리지》에서 가거지의 4조건이 <strong>아닌</strong> 것은?</div><div class="mc-options"><div class="mc-opt" onclick="checkMC(this,2,0,false)"><span class="opt-num">①</span>지리(地理)</div><div class="mc-opt" onclick="checkMC(this,2,0,false)"><span class="opt-num">②</span>생리(生利)</div><div class="mc-opt" onclick="checkMC(this,2,0,false)"><span class="opt-num">③</span>인심(人心)</div><div class="mc-opt" onclick="checkMC(this,2,0,true)"><span class="opt-num">④</span>도리(道理)</div></div><div class="mc-feedback">✅ 가거지 4조건 = 地理·生利·人心·山水. 도리(道理)는 해당 없음.</div></div>
+
+        <div class="mc-item"><div class="mc-num">Q 02</div><div class="mc-q">경제적 안정의 의미로 옳은 것은?</div><div class="mc-options"><div class="mc-opt" onclick="checkMC(this,2,1,false)"><span class="opt-num">①</span>높은 국내 총생산(GDP)을 달성하는 것</div><div class="mc-opt" onclick="checkMC(this,2,1,true)"><span class="opt-num">②</span>생활에 필요한 재화나 서비스를 안정적이고 일정하게 누릴 수 있는 상태</div><div class="mc-opt" onclick="checkMC(this,2,1,false)"><span class="opt-num">③</span>국가 간 경제 격차를 없애는 것</div><div class="mc-opt" onclick="checkMC(this,2,1,false)"><span class="opt-num">④</span>모든 사람이 동일한 소득을 갖는 것</div></div><div class="mc-feedback">✅ 경제적 안정 = 재화·서비스를 안정적이고 일정하게 누릴 수 있는 상태.</div></div>
+
+        <div class="mc-item"><div class="mc-num">Q 03</div><div class="mc-q">'이스털린의 역설'에 대한 설명으로 옳은 것은?</div><div class="mc-options"><div class="mc-opt" onclick="checkMC(this,2,2,false)"><span class="opt-num">①</span>소득이 높을수록 행복도 항상 비례하여 증가한다.</div><div class="mc-opt" onclick="checkMC(this,2,2,true)"><span class="opt-num">②</span>소득이 일정 수준 이상이 되면 소득 증가가 행복의 증가로 이어지지 않는다.</div><div class="mc-opt" onclick="checkMC(this,2,2,false)"><span class="opt-num">③</span>소득이 낮을수록 오히려 행복하다.</div><div class="mc-opt" onclick="checkMC(this,2,2,false)"><span class="opt-num">④</span>행복은 소득과 전혀 무관하다.</div></div><div class="mc-feedback">✅ 이스털린의 역설 = 소득이 일정 수준 이상이면 소득↑ ≠ 행복↑.</div></div>
+
+        <div class="mc-item"><div class="mc-num">Q 04</div><div class="mc-q">소크라테스의 도덕적 실천 과정으로 올바른 순서는?</div><div class="mc-options"><div class="mc-opt" onclick="checkMC(this,2,3,false)"><span class="opt-num">①</span>복(행복) → 덕 → 知善惡</div><div class="mc-opt" onclick="checkMC(this,2,3,true)"><span class="opt-num">②</span>知善惡 → 덕(올바른 실천) → 복(행복)</div><div class="mc-opt" onclick="checkMC(this,2,3,false)"><span class="opt-num">③</span>덕 → 知善惡 → 복(행복)</div><div class="mc-opt" onclick="checkMC(this,2,3,false)"><span class="opt-num">④</span>무지 → 행복 → 도덕적 성찰</div></div><div class="mc-feedback">✅ 소크라테스 : 知善惡(지선악) → 덕 → 복(행복).</div></div>
+
+        <div class="mc-item"><div class="mc-num">Q 05</div><div class="mc-q">민주주의의 필요성으로 옳지 <strong>않은</strong> 것은?</div><div class="mc-options"><div class="mc-opt" onclick="checkMC(this,2,4,false)"><span class="opt-num">①</span>시민의 의사가 반영되지 않는 국가에서는 권력 남용·부패가 발생하기 쉽다.</div><div class="mc-opt" onclick="checkMC(this,2,4,false)"><span class="opt-num">②</span>민주적인 국가에서는 법·제도를 통해 시민의 자유·권리가 보장된다.</div><div class="mc-opt" onclick="checkMC(this,2,4,false)"><span class="opt-num">③</span>시민의 기본적 인권이 보장될 수 있다.</div><div class="mc-opt" onclick="checkMC(this,2,4,true)"><span class="opt-num">④</span>민주주의 지수가 높은 국가는 반드시 세계 행복 지수도 1위이다.</div></div><div class="mc-feedback">✅ 민주주의 지수가 높다고 반드시 행복 지수 1위는 아닙니다. (노르웨이: 민주주의 1위, 세계 행복 7위 등)</div></div>
+
+        <div class="mc-item"><div class="mc-num">Q 06</div><div class="mc-q">정주 환경의 '인문환경'에 해당하지 않는 것은?</div><div class="mc-options"><div class="mc-opt" onclick="checkMC(this,2,5,true)"><span class="opt-num">①</span>깨끗한 물과 토양</div><div class="mc-opt" onclick="checkMC(this,2,5,false)"><span class="opt-num">②</span>교통·통신 시설</div><div class="mc-opt" onclick="checkMC(this,2,5,false)"><span class="opt-num">③</span>의료 서비스</div><div class="mc-opt" onclick="checkMC(this,2,5,false)"><span class="opt-num">④</span>학교 및 교육</div></div><div class="mc-feedback">✅ 깨끗한 물·토양은 자연환경입니다. 인문환경 = 교통·통신·의료·교육 등.</div></div>
+
+        <div class="mc-item"><div class="mc-num">Q 07</div><div class="mc-q">인간 개발 지수(HDI)를 산출하는 주관 기관은?</div><div class="mc-options"><div class="mc-opt" onclick="checkMC(this,2,6,false)"><span class="opt-num">①</span>OECD</div><div class="mc-opt" onclick="checkMC(this,2,6,false)"><span class="opt-num">②</span>UN 세계 행복 보고서</div><div class="mc-opt" onclick="checkMC(this,2,6,true)"><span class="opt-num">③</span>UNDP (국연개발계획)</div><div class="mc-opt" onclick="checkMC(this,2,6,false)"><span class="opt-num">④</span>IMF</div></div><div class="mc-feedback">✅ HDI = UNDP(국제연합개발계획) 산출.</div></div>
+
+        <div class="mc-item"><div class="mc-num">Q 08</div><div class="mc-q">'헬퍼스 하이(Helper's High)'가 의미하는 것은?</div><div class="mc-options"><div class="mc-opt" onclick="checkMC(this,2,7,false)"><span class="opt-num">①</span>운동할 때 느끼는 신체적 쾌감</div><div class="mc-opt" onclick="checkMC(this,2,7,true)"><span class="opt-num">②</span>봉사 활동 시 혈압↓·엔도르핀↑로 인한 정신적 포만감</div><div class="mc-opt" onclick="checkMC(this,2,7,false)"><span class="opt-num">③</span>소득이 높아질 때 느끼는 경제적 만족감</div><div class="mc-opt" onclick="checkMC(this,2,7,false)"><span class="opt-num">④</span>민주주의 참여로 얻는 정치적 만족감</div></div><div class="mc-feedback">✅ 헬퍼스 하이 = 봉사 시 혈압↓·엔도르핀↑ → 정신적 포만감 → 개인·공동체 행복 증진.</div></div>
+
+        <div class="mc-item"><div class="mc-num">Q 09</div><div class="mc-q">OECD '더 나은 삶 지수'에서 측정하는 항목으로 <strong>포함되지 않는</strong> 것은?</div><div class="mc-options"><div class="mc-opt" onclick="checkMC(this,2,8,false)"><span class="opt-num">①</span>주거</div><div class="mc-opt" onclick="checkMC(this,2,8,false)"><span class="opt-num">②</span>환경</div><div class="mc-opt" onclick="checkMC(this,2,8,true)"><span class="opt-num">③</span>군사력</div><div class="mc-opt" onclick="checkMC(this,2,8,false)"><span class="opt-num">④</span>삶의 만족도</div></div><div class="mc-feedback">✅ OECD 더 나은 삶 지수 항목에 군사력은 포함되지 않습니다.</div></div>
+
+        <div class="mc-item"><div class="mc-num">Q 10</div><div class="mc-q">민주주의를 위한 국가의 노력으로 옳지 않은 것은?</div><div class="mc-options"><div class="mc-opt" onclick="checkMC(this,2,9,false)"><span class="opt-num">①</span>의회 제도 운영</div><div class="mc-opt" onclick="checkMC(this,2,9,false)"><span class="opt-num">②</span>복수 정당제 보장</div><div class="mc-opt" onclick="checkMC(this,2,9,false)"><span class="opt-num">③</span>권력 분립 제도 시행</div><div class="mc-opt" onclick="checkMC(this,2,9,true)"><span class="opt-num">④</span>최저 임금 보장</div></div><div class="mc-feedback">✅ 최저 임금 보장은 경제적 안정(국가 노력)에 해당합니다.</div></div>
+
+        <div class="mc-item"><div class="mc-num">Q 11</div><div class="mc-q">소크라테스가 말하는 '무지(無知)의 자각'이 중요한 이유는?</div><div class="mc-options"><div class="mc-opt" onclick="checkMC(this,2,10,false)"><span class="opt-num">①</span>경제적 안정의 첫걸음이기 때문이다.</div><div class="mc-opt" onclick="checkMC(this,2,10,true)"><span class="opt-num">②</span>자신을 성찰하여 올바르게 살고자 하는 도덕적 요청의 출발점이기 때문이다.</div><div class="mc-opt" onclick="checkMC(this,2,10,false)"><span class="opt-num">③</span>민주주의 참여의 기반이 되기 때문이다.</div><div class="mc-opt" onclick="checkMC(this,2,10,false)"><span class="opt-num">④</span>쾌락을 절제하기 위한 첫 단계이기 때문이다.</div></div><div class="mc-feedback">✅ "너 자신을 알라" = 무지 자각 → 자기 성찰 → 올바르게 살고자 하는 도덕적 요청.</div></div>
+
+        <div class="mc-item"><div class="mc-num">Q 12</div><div class="mc-q">우리나라의 더 나은 삶 지수(2021년) 중 가장 낮은 순위 항목은?</div><div class="mc-options"><div class="mc-opt" onclick="checkMC(this,2,11,false)"><span class="opt-num">①</span>1인당 국내 총생산(GDP)</div><div class="mc-opt" onclick="checkMC(this,2,11,false)"><span class="opt-num">②</span>건강 기대 수명</div><div class="mc-opt" onclick="checkMC(this,2,11,true)"><span class="opt-num">③</span>인생을 선택할 자유</div><div class="mc-opt" onclick="checkMC(this,2,11,false)"><span class="opt-num">④</span>정부 부패 인식</div></div><div class="mc-feedback">✅ 인생 선택 자유 99위로 가장 낮습니다. GDP 25위, 건강 3위, 정부 부패 46위.</div></div>
+
+        <div class="mc-item"><div class="mc-num">Q 13</div><div class="mc-q">정주 환경이 낙후될 경우 나타나는 문제로 옳은 것은?</div><div class="mc-options"><div class="mc-opt" onclick="checkMC(this,2,12,true)"><span class="opt-num">①</span>기본적인 삶의 문제를 해결하지 못하고 안락한 삶을 누릴 수 없다.</div><div class="mc-opt" onclick="checkMC(this,2,12,false)"><span class="opt-num">②</span>이스털린의 역설이 심화된다.</div><div class="mc-opt" onclick="checkMC(this,2,12,false)"><span class="opt-num">③</span>도덕적 실천 의지가 약해진다.</div><div class="mc-opt" onclick="checkMC(this,2,12,false)"><span class="opt-num">④</span>민주주의 제도가 붕괴된다.</div></div><div class="mc-feedback">✅ 정주 환경 낙후 → 기본적 삶의 문제 해결 불가 → 안락·행복 불가.</div></div>
+
+        <div class="mc-item"><div class="mc-num">Q 14</div><div class="mc-q">이중환 《택리지》에서 '생리(生利)'란?</div><div class="mc-options"><div class="mc-opt" onclick="checkMC(this,2,13,false)"><span class="opt-num">①</span>자연경관이 아름다운지를 보는 것</div><div class="mc-opt" onclick="checkMC(this,2,13,false)"><span class="opt-num">②</span>풍수적으로 길지인지를 보는 것</div><div class="mc-opt" onclick="checkMC(this,2,13,true)"><span class="opt-num">③</span>경제 활동의 여건이 유리한지를 보는 것</div><div class="mc-opt" onclick="checkMC(this,2,13,false)"><span class="opt-num">④</span>이웃 간의 정과 풍습이 좋은지를 보는 것</div></div><div class="mc-feedback">✅ 생리(生利) = 경제 활동의 여건이 유리한지.</div></div>
+
+        <div class="mc-item"><div class="mc-num">Q 15</div><div class="mc-q">도덕적 성찰에 대한 설명으로 옳은 것은?</div><div class="mc-options"><div class="mc-opt" onclick="checkMC(this,2,14,false)"><span class="opt-num">①</span>타인의 행동을 도덕적으로 평가하는 것이다.</div><div class="mc-opt" onclick="checkMC(this,2,14,false)"><span class="opt-num">②</span>국가 제도의 문제점을 비판하는 것이다.</div><div class="mc-opt" onclick="checkMC(this,2,14,true)"><span class="opt-num">③</span>살면서 마주하는 문제에 대해 도덕적으로 사고하고, 자신의 삶과 행동을 반성하는 것이다.</div><div class="mc-opt" onclick="checkMC(this,2,14,false)"><span class="opt-num">④</span>쾌락과 고통의 총합을 계산하는 것이다.</div></div><div class="mc-feedback">✅ 도덕적 성찰 = 도덕적 사고 + 자신의 삶·행동 반성.</div></div>
+
+        <div class="mc-item"><div class="mc-num">Q 16</div><div class="mc-q">경제적 안정을 위한 국가의 노력으로 옳지 않은 것은?</div><div class="mc-options"><div class="mc-opt" onclick="checkMC(this,2,15,false)"><span class="opt-num">①</span>최저 임금 보장</div><div class="mc-opt" onclick="checkMC(this,2,15,false)"><span class="opt-num">②</span>사회 복지 제도 마련</div><div class="mc-opt" onclick="checkMC(this,2,15,false)"><span class="opt-num">③</span>국민 취업 지원 제도, 실업 급여</div><div class="mc-opt" onclick="checkMC(this,2,15,true)"><span class="opt-num">④</span>권력 분립 제도 시행</div></div><div class="mc-feedback">✅ 권력 분립은 민주주의 발전을 위한 국가의 노력입니다.</div></div>
+
+        <div class="mc-item"><div class="mc-num">Q 17</div><div class="mc-q">세계 행복 보고서(UN)에서 측정하는 방식은?</div><div class="mc-options"><div class="mc-opt" onclick="checkMC(this,2,16,false)"><span class="opt-num">①</span>1인당 국민 소득·교육·평균 수명만을 측정한다.</div><div class="mc-opt" onclick="checkMC(this,2,16,false)"><span class="opt-num">②</span>11개 지표를 기반으로 국민 생활에 영향을 미치는 지표를 산출한다.</div><div class="mc-opt" onclick="checkMC(this,2,16,true)"><span class="opt-num">③</span>경제사회 지표 + 국민의 주관적 삶의 만족감 점수를 합산한다.</div><div class="mc-opt" onclick="checkMC(this,2,16,false)"><span class="opt-num">④</span>민주주의 지수만을 기준으로 한다.</div></div><div class="mc-feedback">✅ UN 세계 행복 보고서 = 경제사회 지표 + 주관적 삶의 만족감 점수 합산.</div></div>
+
+        <div class="mc-item"><div class="mc-num">Q 18</div><div class="mc-q">민주주의를 위한 시민의 노력으로 옳은 것은?</div><div class="mc-options"><div class="mc-opt" onclick="checkMC(this,2,17,false)"><span class="opt-num">①</span>국가 정책에 무조건 따른다.</div><div class="mc-opt" onclick="checkMC(this,2,17,true)"><span class="opt-num">②</span>주인 의식·책임 의식을 바탕으로 정책 결정 과정에 적극 참여하고 감시한다.</div><div class="mc-opt" onclick="checkMC(this,2,17,false)"><span class="opt-num">③</span>경제 활동에만 집중한다.</div><div class="mc-opt" onclick="checkMC(this,2,17,false)"><span class="opt-num">④</span>환경 보호 활동에만 참여한다.</div></div><div class="mc-feedback">✅ 시민 = 주인 의식·책임 의식 → 적극 참여 + 국가 정책 감시.</div></div>
+
+        <div class="mc-item"><div class="mc-num">Q 19</div><div class="mc-q">우리나라 더 나은 삶 지수에서 건강 기대 수명 순위는?</div><div class="mc-options"><div class="mc-opt" onclick="checkMC(this,2,18,true)"><span class="opt-num">①</span>3위</div><div class="mc-opt" onclick="checkMC(this,2,18,false)"><span class="opt-num">②</span>25위</div><div class="mc-opt" onclick="checkMC(this,2,18,false)"><span class="opt-num">③</span>46위</div><div class="mc-opt" onclick="checkMC(this,2,18,false)"><span class="opt-num">④</span>99위</div></div><div class="mc-feedback">✅ 건강 기대 수명 3위. GDP 25위, 정부 부패 46위, 인생 선택 자유 99위.</div></div>
+
+        <div class="mc-item"><div class="mc-num">Q 20</div><div class="mc-q">도덕적 실천이 개인과 공동체 모두의 행복에 기여한다는 것을 보여주는 사례는?</div><div class="mc-options"><div class="mc-opt" onclick="checkMC(this,2,19,false)"><span class="opt-num">①</span>이스털린의 역설</div><div class="mc-opt" onclick="checkMC(this,2,19,false)"><span class="opt-num">②</span>이중환의 택리지</div><div class="mc-opt" onclick="checkMC(this,2,19,true)"><span class="opt-num">③</span>헬퍼스 하이(Helper's High)</div><div class="mc-opt" onclick="checkMC(this,2,19,false)"><span class="opt-num">④</span>인간 개발 지수(HDI)</div></div><div class="mc-feedback">✅ 헬퍼스 하이 = 봉사 활동 → 개인 신체·정신 건강 + 공동체 행복 증진.</div></div>
+
+      </div>
+    </div>
+
+    <!-- OX -->
+    <div class="quiz-panel" id="qp-2-1">
+      <div class="quiz-list">
+        <div class="score-bar"><div><div class="score-num" id="ox-score-2">0</div><div class="score-label">맞힌 문항</div></div><div><div class="score-num" id="ox-total-2">0</div><div class="score-label">/ 10 풀었음</div></div></div>
+        <div class="ox-item"><div class="mc-num">OX 01</div><div class="ox-q">이중환 《택리지》의 가거지 조건에는 山水(산수)가 포함된다.</div><div class="ox-btns"><button class="ox-btn o-btn" onclick="checkOX(this,true,'✅ 地理·生利·人心·山水 — 산수 포함.')">O</button><button class="ox-btn x-btn" onclick="checkOX(this,false,'')">X</button></div><div class="ox-feedback"></div></div>
+        <div class="ox-item"><div class="mc-num">OX 02</div><div class="ox-q">이스털린의 역설에 따르면, 소득이 높을수록 항상 더 행복하다.</div><div class="ox-btns"><button class="ox-btn o-btn" onclick="checkOX(this,false,'이스털린의 역설 = 소득이 일정 수준 이상이면 소득 증가 ≠ 행복 증가.')">O</button><button class="ox-btn x-btn" onclick="checkOX(this,true,'✅ 이스털린의 역설 = 일정 수준 이상의 소득은 행복과 비례하지 않음.')">X</button></div><div class="ox-feedback"></div></div>
+        <div class="ox-item"><div class="mc-num">OX 03</div><div class="ox-q">소크라테스의 도덕적 실천에서 '지선악(知善惡)'은 참된 선과 악을 아는 것이다.</div><div class="ox-btns"><button class="ox-btn o-btn" onclick="checkOX(this,true,'✅ 知善惡 = 참된 선과 악을 아는 것.')">O</button><button class="ox-btn x-btn" onclick="checkOX(this,false,'')">X</button></div><div class="ox-feedback"></div></div>
+        <div class="ox-item"><div class="mc-num">OX 04</div><div class="ox-q">OECD '더 나은 삶 지수'는 11개 지표를 기반으로 삶의 질을 산출한다.</div><div class="ox-btns"><button class="ox-btn o-btn" onclick="checkOX(this,true,'✅ 정확합니다. OECD = 11개 지표.')">O</button><button class="ox-btn x-btn" onclick="checkOX(this,false,'')">X</button></div><div class="ox-feedback"></div></div>
+        <div class="ox-item"><div class="mc-num">OX 05</div><div class="ox-q">정주 환경에서 교통·통신은 자연환경에 해당한다.</div><div class="ox-btns"><button class="ox-btn o-btn" onclick="checkOX(this,false,'교통·통신은 인문환경입니다. 자연환경 = 물·토양·대기 등.')">O</button><button class="ox-btn x-btn" onclick="checkOX(this,true,'✅ 교통·통신은 인문환경. 자연환경 = 물·토양·대기.')">X</button></div><div class="ox-feedback"></div></div>
+        <div class="ox-item"><div class="mc-num">OX 06</div><div class="ox-q">우리나라의 더 나은 삶 지수에서 '인생 선택 자유' 항목은 매우 낮은 순위를 기록하고 있다.</div><div class="ox-btns"><button class="ox-btn o-btn" onclick="checkOX(this,true,'✅ 인생 선택 자유 = 99위로 매우 낮음.')">O</button><button class="ox-btn x-btn" onclick="checkOX(this,false,'')">X</button></div><div class="ox-feedback"></div></div>
+        <div class="ox-item"><div class="mc-num">OX 07</div><div class="ox-q">헬퍼스 하이는 봉사 활동 시 혈압이 높아지고 스트레스가 증가하는 현상이다.</div><div class="ox-btns"><button class="ox-btn o-btn" onclick="checkOX(this,false,'헬퍼스 하이 = 혈압↓·엔도르핀↑·정신적 포만감. 혈압이 높아지는 것이 아닙니다.')">O</button><button class="ox-btn x-btn" onclick="checkOX(this,true,'✅ 헬퍼스 하이 = 혈압↓·엔도르핀↑·정신적 포만감.')">X</button></div><div class="ox-feedback"></div></div>
+        <div class="ox-item"><div class="mc-num">OX 08</div><div class="ox-q">민주주의를 위한 시민의 역할로는 투표와 같은 정치 참여 활동이 포함된다.</div><div class="ox-btns"><button class="ox-btn o-btn" onclick="checkOX(this,true,'✅ 시민의 민주주의 노력 = 주인 의식·책임 의식 → 투표 등 정치 참여.')">O</button><button class="ox-btn x-btn" onclick="checkOX(this,false,'')">X</button></div><div class="ox-feedback"></div></div>
+        <div class="ox-item"><div class="mc-num">OX 09</div><div class="ox-q">경제적 안정만으로 완전한 행복을 보장할 수 있다.</div><div class="ox-btns"><button class="ox-btn o-btn" onclick="checkOX(this,false,'이스털린의 역설 등에 따르면 경제적 안정만으로 완전한 행복 보장 불가. 정주 환경·민주주의·도덕적 실천 등 복합적 조건이 필요합니다.')">O</button><button class="ox-btn x-btn" onclick="checkOX(this,true,'✅ 이스털린의 역설 등 → 경제적 안정만으로는 완전한 행복 보장 불가.')">X</button></div><div class="ox-feedback"></div></div>
+        <div class="ox-item"><div class="mc-num">OX 10</div><div class="ox-q">UN 세계 행복 보고서는 국민의 주관적 삶의 만족감 점수를 반영하여 행복도를 평가한다.</div><div class="ox-btns"><button class="ox-btn o-btn" onclick="checkOX(this,true,'✅ UN = 경제사회 지표 + 주관적 삶의 만족감 점수 합산.')">O</button><button class="ox-btn x-btn" onclick="checkOX(this,false,'')">X</button></div><div class="ox-feedback"></div></div>
+      </div>
+    </div>
+
+    <!-- 고난도 -->
+    <div class="quiz-panel" id="qp-2-2">
+      <div class="quiz-list">
+        <div class="hard-item"><div class="hard-badge">★ 고난도 01</div><div class="hard-q">이중환 《택리지》에서 제시한 가거지(可居地)의 4가지 조건을 모두 서술하고, 각각이 현대 정주 환경의 어떤 요소에 해당하는지 연결하시오.</div><textarea class="hard-textarea" placeholder="여기에 답을 작성하세요..."></textarea><button class="hard-hint-btn" onclick="toggleHint(this)">💡 힌트 보기</button><div class="hard-hint">힌트: 지리=자연환경, 생리=경제 활동(생리), 인심=사회적 환경, 산수=자연경관</div></div>
+        <div class="hard-item"><div class="hard-badge">★ 고난도 02</div><div class="hard-q">'이스털린의 역설'을 설명하고, 이것이 경제 정책 수립에 주는 시사점을 논하시오.</div><textarea class="hard-textarea" placeholder="여기에 답을 작성하세요..."></textarea><button class="hard-hint-btn" onclick="toggleHint(this)">💡 힌트 보기</button><div class="hard-hint">힌트: 소득↑≠행복↑(일정 수준 이상) → 단순 경제 성장 이외에 삶의 질, 만족도 향상 정책 필요</div></div>
+        <div class="hard-item"><div class="hard-badge">★ 고난도 03</div><div class="hard-q">소크라테스의 도덕적 실천 과정(知善惡→덕→복)과 "너 자신을 알라"의 연관성을 설명하고, 현대 사회에서의 의의를 서술하시오.</div><textarea class="hard-textarea" placeholder="여기에 답을 작성하세요..."></textarea><button class="hard-hint-btn" onclick="toggleHint(this)">💡 힌트 보기</button><div class="hard-hint">힌트: "너 자신을 알라" = 무지 자각 = 知善惡의 출발점 → 도덕적 성찰 → 올바른 실천 → 행복</div></div>
+        <div class="hard-item"><div class="hard-badge">★ 고난도 04</div><div class="hard-q">우리나라의 더 나은 삶 지수에서 GDP·건강 수명 등 객관적 지표는 높지만 인생 선택 자유·사회적 지지 등 주관적 지표가 낮은 현상의 원인과 개선 방향을 논하시오.</div><textarea class="hard-textarea" placeholder="여기에 답을 작성하세요..." style="min-height:110px;"></textarea><button class="hard-hint-btn" onclick="toggleHint(this)">💡 힌트 보기</button><div class="hard-hint">힌트: GDP 25위·건강 3위 vs 사회적 지지 83위·인생 선택 자유 99위 → 경쟁 중심 사회, 공동체 의식 부족 등 원인 분석</div></div>
+        <div class="hard-item"><div class="hard-badge">★ 고난도 05</div><div class="hard-q">민주주의 발전과 행복의 관계를 설명하고, 민주주의 지수가 높은 국가가 반드시 행복 지수도 높지 않은 이유를 논하시오.</div><textarea class="hard-textarea" placeholder="여기에 답을 작성하세요..."></textarea><button class="hard-hint-btn" onclick="toggleHint(this)">💡 힌트 보기</button><div class="hard-hint">힌트: 민주주의 지수 1위 노르웨이 → 세계 행복 7위 등. 행복은 민주주의 외에도 경제·정주 환경·도덕적 실천 등 복합 조건</div></div>
+        <div class="hard-item"><div class="hard-badge">★ 고난도 06</div><div class="hard-q">행복한 삶을 실현하기 위한 '정주 환경', '경제적 안정', '민주주의 발전', '도덕적 실천' 네 가지 조건 중 가장 중요하다고 생각하는 것을 선택하고, 나머지와의 관계를 포함하여 논거를 제시하시오.</div><textarea class="hard-textarea" placeholder="여기에 답을 작성하세요..." style="min-height:120px;"></textarea><button class="hard-hint-btn" onclick="toggleHint(this)">💡 힌트 보기</button><div class="hard-hint">힌트: 네 가지가 상호 보완적임을 인식하면서, 선택한 항목이 나머지 조건들의 토대가 되는 이유를 논리적으로 서술</div></div>
+        <div class="hard-item"><div class="hard-badge">★ 고난도 07</div><div class="hard-q">헬퍼스 하이(Helper's High)가 도덕적 실천의 효과를 보여주는 이유를 설명하고, 이것이 공동체 행복에 기여하는 과정을 서술하시오.</div><textarea class="hard-textarea" placeholder="여기에 답을 작성하세요..."></textarea><button class="hard-hint-btn" onclick="toggleHint(this)">💡 힌트 보기</button><div class="hard-hint">힌트: 봉사→혈압↓·엔도르핀↑·포만감 → 개인 행복 + 타인 도움 → 공동체 행복 증진</div></div>
+        <div class="hard-item"><div class="hard-badge">★ 고난도 08</div><div class="hard-q">세 가지 국제 행복 지표(HDI·OECD 더 나은 삶 지수·UN 세계 행복 보고서)를 비교하고, 각 지표의 한계와 보완점을 논하시오.</div><textarea class="hard-textarea" placeholder="여기에 답을 작성하세요..."></textarea><button class="hard-hint-btn" onclick="toggleHint(this)">💡 힌트 보기</button><div class="hard-hint">힌트: HDI=객관(소득·교육·수명), OECD=11개 지표, UN=주관적 만족감 포함 / 각 지표 측정 방식의 장단점</div></div>
+        <div class="hard-item"><div class="hard-badge">★ 고난도 09</div><div class="hard-q">정주 환경의 자연환경과 인문환경이 행복에 미치는 영향을 각각 설명하고, 두 환경이 상호 보완적이어야 하는 이유를 논하시오.</div><textarea class="hard-textarea" placeholder="여기에 답을 작성하세요..."></textarea><button class="hard-hint-btn" onclick="toggleHint(this)">💡 힌트 보기</button><div class="hard-hint">힌트: 자연환경=안전·깨끗한 환경 / 인문환경=교육·의료·교통 / 둘 다 충족되어야 기본적 삶 + 다양한 혜택 가능</div></div>
+        <div class="hard-item"><div class="hard-badge">★ 고난도 10</div><div class="hard-q">경제적 안정을 위한 개인과 국가의 역할을 각각 서술하고, 국가의 복지 정책이 지나치게 확대될 경우 발생할 수 있는 문제점도 함께 논하시오.</div><textarea class="hard-textarea" placeholder="여기에 답을 작성하세요..." style="min-height:110px;"></textarea><button class="hard-hint-btn" onclick="toggleHint(this)">💡 힌트 보기</button><div class="hard-hint">힌트: 개인=자기계발·취업 / 국가=최저임금·복지제도 / 과도한 복지→재정 부담·근로 의욕 저하 등</div></div>
+      </div>
+    </div>
+  </div>
+
+</main>
+</div><!-- /tab-2 -->
+
+<script>
+// ─────────── 탭 전환 ───────────
+function switchTab(n) {
+  document.querySelectorAll('.tab-content').forEach((t,i) => {
+    t.classList.toggle('active', i===n);
+  });
+  document.querySelectorAll('.tab-btn').forEach((b,i) => {
+    b.classList.toggle('active', i===n);
+  });
+}
+
+// ─────────── 문제 타입 전환 ───────────
+function switchQuiz(tabIdx, typeIdx) {
+  const parent = document.getElementById('tab-'+tabIdx);
+  const qtabs = parent.querySelectorAll('.quiz-type-btn');
+  const panels = parent.querySelectorAll('.quiz-panel');
+  qtabs.forEach((b,i) => b.classList.toggle('active', i===typeIdx));
+  panels.forEach((p,i) => p.classList.toggle('active', i===typeIdx));
+}
+
+// ─────────── 객관식 정답 처리 ───────────
+// 각 문제별 1번만 채점, 점수 추적
+const mcAnswered = {};
+
+function checkMC(el, tabIdx, qIdx, isCorrect) {
+  const key = tabIdx+'-'+qIdx;
+  if (mcAnswered[key]) return;
+  mcAnswered[key] = true;
+
+  const item = el.closest('.mc-item');
+  const opts = item.querySelectorAll('.mc-opt');
+  const fb = item.querySelector('.mc-feedback');
+
+  opts.forEach(o => {
+    o.style.pointerEvents = 'none';
+    if (o === el) {
+      o.classList.add(isCorrect ? 'correct' : 'wrong');
+    } else {
+      // 정답 표시
+      const fn = o.getAttribute('onclick');
+      if (fn && fn.includes('true')) o.classList.add('correct');
+    }
+  });
+
+  fb.classList.add('show', isCorrect ? 'ok' : 'ng');
+
+  // 점수 업데이트
+  const totalEl = document.getElementById('mc-total-'+tabIdx);
+  const scoreEl = document.getElementById('mc-score-'+tabIdx);
+  totalEl.textContent = (parseInt(totalEl.textContent)||0) + 1;
+  if (isCorrect) scoreEl.textContent = (parseInt(scoreEl.textContent)||0) + 1;
+}
+
+// ─────────── OX 정답 처리 ───────────
+const oxAnswered = {};
+
+function checkOX(btn, isCorrect, feedback) {
+  const item = btn.closest('.ox-item');
+  const key = item.parentElement.id + item.querySelector('.mc-num').textContent;
+  if (oxAnswered[key]) return;
+  oxAnswered[key] = true;
+
+  const btns = item.querySelectorAll('.ox-btn');
+  const fb = item.querySelector('.ox-feedback');
+  const tabIdx = getTabIdxFromElement(item);
+
+  btns.forEach(b => b.style.pointerEvents = 'none');
+  btn.classList.add(isCorrect ? 'correct' : 'wrong');
+  btn.textContent += isCorrect ? ' ✓' : ' ✗';
+
+  // 상대 버튼에 정답 표시
+  const otherBtn = btn.classList.contains('o-btn') ? item.querySelector('.x-btn') : item.querySelector('.o-btn');
+  if (!isCorrect) otherBtn.classList.add('correct');
+
+  fb.innerHTML = feedback || '';
+  fb.classList.add('show', isCorrect ? 'ok' : 'ng');
+
+  const totalEl = document.getElementById('ox-total-'+tabIdx);
+  const scoreEl = document.getElementById('ox-score-'+tabIdx);
+  if (totalEl) {
+    totalEl.textContent = (parseInt(totalEl.textContent)||0) + 1;
+    if (isCorrect) scoreEl.textContent = (parseInt(scoreEl.textContent)||0) + 1;
+  }
+}
+
+function getTabIdxFromElement(el) {
+  const tab = el.closest('.tab-content');
+  if (!tab) return 0;
+  return parseInt(tab.id.replace('tab-',''));
+}
+
+// ─────────── 힌트 토글 ───────────
+function toggleHint(btn) {
+  const hint = btn.nextElementSibling;
+  hint.classList.toggle('show');
+  btn.textContent = hint.classList.contains('show') ? '💡 힌트 닫기' : '💡 힌트 보기';
+}
+</script>
+
+</body>
+</html>
