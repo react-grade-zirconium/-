@@ -13,21 +13,22 @@
         --kor-theme: #b45309;
         --sci-theme: #0891b2;
         --soc-theme: #f59e0b;
+        --ai-theme: #8b5cf6;
     }
     
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: 'Pretendard', sans-serif; background: var(--bg); display: flex; height: 100vh; overflow: hidden; }
 
-    /* 사이드바 */
-    .sidebar { width: 250px; background: var(--dark); color: white; display: flex; flex-direction: column; height: 100vh; flex-shrink: 0; }
+    /* 사이드바 스타일 */
+    .sidebar { width: 260px; background: var(--dark); color: white; display: flex; flex-direction: column; height: 100vh; flex-shrink: 0; }
     .sidebar-header { padding: 30px 20px; font-size: 1.5rem; font-weight: 900; border-bottom: 1px solid rgba(255,255,255,0.1); text-align: center; color: #60a5fa; cursor: default; }
     
     .subject-list { flex: 1; padding: 20px 0; overflow-y: auto; }
-    .subject-item { padding: 18px 25px; cursor: pointer; transition: 0.3s; opacity: 0.6; display: flex; align-items: center; gap: 12px; }
+    .subject-item { padding: 16px 25px; cursor: pointer; transition: 0.3s; opacity: 0.6; display: flex; align-items: center; gap: 12px; font-size: 0.95rem; }
     .subject-item:hover { background: rgba(255,255,255,0.05); opacity: 1; }
-    .subject-item.active { opacity: 1; background: var(--primary); font-weight: bold; }
+    .subject-item.active { opacity: 1; background: var(--primary); font-weight: bold; border-left: 5px solid #fff; }
 
-    /* 사이드바 하단 홈 버튼 */
+    /* 홈 버튼 */
     .sidebar-footer { padding: 20px; border-top: 1px solid rgba(255,255,255,0.1); }
     .home-btn {
         display: flex; align-items: center; justify-content: center; gap: 8px;
@@ -37,12 +38,12 @@
     }
     .home-btn:hover { background: #ef4444; color: white; }
 
-    /* 메인 컨텐츠 영역 */
+    /* 메인 영역 */
     .main-content { flex: 1; padding: 25px; display: flex; flex-direction: column; height: 100vh; }
-    .subject-header { margin-bottom: 15px; display: flex; align-items: center; justify-content: space-between; }
-    .subject-title { font-size: 1.6rem; font-weight: 800; border-left: 8px solid var(--primary); padding-left: 15px; }
+    .subject-header { margin-bottom: 15px; }
+    .subject-title { font-size: 1.6rem; font-weight: 800; border-left: 8px solid var(--primary); padding-left: 15px; transition: 0.3s; }
 
-    .frame-box { flex: 1; background: white; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); overflow: hidden; }
+    .frame-box { flex: 1; background: white; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); overflow: hidden; border: 1px solid #e2e8f0; }
     iframe { width: 100%; height: 100%; border: none; }
 </style>
 </head>
@@ -52,11 +53,12 @@
     <div class="sidebar-header">STUDY MAX</div>
     
     <div class="subject-list">
-        <div id="side-korean" class="subject-item active" onclick="go('korean_hub.html', 'korean', this)">📖 국어 모의고사</div>
-        <div id="side-science" class="subject-item" onclick="go('science_hub.html', 'science', this)">🧪 통합과학</div>
-        <div id="side-society" class="subject-item" onclick="go('society_hub.html', 'society', this)">🌍 사회 (행복/지리)</div>
-        <div id="side-history" class="subject-item" onclick="go('history_interactive.html', 'history', this)">📚 한국사</div>
-        <div id="side-info" class="subject-item" onclick="go('mega_study.html', 'info', this)">💻 정보 (알고리즘)</div>
+        <div class="subject-item active" onclick="go('korean_hub.html', 'korean', this)">📖 국어 모의고사</div>
+        <div class="subject-item" onclick="go('science_hub.html', 'science', this)">🧪 통합과학 (물/화/생/지)</div>
+        <div class="subject-item" onclick="go('society_hub.html', 'society', this)">🌍 통합사회 (행복/지리)</div>
+        <div class="subject-item" onclick="go('history_interactive.html', 'history', this)">📚 한국사</div>
+        <div class="subject-item" onclick="go('ai_generator.html', 'ai', this)">🤖 AI 무한 문제 생성기</div>
+        <div class="subject-item" onclick="go('mega_study.html', 'info', this)">💻 정보 (알고리즘)</div>
     </div>
 
     <div class="sidebar-footer">
@@ -77,26 +79,29 @@
 
 <script>
     function go(url, type, el) {
-        // 사이드바 활성화 상태 업데이트
+        // 메뉴 활성화 시각화
         document.querySelectorAll('.subject-item').forEach(item => item.classList.remove('active'));
         el.classList.add('active');
 
         const frame = document.getElementById('mainFrame');
         const title = document.getElementById('mainTitle');
 
-        // 과목별 제목 및 강조색 변경
+        // 과목별 헤더 디자인 및 제목 변경
         if(type === 'korean') {
             title.innerText = "국어 서정 시 모의고사";
             title.style.borderLeftColor = 'var(--kor-theme)';
         } else if(type === 'science') {
-            title.innerText = "통합과학 인터랙티브 학습";
+            title.innerText = "통합과학 (물리·화학·생명·지구)";
             title.style.borderLeftColor = 'var(--sci-theme)';
         } else if(type === 'society') {
-            title.innerText = "사회 (행복 및 지리)";
+            title.innerText = "통합사회 (행복 및 지리)";
             title.style.borderLeftColor = 'var(--soc-theme)';
         } else if(type === 'history') {
             title.innerText = "한국사 인터랙티브";
             title.style.borderLeftColor = 'var(--primary)';
+        } else if(type === 'ai') {
+            title.innerText = "AI 무한 문제 생성기 (Beta)";
+            title.style.borderLeftColor = 'var(--ai-theme)';
         } else if(type === 'info') {
             title.innerText = "정보 (알고리즘 및 프로그래밍)";
             title.style.borderLeftColor = '#0d9488';
