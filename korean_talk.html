@@ -3,182 +3,290 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>국어 핵심 정리 및 문제 — 최시원</title>
+    <title>국어 핵심 정리 및 실전 테스트 — 최시원</title>
     <style>
-        *{box-sizing:border-box;margin:0;padding:0}
-        body{font-family:'Malgun Gothic',sans-serif;background:#f0f4f8;color:#1a202c;font-size:14px; line-height: 1.6;}
-        
+        /* 기본 테마 및 색상 */
+        :root {
+            --mega-blue: #004ea2;
+            --mega-dark: #002d5f;
+            --mega-orange: #ff6600;
+            --bg-gray: #f0f4f8;
+            --text-main: #1a202c;
+            --border-light: #e2e8f0;
+            --correct-green: #38a169;
+            --wrong-red: #e53e3e;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Pretendard', 'Malgun Gothic', sans-serif; background: var(--bg-gray); color: var(--text-main); line-height: 1.6; }
+
         /* Header */
-        .header{background:linear-gradient(135deg,#004ea2 0%,#002d5f 100%);color:white;padding:30px 20px;text-align:center}
-        .header h1{font-size:1.6rem;margin-bottom:8px}
-        .header p{opacity:.8;font-size:.9rem}
+        .header { background: linear-gradient(135deg, var(--mega-blue) 0%, var(--mega-dark) 100%); color: white; padding: 35px 20px; text-align: center; }
+        .header h1 { font-size: 1.8rem; margin-bottom: 8px; letter-spacing: -1px; }
+        .header p { opacity: 0.9; font-size: 0.95rem; }
 
         /* Tabs */
-        .tabs{display:flex;background:white;border-bottom:2px solid #e2e8f0;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.08)}
-        .tab{flex:1;padding:15px;text-align:center;cursor:pointer;font-size:1rem;font-weight:700;color:#64748b;border-bottom:3px solid transparent;transition:all .2s}
-        .tab.active{color:#004ea2;border-bottom-color:#004ea2;background:#f8fafc}
+        .tabs { display: flex; background: white; border-bottom: 2px solid var(--border-light); position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .tab { flex: 1; padding: 18px; text-align: center; cursor: pointer; font-size: 1.1rem; font-weight: 800; color: #64748b; border-bottom: 4px solid transparent; transition: all 0.3s; }
+        .tab.active { color: var(--mega-blue); border-bottom-color: var(--mega-blue); background: #f8fafc; }
 
-        /* Content Area */
-        .content-container{max-width:1000px;margin:25px auto;padding:0 20px;padding-bottom:50px}
-        .tab-content{display:none}
-        .tab-content.active{display:block}
+        /* Content Container */
+        .content-container { max-width: 1000px; margin: 30px auto; padding: 0 20px 60px; }
+        .tab-content { display: none; animation: fadeIn 0.4s ease; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         /* Study Cards */
-        .card{background:white;border-radius:12px;padding:25px;margin-bottom:25px;box-shadow:0 4px 6px rgba(0,0,0,.05);border:1px solid #e2e8f0}
-        .card h2{color:#004ea2;font-size:1.3rem;margin-bottom:15px;border-left:5px solid #ff6600;padding-left:12px}
-        .sub-title{font-weight:bold;color:#2d3748;margin:15px 0 8px;display:block;font-size:1.1rem}
+        .card { background: white; border-radius: 12px; padding: 30px; margin-bottom: 30px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); border: 1px solid var(--border-light); }
+        .card h2 { color: var(--mega-blue); font-size: 1.4rem; margin-bottom: 20px; border-left: 6px solid var(--mega-orange); padding-left: 15px; }
+        .sub-title { font-weight: 800; color: #2d3748; margin: 20px 0 10px; display: block; font-size: 1.15rem; background: #f1f5f9; padding: 5px 10px; border-radius: 4px; }
         
-        table{width:100%;border-collapse:collapse;margin:15px 0;background:#fff}
-        th,td{border:1px solid #e2e8f0;padding:12px;text-align:left}
-        th{background:#f8fafc;color:#475569;font-weight:700}
+        table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 0.95rem; }
+        th, td { border: 1px solid var(--border-light); padding: 14px; text-align: left; }
+        th { background: #f8fafc; font-weight: 700; width: 25%; }
         
-        .point-box{background:#fdf2f2;border-left:4px solid #f87171;padding:12px;margin:10px 0;border-radius:0 4px 4px 0}
-        .example{background:#f0f9ff;padding:10px;border-radius:6px;margin:5px 0;font-style:italic;color:#0369a1}
-        .highlight{color:#e53e3e;font-weight:bold}
+        .point-box { background: #fffaf0; border: 1px solid #feebc8; padding: 15px; margin: 15px 0; border-radius: 8px; }
+        .highlight { color: #e53e3e; font-weight: bold; text-decoration: underline; }
 
-        /* Quiz Styles */
-        .quiz-item{background:white;border-radius:8px;padding:20px;margin-bottom:15px;border:1px solid #e2e8f0;transition:transform 0.2s}
-        .quiz-item:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(0,0,0,0.1)}
-        .q-text{font-size:1.05rem;font-weight:600;margin-bottom:12px;display:block}
-        .q-num{color:#004ea2;margin-right:8px}
-        .btn-ans{background:#edf2f7;border:none;padding:8px 15px;border-radius:5px;cursor:pointer;font-size:0.9rem;color:#4a5568;transition:0.2s}
-        .btn-ans:hover{background:#e2e8f0}
-        .ans-content{display:none;margin-top:10px;padding:12px;background:#f0fff4;border-radius:6px;color:#22543d;border-left:4px solid #48bb78}
+        /* Quiz UI */
+        .quiz-section-title { font-size: 1.3rem; color: var(--mega-dark); border-bottom: 2px solid var(--mega-orange); padding-bottom: 10px; margin: 40px 0 20px; font-weight: bold; }
+        .quiz-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        @media (max-width: 768px) { .quiz-grid { grid-template-columns: 1fr; } }
+        
+        .quiz-item { background: white; border-radius: 10px; padding: 20px; border: 1px solid var(--border-light); position: relative; }
+        .q-text { font-weight: 700; margin-bottom: 15px; display: block; line-height: 1.5; font-size: 1.05rem; }
+        .q-num { color: var(--mega-blue); font-size: 1.1rem; margin-right: 5px; }
+        
+        /* 단답형 입력칸 */
+        .short-input-group { display: flex; gap: 10px; margin-bottom: 10px; }
+        .short-input { flex: 1; padding: 10px; border: 1px solid #cbd5e0; border-radius: 6px; font-size: 1rem; outline: none; transition: border-color 0.2s; }
+        .short-input:focus { border-color: var(--mega-blue); }
+        
+        /* 객관식 보기 */
+        .mcq-options { display: flex; flex-direction: column; gap: 8px; margin-bottom: 15px; }
+        .mcq-label { display: flex; align-items: center; padding: 10px 15px; border: 1px solid #e2e8f0; border-radius: 6px; cursor: pointer; transition: 0.2s; font-size: 0.95rem; }
+        .mcq-label:hover { background: #f8fafc; border-color: #cbd5e0; }
+        .mcq-label input[type="radio"] { margin-right: 10px; transform: scale(1.2); accent-color: var(--mega-blue); }
+        
+        /* 버튼 및 피드백 */
+        .btn-check { background: var(--mega-blue); color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: 600; transition: 0.2s; white-space: nowrap; }
+        .btn-check:hover { background: var(--mega-dark); }
+        
+        .feedback { display: none; margin-top: 15px; padding: 12px; border-radius: 6px; font-weight: 600; font-size: 0.95rem; }
+        .feedback.correct { display: block; background: #f0fff4; color: var(--correct-green); border-left: 4px solid var(--correct-green); }
+        .feedback.wrong { display: block; background: #fff5f5; color: var(--wrong-red); border-left: 4px solid var(--wrong-red); }
+        
+        .ans-desc { display: block; margin-top: 5px; font-size: 0.9rem; font-weight: normal; color: #4a5568; }
     </style>
 </head>
 <body>
 
 <div class="header">
-    <h1>고등 국어: 대화의 원리와 매체 언어</h1>
-    <p>PDF 전체 내용 통합 정리 & 단원 확인 문제 30제</p>
+    <h1>[완벽정리] 국어: 대화의 원리와 담화 관습</h1>
+    <p>작성자: 최시원 | 개념 요약 & 실전 모의 테스트 (객관식+단답형)</p>
 </div>
 
 <div class="tabs">
-    <div class="tab active" onclick="openTab(event, 'study')">01. 핵심 개념 정리</div>
-    <div class="tab" onclick="openTab(event, 'quiz')">02. 단원 확인 문제 (30문)</div>
+    <div class="tab active" onclick="openTab(event, 'study')">01 핵심 개념 정리</div>
+    <div class="tab" onclick="openTab(event, 'quiz')">02 실전 확인 문제 (30문)</div>
 </div>
 
 <div class="content-container">
     
     <div id="study" class="tab-content active">
         <div class="card">
-            <h2>1. 대화의 원리 개관</h2>
-            <p><strong>대화의 목적:</strong> 전달하고자 하는 바를 명확히 표현하고, 상대방의 말을 잘 이해하며, 좋은 관계 형성 및 협력을 위함.</p>
+            <h2>1. 대화의 원리</h2>
+            <p><strong>대화의 목적:</strong> 전달하고자 하는 바를 명확히 표현하고, 상대방의 말을 잘 이해하며, 좋은 관계 형성·지속 및 협력을 위함.</p>
             
-            <span class="sub-title">가. 협력의 원리 (효율적인 정보 전달)</span>
+            <span class="sub-title">가. 협력의 원리: 대화의 목적과 요구에 맞게 (효율성)</span>
             <ul>
-                <li><strong>양의 격률:</strong> 대화의 목적에 필요한 만큼의 정보 제공</li>
-                <li><strong>질의 격률:</strong> 진실한 정보 제공 (타당한 근거 바탕)</li>
-                <li><strong>관련성의 격률:</strong> 대화의 목적이나 주제와 연관된 내용 말하기</li>
-                <li><strong>태도의 격률:</strong> 모호하거나 중의적인 표현 피하기</li>
+                <li><strong>양의 격률:</strong> 필요한 만큼의 정보 제공</li>
+                <li><strong>질의 격률:</strong> 타당한 근거를 바탕으로 진실한 정보를 제공</li>
+                <li><strong>관련성의 격률:</strong> 목적 및 주제에 연관된 내용을 말함</li>
+                <li><strong>태도의 격률:</strong> 모호하거나 중의적인 표현을 피함</li>
             </ul>
 
-            <span class="sub-title">나. 공손성의 원리 (관계 유지를 위한 정중어법)</span>
+            <span class="sub-title">나. 공손성의 원리 (정중어법): 관계 지향</span>
             <table>
-                <thead>
-                    <tr><th>격률</th><th>핵심 전략</th><th>대표 예시</th></tr>
-                </thead>
-                <tbody>
-                    <tr><td><b>요령</b></td><td>청자 부담↓ 이익↑</td><td>의문형으로 부탁하기 ("~해줄 수 있니?")</td></tr>
-                    <tr><td><b>관용</b></td><td>화자 이익↓ 부담↑</td><td>"내 탓이야", "내가 좀 더 도와줄게"</td></tr>
-                    <tr><td><b>찬동</b></td><td>청자 비난↓ 칭찬↑</td><td>"너 정말 대단하다!", "좋은 생각이야"</td></tr>
-                    <tr><td><b>겸양</b></td><td>화자 칭찬↓ 비난↑</td><td>"운이 좋았을 뿐이야", "아직 부족해"</td></tr>
-                    <tr><td><b>동의</b></td><td>의견 일치 강조</td><td>"그 부분은 나도 동감해. 다만..."</td></tr>
-                </tbody>
+                <tr><th>격률</th><th>핵심 내용</th><th>학습 예시</th></tr>
+                <tr><td>요령</td><td>청자 부담↓ 이익↑</td><td>의문형 부탁 사용 ("창문 좀 닫아줄래?")</td></tr>
+                <tr><td>관용</td><td>화자 이익↓ 부담↑</td><td>"내가 할게", "도와줄게"</td></tr>
+                <tr><td>찬동</td><td>청자 비난↓ 칭찬↑</td><td>"넌 정말 좋은 친구야!"</td></tr>
+                <tr><td>겸양</td><td>화자 칭찬↓ 비난↑</td><td>"난 운동 신경이 부족해서 더 연습해야 돼"</td></tr>
+                <tr><td>동의</td><td>의견 일치 강조</td><td>"저녁은 좋은데(동의) 선약이 있어(차이)"</td></tr>
             </table>
         </div>
 
         <div class="card">
-            <h2>2. 체면 유지와 담화 관습</h2>
-            <span class="sub-title">가. 체면(Face) 유지의 원리</span>
-            <p>체면이란 사회 구성원이 보호받고 싶어 하는 <span class="highlight">공개적 자아</span>(인정 욕구 + 간섭받지 않을 욕구)를 의미함.</p>
+            <h2>2. 체면 유지 및 담화 관습</h2>
+            <span class="sub-title">가. 체면 유지의 원리</span>
+            <p><strong>체면(자존심):</strong> 모든 사회 구성원이 스스로 주장하고 보호받고 싶어 하는 <span class="highlight">공개적인 자아</span> (인정 욕구 + 간섭받지 않을 욕구).</p>
             <div class="point-box">
-                <b>실천 방법:</b> 간접적 표현 사용, 예의와 존중 갖추기, 공개적인 장소에서의 비판 삼가기.
+                <strong>[실천 방법]</strong> 간접적 표현, 예의와 존중 사용.<br>
+                <strong>[주의 사항]</strong> 상대 요청을 단칼에 거절하거나 여러 사람 앞에서 잘못을 비판하지 않음.
             </div>
 
             <span class="sub-title">나. 우리 사회의 담화 관습</span>
             <table>
-                <tr><th>관습명</th><th>장점</th><th>단점</th></tr>
-                <tr><td><b>말의 신중함</b></td><td>말실수 감소, 신뢰감</td><td>의견 표현이 불분명함</td></tr>
-                <tr><td><b>우회적 표현</b></td><td>편안한 분위기, 배려</td><td>오해 발생, 겉치레 가능성</td></tr>
-                <tr><td><b>예의와 격식</b></td><td>상대방 존중, 질서 유지</td><td>수직적 관계 고착, 아랫사람 무시</td></tr>
+                <tr><th>관습 구분</th><th>장점</th><th>단점</th></tr>
+                <tr><td><strong>말의 신중함</strong></td><td>말실수 감소</td><td>자기 의견 표현이 불분명함</td></tr>
+                <tr><td><strong>우회적 표현</strong></td><td>편안한 분위기, 곤란한 상황 회피</td><td>오해 유발, 겉치레</td></tr>
+                <tr><td><strong>예의·격식 중시</strong></td><td>타인 배려</td><td>윗사람 눈치, 아랫사람 무시</td></tr>
             </table>
-            <div class="example">관련 속담: "말 한마디에 천 냥 빚 갚는다", "낮말은 새가 듣고 밤말은 쥐가 듣는다"</div>
+            <div class="point-box">
+                <strong>관련 속담:</strong> 발 없는 말이 천 리 간다, 말 한마디에 천 냥 빚 갚는다, 낮말은 새가 듣고 밤말은 쥐가 듣는다, 가는 말이 고와야 오는 말이 곱다, '아' 다르고 '어' 다르다.
+            </div>
+            <p><strong>변화 배경:</strong> 정보화 사회, 핵가족 및 1인 가구 증가, 매체 발달로 인한 세대 간 언어 차이.</p>
         </div>
 
         <div class="card">
-            <h2>3. 매체와 사회·문화적 맥락</h2>
-            <span class="sub-title">가. 매체의 변화</span>
-            <p>올드 미디어(뉴스, 영화)에서 개인 생산 중심의 뉴미디어로 변화.</p>
-            <span class="sub-title">나. 비판적 수용의 필요성</span>
-            <p>모든 매체는 생산자의 <span class="highlight">관점</span>이 반영되어 특정 정보를 <b>선택, 강조, 배제</b>하기 때문에 주체적으로 읽어야 함.</p>
+            <h2>3. 매체(Media)의 이해</h2>
+            <p><strong>정의:</strong> 소식이나 사실을 널리 전달하는 물질이나 수단. (의사소통 매개체 / 사회적 의제 전달 수단)</p>
+            <span class="sub-title">가. 사회·문화적 맥락 (대한민국)</span>
+            <ul>
+                <li><strong>역사적:</strong> 일제강점기 및 독재에 대한 거부감</li>
+                <li><strong>정치적:</strong> 민주주의와 표현의 자유 중시</li>
+                <li><strong>경제적:</strong> 자본주의 및 경쟁 중심 환경</li>
+                <li><strong>문화적:</strong> 유교적 공동체 중심 규범</li>
+            </ul>
+            <span class="sub-title">나. 매체 자료의 비판적 분석</span>
+            <div class="point-box">
+                올드/레거시 미디어(뉴스,영화)에서 개인이 생산하는 뉴미디어로 변화함.<br>
+                매체는 생산자의 특정 관점이 반영되어 정보를 <span class="highlight">선택, 강조, 배제</span>함. 따라서 수용자는 반영된 의도를 파악하는 <strong>주체적(비판적) 수용</strong>이 필요함.
+            </div>
         </div>
     </div>
 
     <div id="quiz" class="tab-content">
-        <div id="quiz-container">
-            </div>
+        <div class="quiz-section-title">Part 1. 객관식 문제 (10문항)</div>
+        <div class="quiz-grid" id="mcq-container"></div>
+        
+        <div class="quiz-section-title">Part 2. 단답형 문제 (20문항)</div>
+        <div class="quiz-grid" id="short-container"></div>
     </div>
-
 </div>
 
 <script>
-    // 탭 전환 함수
+    // 탭 전환 로직
     function openTab(evt, tabName) {
-        var i, tabcontent, tablinks;
-        tabcontent = document.getElementsByClassName("tab-content");
-        for (i = 0; i < tabcontent.length; i++) { tabcontent[i].className = "tab-content"; }
-        tablinks = document.getElementsByClassName("tab");
-        for (i = 0; i < tablinks.length; i++) { tablinks[i].className = "tab"; }
-        document.getElementById(tabName).className = "tab-content active";
-        evt.currentTarget.className += " active";
+        const tabContents = document.getElementsByClassName("tab-content");
+        for (let i = 0; i < tabContents.length; i++) tabContents[i].classList.remove("active");
+        
+        const tabs = document.getElementsByClassName("tab");
+        for (let i = 0; i < tabs.length; i++) tabs[i].classList.remove("active");
+        
+        document.getElementById(tabName).classList.add("active");
+        evt.currentTarget.classList.add("active");
     }
 
-    // 문제 데이터 (30개)
-    const questions = [
-        {q: "대화의 원리 중 필요한 만큼만 정보를 제공해야 한다는 격률은?", a: "양의 격률"},
-        {q: "거짓된 정보를 말하지 않으며 타당한 근거를 들어야 하는 격률은?", a: "질의 격률"},
-        {q: "대화의 주제나 목적과 직접적인 관련이 있는 말을 해야 한다는 원리는?", a: "관련성의 격률"},
-        {q: "중의적이거나 모호한 표현을 피하고 조리 있게 말해야 하는 격률은?", a: "태도의 격률"},
-        {q: "협력의 원리는 대화의 목적과 요구에 맞게 □□적으로 말하는 것이다.", a: "효율"},
-        {q: "상대방의 부담을 최소화하고 이익을 최대화하는 정중어법은?", a: "요령의 격률"},
-        {q: "자신의 이익을 최소화하고 부담을 최대화하는 정중어법은?", a: "관용의 격률"},
-        {q: "상대방에 대한 비난을 줄이고 칭찬을 극대화하는 격률은?", a: "찬동의 격률"},
-        {q: "자신에 대한 칭찬을 줄이고 스스로를 낮추어 말하는 격률은?", a: "겸양의 격률"},
-        {q: "의견 차이를 줄이고 일치하는 부분을 강조하는 정중어법은?", a: "동의의 격률"},
-        {q: "체면은 인정받고 싶고 □□받지 않을 욕구를 포함하는 공개적 자아다.", a: "간섭"},
-        {q: "상대방의 체면을 세워주기 위해 주로 어떤 표현 방식을 사용하는가?", a: "간접적 표현 (우회적 표현)"},
-        {q: "단칼에 거절하는 행위는 상대방의 무엇을 깎는 행위인가?", a: "체면 (자존심)"},
-        {q: "우리 담화 관습 중 말실수를 줄여주지만 의견이 불분명해지는 관습은?", a: "말의 신중함"},
-        {q: "우회적 표현의 단점 중 하나로, 뜻이 명확히 전달되지 않아 생기는 것은?", a: "오해"},
-        {q: "속담 '가는 말이 고와야 오는 말이 곱다'와 가장 관련 깊은 원리는?", a: "공손성의 원리"},
-        {q: "전통적인 뉴스나 영화를 가리키는 말은?", a: "올드 미디어 (레거시 미디어)"},
-        {q: "매체 생산자가 정보를 가공할 때 사용하는 3대 전략은 선택, □□, 배제다.", a: "강조"},
-        {q: "우리나라가 역사적으로 매체에 대해 거부감을 느끼는 대상은?", a: "독재 / 검열"},
-        {q: "유교적 관습은 소통 시 무엇과 격식을 중시하게 만들었는가?", a: "예의"},
-        {q: "정보화 사회로 접어들며 세대 간 담화 관습의 □□가 발생하고 있다.", a: "차이 (갈등)"},
-        {q: "상대방의 요청에 '안 돼' 대신 '조금 어려울 것 같아'라고 말하는 격률은?", a: "요령의 격률"},
-        {q: "칭찬을 받았을 때 '아니에요, 아직 멀었어요'라고 답하는 격률은?", a: "겸양의 격률"},
-        {q: "대화 시 상대방과 좋은 관계를 유지하기 위한 원리를 통칭하여 무엇이라 하나?", a: "공손성의 원리 (정중어법)"},
-        {q: "사회 구성원으로서의 공적인 얼굴을 뜻하는 말은?", a: "체면"},
-        {q: "매체 분석 시 생산자의 어떤 요소가 개입되어 있는지 파악해야 하는가?", a: "관점 (의도)"},
-        {q: "핵가족화와 매체 발달은 □□ 관습의 변화를 가져왔다.", a: "담화"},
-        {q: "청자의 이익을 높이기 위해 의문형을 사용하는 것은 어떤 격률인가?", a: "요령의 격률"},
-        {q: "질의 격률을 어기는 행위의 대표적인 예는?", a: "거짓말 / 근거 없는 비난"},
-        {q: "매체 자료를 무비판적으로 수용하지 않는 태도를 무엇이라 하는가?", a: "비판적 읽기 (주체적 수용)"}
+    // 객관식 데이터 (10개)
+    const mcqData = [
+        { q: "공손성의 원리 중 청자의 부담을 줄이고 이익을 높이는 격률은?", options: ["요령의 격률", "관용의 격률", "찬동의 격률", "겸양의 격률"], a: 0, exp: "요령의 격률은 청자에게 부담이 가는 표현은 최소화하고 이익이 되는 표현을 최대화하는 것입니다." },
+        { q: "다음 중 체면의 개념에 대한 설명으로 알맞지 않은 것은?", options: ["공개적인 자아를 뜻한다.", "인정받고 싶은 욕구를 포함한다.", "간섭받고 싶어 하는 욕구를 포함한다.", "스스로를 보호받고 싶어 하는 심리다."], a: 2, exp: "체면은 '간섭받지 않을 욕구(독립성)'를 포함합니다." },
+        { q: "우리 사회의 담화 관습 중 '말의 신중함'을 강조할 때 발생할 수 있는 단점은?", options: ["말실수가 줄어든다.", "자신의 의견 표현이 불분명해진다.", "상대방을 무시하게 된다.", "의사소통이 너무 직설적이게 된다."], a: 1, exp: "말을 너무 아끼다 보면 자신의 의견을 분명하게 표현하지 못하는 단점이 있습니다." },
+        { q: "매체의 비판적 분석 시, 생산자가 정보를 가공하는 3가지 방식에 속하지 않는 것은?", options: ["선택", "강조", "창조", "배제"], a: 2, exp: "생산자는 정보를 '선택, 강조, 배제'하여 자신의 관점을 반영합니다." },
+        { q: "속담 '낮말은 새가 듣고 밤말은 쥐가 듣는다'와 가장 관련 깊은 담화 관습은?", options: ["우회적 표현", "말의 신중함", "예의와 격식 중시", "직설적 화법"], a: 1, exp: "항상 말을 조심해야 한다는 '말의 신중함'을 강조한 속담입니다." },
+        { q: "다음 중 '협력의 원리'에 속하지 않는 것은?", options: ["양의 격률", "질의 격률", "관련성의 격률", "동의의 격률"], a: 3, exp: "동의의 격률은 협력의 원리가 아닌 '공손성의 원리(정중어법)'에 속합니다." },
+        { q: "대한민국의 사회문화적 맥락 중, '유교적 공동체 중심 규범'과 관련이 깊은 것은?", options: ["경제적 환경", "정치적 환경", "문화적 규범", "역사적 배경"], a: 2, exp: "유교적 공동체주의는 문화적 규범에 해당합니다." },
+        { q: "\"내가 부족해서 그래.\"와 같이 화자 자신을 낮추고 비난을 최대화하는 격률은?", options: ["관용의 격률", "찬동의 격률", "겸양의 격률", "요령의 격률"], a: 2, exp: "자신을 낮추고 겸손하게 말하는 것은 겸양의 격률입니다." },
+        { q: "개인이 정보를 직접 생산하고 공유하는 매체를 무엇이라고 하는가?", options: ["올드 미디어", "레거시 미디어", "뉴미디어", "매스 미디어"], a: 2, exp: "대중 매체(올드 미디어)와 달리 개인이 생산 주체가 되는 것은 뉴미디어입니다." },
+        { q: "\"저녁 먹는 건 좋은데, 오늘은 약속이 있어.\"와 같이 의견 일치를 먼저 강조하는 격률은?", options: ["요령의 격률", "관용의 격률", "동의의 격률", "찬동의 격률"], a: 2, exp: "의견 차이를 줄이고 일치하는 부분을 강조하는 것은 동의의 격률입니다." }
     ];
 
-    const container = document.getElementById('quiz-container');
-    questions.forEach((item, index) => {
-        const div = document.createElement('div');
-        div.className = 'quiz-item';
-        div.innerHTML = `
-            <span class="q-text"><span class="q-num">Q${index + 1}.</span> ${item.q}</span>
-            <button class="btn-ans" onclick="this.nextElementSibling.style.display='block'">정답 확인</button>
-            <div class="ans-content">정답: ${item.a}</div>
-        `;
-        container.appendChild(div);
-    });
+    // 단답형 데이터 (20개) - keyword로 정답 확인 (띄어쓰기 무시 처리)
+    const shortData = [
+        { q: "대화의 원리 중 대화의 목적과 요구에 맞게 '필요한 만큼의 정보'만 제공해야 한다는 격률은 무엇인가?", a: "양의격률" },
+        { q: "타당한 근거를 바탕으로 진실만을 말해야 하는 협력의 원리는 무엇인가?", a: "질의격률" },
+        { q: "화자 자신의 이익을 최소화하고 화자 자신의 부담을 최대화하는 정중어법은 무엇인가?", a: "관용의격률" },
+        { q: "청자에 대한 비난을 최소화하고 칭찬을 최대화하는 격률은 무엇인가?", a: "찬동의격률" },
+        { q: "모든 사회 구성원들이 인정받고 싶고 간섭받지 않고 싶어 하는 '공개적인 자아'를 세 글자로 무엇이라 하는가?", a: "자존심", alt: "체면" },
+        { q: "체면 유지를 위해 우리는 직설적인 표현 대신 주로 어떤 표현을 사용하는가?", a: "간접적표현", alt: "우회적표현" },
+        { q: "담화 관습 중 '우회적 표현'의 단점은 상황을 피하려다 자칫 무엇이 발생할 수 있다는 점인가?", a: "오해", alt: "겉치레" },
+        { q: "우리 담화 관습이 변화하게 된 배경 중, 정보화 사회와 매체 발달 외에 가족 형태가 어떻게 변했기 때문인가?", a: "핵가족", alt: "1인가구" },
+        { q: "어떤 소식이나 사실을 널리 전달하는 물질이나 수단을 두 글자로 무엇이라고 하는가?", a: "매체" },
+        { q: "매체 자료 분석 시, 매체에는 생산자의 특정 '이것'이 반영되어 있음을 파악해야 한다. 두 글자로 무엇인가?", a: "관점", alt: "의도" },
+        { q: "수용자가 매체의 정보를 있는 그대로 받아들이지 않고 의도를 파악하며 주체적으로 읽는 태도를 무슨 수용이라 하는가?", a: "비판적수용", alt: "주체적수용" },
+        { q: "공손성의 원리는 다른 말로 무슨 어법이라고도 부르는가?", a: "정중어법" },
+        { q: "대화 중 모호하거나 중의적인 표현을 피해야 한다는 것은 협력의 원리 중 무슨 격률인가?", a: "태도의격률" },
+        { q: "대화의 목적이나 주제와 직접적으로 연관된 내용을 말해야 하는 것은 무슨 격률인가?", a: "관련성의격률" },
+        { q: "타인을 배려하고 위계를 존중하기 위해 지키려고 하는 우리 사회의 관습은 'ㅇㅇ와 격식 중시'이다.", a: "예의" },
+        { q: "예의와 격식을 너무 중시할 때 나타날 수 있는 단점은 아랫사람을 어떻게 할 가능성이 있다는 것인가?", a: "무시" },
+        { q: "뉴스, 영화 등 대중에게 일방적으로 정보를 전달하는 전통적 매체를 뉴미디어와 대비하여 무슨 미디어라 부르는가?", a: "올드미디어", alt: "레거시미디어" },
+        { q: "대한민국이 일제 강점기와 독재를 겪으며 가지게 된 거부감은 사회문화적 맥락 중 어떤 배경에 해당하는가?", a: "역사적배경", alt: "역사" },
+        { q: "매체의 발달로 인해 기성세대와 젊은 세대 간의 언어 사용 양상에 무엇이 발생하고 있는가?", a: "차이", alt: "갈등" },
+        { q: "상대방의 요청을 단칼에 거절하는 것은 상대방의 무엇을 손상시키는 행위인가?", a: "체면", alt: "자존심" }
+    ];
+
+    // 정답 체크 로직 (공백 제거 후 비교)
+    function cleanString(str) { return str.replace(/\s+/g, '').toLowerCase(); }
+
+    function checkMCQ(btn, correctIdx, exp) {
+        const wrapper = btn.parentElement;
+        const selected = wrapper.querySelector('input[type="radio"]:checked');
+        const feedback = wrapper.querySelector('.feedback');
+        
+        if(!selected) { alert("보기를 선택해주세요!"); return; }
+        
+        if(parseInt(selected.value) === correctIdx) {
+            feedback.className = "feedback correct";
+            feedback.innerHTML = `정답입니다! <span class="ans-desc">${exp}</span>`;
+        } else {
+            feedback.className = "feedback wrong";
+            feedback.innerHTML = `틀렸습니다. 정답은 <b>${correctIdx + 1}번</b>입니다. <span class="ans-desc">${exp}</span>`;
+        }
+    }
+
+    function checkShort(btn, correctAns, altAns) {
+        const wrapper = btn.parentElement.parentElement;
+        const inputVal = cleanString(wrapper.querySelector('input[type="text"]').value);
+        const feedback = wrapper.querySelector('.feedback');
+        
+        if(!inputVal) { alert("정답을 입력해주세요!"); return; }
+        
+        if(inputVal === correctAns || (altAns && inputVal === cleanString(altAns))) {
+            feedback.className = "feedback correct";
+            feedback.innerHTML = `정답입니다!`;
+        } else {
+            feedback.className = "feedback wrong";
+            let ansText = altAns ? `${correctAns} (또는 ${altAns})` : correctAns;
+            feedback.innerHTML = `오답입니다. 정답: <b>${ansText}</b>`;
+        }
+    }
+
+    // 문제 렌더링
+    window.onload = () => {
+        const mcqContainer = document.getElementById('mcq-container');
+        mcqData.forEach((item, index) => {
+            let optionsHTML = '';
+            item.options.forEach((opt, i) => {
+                optionsHTML += `<label class="mcq-label"><input type="radio" name="mcq${index}" value="${i}"> ${i+1}. ${opt}</label>`;
+            });
+            
+            mcqContainer.innerHTML += `
+                <div class="quiz-item">
+                    <span class="q-text"><span class="q-num">Q${index + 1}.</span> ${item.q}</span>
+                    <div class="mcq-options">${optionsHTML}</div>
+                    <button class="btn-check" onclick="checkMCQ(this, ${item.a}, '${item.exp}')">정답 확인</button>
+                    <div class="feedback"></div>
+                </div>
+            `;
+        });
+
+        const shortContainer = document.getElementById('short-container');
+        shortData.forEach((item, index) => {
+            let altArg = item.alt ? `,'${item.alt}'` : `,null`;
+            shortContainer.innerHTML += `
+                <div class="quiz-item">
+                    <span class="q-text"><span class="q-num">Q${index + 11}.</span> ${item.q}</span>
+                    <div class="short-input-group">
+                        <input type="text" class="short-input" placeholder="정답 입력...">
+                        <button class="btn-check" onclick="checkShort(this, '${item.a}'${altArg})">채점</button>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+            `;
+        });
+    };
 </script>
 
 </body>
