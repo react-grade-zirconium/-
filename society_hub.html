@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<style>
+    /* 사회 파트 테마 컬러 (오렌지/앰버) */
+    :root { --soc: #f59e0b; --bg: #f8fafc; }
+    
+    body { 
+        font-family: 'Pretendard', sans-serif; 
+        background: var(--bg); 
+        margin: 0; 
+        padding: 20px; 
+        display: flex; 
+        flex-direction: column; 
+        height: 100vh; 
+        overflow: hidden; 
+    }
+    
+    /* 상단 서브 메뉴 (행복/지리) */
+    .nav { 
+        display: flex; 
+        gap: 10px; 
+        margin-bottom: 15px; 
+        border-bottom: 2px solid #e2e8f0; 
+        padding-bottom: 10px; 
+        flex-shrink: 0;
+    }
+    
+    .nav-btn { 
+        padding: 10px 25px; 
+        border: 2px solid var(--soc); 
+        background: white; 
+        color: var(--soc); 
+        border-radius: 25px; 
+        cursor: pointer; 
+        font-weight: 800; 
+        font-size: 0.95rem; 
+        transition: 0.2s;
+    }
+    
+    .nav-btn.active { 
+        background: var(--soc); 
+        color: white; 
+    }
+
+    .nav-btn:hover:not(.active) {
+        background: #fffbeb;
+    }
+    
+    .content { 
+        flex: 1; 
+        border-radius: 16px; 
+        overflow: hidden; 
+        background: white; 
+        border: 1px solid #e2e8f0; 
+        box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+    }
+    
+    iframe { 
+        width: 100%; 
+        height: 100%; 
+        border: none; 
+    }
+</style>
+</head>
+<body>
+
+<div class="nav">
+    <button class="nav-btn active" onclick="load('happiness_interactive.html', this)">😊 행복 파트</button>
+    <button class="nav-btn" onclick="load('climate_interactive.html', this)">🌍 지리(기후) 파트</button>
+</div>
+
+<div class="content">
+    <iframe id="socFrame" src="./happiness_interactive.html"></iframe>
+</div>
+
+<script>
+    function load(url, btn) {
+        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('socFrame').src = "./" + url;
+    }
+</script>
+</body>
+</html>
