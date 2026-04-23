@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>화학 마스터 - 전체 정리 및 퀴즈</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Noto Sans KR','Malgun Gothic',sans-serif;background:#f0f4f8;color:#1a202c;font-size:14px}
+.app-header{background:linear-gradient(135deg,#1a4a6e 0%,#2d7a6e 100%);color:white;padding:20px;text-align:center}
+.app-header h1{font-size:1.45rem;margin-bottom:4px;font-weight:900}
+.app-header p{opacity:.85;font-size:.83rem}
+.tabs{display:flex;background:white;border-bottom:2px solid #e2e8f0;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.08);overflow-x:auto;flex-wrap:nowrap}
+.tab{padding:10px 13px;cursor:pointer;font-size:.75rem;font-weight:700;color:#64748b;border-bottom:3px solid transparent;white-space:nowrap;transition:all .2s;background:none;border-top:none;border-left:none;border-right:none;font-family:inherit}
+.tab.active{color:#2d7a6e;border-bottom-color:#2d7a6e;background:#f0faf8}
+.tab:hover{background:#f1f5f9;color:#2d7a6e}
+.tab-group{display:flex;border-right:2px solid #e2e8f0;flex-shrink:0}
+.page{display:none;padding:16px;max-width:960px;margin:0 auto}
+.page.active{display:block}
+.page-header{margin-bottom:16px}
+.page-header h2{font-size:1.1rem;font-weight:800;color:#2d3748;margin-bottom:4px}
+.page-header p{font-size:.83rem;color:#64748b}
+.chapter-tag{display:inline-flex;align-items:center;gap:5px;font-size:.72rem;font-weight:700;letter-spacing:1px;color:#64748b;margin-bottom:6px}
+.card{background:white;border-radius:12px;padding:16px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,.07);border-left:4px solid #4a5568}
+.card.blue{border-left-color:#3182ce}
+.card.green{border-left-color:#38a169}
+.card.purple{border-left-color:#805ad5}
+.card.orange{border-left-color:#dd6b20}
+.card.teal{border-left-color:#319795}
+.card.red{border-left-color:#e53e3e}
+.card-header{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.chapter-pill{font-size:.7rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:2px 8px;border-radius:20px;background:#f1f5f9;color:#64748b}
+.card h2{font-size:1rem;font-weight:800;color:#1a202c;margin-bottom:8px}
+.card h3{font-size:.9rem;font-weight:700;color:#2d3748;margin:12px 0 6px}
+.card p,.card li{font-size:.83rem;line-height:1.75;color:#4a5568}
+.info-box{background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:11px 14px;font-size:.83rem;line-height:1.8;color:#1e3a8a;margin:8px 0}
+.info-box b{color:#1e40af}
+table{width:100%;border-collapse:collapse;font-size:.8rem;margin:10px 0}
+th{background:#2d7a6e;color:white;padding:8px 9px;text-align:left}
+td{padding:7px 9px;border-bottom:1px solid #e2e8f0;vertical-align:top}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:640px){.grid2{grid-template-columns:1fr}}
+.fade-in { animation: fadeIn 0.3s ease-in; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+.quiz-q{background:white;padding:18px;border-radius:12px;margin-bottom:16px;box-shadow:0 2px 8px rgba(0,0,0,.08);border-top:4px solid #3182ce}
+.quiz-num{font-size:.8rem;font-weight:800;color:#3182ce;margin-bottom:6px;display:inline-block;padding:2px 8px;background:#ebf8ff;border-radius:20px}
+.quiz-text{font-size:.9rem;font-weight:700;color:#2d3748;margin-bottom:14px;line-height:1.5}
+.answer-area{margin-top:12px;background:#f8fafc;border:1px dashed #cbd5e1;padding:16px;border-radius:8px;color:#94a3b8;font-size:.85rem;text-align:center;min-height:80px;display:flex;align-items:center;justify-content:center;}
+</style>
+</head>
+<body>
+<div class="app-header">
+  <h1>🧪 화학 통합 마스터</h1>
+  <p>전체 정리 + 서술형 + 객관식 60문항</p>
+</div>
+<div class="tabs">
+  <div class="tab-group">
+    <button class="tab active" onclick="showPage('개념',this)">📖 전체 정리</button>
+    <button class="tab" onclick="showPage('키워드',this)">🔑 키워드</button>
+    <button class="tab" onclick="showPage('문제',this)">📝 문제 풀기</button>
+  </div>
+</div>
+
+<div id="page-개념" class="page active fade-in">
+  
+  <div class="card blue">
+    <div class="card-header"><span class="chapter-pill">Chapter 1</span></div>
+    <h2>1. 금속 원소와 비금속 원소</h2>
+    <p>주기율표의 왼쪽과 가운데에는 금속 원소, 오른쪽에는 비금속 원소가 위치하며, 금속과 비금속의 경계에 준금속 원소가 위치합니다 [cite: 1].</p>
+    <table>
+      <tr><th>구분</th><th>금속 원소 [cite: 2]</th><th>비금속 원소 [cite: 2]</th></tr>
+      <tr><td>주기율표 위치</td><td>대체로 왼쪽과 가운데 부분 [cite: 2]</td><td>대체로 오른쪽 (단, 수소는 왼쪽) [cite: 2]</td></tr>
+      <tr>
+        <td>특징</td>
+        <td>
+          <ul>
+            <li>전자를 잃고 양이온이 되기 쉽다 [cite: 2].</li>
+            <li>대부분 광택이 있다 [cite: 2].</li>
+            <li>열과 전기 전도성이 있다 [cite: 2].</li>
+            <li>외부 힘에 의해 길게 늘어나거나 얇게 펴진다 [cite: 2].</li>
+          </ul>
+        </td>
+        <td>
+          <ul>
+            <li>전자를 얻어 음이온이 되기 쉽다 (18족 제외) [cite: 2].</li>
+            <li>광택이 없다 [cite: 2].</li>
+            <li>열과 전기 전도성이 매우 작다 [cite: 2].</li>
+          </ul>
+        </td>
+      </tr>
+      <tr><td>실온 상태</td><td>대부분 고체 (단, 수은은 액체) [cite: 2]</td><td>대부분 기체 또는 고체 (단, 브로민은 액체) [cite: 2]</td></tr>
+    </table>
+    <div class="info-box">
+      <b>참고 및 예외 사항:</b><br>
+      • <b>18족 원소:</b> 비금속이지만 전자를 얻는 성질을 나타내지는 않습니다 [cite: 3].<br>
+      • <b>준금속:</b> 금속과 비금속의 중간 성질을 가집니다 (예: B, Si, Ge) [cite: 4, 5].<br>
+      • <b>흑연:</b> 비금속 탄소의 공유 결합 물질이나, 자유 전자가 있어 전기가 통합니다 [cite: 7, 8].
+    </div>
+    <h3>1-1. 원소의 이용 [cite: 6]</h3>
+    <div class="grid2">
+      <div>
+        <b>[금속 원소]</b>
+        <ul>
+          <li>철: 건축 자재, 기계</li>
+          <li>구리: 전선</li>
+          <li>금: 반도체 회로기판</li>
+          <li>알루미늄: 캔, 비행기 동체</li>
+        </ul>
+      </div>
+      <div>
+        <b>[비금속 원소]</b>
+        <ul>
+          <li>수소: 우주 왕복선 연료</li>
+          <li>질소: 식품 포장 충전재</li>
+          <li>산소: 생명체 호흡</li>
+          <li>인: 성냥</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="card green">
+    <div class="card-header"><span class="chapter-pill">Chapter 2</span></div>
+    <h2>2. 알칼리 금속과 할로젠</h2>
+    <h3>2-1. 알칼리 금속 (1족, 수소 제외) [cite: 9]</h3>
+    <ul>
+      <li>종류: Li, Na, K, Rb, Cs 등 [cite: 9]</li>
+      <li>성질: 실온 고체, 은백색 광택, 낮은 밀도, 무른 성질 [cite: 10, 11].</li>
+      <li>반응: 산소와 빠르게 반응하여 광택 소실 [cite: 11, 12]. 물과 반응하여 수소 기체(H₂) 발생 및 수용액 염기성 화 [cite: 13, 35].</li>
+      <li>반응성: 원자 번호가 클수록 증가 (Li < Na < K) [cite: 13, 14].</li>
+      <li>보관: 석유나 액체 파라핀 속 [cite: 15].</li>
+    </ul>
+    <h3>2-2. 할로젠 (17족 비금속) [cite: 18]</h3>
+    <ul>
+      <li>종류: F, Cl, Br, I 등 [cite: 18]</li>
+      <li>성질: 실온 이원자 분자, 고유 색상(F₂ 노랑, Cl₂ 노랑, Br₂ 적갈색, I₂ 보라) [cite: 18, 19].</li>
+      <li>반응: 금속/수소와 격렬히 반응 [cite: 20, 21]. 수소 반응물은 물에서 산성 [cite: 21, 22].</li>
+      <li>반응성: 원자 번호가 작을수록 증가 (F₂ > Cl₂ > Br₂ > I₂) [cite: 22].</li>
+    </ul>
+  </div>
+  <div class="card purple">
+    <div class="card-header"><span class="chapter-pill">Chapter 3</span></div>
+    <h2>3. 원자의 구조와 화학 결합</h2>
+    <p>원자는 원자핵(양성자+중성자)과 전자로 구성되며 전기적 중성입니다 [cite: 40, 42].</p>
+    <h3>3-1. 전자 배치와 옥텟 규칙</h3>
+    <ul>
+      <li>전자 껍질: 안쪽부터 차례로 채워짐 (2, 8, 8...) [cite: 44, 45].</li>
+      <li>원자가 전자: 가장 바깥 껍질 전자로 화학 성질 결정 [cite: 53, 54].</li>
+      <li>옥텟 규칙: 8개를 채워 비활성 기체처럼 안정해지려는 경향 [cite: 67].</li>
+    </ul>
+    <h3>3-2. 화학 결합 [cite: 68, 84]</h3>
+    <div class="grid2">
+      <div class="info-box"><b>이온 결합:</b> 양이온(금속)과 음이온(비금속) 사이의 정전기적 인력 [cite: 68, 70].</div>
+      <div class="info-box"><b>공유 결합:</b> 비금속 원자들이 전자쌍을 공유하여 형성 [cite: 84].</div>
+    </div>
+  </div>
+
+</div>
+
+<div id="page-키워드" class="page fade-in">
+  <div class="page-header"><div class="chapter-tag">PART 2</div><h2>주요 키워드 해설</h2></div>
+  
+  <div class="grid2">
+    <div class="card orange"><h2>알칼리 금속 [cite: 9]</h2><p>1족 금속(H 제외). 반응성 매우 큼, 수소 기체 발생, 염기성 수용액.</p></div>
+    <div class="card teal"><h2>할로젠 [cite: 18]</h2><p>17족 비금속. 이원자 분자, 색깔 있음, 반응성 매우 큼.</p></div>
+    <div class="card blue"><h2>원자가 전자 [cite: 53]</h2><p>가장 바깥 껍질의 전자. 화학적 성질 결정.</p></div>
+    <div class="card green"><h2>옥텟 규칙 [cite: 67]</h2><p>가장 바깥 껍질에 전자 8개를 채워 안정해지려는 경향.</p></div>
+    <div class="card purple"><h2>이온 결합 [cite: 68]</h2><p>금속과 비금속 사이의 전하적 끌림.</p></div>
+    <div class="card red"><h2>공유 결합 [cite: 84]</h2><p>비금속끼리 전자쌍을 나눠 갖는 결합.</p></div>
+  </div>
+
+</div>
+
+<div id="page-문제" class="page fade-in">
+  <div class="page-header"><div class="chapter-tag">PART 3</div><h2>실전 확인 문제</h2></div>
+  
+  <div class="quiz-q"><span class="quiz-num">서술형 1</span><div class="quiz-text">나트륨(Na)과 칼륨(K) 조각을 각각 물이 든 비커에 넣었을 때의 반응을 관찰했습니다. 두 금속이 물과 반응할 때 발생하는 기체의 종류를 쓰고, 반응 후 남은 수용액에 페놀프탈레인 용액을 떨어뜨렸을 때 나타나는 색깔 변화와 그 이유를 서술하시오.</div><div class="answer-area">정답: 수소 기체(H₂) / 붉은색 (수용액이 염기성인 수산화 금속이 되기 때문) [cite: 13, 16].</div></div>
+  <div class="quiz-q"><span class="quiz-num">서술형 2</span><div class="quiz-text">할로젠 원소인 플루오린(F)과 염소(Cl), 브로민(Br), 아이오딘(I) 중에서 가장 반응성이 큰 원소는 무엇인지 쓰고, 할로젠 원소들의 실온에서의 상태(기체, 액체, 고체)에 대해 간단히 설명하시오.</div><div class="answer-area">정답: 플루오린(F) / F₂·Cl₂ 기체, Br₂ 액체, I₂ 고체 [cite: 19, 22].</div></div>
+  <div class="quiz-q"><span class="quiz-num">서술형 3</span><div class="quiz-text">원자 번호 11번인 나트륨(Na)과 17번인 염소(Cl)가 만나 염화 나트륨(NaCl)을 형성하는 과정은 어떤 화학 결합인지 쓰고, 이 결합이 형성되는 원리를 '전자 이동'과 '정전기적 인력'이라는 단어를 포함하여 설명하시오.</div><div class="answer-area">정답: 이온 결합 / 나트륨의 전자 1개가 염소로 이동하여 각각 양이온과 음이온이 된 후, 정전기적 인력으로 결합함 [cite: 68, 75].</div></div>
+  <div class="quiz-q"><span class="quiz-num">서술형 4</span><div class="quiz-text">염화 칼슘(CaCl₂)과 포도당(C₆H₁₂O₆)의 전기 전도성 차이를 이온의 이동과 관련지어 서술하시오.</div><div class="answer-area">정답: 염화 칼슘은 수용액에서 이온화되어 전기가 통하지만, 포도당은 분자 상태로 존재하여 통하지 않음 [cite: 121, 122].</div></div>
+  
+  <div class="page-header" style="margin-top: 40px; border-top: 2px dashed #cbd5e1; padding-top: 20px;">
+    <div class="chapter-tag" style="color: #38a169; background: #f0fff4;">객관식 60문항</div>
+    <h2>객관식 실전 테스트</h2>
+  </div>
+
+  
+  <div class="quiz-q" style="border-top-color: #38a169;">
+    <span class="quiz-num" style="color: #38a169; background: #f0fff4;">객관식 1</span>
+    <div class="quiz-text">주기율표의 왼쪽과 가운데 부분에 주로 위치하는 원소의 종류는?</div>
+    <ol style="margin-left: 20px; margin-bottom: 15px; color: #4a5568; line-height: 1.8;">
+      <li>금속 원소</li><li>비금속 원소</li><li>비활성 기체</li><li>할로젠</li><li>중성자</li>
+    </ol>
+    <details>
+      <summary style="cursor: pointer; color: #38a169; font-weight: bold; padding: 5px 0;">정답 및 해설 보기</summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f0fff4; border-radius: 8px; font-size: 0.85rem; color: #22543d;">
+        <b>정답: 1</b><br>
+        해설: 금속 원소는 대체로 주기율표의 왼쪽과 가운데에 위치합니다 [cite: 1, 2].
+      </div>
+    </details>
+  </div>
+
+  <div class="quiz-q" style="border-top-color: #38a169;">
+    <span class="quiz-num" style="color: #38a169; background: #f0fff4;">객관식 2</span>
+    <div class="quiz-text">다음 중 실온에서 액체 상태인 금속 원소는?</div>
+    <ol style="margin-left: 20px; margin-bottom: 15px; color: #4a5568; line-height: 1.8;">
+      <li>철</li><li>알루미늄</li><li>수은</li><li>나트륨</li><li>리튬</li>
+    </ol>
+    <details>
+      <summary style="cursor: pointer; color: #38a169; font-weight: bold; padding: 5px 0;">정답 및 해설 보기</summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f0fff4; border-radius: 8px; font-size: 0.85rem; color: #22543d;">
+        <b>정답: 3</b><br>
+        해설: 수은(Hg)은 실온에서 유일하게 액체 상태인 금속입니다 [cite: 2].
+      </div>
+    </details>
+  </div>
+
+  <div class="quiz-q" style="border-top-color: #38a169;">
+    <span class="quiz-num" style="color: #38a169; background: #f0fff4;">객관식 3</span>
+    <div class="quiz-text">비금속 원소인 브로민(Br₂)의 실온 상태와 색깔은?</div>
+    <ol style="margin-left: 20px; margin-bottom: 15px; color: #4a5568; line-height: 1.8;">
+      <li>기체, 노란색</li><li>액체, 적갈색</li><li>고체, 보라색</li><li>기체, 연한 노란색</li><li>액체, 은백색</li>
+    </ol>
+    <details>
+      <summary style="cursor: pointer; color: #38a169; font-weight: bold; padding: 5px 0;">정답 및 해설 보기</summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f0fff4; border-radius: 8px; font-size: 0.85rem; color: #22543d;">
+        <b>정답: 2</b><br>
+        해설: 브로민은 실온에서 적갈색 액체입니다 [cite: 2, 19].
+      </div>
+    </details>
+  </div>
+
+  <div class="quiz-q" style="border-top-color: #38a169;">
+    <span class="quiz-num" style="color: #38a169; background: #f0fff4;">객관식 4</span>
+    <div class="quiz-text">금속과 비금속의 중간 성질을 갖는 원소를 무엇이라 하는가?</div>
+    <ol style="margin-left: 20px; margin-bottom: 15px; color: #4a5568; line-height: 1.8;">
+      <li>알칼리 금속</li><li>비활성 기체</li><li>할로젠</li><li>준금속 원소</li><li>이온</li>
+    </ol>
+    <details>
+      <summary style="cursor: pointer; color: #38a169; font-weight: bold; padding: 5px 0;">정답 및 해설 보기</summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f0fff4; border-radius: 8px; font-size: 0.85rem; color: #22543d;">
+        <b>정답: 4</b><br>
+        해설: 붕소, 규소 등 중간 성질 원소는 준금속입니다 [cite: 4].
+      </div>
+    </details>
+  </div>
+
+  <div class="quiz-q" style="border-top-color: #38a169;">
+    <span class="quiz-num" style="color: #38a169; background: #f0fff4;">객관식 5</span>
+    <div class="quiz-text">다음 중 전기 전도성이 있는 비금속 공유 결합 물질은?</div>
+    <ol style="margin-left: 20px; margin-bottom: 15px; color: #4a5568; line-height: 1.8;">
+      <li>포도당</li><li>설탕</li><li>증류수</li><li>흑연</li><li>다이아몬드</li>
+    </ol>
+    <details>
+      <summary style="cursor: pointer; color: #38a169; font-weight: bold; padding: 5px 0;">정답 및 해설 보기</summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f0fff4; border-radius: 8px; font-size: 0.85rem; color: #22543d;">
+        <b>정답: 4</b><br>
+        해설: 흑연은 탄소 공유 결합 물질이나 자유 전자가 있어 전기가 통합니다 [cite: 7].
+      </div>
+    </details>
+  </div>
+
+  <div class="quiz-q" style="border-top-color: #38a169;">
+    <span class="quiz-num" style="color: #38a169; background: #f0fff4;">객관식 6</span>
+    <div class="quiz-text">우주 왕복선의 연료로 이용되는 비금속 원소는?</div>
+    <ol style="margin-left: 20px; margin-bottom: 15px; color: #4a5568; line-height: 1.8;">
+      <li>질소</li><li>산소</li><li>인</li><li>수소</li><li>헬륨</li>
+    </ol>
+    <details>
+      <summary style="cursor: pointer; color: #38a169; font-weight: bold; padding: 5px 0;">정답 및 해설 보기</summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f0fff4; border-radius: 8px; font-size: 0.85rem; color: #22543d;">
+        <b>정답: 4</b><br>
+        해설: 수소는 우주 왕복선의 연료로 사용됩니다 [cite: 6].
+      </div>
+    </details>
+  </div>
+
+  <div class="quiz-q" style="border-top-color: #38a169;">
+    <span class="quiz-num" style="color: #38a169; background: #f0fff4;">객관식 7</span>
+    <div class="quiz-text">식품 포장용 충전 기체로 사용되는 원소는?</div>
+    <ol style="margin-left: 20px; margin-bottom: 15px; color: #4a5568; line-height: 1.8;">
+      <li>수소</li><li>산소</li><li>질소</li><li>인</li><li>염소</li>
+    </ol>
+    <details>
+      <summary style="cursor: pointer; color: #38a169; font-weight: bold; padding: 5px 0;">정답 및 해설 보기</summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f0fff4; border-radius: 8px; font-size: 0.85rem; color: #22543d;">
+        <b>정답: 3</b><br>
+        해설: 질소는 식품 부패 방지를 위한 충전재로 쓰입니다 [cite: 6].
+      </div>
+    </details>
+  </div>
+
+  <div class="quiz-q" style="border-top-color: #38a169;">
+    <span class="quiz-num" style="color: #38a169; background: #f0fff4;">객관식 8</span>
+    <div class="quiz-text">반도체 회로기판에 주로 사용되는 금속 원소는?</div>
+    <ol style="margin-left: 20px; margin-bottom: 15px; color: #4a5568; line-height: 1.8;">
+      <li>철</li><li>구리</li><li>금</li><li>알루미늄</li><li>납</li>
+    </ol>
+    <details>
+      <summary style="cursor: pointer; color: #38a169; font-weight: bold; padding: 5px 0;">정답 및 해설 보기</summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f0fff4; border-radius: 8px; font-size: 0.85rem; color: #22543d;">
+        <b>정답: 3</b><br>
+        해설: 금은 전도성이 좋고 부식되지 않아 반도체 기판에 쓰입니다 [cite: 6].
+      </div>
+    </details>
+  </div>
+
+  <div class="quiz-q" style="border-top-color: #38a169;">
+    <span class="quiz-num" style="color: #38a169; background: #f0fff4;">객관식 9</span>
+    <div class="quiz-text">알칼리 금속에 해당하지 않는 원소는?</div>
+    <ol style="margin-left: 20px; margin-bottom: 15px; color: #4a5568; line-height: 1.8;">
+      <li>리튬</li><li>나트륨</li><li>칼륨</li><li>수소</li><li>루비듐</li>
+    </ol>
+    <details>
+      <summary style="cursor: pointer; color: #38a169; font-weight: bold; padding: 5px 0;">정답 및 해설 보기</summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f0fff4; border-radius: 8px; font-size: 0.85rem; color: #22543d;">
+        <b>정답: 4</b><br>
+        해설: 수소는 1족이지만 비금속으로 알칼리 금속이 아닙니다 [cite: 8, 9].
+      </div>
+    </details>
+  </div>
+
+  <div class="quiz-q" style="border-top-color: #38a169;">
+    <span class="quiz-num" style="color: #38a169; background: #f0fff4;">객관식 10</span>
+    <div class="quiz-text">알칼리 금속의 광택이 공기 중에서 빠르게 사라지는 이유는?</div>
+    <ol style="margin-left: 20px; margin-bottom: 15px; color: #4a5568; line-height: 1.8;">
+      <li>수분 흡수</li><li>산소와 반응</li><li>질소와 반응</li><li>빛의 굴절</li><li>증발</li>
+    </ol>
+    <details>
+      <summary style="cursor: pointer; color: #38a169; font-weight: bold; padding: 5px 0;">정답 및 해설 보기</summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f0fff4; border-radius: 8px; font-size: 0.85rem; color: #22543d;">
+        <b>정답: 2</b><br>
+        해설: 산소와 빠르게 반응하여 산화물을 형성하기 때문입니다 [cite: 11, 12].
+      </div>
+    </details>
+  </div>
+
+  <div class="quiz-q" style="border-top-color: #38a169;">
+    <span class="quiz-num" style="color: #38a169; background: #f0fff4;">객관식 11</span>
+    <div class="quiz-text">나트륨이 물과 반응할 때 발생하는 기체는?</div>
+    <ol style="margin-left: 20px; margin-bottom: 15px; color: #4a5568; line-height: 1.8;">
+      <li>산소</li><li>이산화 탄소</li><li>수소</li><li>질소</li><li>헬륨</li>
+    </ol>
+    <details>
+      <summary style="cursor: pointer; color: #38a169; font-weight: bold; padding: 5px 0;">정답 및 해설 보기</summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f0fff4; border-radius: 8px; font-size: 0.85rem; color: #22543d;">
+        <b>정답: 3</b><br>
+        해설: 알칼리 금속은 물과 반응하여 수소 기체를 냅니다 [cite: 13, 35].
+      </div>
+    </details>
+  </div>
+
+  <div class="quiz-q" style="border-top-color: #38a169;">
+    <span class="quiz-num" style="color: #38a169; background: #f0fff4;">객관식 12</span>
+    <div class="quiz-text">알칼리 금속 수용액에 페놀프탈레인 용액을 넣었을 때의 색깔은?</div>
+    <ol style="margin-left: 20px; margin-bottom: 15px; color: #4a5568; line-height: 1.8;">
+      <li>무색</li><li>노란색</li><li>붉은색</li><li>푸른색</li><li>보라색</li>
+    </ol>
+    <details>
+      <summary style="cursor: pointer; color: #38a169; font-weight: bold; padding: 5px 0;">정답 및 해설 보기</summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f0fff4; border-radius: 8px; font-size: 0.85rem; color: #22543d;">
+        <b>정답: 3</b><br>
+        해설: 수용액이 염기성이 되어 붉은색을 띱니다 [cite: 13, 16].
+      </div>
+    </details>
+  </div>
+
+  <div class="quiz-q" style="border-top-color: #38a169;">
+    <span class="quiz-num" style="color: #38a169; background: #f0fff4;">객관식 13</span>
+    <div class="quiz-text">알칼리 금속의 반응성 크기 순서가 옳은 것은?</div>
+    <ol style="margin-left: 20px; margin-bottom: 15px; color: #4a5568; line-height: 1.8;">
+      <li>Li > Na > K</li><li>Li < Na < K</li><li>Na < Li < K</li><li>K < Na < Li</li><li>Na > K > Li</li>
+    </ol>
+    <details>
+      <summary style="cursor: pointer; color: #38a169; font-weight: bold; padding: 5px 0;">정답 및 해설 보기</summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f0fff4; border-radius: 8px; font-size: 0.85rem; color: #22543d;">
+        <b>정답: 2</b><br>
+        해설: 원자 번호가 클수록 반응성이 커집니다 [cite: 13, 14].
+      </div>
+    </details>
+  </div>
+
+  <div class="quiz-q" style="border-top-color: #38a169;">
+    <span class="quiz-num" style="color: #38a169; background: #f0fff4;">객관식 14</span>
+    <div class="quiz-text">알칼리 금속을 석유 속에 보관하는 주된 이유는?</div>
+    <ol style="margin-left: 20px; margin-bottom: 15px; color: #4a5568; line-height: 1.8;">
+      <li>냄새 방지</li><li>산소와 물 접촉 차단</li><li>온도 유지</li><li>광택 유지</li><li>증발 방지</li>
+    </ol>
+    <details>
+      <summary style="cursor: pointer; color: #38a169; font-weight: bold; padding: 5px 0;">정답 및 해설 보기</summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f0fff4; border-radius: 8px; font-size: 0.85rem; color: #22543d;">
+        <b>정답: 2</b><br>
+        해설: 공기 중 산소나 물과 쉽게 반응하기 때문입니다 [cite: 14, 15].
+      </div>
+    </details>
+  </div>
+
+  <div class="quiz-q" style="border-top-color: #38a169;">
+    <span class="quiz-num" style="color: #38a169; background: #f0fff4;">객관식 15</span>
+    <div class="quiz-text">리튬 이온이 이용되는 대표적인 제품은?</div>
+    <ol style="margin-left: 20px; margin-bottom: 15px; color: #4a5568; line-height: 1.8;">
+      <li>가로등</li><li>비료</li><li>휴대 전화 배터리</li><li>성냥</li><li>전선</li>
+    </ol>
+    <details>
+      <summary style="cursor: pointer; color: #38a169; font-weight: bold; padding: 5px 0;">정답 및 해설 보기</summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f0fff4; border-radius: 8px; font-size: 0.85rem; color: #22543d;">
+        <b>정답: 3</b><br>
+        해설: 리튬은 휴대 전화 배터리에 사용됩니다 [cite: 18].
+      </div>
+    </details>
+  </div>
+
+  <div class="quiz-q" style="border-top-color: #38a169;">
+    <span class="quiz-num" style="color: #38a169; background: #f0fff4;">객관식 16</span>
+    <div class="quiz-text">터널의 노란 조명(램프)에 이용되는 원소는?</div>
+    <ol style="margin-left: 20px; margin-bottom: 15px; color: #4a5568; line-height: 1.8;">
+      <li>리튬</li><li>나트륨</li><li>칼륨</li><li>염소</li><li>네온</li>
+    </ol>
+    <details>
+      <summary style="cursor: pointer; color: #38a169; font-weight: bold; padding: 5px 0;">정답 및 해설 보기</summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f0fff4; border-radius: 8px; font-size: 0.85rem; color: #22543d;">
+        <b>정답: 2</b><br>
+        해설: 나트륨 램프는 터널 조명으로 쓰입니다 [cite: 18].
+      </div>
+    </details>
+  </div>
+
+  <div class="quiz-q" style="border-top-color: #38a169;">
+    <span class="quiz-num" style="color: #38a169; background: #f0fff4;">객관식 17</span>
+    <div class="quiz-text">비료를 만드는 데 사용되는 알칼리 금속은?</div>
+    <ol style="margin-left: 20px; margin-bottom: 15px; color: #4a5568; line-height: 1.8;">
+      <li>나트륨</li><li>칼륨</li><li>리튬</li><li>세슘</li><li>마그네슘</li>
+    </ol>
+    <details>
+      <summary style="cursor: pointer; color: #38a169; font-weight: bold; padding: 5px 0;">정답 및 해설 보기</summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f0fff4; border-radius: 8px; font-size: 0.85rem; color: #22543d;">
+        <b>정답: 2</b><br>
+        해설: 칼륨은 비료의 주성분입니다 [cite: 18].
+      </div>
+    </details>
+  </div>
+
+  <div class="quiz-q" style="border-top-color: #38a169;">
+    <span class="quiz-num" style="color: #38a169; background: #f0fff4;">객관식 18</span>
+    <div class="quiz-text">할로젠 원소가 속한 족은?</div>
+    <ol style="margin-left: 20px; margin-bottom: 15px; color: #4a5568; line-height: 1.8;">
+      <li>1족</li><li>2족</li><li>13족</li><li>17족</li><li>18족</li>
+    </ol>
+    <details>
+      <summary style="cursor: pointer; color: #38a169; font-weight: bold; padding: 5px 0;">정답 및 해설 보기</summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f0fff4; border-radius: 8px; font-size: 0.85rem; color: #22543d;">
+        <b>정답: 4</b><br>
+        해설: 할로젠은 17족 원소입니다 [cite: 18].
+      </div>
+    </details>
+  </div>
+
+  <div class="quiz-q" style="border-top-color: #38a169;">
+    <span class="quiz-num" style="color: #38a169; background: #f0fff4;">객관식 19</span>
+    <div class="quiz-text">염소(Cl₂)의 실온 상태와 색깔은?</div>
+    <ol style="margin-left: 20px; margin-bottom: 15px; color: #4a5568; line-height: 1.8;">
+      <li>연한 노란색 기체</li><li>노란색 기체</li><li>적갈색 액체</li><li>보라색 고체</li><li>무색 기체</li>
+    </ol>
+    <details>
+      <summary style="cursor: pointer; color: #38a169; font-weight: bold; padding: 5px 0;">정답 및 해설 보기</summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f0fff4; border-radius: 8px; font-size: 0.85rem; color: #22543d;">
+        <b>정답: 2</b><br>
+        해설: 염소는 노란색 기체입니다 [cite: 19].
+      </div>
+    </details>
+  </div>
+
+  <div class="quiz-q" style="border-top-color: #38a169;">
+    <span class="quiz-num" style="color: #38a169; background: #f0fff4;">객관식 20</span>
+    <div class="quiz-text">아이오딘(I₂)의 실온 상태와 색깔은?</div>
+    <ol style="margin-left: 20px; margin-bottom: 15px; color: #4a5568; line-height: 1.8;">
+      <li>적갈색 액체</li><li>노란색 기체</li><li>보라색 고체</li><li>연한 노란색 기체</li><li>은백색 고체</li>
+    </ol>
+    <details>
+      <summary style="cursor: pointer; color: #38a169; font-weight: bold; padding: 5px 0;">정답 및 해설 보기</summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f0fff4; border-radius: 8px; font-size: 0.85rem; color: #22543d;">
+        <b>정답: 3</b><br>
+        해설: 아이오딘은 보라색 고체입니다 [cite: 19].
+      </div>
+    </details>
+  </div>
+
+  <div class="quiz-q" style="border-top-color: #38a169;">
+    <span class="quiz-num" style="color: #38a169; background: #f0fff4;">객관식 21</span>
+    <div class="quiz-text">할로젠 원소의 반응성 크기 순서가 옳은 것은?</div>
+    <ol style="margin-left: 20px; margin-bottom: 15px; color: #4a5568; line-height: 1.8;">
+      <li>F₂ < Cl₂ < Br₂</li><li>F₂ > Cl₂ > Br₂</li><li>Cl₂ > F₂ > Br₂</li><li>Br₂ > Cl₂ > F₂</li><li>I₂ > Br₂ > Cl₂</li>
+    </ol>
+    <details>
+      <summary style="cursor: pointer; color: #38a169; font-weight: bold; padding: 5px 0;">정답 및 해설 보기</summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f0fff4; border-radius: 8px; font-size: 0.85rem; color: #22543d;">
+        <b>정답: 2</b><br>
+        해설: 원자 번호가 작을수록 반응성이 큽니다 [cite: 22].
+      </div>
+    </details>
+  </div>
+
+  <div class="quiz-q" style="border-top-color: #38a169;">
+    <span class="quiz-num" style="color: #38a169; background: #f0fff4;">객관식 22</span>
+    <div class="quiz-text">염소가 나트륨과 반응하여 생성되는 흰색 고체는?</div>
+    <ol style="margin-left: 20px; margin-bottom: 15px; color: #4a5568; line-height: 1.8;">
+      <li>산화 나트륨</li><li>수산화 나트륨</li><li>염화 나트륨</li><li>염화 수소</li><li>아이오딘화 나트륨</li>
+    </ol>
+    <details>
+      <summary style="cursor: pointer; color: #38a169; font-weight: bold; padding: 5px 0;">정답 및 해설 보기</summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f0fff4; border-radius: 8px; font-size: 0.85rem; color: #22543d;">
+        <b>정답: 3</b><br>
+        해설: 나트륨과 염소는 반응하여 NaCl을 만듭니다 [cite: 20].
+      </div>
+    </details>
+  </div>
+
+  <div class="quiz-q" style="border-top-color: #38a169;">
+    <span class="quiz-num" style="color: #38a169; background: #f0fff4;">객관식 23</span>
+    <div class="quiz-text">할로젠화 수소를 물에 녹인 수용액의 액성은?</div>
+    <ol style="margin-left: 20px; margin-bottom: 15px; color: #4a5568; line-height: 1.8;">
+      <li>산성</li><li>중성</li><li>염기성</li><li>알칼리성</li><li>없음</li>
+    </ol>
+    <details>
+      <summary style="cursor: pointer; color: #38a169; font-weight: bold; padding: 5px 0;">정답 및 해설 보기</summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f0fff4; border-radius: 8px; font-size: 0.85rem; color: #22543d;">
+        <b>정답: 1</b><br>
+        해설: HF, HCl 등은 물에서 산성을 띱니다 [cite: 21, 22].
+      </div>
+    </details>
+  </div>
+
+  <div class="quiz-q" style="border-top-color: #38a169;">
+    <span class="quiz-num" style="color: #38a169; background: #f0fff4;">객관식 24</span>
+    <div class="quiz-text">충치 예방을 위해 치약에 넣는 할로젠 원소는?</div>
+    <ol style="margin-left: 20px; margin-bottom: 15px; color: #4a5568; line-height: 1.8;">
+      <li>염소</li><li>브로민</li><li>아이오딘</li><li>플루오린</li><li>질소</li>
+    </ol>
+    <details>
+      <summary style="cursor: pointer; color: #38a169; font-weight: bold; padding: 5px 0;">정답 및 해설 보기</summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f0fff4; border-radius: 8px; font-size: 0.85rem; color: #22543d;">
+        <b>정답: 4</b><br>
+        해설: 플루오린은 충치 예방에 쓰입니다 [cite: 23].
+      </div>
+    </details>
+  </div>
+
+  <div class="quiz-q" style="border-top-color: #38a169;">
+    <span class="quiz-num" style="color: #38a169; background: #f0fff4;">객관식 25</span>
+    <div class="quiz-text">수영장 물의 소독에 이용되는 원소는?</div>
+    <ol style="margin-left: 20px; margin-bottom: 15px; color: #4a5568; line-height: 1.8;">
+      <li>플루오린</li><li>염소</li><li>아이오딘</li><li>브로민</li><li>산소</li>
+    </ol>
+    <details>
+      <summary style="cursor: pointer; color: #38a169; font-weight: bold; padding: 5px 0;">정답 및 해설 보기</summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f0fff4; border-radius: 8px; font-size: 0.85rem; color: #22543d;">
+        <b>정답: 2</b><br>
+        해설: 염소는 소독과 표백에 쓰입니다 [cite: 23].
+      </div>
+    </details>
+  </div>
+
+  <div class="quiz-q" style="border-top-color: #38a169;">
+    <span class="quiz-num" style="color: #38a169; background: #f0fff4;">객관식 26</span>
+    <div class="quiz-text">미역에 많이 포함되어 있으며 소독약으로 쓰이는 원소는?</div>
+    <ol style="margin-left: 20px; margin-bottom: 15px; color: #4a5568; line-height: 1.8;">
+      <li>염소</li><li>브로민</li><li>아이오딘</li><li>플루오린</li><li>인</li>
+    </ol>
+    <details>
+      <summary style="cursor: pointer; color: #38a169; font-weight: bold; padding: 5px 0;">정답 및 해설 보기</summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f0fff4; border-radius: 8px; font-size: 0.85rem; color: #22543d;">
+        <b>정답: 3</b><br>
+        해설: 아이오딘은 해조류에 많고 소독약에 쓰입니다 [cite: 23].
+      </div>
+    </details>
+  </div>
+
+  <div class="quiz-q" style="border-top-color: #38a169;">
+    <span class="quiz-num" style="color: #38a169; background: #f0fff4;">객관식 27</span>
+    <div class="quiz-text">비금속 원소의 반응성이 크다는 것의 의미는?</div>
+    <ol style="margin-left: 20px; margin-bottom: 15px; color: #4a5568; line-height: 1.8;">
+      <li>전자를 잃기 쉽다</li><li>전자를 얻기 쉽다</li><li>양이온이 되기 쉽다</li><li>화학 결합을 안 한다</li><li>질량이 가볍다</li>
+    </ol>
+    <details>
+      <summary style="cursor: pointer; color: #38a169; font-weight: bold; padding: 5px 0;">정답 및 해설 보기</summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f0fff4; border-radius: 8px; font-size: 0.85rem; color: #22543d;">
+        <b>정답: 2</b><br>
+        해설: 비금속은 전자를 얻어 음이온이 되려는 성질이 반응성입니다 [cite: 23, 24].
+      </div>
+    </details>
+  </div>
+
+  <div class="quiz-q" style="border-top-color: #38a169;">
+    <span class="quiz-num" style="color: #38a169; background: #f0fff4;">객관식 28</span>
+    <div class="quiz-text">원자핵을 구성하는 두 입자는?</div>
+    <ol style="margin-left: 20px; margin-bottom: 15px; color: #4a5568; line-height: 1.8;">
+      <li>양성자와 전자</li><li>양성자와 중성자</li><li>중성자와 전자</li><li>전자와 이온</li><li>원자 번호와 양성자</li>
+    </ol>
+    <details>
+      <summary style="cursor: pointer; color: #38a169; font-weight: bold; padding: 5px 0;">정답 및 해설 보기</summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f0fff4; border-radius: 8px; font-size: 0.85rem; color: #22543d;">
+        <b>정답: 2</b><br>
+        해설: 원자핵은 양성자와 중성자로 이루어집니다 [cite: 40, 41].
+      </div>
+    </details>
+  </div>
+
+  <div class="quiz-q" style="border-top-color: #38a169;">
+    <span class="quiz-num" style="color: #38a169; background: #f0fff4;">객관식 29</span>
+    <div class="quiz-text">원자 번호를 결정하는 기준은?</div>
+    <ol style="margin-left: 20px; margin-bottom: 15px; color: #4a5568; line-height: 1.8;">
+      <li>전자 수</li><li>중성자 수</li><li>양성자 수</li><li>전자 껍질 수</li><li>질량</li>
+    </ol>
+    <details>
+      <summary style="cursor: pointer; color: #38a169; font-weight: bold; padding: 5px 0;">정답 및 해설 보기</summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f0fff4; border-radius: 8px; font-size: 0.85rem; color: #22543d;">
+        <b>정답: 3</b><br>
+        해설: 양성자수가 곧 원자 번호입니다 [cite: 41].
+      </div>
+    </details>
+  </div>
+
+  <div class="quiz-q" style="border-top-color: #38a169;">
+    <span class="quiz-num" style="color: #38a169; background: #f0fff4;">객관식 30</span>
+    <div class="quiz-text">원자가 전기적으로 중성인 이유는?</div>
+    <ol style="margin-left: 20px; margin-bottom: 15px; color: #4a5568; line-height: 1.8;">
+      <li>전하가 없어서</li><li>양성자수와 중성자수가 같아서</li><li>양성자수와 전자 수가 같아서</li><li>전자가 핵 안에 있어서</li><li>이온이 안 되어서</li>
+    </ol>
+    <details>
+      <summary style="cursor: pointer; color: #38a169; font-weight: bold; padding: 5px 0;">정답 및 해설 보기</summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f0fff4; border-radius: 8px; font-size: 0.85rem; color: #22543d;">
+        <b>정답: 3</b><br>
+        해설: 양성자(+)와 전자(-)의 수가 같아 상쇄됩니다 [cite: 42].
+      </div>
+    </details>
+  </div>
+
+  <div class="quiz-q" style="border-top-color: #38a169;">
+    <span class="quiz-num" style="color: #38a169; background: #f0fff4;">객관식 31</span>
+    <div class="quiz-text">전자가 운동하는 특정한 에너지 궤도를 무엇이라 하는가?</div>
+    <ol style="margin-left: 20px; margin-bottom: 15px; color: #4a5568; line-height: 1.8;">
+      <li>원자핵</li><li>전자 껍질</li><li>중성자</li><li>양성자</li><li>이온</li>
+    </ol>
+    <details>
+      <summary style="cursor: pointer; color: #38a169; font-weight: bold; padding: 5px 0;">정답 및 해설 보기</summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f0fff4; border-radius: 8px; font-size: 0.85rem; color: #22543d;">
+        <b>정답: 2</b><br>
+        해설: 전자는 전자 껍질에 존재합니다 [cite: 43].
+      </div>
+    </details>
+  </div>
+
+  <div class="quiz-q" style="border-top-color: #38a169;">
+    <span class="quiz-num" style="color: #38a169; background: #f0fff4;">객관식 32</span>
+    <div class="quiz-text">두 번째 전자 껍질에 채워질 수 있는 최대 전자 수는?</div>
+    <ol style="margin-left: 20px; margin-bottom: 15px; color: #4a5568; line-height: 1.8;">
+      <li>2개</li><li>4개</li><li>8개</li><li>10개</li><li>18개</li>
+    </ol>
+    <details>
+      <summary style="cursor: pointer; color: #38a169; font-weight: bold; padding: 5px 0;">정답 및 해설 보기</summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f0fff4; border-radius: 8px; font-size: 0.85rem; color: #22543d;">
+        <b>정답: 3</b><br>
+        해설: 첫 번째는 2개, 두 번째부터는 8개입니다 [cite: 45].
+      </div>
+    </details>
+  </div>
+
+  <div class="quiz-q" style="border-top-color: #38a169;">
+    <span class="quiz-num" style="color: #38a169; background: #f0fff4;">객관식 33</span>
+    <div class="quiz-text">원자가 번호가 11인 나트륨의 전자 배치로 옳은 것은? (안쪽 껍질부터)</div>
+    <ol style="margin-left: 20px; margin-bottom: 15px; color: #4a5568; line-height: 1.8;">
+      <li>2, 9</li><li>2, 8, 1</li><li>2, 7, 2</li><li>11</li><li>2, 2, 7</li>
+    </ol>
+    <details>
+      <summary style="cursor: pointer; color: #38a169; font-weight: bold; padding: 5px 0;">정답 및 해설 보기</summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f0fff4; border-radius: 8px; font-size: 0.85rem; color: #22543d;">
+        <b>정답: 2</b><br>
+        해설: 2 + 8 + 1 = 11입니다 [cite: 55].
+      </div>
+    </details>
+  </div>
+
+  <div class="quiz-q" style="border-top-color: #38a169;">
+    <span class="quiz-num" style="color: #38a169; background: #f0fff4;">객관식 34</span>
+    <div class="quiz-text">화학적 성질을 결정하는 '가장 바깥 껍질의 전자'를 무엇이라 하는가?</div>
+    <ol style="margin-left: 20px; margin-bottom: 15px; color: #4a5568; line-height: 1.8;">
+      <li>최내각 전자</li><li>원자가 전자</li><li>중성 전자</li><li>안정 전자</li><li>핵 전자</li>
+    </ol>
+    <details>
+      <summary style="cursor: pointer; color: #38a169; font-weight: bold; padding: 5px 0;">정답 및 해설 보기</summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f0fff4; border-radius: 8px; font-size: 0.85rem; color: #22543d;">
+        <b>정답: 2</b><br>
+        해설: 원자가 전자가 화학 성질을 결정합니다 [cite: 53, 54].
+      </div>
+    </details>
+  </div>
+
+  <div class="quiz-q" style="border-top-color: #38a169;">
+    <span class="quiz-num" style="color: #38a169; background: #f0fff4;">객관식 35</span>
+    <div class="quiz-text">18족 원소(비활성 기체)의 원자가 전자 수는?</div>
+    <ol style="margin-left: 20px; margin-bottom: 15px; color: #4a5568; line-height: 1.8;">
+      <li>0개</li><li>2개</li><li>8개</li><li>18개</li><li>1개</li>
+    </ol>
+    <details>
+      <summary style="cursor: pointer; color: #38a169; font-weight: bold; padding: 5px 0;">정답 및 해설 보기</summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f0fff4; border-radius: 8px; font-size: 0.85rem; color: #22543d;">
+        <b>정답: 1</b><br>
+        해설: 반응에 참여하지 않으므로 0으로 정합니다 [cite: 56, 57].
+      </div>
+    </details>
+  </div>
+
+  <div class="quiz-q" style="border-top-color: #38a169;">
+    <span class="quiz-num" style="color: #38a169; background: #f0fff4;">객관식 36</span>
+    <div class="quiz-text">비활성 기체에 해당하지 않는 원소는?</div>
+    <ol style="margin-left: 20px; margin-bottom: 15px; color: #4a5568; line-height: 1.8;">
+      <li>헬륨</li><li>네온</li><li>아르곤</li><li>질소</li><li>크립톤</li>
+    </ol>
+    <details>
+      <summary style="cursor: pointer; color: #38a169; font-weight: bold; padding: 5px 0;">정답 및 해설 보기</summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f0fff4; border-radius: 8px; font-size: 0.85rem; color: #22543d;">
+        <b>정답: 4</b><br>
+        해설: 질소는 15족 원소입니다 [cite: 59].
+      </div>
+    </details>
+  </div>
+
+  <div class="quiz-q" style="border-top-color: #38a169;">
+    <span class="quiz-num" style="color: #38a169; background: #f0fff4;">객관식 37</span>
+    <div class="quiz-text">헬륨(He)의 첫 번째 전자 껍질에 있는 전자 수는?</div>
+    <ol style="margin-left: 20px; margin-bottom: 15px; color: #4a5568; line-height: 1.8;">
+      <li>1개</li><li>2개</li><li>8개</li><li>0개</li><li>4개</li>
+    </ol>
+    <details>
+      <summary style="cursor: pointer; color: #38a169; font-weight: bold; padding: 5px 0;">정답 및 해설 보기</summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f0fff4; border-radius: 8px; font-size: 0.85rem; color: #22543d;">
+        <b>정답: 2</b><br>
+        해설: 헬륨은 2개의 전자가 첫 껍질을 채웁니다 [cite: 61, 63].
+      </div>
+    </details>
+  </div>
+
+  <div class="quiz-q" style="border-top-color: #38a169;">
+    <span class="quiz-num" style="color: #38a169; background: #f0fff4;">객관식 38</span>
+    <div class="quiz-text">광고판(네온사인) 충전 기체로 쓰이는 비활성 기체는?</div>
+    <ol style="margin-left: 20px; margin-bottom: 15px; color: #4a5568; line-height: 1.8;">
+      <li>헬륨</li><li>네온</li><li>아르곤</li><li>산소</li><li>질소</li>
+    </ol>
+    <details>
+      <summary style="cursor: pointer; color: #38a169; font-weight: bold; padding: 5px 0;">정답 및 해설 보기</summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f0fff4; border-radius: 8px; font-size: 0.85rem; color: #22543d;">
+        <b>정답: 2</b><br>
+        해설: 네온은 광고판 충전 기체로 쓰입니다 [cite: 64].
+      </div>
+    </details>
+  </div>
+
+  <div class="quiz-q" style="border-top-color: #38a169;">
+    <span class="quiz-num" style="color: #38a169; background: #f0fff4;">객관식 39</span>
+    <div class="quiz-text">형광등의 충전 기체나 용접 시 사용되는 원소는?</div>
+    <ol style="margin-left: 20px; margin-bottom: 15px; color: #4a5568; line-height: 1.8;">
+      <li>헬륨</li><li>네온</li><li>아르곤</li><li>염소</li><li>나트륨</li>
+    </ol>
+    <details>
+      <summary style="cursor: pointer; color: #38a169; font-weight: bold; padding: 5px 0;">정답 및 해설 보기</summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f0fff4; border-radius: 8px; font-size: 0.85rem; color: #22543d;">
+        <b>정답: 3</b><br>
+        해설: 아르곤은 용접 등에 쓰입니다 [cite: 64].
+      </div>
+    </details>
+  </div>
+
+  <div class="quiz-q" style="border-top-color: #38a169;">
+    <span class="quiz-num" style="color: #38a169; background: #f0fff4;">객관식 40</span>
+    <div class="quiz-text">이온 결합이 형성되는 주된 힘은?</div>
+    <ol style="margin-left: 20px; margin-bottom: 15px; color: #4a5568; line-height: 1.8;">
+      <li>공유 결합력</li><li>자기력</li><li>정전기적 인력</li><li>중력</li><li>마찰력</li>
+    </ol>
+    <details>
+      <summary style="cursor: pointer; color: #38a169; font-weight: bold; padding: 5px 0;">정답 및 해설 보기</summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f0fff4; border-radius: 8px; font-size: 0.85rem; color: #22543d;">
+        <b>정답: 3</b><br>
+        해설: 양이온과 음이온 사이의 끌림인 정전기적 인력입니다 [cite: 68, 70].
+      </div>
+    </details>
+  </div>
+
+  <div class="quiz-q" style="border-top-color: #38a169;">
+    <span class="quiz-num" style="color: #38a169; background: #f0fff4;">객관식 41</span>
+    <div class="quiz-text">금속 원소가 양이온이 될 때의 변화는?</div>
+    <ol style="margin-left: 20px; margin-bottom: 15px; color: #4a5568; line-height: 1.8;">
+      <li>전자를 얻는다</li><li>전자를 잃는다</li><li>양성자를 얻는다</li><li>중성자를 잃는다</li><li>변화 없다</li>
+    </ol>
+    <details>
+      <summary style="cursor: pointer; color: #38a169; font-weight: bold; padding: 5px 0;">정답 및 해설 보기</summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f0fff4; border-radius: 8px; font-size: 0.85rem; color: #22543d;">
+        <b>정답: 2</b><br>
+        해설: 전자를 잃고 양전하를 띱니다 [cite: 69].
+      </div>
+    </details>
+  </div>
+
+  <div class="quiz-q" style="border-top-color: #38a169;">
+    <span class="quiz-num" style="color: #38a169; background: #f0fff4;">객관식 42</span>
+    <div class="quiz-text">17족 할로젠 원소가 되기 쉬운 이온의 전하는?</div>
+    <ol style="margin-left: 20px; margin-bottom: 15px; color: #4a5568; line-height: 1.8;">
+      <li>+1가</li><li>+2가</li><li>-1가</li><li>-2가</li><li>0</li>
+    </ol>
+    <details>
+      <summary style="cursor: pointer; color: #38a169; font-weight: bold; padding: 5px 0;">정답 및 해설 보기</summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f0fff4; border-radius: 8px; font-size: 0.85rem; color: #22543d;">
+        <b>정답: 3</b><br>
+        해설: 전자 1개를 얻어 -1가 음이온이 되기 쉽습니다 [cite: 69].
+      </div>
+    </details>
+  </div>
+
+  <div class="quiz-q" style="border-top-color: #38a169;">
+    <span class="quiz-num" style="color: #38a169; background: #f0fff4;">객관식 43</span>
+    <div class="quiz-text">염화 나트륨(NaCl)에서 나트륨 이온과 염화 이온의 결합 개수비는?</div>
+    <ol style="margin-left: 20px; margin-bottom: 15px; color: #4a5568; line-height: 1.8;">
+      <li>1:1</li><li>1:2</li><li>2:1</li><li>1:3</li><li>3:1</li>
+    </ol>
+    <details>
+      <summary style="cursor: pointer; color: #38a169; font-weight: bold; padding: 5px 0;">정답 및 해설 보기</summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f0fff4; border-radius: 8px; font-size: 0.85rem; color: #22543d;">
+        <b>정답: 1</b><br>
+        해설: 전하 합이 0이 되기 위해 1:1로 결합합니다 [cite: 80].
+      </div>
+    </details>
+  </div>
+
+  <div class="quiz-q" style="border-top-color: #38a169;">
+    <span class="quiz-num" style="color: #38a169; background: #f0fff4;">객관식 44</span>
+    <div class="quiz-text">공유 결합이 형성되는 원소들의 조합은?</div>
+    <ol style="margin-left: 20px; margin-bottom: 15px; color: #4a5568; line-height: 1.8;">
+      <li>금속 + 금속</li><li>금속 + 비금속</li><li>비금속 + 비금속</li><li>비활성 기체 + 금속</li><li>양이온 + 음이온</li>
+    </ol>
+    <details>
+      <summary style="cursor: pointer; color: #38a169; font-weight: bold; padding: 5px 0;">정답 및 해설 보기</summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f0fff4; border-radius: 8px; font-size: 0.85rem; color: #22543d;">
+        <b>정답: 3</b><br>
+        해설: 공유 결합은 비금속 원소 사이에서 일어납니다 [cite: 84, 87].
+      </div>
+    </details>
+  </div>
+
+  <div class="quiz-q" style="border-top-color: #38a169;">
+    <span class="quiz-num" style="color: #38a169; background: #f0fff4;">객관식 45</span>
+    <div class="quiz-text">물 분자(H₂O) 한 개에 포함된 공유 전자쌍의 수는?</div>
+    <ol style="margin-left: 20px; margin-bottom: 15px; color: #4a5568; line-height: 1.8;">
+      <li>1개</li><li>2개</li><li>3개</li><li>4개</li><li>8개</li>
+    </ol>
+    <details>
+      <summary style="cursor: pointer; color: #38a169; font-weight: bold; padding: 5px 0;">정답 및 해설 보기</summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f0fff4; border-radius: 8px; font-size: 0.85rem; color: #22543d;">
+        <b>정답: 2</b><br>
+        해설: 산소가 수소 두 개와 각각 1쌍씩, 총 2쌍을 공유합니다 [cite: 88, 89].
+      </div>
+    </details>
+  </div>
+
+  <div class="quiz-q" style="border-top-color: #38a169;">
+    <span class="quiz-num" style="color: #38a169; background: #f0fff4;">객관식 46</span>
+    <div class="quiz-text">질소 분자(N₂)에서 두 질소 원자 사이의 결합 종류는?</div>
+    <ol style="margin-left: 20px; margin-bottom: 15px; color: #4a5568; line-height: 1.8;">
+      <li>단일 결합</li><li>2중 결합</li><li>3중 결합</li><li>이온 결합</li><li>없음</li>
+    </ol>
+    <details>
+      <summary style="cursor: pointer; color: #38a169; font-weight: bold; padding: 5px 0;">정답 및 해설 보기</summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f0fff4; border-radius: 8px; font-size: 0.85rem; color: #22543d;">
+        <b>정답: 3</b><br>
+        해설: 질소는 전자 3쌍을 공유하는 3중 결합을 합니다 [cite: 90].
+      </div>
+    </details>
+  </div>
+
+  <div class="quiz-q" style="border-top-color: #38a169;">
+    <span class="quiz-num" style="color: #38a169; background: #f0fff4;">객관식 47</span>
+    <div class="quiz-text">이온 결합 물질의 특징으로 옳은 것은?</div>
+    <ol style="margin-left: 20px; margin-bottom: 15px; color: #4a5568; line-height: 1.8;">
+      <li>실온에서 주로 액체이다</li><li>고체 상태에서 전기가 잘 통한다</li><li>수용액 상태에서 전기가 통한다</li><li>물에 전혀 녹지 않는다</li><li>분자 단위로 존재한다</li>
+    </ol>
+    <details>
+      <summary style="cursor: pointer; color: #38a169; font-weight: bold; padding: 5px 0;">정답 및 해설 보기</summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f0fff4; border-radius: 8px; font-size: 0.85rem; color: #22543d;">
+        <b>정답: 3</b><br>
+        해설: 수용액에서 이온화되어 전기가 통합니다 [cite: 99].
+      </div>
+    </details>
+  </div>
+
+  <div class="quiz-q" style="border-top-color: #38a169;">
+    <span class="quiz-num" style="color: #38a169; background: #f0fff4;">객관식 48</span>
+    <div class="quiz-text">설탕 수용액에 전류가 흐르지 않는 이유는?</div>
+    <ol style="margin-left: 20px; margin-bottom: 15px; color: #4a5568; line-height: 1.8;">
+      <li>설탕이 안 녹아서</li><li>이온이 생성되지 않아서</li><li>설탕이 금속이라서</li><li>물 분자가 방해해서</li><li>전압이 낮아서</li>
+    </ol>
+    <details>
+      <summary style="cursor: pointer; color: #38a169; font-weight: bold; padding: 5px 0;">정답 및 해설 보기</summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f0fff4; border-radius: 8px; font-size: 0.85rem; color: #22543d;">
+        <b>정답: 2</b><br>
+        해설: 설탕은 공유 결합 물질로 이온화되지 않습니다 [cite: 110, 111].
+      </div>
+    </details>
+  </div>
+
+  <div class="quiz-q" style="border-top-color: #38a169;">
+    <span class="quiz-num" style="color: #38a169; background: #f0fff4;">객관식 49</span>
+    <div class="quiz-text">제설제로 쓰이며 습기 제거에도 이용되는 물질은?</div>
+    <ol style="margin-left: 20px; margin-bottom: 15px; color: #4a5568; line-height: 1.8;">
+      <li>염화 나트륨</li><li>염화 칼슘</li><li>수산화 나트륨</li><li>탄산수소나트륨</li><li>산화 마그네슘</li>
+    </ol>
+    <details>
+      <summary style="cursor: pointer; color: #38a169; font-weight: bold; padding: 5px 0;">정답 및 해설 보기</summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f0fff4; border-radius: 8px; font-size: 0.85rem; color: #22543d;">
+        <b>정답: 2</b><br>
+        해설: 염화 칼슘은 제설제와 습기 제거제에 쓰입니다 [cite: 102].
+      </div>
+    </details>
+  </div>
+
+  <div class="quiz-q" style="border-top-color: #38a169;">
+    <span class="quiz-num" style="color: #38a169; background: #f0fff4;">객관식 50</span>
+    <div class="quiz-text">비누의 제조에 사용되는 이온 결합 물질은?</div>
+    <ol style="margin-left: 20px; margin-bottom: 15px; color: #4a5568; line-height: 1.8;">
+      <li>염화 나트륨</li><li>탄산수소나트륨</li><li>수산화 나트륨</li><li>염화 칼슘</li><li>탄산 칼슘</li>
+    </ol>
+    <details>
+      <summary style="cursor: pointer; color: #38a169; font-weight: bold; padding: 5px 0;">정답 및 해설 보기</summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f0fff4; border-radius: 8px; font-size: 0.85rem; color: #22543d;">
+        <b>정답: 3</b><br>
+        해설: 수산화 나트륨(NaOH)은 비누 제조에 쓰입니다 [cite: 101].
+      </div>
+    </details>
+  </div>
+
+  <div class="quiz-q" style="border-top-color: #38a169;">
+    <span class="quiz-num" style="color: #38a169; background: #f0fff4;">객관식 51</span>
+    <div class="quiz-text">다음 중 금속 원소와 비금속 원소에 대한 설명으로 옳은 것은?</div>
+    <ol style="margin-left: 20px; margin-bottom: 15px; color: #4a5568; line-height: 1.8;">
+      <li>금속 원소는 주기율표에서 대체로 오른쪽에 위치한다.</li><li>비금속 원소는 전자를 잃고 양이온이 되기 쉽다.</li><li>대부분의 비금속 원소는 실온에서 액체 상태로 존재한다.</li><li>금속 원소는 열과 전기 전도성이 크다.</li><li>흑연은 비금속 원소이므로 예외 없이 전기가 통하지 않는다.</li>
+    </ol>
+    <details>
+      <summary style="cursor: pointer; color: #38a169; font-weight: bold; padding: 5px 0;">정답 및 해설 보기</summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f0fff4; border-radius: 8px; font-size: 0.85rem; color: #22543d;">
+        <b>정답: 4</b><br>
+        해설: 금속은 전도성이 큽니다. 흑연은 예외적으로 전기가 통합니다 [cite: 2, 7, 8].
+      </div>
+    </details>
+  </div>
+
+  <div class="quiz-q" style="border-top-color: #38a169;">
+    <span class="quiz-num" style="color: #38a169; background: #f0fff4;">객관식 52</span>
+    <div class="quiz-text">알칼리 금속(리튬, 나트륨, 칼륨)의 공통적인 성질로 옳지 않은 것은?</div>
+    <ol style="margin-left: 20px; margin-bottom: 15px; color: #4a5568; line-height: 1.8;">
+      <li>밀도가 작아 물에 뜬다.</li><li>물과 반응하여 산소 기체를 발생시킨다.</li><li>물과 반응한 후의 수용액에 페놀프탈레인 용액을 넣으면 붉은색으로 변한다.</li><li>칼로 쉽게 잘릴 정도로 무른 금속이다.</li><li>반응성이 매우 커서 공기나 물과 접촉하지 않도록 보관한다.</li>
+    </ol>
+    <details>
+      <summary style="cursor: pointer; color: #38a169; font-weight: bold; padding: 5px 0;">정답 및 해설 보기</summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f0fff4; border-radius: 8px; font-size: 0.85rem; color: #22543d;">
+        <b>정답: 2</b><br>
+        해설: 물과 반응하여 수소 기체(H₂)를 발생시킵니다 [cite: 13, 35].
+      </div>
+    </details>
+  </div>
+
+  <div class="quiz-q" style="border-top-color: #38a169;">
+    <span class="quiz-num" style="color: #38a169; background: #f0fff4;">객관식 53</span>
+    <div class="quiz-text">할로젠 원소에 대한 설명으로 가장 적절한 것은?</div>
+    <ol style="margin-left: 20px; margin-bottom: 15px; color: #4a5568; line-height: 1.8;">
+      <li>주기율표의 1족에 속하는 원소들이다.</li><li>원자가 전자가 1개이다.</li><li>원자 번호가 커질수록 반응성이 커진다.</li><li>실온에서 2개의 동일한 원자가 결합한 이원자 분자 형태로 존재한다.</li><li>수소와 반응하여 생성된 물질을 물에 녹이면 염기성을 띤다.</li>
+    </ol>
+    <details>
+      <summary style="cursor: pointer; color: #38a169; font-weight: bold; padding: 5px 0;">정답 및 해설 보기</summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f0fff4; border-radius: 8px; font-size: 0.85rem; color: #22543d;">
+        <b>정답: 4</b><br>
+        해설: 할로젠은 17족으로, 실온에서 이원자 분자로 존재합니다 [cite: 18, 19].
+      </div>
+    </details>
+  </div>
+
+  <div class="quiz-q" style="border-top-color: #38a169;">
+    <span class="quiz-num" style="color: #38a169; background: #f0fff4;">객관식 54</span>
+    <div class="quiz-text">원소와 그 이용 사례가 바르게 짝지어지지 않은 것은?</div>
+    <ol style="margin-left: 20px; margin-bottom: 15px; color: #4a5568; line-height: 1.8;">
+      <li>철(Fe) - 건축 자재 및 기계</li><li>구리(Cu) - 전선</li><li>수소(H) - 우주 왕복선의 연료</li><li>질소(N) - 성냥</li><li>알루미늄(Al) - 비행기 동체</li>
+    </ol>
+    <details>
+      <summary style="cursor: pointer; color: #38a169; font-weight: bold; padding: 5px 0;">정답 및 해설 보기</summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f0fff4; border-radius: 8px; font-size: 0.85rem; color: #22543d;">
+        <b>정답: 4</b><br>
+        해설: 성냥은 인(P)으로 만듭니다. 질소는 포장 충전재로 씁니다 [cite: 6].
+      </div>
+    </details>
+  </div>
+
+  <div class="quiz-q" style="border-top-color: #38a169;">
+    <span class="quiz-num" style="color: #38a169; background: #f0fff4;">객관식 55</span>
+    <div class="quiz-text">원자의 구조와 전자 배치에 대한 설명으로 옳은 것은?</div>
+    <ol style="margin-left: 20px; margin-bottom: 15px; color: #4a5568; line-height: 1.8;">
+      <li>원자핵은 (-)전하를 띠고 전자는 (+)전하를 띤다.</li><li>원자는 양성자수와 중성자수가 같아 전기적으로 중성이다.</li><li>전자는 원자핵 주위의 아무 공간에나 자유롭게 존재한다.</li><li>첫 번째 전자 껍질에는 최대 8개의 전자가 채워질 수 있다.</li><li>같은 족 원소들은 원자가 전자 수가 같다.</li>
+    </ol>
+    <details>
+      <summary style="cursor: pointer; color: #38a169; font-weight: bold; padding: 5px 0;">정답 및 해설 보기</summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f0fff4; border-radius: 8px; font-size: 0.85rem; color: #22543d;">
+        <b>정답: 5</b><br>
+        해설: 같은 족 원소들은 원자가 전자 수가 같아 화학적 성질이 유사합니다 [cite: 54].
+      </div>
+    </details>
+  </div>
+
+  <div class="quiz-q" style="border-top-color: #38a169;">
+    <span class="quiz-num" style="color: #38a169; background: #f0fff4;">객관식 56</span>
+    <div class="quiz-text">다음 중 옥텟 규칙(Octet Rule)의 의미를 가장 잘 설명한 것은?</div>
+    <ol style="margin-left: 20px; margin-bottom: 15px; color: #4a5568; line-height: 1.8;">
+      <li>원자가 핵융합을 통해 8번 원소인 산소가 되려는 경향</li><li>모든 원소가 8개의 원자가 전자를 가져야만 화합물을 형성하는 현상</li><li>화학 결합을 통해 가장 바깥 껍질에 전자 8개를 채워 안정해지려는 경향</li><li>18족 비활성 기체들이 서로 전자를 8개씩 주고받는 결합</li><li>전자가 8개인 원소는 무조건 이온 결합만 형성한다는 규칙</li>
+    </ol>
+    <details>
+      <summary style="cursor: pointer; color: #38a169; font-weight: bold; padding: 5px 0;">정답 및 해설 보기</summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f0fff4; border-radius: 8px; font-size: 0.85rem; color: #22543d;">
+        <b>정답: 3</b><br>
+        해설: 옥텟 규칙은 전자 8개(비활성 기체)를 채워 안정화하려는 경향입니다 [cite: 67].
+      </div>
+    </details>
+  </div>
+
+  <div class="quiz-q" style="border-top-color: #38a169;">
+    <span class="quiz-num" style="color: #38a169; background: #f0fff4;">객관식 57</span>
+    <div class="quiz-text">다음 중 이온 결합에 대한 설명으로 옳은 것은?</div>
+    <ol style="margin-left: 20px; margin-bottom: 15px; color: #4a5568; line-height: 1.8;">
+      <li>비금속 원소와 비금속 원소 사이에서 형성된다.</li><li>두 원자가 전자쌍을 공유하여 결합하는 방식이다.</li><li>물(H₂O)과 수소(H₂)가 대표적인 이온 결합 물질이다.</li><li>양이온과 음이온 사이의 정전기적 인력에 의해 형성된다.</li><li>금속 원소는 전자를 얻고, 비금속 원소는 전자를 잃는 과정이 포함된다.</li>
+    </ol>
+    <details>
+      <summary style="cursor: pointer; color: #38a169; font-weight: bold; padding: 5px 0;">정답 및 해설 보기</summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f0fff4; border-radius: 8px; font-size: 0.85rem; color: #22543d;">
+        <b>정답: 4</b><br>
+        해설: 양이온과 음이온의 정전기적 인력에 의한 결합입니다 [cite: 68, 70].
+      </div>
+    </details>
+  </div>
+
+  <div class="quiz-q" style="border-top-color: #38a169;">
+    <span class="quiz-num" style="color: #38a169; background: #f0fff4;">객관식 58</span>
+    <div class="quiz-text">이온 결합 물질과 공유 결합 물질의 전기 전도성 실험 결과에 대한 해석으로 바른 것은?</div>
+    <ol style="margin-left: 20px; margin-bottom: 15px; color: #4a5568; line-height: 1.8;">
+      <li>염화 칼슘(이온 결합)은 고체 상태일 때 전류가 가장 잘 흐른다.</li><li>포도당(공유 결합)은 수용액 상태가 되면 전기가 통한다.</li><li>염화 칼슘 수용액에서 전류가 흐르는 이유는 이온들이 분리되어 움직이기 때문이다.</li><li>설탕 수용액은 이온이 자유롭게 움직이므로 전기 전도성을 띤다.</li><li>이온 결합 물질은 상태와 관계없이 항상 전기가 통한다.</li>
+    </ol>
+    <details>
+      <summary style="cursor: pointer; color: #38a169; font-weight: bold; padding: 5px 0;">정답 및 해설 보기</summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f0fff4; border-radius: 8px; font-size: 0.85rem; color: #22543d;">
+        <b>정답: 3</b><br>
+        해설: 이온 결합 물질은 수용액에서 이온화되어 전류가 흐릅니다 [cite: 121, 122].
+      </div>
+    </details>
+  </div>
+
+  <div class="quiz-q" style="border-top-color: #38a169;">
+    <span class="quiz-num" style="color: #38a169; background: #f0fff4;">객관식 59</span>
+    <div class="quiz-text">할로젠 원소 중 실온에서 적갈색의 '액체' 상태로 존재하는 원소는?</div>
+    <ol style="margin-left: 20px; margin-bottom: 15px; color: #4a5568; line-height: 1.8;">
+      <li>플루오린(F₂)</li><li>염소(Cl₂)</li><li>브로민(Br₂)</li><li>아이오딘(I₂)</li><li>아스타틴(At₂)</li>
+    </ol>
+    <details>
+      <summary style="cursor: pointer; color: #38a169; font-weight: bold; padding: 5px 0;">정답 및 해설 보기</summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f0fff4; border-radius: 8px; font-size: 0.85rem; color: #22543d;">
+        <b>정답: 3</b><br>
+        해설: 브로민(Br₂)은 적갈색 액체입니다 [cite: 19].
+      </div>
+    </details>
+  </div>
+
+  <div class="quiz-q" style="border-top-color: #38a169;">
+    <span class="quiz-num" style="color: #38a169; background: #f0fff4;">객관식 60</span>
+    <div class="quiz-text">다음 중 화학적 성질을 결정짓는 가장 중요한 요소는 무엇인가?</div>
+    <ol style="margin-left: 20px; margin-bottom: 15px; color: #4a5568; line-height: 1.8;">
+      <li>원자핵에 있는 중성자의 수</li><li>원자가 가진 총 전자 껍질의 수</li><li>가장 안쪽 껍질에 있는 전자의 수</li><li>가장 바깥 껍질에 있는 원자가 전자의 수</li><li>원자핵 내부의 양성자와 중성자의 비율</li>
+    </ol>
+    <details>
+      <summary style="cursor: pointer; color: #38a169; font-weight: bold; padding: 5px 0;">정답 및 해설 보기</summary>
+      <div style="margin-top: 10px; padding: 12px; background: #f0fff4; border-radius: 8px; font-size: 0.85rem; color: #22543d;">
+        <b>정답: 4</b><br>
+        해설: 화학 결합에 참여하는 '원자가 전자'가 화학적 성질을 결정합니다 [cite: 53, 54].
+      </div>
+    </details>
+  </div>
+
+</div>
+
+<script>
+function showPage(name, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-'+name).classList.add('active');
+  if(btn) btn.classList.add('active');
+  window.scrollTo(0,0);
+}
+</script>
+</body>
+</html>
