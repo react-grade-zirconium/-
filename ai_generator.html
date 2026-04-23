@@ -1,39 +1,50 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>STUDY MAX - 통합 AI 문제 생성기</title>
-<style>
-    :root { --ai: #8b5cf6; --bg: #f8fafc; }
-    body { font-family: 'Pretendard', sans-serif; background: var(--bg); padding: 30px; color: #1e293b; margin: 0; }
-    
-    .header { text-align: center; margin-bottom: 25px; }
-    .header h1 { font-size: 2rem; font-weight: 900; color: var(--ai); margin: 0; }
-    
-    .ai-box { max-width: 700px; margin: 0 auto; background: white; border-radius: 20px; box-shadow: 0 10px 30px rgba(139, 92, 246, 0.15); overflow: hidden; border: 1px solid #ddd6fe; }
-    
-    .control-panel { padding: 20px; background: #f5f3ff; border-bottom: 1px solid #ddd6fe; display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
-    select, button { padding: 12px 18px; font-size: 1rem; border-radius: 10px; border: 1px solid #c4b5fd; font-weight: bold; outline: none; }
-    select { background: white; color: #4c1d95; cursor: pointer; min-width: 150px; }
-    button { background: var(--ai); color: white; border: none; cursor: pointer; transition: 0.2s; }
-    button:hover { background: #7c3aed; transform: translateY(-2px); }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STUDY MAX - AI 무한 문제 생성기</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root { --ai: #8b5cf6; --bg: #f8fafc; }
+        body { font-family: 'Pretendard', sans-serif; background: var(--bg); padding: 30px; color: #1e293b; margin: 0; }
+        
+        .header { text-align: center; margin-bottom: 25px; }
+        .header h1 { font-size: 2rem; font-weight: 900; color: var(--ai); margin: 0; }
+        
+        .ai-box { max-width: 800px; margin: 0 auto; background: white; border-radius: 20px; box-shadow: 0 10px 30px rgba(139, 92, 246, 0.15); overflow: hidden; border: 1px solid #ddd6fe; }
+        
+        .control-panel { padding: 20px; background: #f5f3ff; border-bottom: 1px solid #ddd6fe; display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+        select, button { padding: 12px 18px; font-size: 1rem; border-radius: 10px; border: 1px solid #c4b5fd; font-weight: bold; outline: none; }
+        select { background: white; color: #4c1d95; cursor: pointer; min-width: 150px; }
+        .btn-main { background: var(--ai); color: white; border: none; cursor: pointer; transition: 0.2s; }
+        .btn-main:hover { background: #7c3aed; transform: translateY(-2px); }
 
-    .problem-area { padding: 50px 30px; text-align: center; min-height: 250px; }
-    .subject-badge { display: inline-block; padding: 4px 12px; background: #ede9fe; color: #7c3aed; border-radius: 20px; font-size: 0.85rem; font-weight: 800; margin-bottom: 15px; }
-    .problem-text { font-size: 1.4rem; font-weight: 800; margin-bottom: 25px; color: #1e293b; line-height: 1.6; word-break: keep-all; }
-    
-    .answer-area { display: none; justify-content: center; gap: 10px; margin-top: 20px; }
-    .answer-area input { padding: 12px; font-size: 1.1rem; width: 160px; text-align: center; border: 2px solid #e2e8f0; border-radius: 10px; }
-    .answer-area input:focus { border-color: var(--ai); outline: none; }
-    
-    .feedback { margin-top: 20px; font-weight: bold; font-size: 1.1rem; min-height: 24px; }
-    .correct { color: #10b981; }
-    .wrong { color: #ef4444; }
+        .problem-area { padding: 40px 30px; text-align: center; min-height: 350px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .subject-badge { display: inline-block; padding: 4px 12px; background: #ede9fe; color: #7c3aed; border-radius: 20px; font-size: 0.85rem; font-weight: 800; margin-bottom: 15px; }
+        .problem-text { font-size: 1.4rem; font-weight: 800; margin-bottom: 25px; color: #1e293b; line-height: 1.6; word-break: keep-all; }
+        
+        /* 주관식/OX 입력 영역 */
+        .answer-area { display: none; justify-content: center; gap: 10px; margin-top: 20px; width: 100%; }
+        .answer-area input { padding: 12px; font-size: 1.1rem; width: 250px; text-align: center; border: 2px solid #e2e8f0; border-radius: 10px; }
+        .answer-area input:focus { border-color: var(--ai); outline: none; }
+        
+        /* 객관식 (5지선다) 버튼 영역 */
+        .options-area { display: none; flex-direction: column; gap: 10px; width: 100%; max-width: 500px; margin-top: 10px; }
+        .option-btn { padding: 15px 20px; background: white; border: 2px solid #e2e8f0; border-radius: 12px; cursor: pointer; text-align: left; font-size: 1.05rem; transition: 0.2s; font-weight: bold; color: #334155; }
+        .option-btn:hover { border-color: var(--ai); background: #f5f3ff; color: var(--ai); transform: translateX(5px); }
 
-    .loader { display: none; margin: 20px auto; width: 40px; height: 40px; border: 4px solid #f3f3f3; border-top: 4px solid var(--ai); border-radius: 50%; animation: spin 1s linear infinite; }
-    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-</style>
+        .feedback { margin-top: 25px; font-weight: bold; font-size: 1.1rem; min-height: 24px; display: flex; flex-direction: column; align-items: center; gap: 15px; }
+        .correct { color: #10b981; }
+        .wrong { color: #ef4444; }
+
+        .next-btn { padding: 10px 25px; background: #1e293b; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 0.95rem; font-weight: bold; animation: slideUp 0.3s ease; }
+        .next-btn:hover { background: #334155; }
+
+        @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .loader { display: none; margin: 20px auto; width: 40px; height: 40px; border: 4px solid #f3f3f3; border-top: 4px solid var(--ai); border-radius: 50%; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
 </head>
 <body>
 
@@ -44,11 +55,12 @@
     <div class="ai-box">
         <div class="control-panel">
             <select id="subjectSelect">
+                <option value="korean">📖 통합국어 (시/대화)</option>
                 <option value="science">🧪 통합과학 (물/화/생/지)</option>
                 <option value="society">🌍 통합사회 (행복/지리)</option>
                 <option value="info">💻 정보/알고리즘</option>
             </select>
-            <button onclick="generate()">문제 생성하기 ⚡</button>
+            <button class="btn-main" onclick="generate()">문제 생성하기 ⚡</button>
         </div>
 
         <div class="problem-area">
@@ -58,9 +70,12 @@
                 <div id="problemText" class="problem-text" style="color: #94a3b8;">과목을 선택하고 버튼을 누르세요.</div>
                 
                 <div id="interactionArea" class="answer-area">
-                    <input type="text" id="userAnswer" placeholder="정답 입력" onkeypress="if(event.key==='Enter') check()">
-                    <button onclick="check()" style="background: #10b981;">확인</button>
+                    <input type="text" id="userAnswer" placeholder="정답 입력 (단답형/OX)" onkeypress="if(event.key==='Enter') check()">
+                    <button onclick="check()" style="background: #10b981; color: white; border:none; padding:10px 20px; border-radius:10px; cursor:pointer; font-weight:bold;">확인</button>
                 </div>
+
+                <div id="optionsArea" class="options-area"></div>
+
                 <div id="feedbackText" class="feedback"></div>
             </div>
         </div>
@@ -68,6 +83,7 @@
 
 <script>
     let curAns = "";
+    let isMultiple = false;
 
     function generate() {
         const sub = document.getElementById('subjectSelect').value;
@@ -75,89 +91,88 @@
         const txt = document.getElementById('problemText');
         const loader = document.getElementById('loader');
         const area = document.getElementById('interactionArea');
+        const optArea = document.getElementById('optionsArea');
         const feedback = document.getElementById('feedbackText');
 
         // UI 초기화
         area.style.display = 'none';
+        optArea.style.display = 'none';
         badge.style.display = 'none';
-        feedback.innerText = '';
+        feedback.innerHTML = '';
         txt.innerText = '';
         loader.style.display = 'block';
 
         setTimeout(() => {
             loader.style.display = 'none';
-            let q = "";
-            let bTxt = "";
+            let qData = {};
 
-            if (sub === 'science') {
-                const parts = ['물리', '화학', '생명', '지구'];
-                const part = parts[Math.floor(Math.random() * parts.length)];
-                bTxt = "통합과학 - " + part;
-                
-                if(part === '물리') {
-                    let v = (Math.floor(Math.random()*5)+1)*10;
-                    let t = Math.floor(Math.random()*4)+2;
-                    q = `어떤 물체가 ${v}m/s의 일정한 속력으로 ${t}초 동안 이동했습니다. 총 이동 거리는 몇 m입니까?`;
-                    curAns = (v * t).toString();
-                } else if(part === '화학') {
-                    let solute = (Math.floor(Math.random()*3)+1)*10;
-                    q = `용질 ${solute}g이 녹아있는 소금물 100g이 있습니다. 이 용액의 퍼센트(%) 농도는 얼마입니까?`;
-                    curAns = solute.toString();
-                } else if(part === '생명') {
-                    const organelles = ["핵", "미토콘드리아", "리보솜"];
-                    const chosen = organelles[Math.floor(Math.random()*organelles.length)];
-                    q = `세포 소기관 중 '${chosen}'의 주요 기능은 무엇입니까?\n(1.유전정보저장 2.에너지생성 3.단백질합성)\n번호로 입력하세요.`;
-                    curAns = chosen === "핵" ? "1" : (chosen === "미토콘드리아" ? "2" : "3");
-                } else {
-                    q = `지구 시스템의 구성 요소 중 기권, 수권, 지권 중 암석과 토양으로 이루어진 영역은 무엇입니까?`;
-                    curAns = "지권";
-                }
-            } 
-            else if (sub === 'society') {
-                const part = Math.random() > 0.5 ? '행복' : '지리';
-                bTxt = "통합사회 - " + part;
-                if(part === '행복') {
-                    q = `도덕적 성찰과 실천을 통해 도달하는 동양의 행복관 중 '열반'을 강조하는 종교는?`;
-                    curAns = "불교";
-                } else {
-                    let temp = Math.floor(Math.random()*15) - 20;
-                    q = `현재 기온이 ${temp}℃인 지역에서 가장 적합한 의복은?\n(1.반팔 2.두꺼운패딩)`;
-                    curAns = "2";
-                }
-            }
-            else if (sub === 'math') {
-                bTxt = "기초 수학";
-                let a = Math.floor(Math.random()*9)+2;
-                let b = Math.floor(Math.random()*15)+5;
-                let x = Math.floor(Math.random()*10)+1;
-                let c = (a * x) + b;
-                q = `다음 일차방정식의 x 값을 구하세요.\n${a}x + ${b} = ${c}`;
-                curAns = x.toString();
-            }
-            else if (sub === 'info') {
-                bTxt = "정보/알고리즘";
-                q = `파이썬에서 'Hello'를 출력하는 올바른 함수 이름은 무엇입니까?`;
-                curAns = "print";
-            }
+            // 문제 은행
+            const bank = {
+                korean: [
+                    { type: 'ox', q: "[OX퀴즈] 공손성의 원리 중 '자신을 낮추고 겸손하게 말하는 것'은 찬동의 격률이다. (O / X 로 입력)", a: "X" },
+                    { type: 'short', q: "[단답형] 상대방의 부담을 최소화하고 이익을 극대화하는 공손성의 격률은 무슨 격률인가요?", a: "요령" },
+                    { type: 'multi', q: "[5지선다] 대화 중 필요한 만큼의 정보를 제공해야 한다는 협력의 원리에 해당하는 격률은?", opts: ["① 질의 격률", "② 양의 격률", "③ 관련성의 격률", "④ 태도의 격률", "⑤ 요령의 격률"], a: "② 양의 격률" },
+                    { type: 'multi', q: "[5지선다] 시에서 대상에 인격적 요소를 부여하여 표현하는 수사법은?", opts: ["① 직유법", "② 은유법", "③ 의인법", "④ 대구법", "⑤ 반어법"], a: "③ 의인법" }
+                ],
+                science: [
+                    { type: 'ox', q: "[OX퀴즈] 물체의 속력이 일정하면 가속도는 항상 0이다. (O / X 로 입력)", a: "O" },
+                    { type: 'short', q: "[단답형] 지구 시스템 중 암석과 토양으로 이루어진 영역의 이름은?", a: "지권" },
+                    { type: 'multi', q: "[5지선다] 다음 중 세포 내에서 생명 활동을 조절하고 유전 정보를 저장하는 핵심 소기관은?", opts: ["① 리보솜", "② 골지체", "③ 엽록체", "④ 핵", "⑤ 미토콘드리아"], a: "④ 핵" },
+                    { type: 'multi', q: "[5지선다] 빛 에너지를 전기 에너지로 변환하여 우리 생활에 활용되는 센서는 무엇인가?", opts: ["① 온도 센서", "② 광센서", "③ 압력 센서", "④ 음향 센서", "⑤ 가스 센서"], a: "② 광센서" }
+                ],
+                society: [
+                    { type: 'ox', q: "[OX퀴즈] 한대 기후 지역의 사람들은 지열을 피하기 위해 고상 가옥을 짓는다. (O / X 로 입력)", a: "O" },
+                    { type: 'short', q: "[단답형] 도덕적 성찰과 실천을 통해 도달하는 불교의 이상적인 상태(목표)는 무엇인가요?", a: "열반" },
+                    { type: 'multi', q: "[5지선다] 다음 중 인간의 행복을 결정짓는 객관적(물질적) 조건에 해당하는 것은?", opts: ["① 삶의 만족도", "② 긍정적 정서", "③ 자아 실현", "④ 소득 수준 및 주거 환경", "⑤ 가치관"], a: "④ 소득 수준 및 주거 환경" }
+                ],
+                // 정보 파트: 자료형 문제 제거 및 알고리즘/제어문 집중
+                info: [
+                    { type: 'ox', q: "[OX퀴즈] 알고리즘은 문제를 해결하기 위한 절차로, 반드시 끝이 나야 하는 '유한성'을 가진다. (O / X 로 입력)", a: "O" },
+                    { type: 'short', q: "[단답형] 어떤 문제를 해결하기 위해 명확하게 정의된 일련의 절차나 방법을 무엇이라고 하는가?", a: "알고리즘" },
+                    { type: 'multi', q: "[5지선다] 특정 조건이 참(True)일 때만 실행 흐름을 바꾸는 제어문은 무엇인가?", opts: ["① for문", "② while문", "③ if문", "④ continue", "⑤ break"], a: "③ if문" },
+                    { type: 'multi', q: "[5지선다] 다음 중 알고리즘을 표현하는 방법으로 가장 적절하지 않은 것은?", opts: ["① 자연어 (일상 언어)", "② 순서도 (Flowchart)", "③ 의사코드 (Pseudocode)", "④ 프로그래밍 언어", "⑤ 무작위 숫자 나열"], a: "⑤ 무작위 숫자 나열" }
+                ]
+            };
 
-            badge.innerText = bTxt;
+            const selectedPool = bank[sub];
+            qData = selectedPool[Math.floor(Math.random() * selectedPool.length)];
+            
+            const subjectNames = { korean: "📖 통합국어", science: "🧪 통합과학", society: "🌍 통합사회", info: "💻 정보" };
+            badge.innerText = subjectNames[sub];
             badge.style.display = 'inline-block';
-            txt.innerText = q;
-            area.style.display = 'flex';
-            document.getElementById('userAnswer').value = "";
-            document.getElementById('userAnswer').focus();
-        }, 600);
+            txt.innerText = qData.q;
+            curAns = qData.a;
+
+            if(qData.type === 'multi') {
+                isMultiple = true;
+                optArea.innerHTML = '';
+                qData.opts.forEach(opt => {
+                    const btn = document.createElement('button');
+                    btn.className = 'option-btn';
+                    btn.innerText = opt;
+                    btn.onclick = () => check(opt);
+                    optArea.appendChild(btn);
+                });
+                optArea.style.display = 'flex';
+            } else {
+                isMultiple = false;
+                area.style.display = 'flex';
+                document.getElementById('userAnswer').value = "";
+                document.getElementById('userAnswer').focus();
+            }
+        }, 500);
     }
 
-    function check() {
-        const user = document.getElementById('userAnswer').value.trim();
+    function check(val) {
+        let user = isMultiple ? val : document.getElementById('userAnswer').value.trim().toUpperCase();
         const f = document.getElementById('feedbackText');
-        if(user === curAns) {
-            f.innerText = "✅ 정답입니다! 완벽해요.";
-            f.className = "feedback correct";
+        
+        if(user === curAns.toUpperCase()) {
+            f.innerHTML = `<span class="correct">✅ 정답입니다! 아주 훌륭해요.</span>
+                           <button class="next-btn" onclick="generate()">다음 문제 생성 ⚡</button>`;
         } else {
-            f.innerText = "❌ 다시 생각해보세요. (정답: " + curAns + ")";
-            f.className = "feedback wrong";
+            f.innerHTML = `<span class="wrong">❌ 틀렸습니다. (정답: ${curAns})</span>
+                           <button class="next-btn" onclick="generate()">다른 문제 도전 ⚡</button>`;
         }
     }
 </script>
