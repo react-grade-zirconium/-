@@ -1,30 +1,99 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<style>
-    :root { --kor: #b45309; --bg: #fdfaf5; }
-    body { font-family: 'Pretendard', sans-serif; background: var(--bg); margin: 0; padding: 20px; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
-    .nav { display: flex; gap: 10px; margin-bottom: 15px; border-bottom: 2px solid #d6c9b5; padding-bottom: 10px; }
-    .nav-btn { padding: 10px 20px; border: 2px solid var(--kor); background: white; color: var(--kor); border-radius: 25px; cursor: pointer; font-weight: 800; }
-    .nav-btn.active { background: var(--kor); color: white; }
-    .content { flex: 1; border-radius: 12px; overflow: hidden; background: white; border: 1px solid #d6c9b5; }
-    iframe { width: 100%; height: 100%; border: none; }
-</style>
+    <meta charset="UTF-8">
+    <title>국어 학습 허브</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root { --kor-main: #b45309; --kor-bg: #fff7ed; }
+        body { 
+            font-family: 'Pretendard', sans-serif; 
+            background: var(--kor-bg); 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; 
+            margin: 0; 
+            gap: 30px; 
+        }
+
+        .card { 
+            width: 280px; 
+            height: 350px; 
+            background: white; 
+            border-radius: 24px; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center;
+            cursor: pointer; 
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 30px rgba(180, 83, 9, 0.08);
+            border: 2px solid transparent;
+            text-decoration: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .card:hover { 
+            transform: translateY(-15px); 
+            border-color: var(--kor-main);
+            box-shadow: 0 20px 40px rgba(180, 83, 9, 0.15);
+        }
+
+        .icon { 
+            font-size: 60px; 
+            margin-bottom: 20px; 
+            background: #fff7ed;
+            width: 100px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .title { 
+            font-size: 1.4rem; 
+            font-weight: 800; 
+            color: var(--kor-main); 
+            margin-bottom: 10px;
+        }
+
+        .desc { 
+            font-size: 0.95rem; 
+            color: #92400e; 
+            line-height: 1.5;
+            word-break: keep-all;
+        }
+
+        /* 배지 스타일 */
+        .badge {
+            margin-top: 15px;
+            padding: 5px 12px;
+            background: var(--kor-main);
+            color: white;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
-<div class="nav">
-    <button class="nav-btn active" onclick="load('korean_set1.html', this)">제1회</button>
-    <button class="nav-btn" onclick="load('korean_set2_3.html', this)">제2·3회</button>
-    <button class="nav-btn" onclick="load('korean_set4.html', this)">제4회</button>
-</div>
-<div class="content"><iframe id="korFrame" src="./korean_set1.html"></iframe></div>
-<script>
-    function load(url, btn) {
-        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        document.getElementById('korFrame').src = "./" + url;
-    }
-</script>
+
+    <a href="./korean_poem.html" class="card">
+        <div class="icon">📝</div>
+        <div class="title">서정 시 모의고사</div>
+        <div class="desc">실전 감각을 기르는 시 문학 모의고사 및 해설</div>
+        <div class="badge">TEST MODE</div>
+    </a>
+
+    <a href="./korean_talk.html" class="card">
+        <div class="icon">💬</div>
+        <div class="title">대화와 매체</div>
+        <div class="desc">대화의 원리, 공손성의 격률 등 핵심 요약 및 퀴즈</div>
+        <div class="badge">STUDY MODE</div>
+    </a>
+
 </body>
 </html>
