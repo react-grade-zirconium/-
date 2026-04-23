@@ -27,7 +27,7 @@
         position: relative;
     }
 
-    /* 배경 애니메이션 효과 */
+    /* 배경 효과 */
     .bg-gradient {
         position: absolute;
         top: 0; left: 0; width: 100%; height: 100%;
@@ -40,10 +40,6 @@
         padding: 20px;
         animation: fadeIn 1.5s ease-out;
         z-index: 10;
-    }
-
-    .logo-area {
-        margin-bottom: 30px;
     }
 
     .logo-text {
@@ -64,7 +60,6 @@
         text-transform: uppercase;
     }
 
-    /* 메인 버튼 스타일 */
     .start-btn {
         margin-top: 40px;
         padding: 18px 45px;
@@ -87,24 +82,7 @@
         box-shadow: 0 15px 35px rgba(37, 99, 235, 0.5);
     }
 
-    /* 하단 과목 요약 */
-    .subject-tags {
-        margin-top: 50px;
-        display: flex;
-        gap: 20px;
-        justify-content: center;
-        opacity: 0.6;
-    }
-
-    .tag {
-        font-size: 0.9rem;
-        background: rgba(255,255,255,0.05);
-        padding: 5px 15px;
-        border-radius: 20px;
-        border: 1px solid rgba(255,255,255,0.1);
-    }
-
-    /* 크레딧 (만든이, 도움 등) 영역 */
+    /* 🔥 하단 크레딧 스타일 */
     .credits {
         position: absolute;
         bottom: 40px;
@@ -124,7 +102,11 @@
 
     .credits .name {
         color: #e2e8f0;
-        margin-right: 20px;
+        margin-right: 25px;
+    }
+
+    .credits .name:last-child {
+        margin-right: 0;
     }
 
     @keyframes fadeIn {
@@ -134,7 +116,6 @@
 
     @media (max-width: 600px) {
         .logo-text { font-size: 3rem; }
-        .subject-tags { flex-wrap: wrap; }
         .credits { font-size: 0.75rem; bottom: 20px; }
     }
 </style>
@@ -146,23 +127,15 @@
     <div class="container">
         <div class="logo-area">
             <h1 class="logo-text">STUDY MAX</h1>
-            <p class="sub-text">내일의 나를 위한 완벽한 통합 학습 시스템</p>
+            <p class="sub-text">Ultimate Learning Portal System</p>
         </div>
 
         <a href="./portal.html" class="start-btn">학습 시작하기</a>
-
-        <div class="subject-tags">
-            <span class="tag">📖 국어</span>
-            <span class="tag">🧪 과학</span>
-            <span class="tag">🌍 사회</span>
-            <span class="tag">📚 한국사</span>
-            <span class="tag">💻 정보</span>
-        </div>
     </div>
 
     <div class="credits">
-        <span><span class="role">PROJECT BY</span> <span class="name">심규원</span></span>
-        <span><span class="role">SPECIAL THANKS TO</span> <span class="name">최시원, </span></span>
+        <span><span class="role">PROJECT BY</span> <span class="name">최시원</span></span>
+        <span><span class="role">SPECIAL THANKS TO</span> <span class="name">Google Gemini</span></span>
     </div>
 
 </body>
