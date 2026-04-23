@@ -13,62 +13,53 @@
             min-height: 100vh; margin: 0; padding: 20px; gap: 30px;
         }
 
-        /* 왼쪽: 핵심 요약 카드 */
-        .main-card { 
-            width: 320px; height: 450px; background: white; border-radius: 28px;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            text-decoration: none; transition: 0.4s; border: 2px solid transparent;
-            box-shadow: 0 15px 35px rgba(180, 83, 9, 0.1); padding: 30px; text-align: center;
-        }
-        .main-card:hover { transform: translateY(-10px); border-color: var(--kor-main); }
-
-        /* 오른쪽: 모의고사 리스트 영역 */
-        .exam-container { width: 400px; display: flex; flex-direction: column; gap: 15px; }
-        .exam-header { font-size: 1.5rem; font-weight: 900; color: var(--kor-main); margin-bottom: 10px; padding-left: 10px; border-left: 5px solid var(--kor-main); }
+        /* 📝 모의고사 리스트 영역 (기존 자료 2개) */
+        .exam-container { width: 450px; display: flex; flex-direction: column; gap: 15px; }
+        .exam-header { font-size: 1.7rem; font-weight: 900; color: var(--kor-main); margin-bottom: 15px; padding-left: 10px; border-left: 6px solid var(--kor-main); }
         
         .exam-item { 
-            background: white; padding: 20px; border-radius: 18px; 
-            display: flex; align-items: center; gap: 15px;
+            background: white; padding: 25px; border-radius: 18px; 
+            display: flex; align-items: center; justify-content: space-between;
             text-decoration: none; color: #451a03; font-weight: 700;
-            transition: 0.3s; box-shadow: 0 4px 10px rgba(180, 83, 9, 0.05);
+            transition: 0.3s; box-shadow: 0 4px 15px rgba(180, 83, 9, 0.08);
             border: 1px solid #ffedd5;
         }
-        .exam-item:hover { background: var(--kor-main); color: white; transform: scale(1.02); }
-        .exam-item .num { background: var(--kor-accent); color: #451a03; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 0.8rem; }
-        .exam-item:hover .num { background: white; }
+        .exam-item:hover { background: var(--kor-main); color: white; transform: scale(1.03); }
+        .exam-item .tag { font-size: 0.75rem; background: var(--kor-accent); padding: 3px 10px; border-radius: 10px; color: #451a03; font-weight: 800; }
 
-        .icon-big { font-size: 70px; margin-bottom: 20px; }
+        /* 💬 대화 파트 (사이드 카드) */
+        .side-card { 
+            width: 280px; height: 260px; background: #fffbeb; border-radius: 28px;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            padding: 30px; text-align: center; border: 2px dashed var(--kor-main);
+            text-decoration: none; transition: 0.3s;
+        }
+        .side-card:hover { background: white; border-style: solid; transform: translateY(-5px); }
+        .icon { font-size: 50px; margin-bottom: 15px; }
     </style>
 </head>
 <body>
 
-    <a href="./korean_talk.html" class="main-card">
-        <div class="icon-big">💬</div>
-        <div style="font-size: 1.6rem; font-weight: 900; color: #b45309; margin-bottom: 10px;">대화와 매체</div>
-        <p style="color: #92400e; font-size: 1rem; line-height: 1.6;">대화의 원리, 공손성의 격률<br>핵심 요약 및 체크 퀴즈</p>
-        <div style="margin-top: 20px; padding: 8px 20px; background: #fff7ed; border-radius: 50px; color: #b45309; font-weight: bold; font-size: 0.9rem;">이론 공부하기</div>
-    </a>
-
     <div class="exam-container">
-        <div class="exam-header">실전 모의고사 시리즈</div>
+        <div class="exam-header">기본 모의고사</div>
         
         <a href="./korean_poem.html" class="exam-item">
-            <span class="num">01</span>
-            <span>국어 서정 시 모의고사 (기본)</span>
+            <span>📖 서정 시 모의고사 1회</span>
+            <span class="tag">기존자료</span>
         </a>
 
         <a href="./korean_exam2.html" class="exam-item">
-            <span class="num">02</span>
-            <span>국어 서정 시 모의고사 (심화)</span>
+            <span>📖 서정 시 모의고사 2, 3회</span>
+            <span class="tag">기존자료</span>
         </a>
-
-        <a href="./korean_exam3.html" class="exam-item">
-            <span class="num">03</span>
-            <span>국어 현대 소설 모의고사</span>
-        </a>
-
-        <p style="text-align: center; font-size: 0.85rem; color: #92400e; opacity: 0.7; margin-top: 10px;">* 새로운 모의고사는 계속 업데이트됩니다.</p>
     </div>
+
+    <a href="./korean_talk.html" class="side-card">
+        <div class="icon">💬</div>
+        <h3 style="margin: 0; color: #b45309; font-size: 1.3rem;">대화의 원리</h3>
+        <p style="font-size: 0.9rem; color: #92400e; margin-top: 10px; line-height: 1.5;">핵심 요약 노트 & 퀴즈</p>
+        <span style="margin-top: 15px; font-weight: bold; color: #b45309; font-size: 0.85rem; background: white; padding: 5px 15px; border-radius: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">학습하기</span>
+    </a>
 
 </body>
 </html>
