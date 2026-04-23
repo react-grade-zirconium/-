@@ -3,174 +3,85 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>STUDY MAX — 통합 학습 포털</title>
-<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@100;400;700;900&display=swap" rel="stylesheet">
+<title>STUDY MAX — 포털</title>
+<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
-    :root {
-        --primary: #2563eb;
-        --dark: #0f172a;
-        --accent: #60a5fa;
-    }
+    :root { --primary: #2563eb; --dark: #1e293b; --bg: #f8fafc; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Pretendard', sans-serif; background: var(--bg); display: flex; height: 100vh; overflow: hidden; }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    /* 사이드바 */
+    .sidebar { width: 250px; background: var(--dark); color: white; display: flex; flex-direction: column; height: 100vh; flex-shrink: 0; }
+    .sidebar-header { padding: 30px 20px; font-size: 1.5rem; font-weight: 900; border-bottom: 1px solid rgba(255,255,255,0.1); text-align: center; color: #60a5fa; }
     
-    body {
-        font-family: 'Pretendard', sans-serif;
-        background-color: var(--dark);
-        color: white;
-        height: 100vh;
+    .subject-list { flex: 1; padding: 20px 0; }
+    .subject-item { padding: 18px 25px; cursor: pointer; transition: 0.3s; opacity: 0.6; display: flex; align-items: center; gap: 12px; }
+    .subject-item:hover { background: rgba(255,255,255,0.05); opacity: 1; }
+    .subject-item.active { opacity: 1; background: var(--primary); font-weight: bold; }
+
+    /* 🏠 메인으로 돌아가기 버튼 (사이드바 하단) */
+    .sidebar-footer {
+        padding: 20px;
+        border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    .home-btn {
         display: flex;
-        flex-direction: column;
         align-items: center;
         justify-content: center;
-        overflow: hidden;
-        position: relative;
-    }
-
-    /* 배경 애니메이션 효과 */
-    .bg-gradient {
-        position: absolute;
-        top: 0; left: 0; width: 100%; height: 100%;
-        background: radial-gradient(circle at 50% 50%, rgba(37, 99, 235, 0.15) 0%, transparent 70%);
-        z-index: -1;
-    }
-
-    .container {
-        text-align: center;
-        padding: 20px;
-        animation: fadeIn 1.5s ease-out;
-        z-index: 10;
-    }
-
-    .logo-area {
-        margin-bottom: 30px;
-    }
-
-    /* 큰 프로젝트 제목으로 활용 */
-    .logo-text {
-        font-size: 5rem;
-        font-weight: 900;
-        letter-spacing: -2px;
-        background: linear-gradient(to right, #ffffff, var(--accent));
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        margin-bottom: 10px;
-    }
-
-    .sub-text {
-        font-size: 1.2rem;
+        gap: 8px;
+        width: 100%;
+        padding: 12px;
+        background: rgba(255,255,255,0.1);
         color: #94a3b8;
-        font-weight: 400;
-        letter-spacing: 2px;
-        text-transform: uppercase;
-    }
-
-    /* 메인 버튼 스타일 */
-    .start-btn {
-        margin-top: 40px;
-        padding: 18px 45px;
-        font-size: 1.1rem;
-        font-weight: 700;
-        color: white;
-        background: var(--primary);
-        border: none;
-        border-radius: 50px;
-        cursor: pointer;
         text-decoration: none;
-        transition: all 0.3s;
-        display: inline-block;
-        box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
-    }
-
-    .start-btn:hover {
-        transform: translateY(-5px);
-        background: #1d4ed8;
-        box-shadow: 0 15px 35px rgba(37, 99, 235, 0.5);
-    }
-
-    /* 하단 과목 요약 */
-    .subject-tags {
-        margin-top: 50px;
-        display: flex;
-        gap: 20px;
-        justify-content: center;
-        opacity: 0.6;
-    }
-
-    .tag {
+        border-radius: 8px;
         font-size: 0.9rem;
-        background: rgba(255,255,255,0.05);
-        padding: 5px 15px;
-        border-radius: 20px;
-        border: 1px solid rgba(255,255,255,0.1);
+        font-weight: 700;
+        transition: 0.3s;
+    }
+    .home-btn:hover {
+        background: #ef4444; /* 나갈 때는 살짝 붉은색 포인트 */
+        color: white;
     }
 
-    /* 🔥 크레딧 (만든이, 도움 등) 영역 */
-    .credits {
-        position: absolute;
-        bottom: 40px;
-        text-align: center;
-        font-size: 0.85rem;
-        color: #64748b;
-        line-height: 1.8;
-        animation: fadeIn 2s ease-out;
-    }
-
-    .credits .role {
-        font-weight: 900;
-        color: var(--accent);
-        margin-right: 8px;
-        letter-spacing: 1px;
-    }
-
-    .credits .name {
-        color: #e2e8f0;
-        margin-right: 20px;
-    }
-
-    .credits .name:last-child {
-        margin-right: 0;
-    }
-
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(20px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* 반응형 */
-    @media (max-width: 600px) {
-        .logo-text { font-size: 3rem; }
-        .subject-tags { flex-wrap: wrap; }
-        .credits { font-size: 0.75rem; bottom: 20px; padding: 0 10px; }
-        .credits .name { margin-right: 10px; }
-    }
+    /* 메인 영역 */
+    .main-content { flex: 1; padding: 25px; display: flex; flex-direction: column; height: 100vh; }
+    .frame-box { flex: 1; background: white; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); overflow: hidden; }
+    iframe { width: 100%; height: 100%; border: none; }
 </style>
 </head>
 <body>
 
-    <div class="bg-gradient"></div>
-
-    <div class="container">
-        <div class="logo-area">
-            <h1 class="logo-text">STUDY MAX</h1>
-            <p class="sub-text">내일의 나를 위한 완벽한 통합 학습 시스템</p>
-        </div>
-
-        <a href="./portal.html" class="start-btn">학습 시작하기</a>
-
-        <div class="subject-tags">
-            <span class="tag">📖 국어</span>
-            <span class="tag">🧪 과학</span>
-            <span class="tag">🌍 사회</span>
-            <span class="tag">📚 한국사</span>
-            <span class="tag">💻 정보</span>
-        </div>
+<div class="sidebar">
+    <div class="sidebar-header">STUDY MAX</div>
+    
+    <div class="subject-list">
+        <div id="side-korean" class="subject-item active" onclick="go('korean_hub.html', this)">📖 국어 모의고사</div>
+        <div id="side-science" class="subject-item" onclick="go('science_hub.html', this)">🧪 통합과학</div>
+        <div id="side-climate" class="subject-item" onclick="go('climate_interactive.html', this)">🌍 사회 (기후)</div>
+        <div id="side-history" class="subject-item" onclick="go('history_interactive.html', this)">📚 한국사</div>
+        <div id="side-info" class="subject-item" onclick="go('mega_study.html', this)">💻 정보 (알고리즘)</div>
     </div>
 
-    <div class="credits">
-        <span><span class="role">PROJECT BY</span> <span class="name">최시원</span></span>
-        <span><span class="role">SPECIAL THANKS TO</span> <span class="name">Google Gemini</span></span>
+    <div class="sidebar-footer">
+        <a href="./index.html" class="home-btn">
+            <span>🏠</span> 인트로 화면으로
+        </a>
     </div>
+</div>
 
+<div class="main-content">
+    <div class="frame-box">
+        <iframe id="mainFrame" src="./korean_hub.html"></iframe>
+    </div>
+</div>
+
+<script>
+    function go(url, el) {
+        document.querySelectorAll('.subject-item').forEach(item => item.classList.remove('active'));
+        el.classList.add('active');
+        document.getElementById('mainFrame').src = "./" + url;
+    }
+</script>
 </body>
 </html>
