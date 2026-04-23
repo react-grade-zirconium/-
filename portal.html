@@ -3,21 +3,45 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>통합 학습 포털 MAX</title>
+<title>STUDY MAX — 통합 학습 포털</title>
+<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
-    :root { --primary: #2563eb; --dark: #1e293b; --bg: #f8fafc; }
+    :root { 
+        --primary: #2563eb; 
+        --dark: #1e293b; 
+        --bg: #f8fafc; 
+        --kor-theme: #b45309;
+        --sci-theme: #0891b2;
+        --soc-theme: #f59e0b;
+    }
+    
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: 'Pretendard', sans-serif; background: var(--bg); display: flex; height: 100vh; overflow: hidden; }
 
     /* 사이드바 */
-    .sidebar { width: 250px; background: var(--dark); color: white; display: flex; flex-direction: column; flex-shrink: 0; }
-    .sidebar-header { padding: 30px 20px; font-size: 1.5rem; font-weight: 900; border-bottom: 1px solid rgba(255,255,255,0.1); text-align: center; color: #60a5fa; }
-    .subject-list { flex: 1; padding: 20px 0; }
-    .subject-item { padding: 18px 25px; cursor: pointer; transition: 0.3s; opacity: 0.6; }
+    .sidebar { width: 250px; background: var(--dark); color: white; display: flex; flex-direction: column; height: 100vh; flex-shrink: 0; }
+    .sidebar-header { padding: 30px 20px; font-size: 1.5rem; font-weight: 900; border-bottom: 1px solid rgba(255,255,255,0.1); text-align: center; color: #60a5fa; cursor: default; }
+    
+    .subject-list { flex: 1; padding: 20px 0; overflow-y: auto; }
+    .subject-item { padding: 18px 25px; cursor: pointer; transition: 0.3s; opacity: 0.6; display: flex; align-items: center; gap: 12px; }
+    .subject-item:hover { background: rgba(255,255,255,0.05); opacity: 1; }
     .subject-item.active { opacity: 1; background: var(--primary); font-weight: bold; }
 
-    /* 메인 영역 */
-    .main-content { flex: 1; padding: 25px; display: flex; flex-direction: column; }
+    /* 사이드바 하단 홈 버튼 */
+    .sidebar-footer { padding: 20px; border-top: 1px solid rgba(255,255,255,0.1); }
+    .home-btn {
+        display: flex; align-items: center; justify-content: center; gap: 8px;
+        width: 100%; padding: 12px; background: rgba(255,255,255,0.1);
+        color: #94a3b8; text-decoration: none; border-radius: 8px;
+        font-size: 0.9rem; font-weight: 700; transition: 0.3s;
+    }
+    .home-btn:hover { background: #ef4444; color: white; }
+
+    /* 메인 컨텐츠 영역 */
+    .main-content { flex: 1; padding: 25px; display: flex; flex-direction: column; height: 100vh; }
+    .subject-header { margin-bottom: 15px; display: flex; align-items: center; justify-content: space-between; }
+    .subject-title { font-size: 1.6rem; font-weight: 800; border-left: 8px solid var(--primary); padding-left: 15px; }
+
     .frame-box { flex: 1; background: white; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); overflow: hidden; }
     iframe { width: 100%; height: 100%; border: none; }
 </style>
@@ -26,26 +50,60 @@
 
 <div class="sidebar">
     <div class="sidebar-header">STUDY MAX</div>
+    
     <div class="subject-list">
-        <div id="side-korean" class="subject-item active" onclick="go('korean_hub.html', this)">📖 국어 모의고사</div>
-        <div id="side-science" class="subject-item" onclick="go('science_hub.html', this)">🧪 통합과학</div>
-        <div id="side-climate" class="subject-item" onclick="go('climate_interactive.html', this)">🌍 사회 (기후/지리)</div>
-        <div id="side-history" class="subject-item" onclick="go('history_interactive.html', this)">📚 한국사 (인터랙티브)</div>
-        <div id="side-info" class="subject-item" onclick="go('mega_study.html', this)">💻 정보 (알고리즘)</div>
+        <div id="side-korean" class="subject-item active" onclick="go('korean_hub.html', 'korean', this)">📖 국어 모의고사</div>
+        <div id="side-science" class="subject-item" onclick="go('science_hub.html', 'science', this)">🧪 통합과학</div>
+        <div id="side-society" class="subject-item" onclick="go('society_hub.html', 'society', this)">🌍 사회 (행복/지리)</div>
+        <div id="side-history" class="subject-item" onclick="go('history_interactive.html', 'history', this)">📚 한국사</div>
+        <div id="side-info" class="subject-item" onclick="go('mega_study.html', 'info', this)">💻 정보 (알고리즘)</div>
+    </div>
+
+    <div class="sidebar-footer">
+        <a href="./index.html" class="home-btn" target="_top">
+            <span>🏠</span> 인트로 화면으로
+        </a>
     </div>
 </div>
 
 <div class="main-content">
+    <div class="subject-header">
+        <h1 id="mainTitle" class="subject-title">국어 서정 시 모의고사</h1>
+    </div>
     <div class="frame-box">
         <iframe id="mainFrame" src="./korean_hub.html"></iframe>
     </div>
 </div>
 
 <script>
-    function go(url, el) {
+    function go(url, type, el) {
+        // 사이드바 활성화 상태 업데이트
         document.querySelectorAll('.subject-item').forEach(item => item.classList.remove('active'));
         el.classList.add('active');
-        document.getElementById('mainFrame').src = "./" + url;
+
+        const frame = document.getElementById('mainFrame');
+        const title = document.getElementById('mainTitle');
+
+        // 과목별 제목 및 강조색 변경
+        if(type === 'korean') {
+            title.innerText = "국어 서정 시 모의고사";
+            title.style.borderLeftColor = 'var(--kor-theme)';
+        } else if(type === 'science') {
+            title.innerText = "통합과학 인터랙티브 학습";
+            title.style.borderLeftColor = 'var(--sci-theme)';
+        } else if(type === 'society') {
+            title.innerText = "사회 (행복 및 지리)";
+            title.style.borderLeftColor = 'var(--soc-theme)';
+        } else if(type === 'history') {
+            title.innerText = "한국사 인터랙티브";
+            title.style.borderLeftColor = 'var(--primary)';
+        } else if(type === 'info') {
+            title.innerText = "정보 (알고리즘 및 프로그래밍)";
+            title.style.borderLeftColor = '#0d9488';
+        }
+
+        // iframe 경로 변경
+        frame.src = "./" + url;
     }
 </script>
 </body>
