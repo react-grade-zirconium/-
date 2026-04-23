@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>국어 핵심 정리 - 대화의 원리와 매체</title>
+    <style>
+        :root {
+            --mega-blue: #004ea2;
+            --mega-light-blue: #eef4fb;
+            --mega-orange: #ff6600;
+            --text-dark: #333;
+            --border-color: #d1d1d1;
+        }
+        body { font-family: 'Pretendard', 'Malgun Gothic', sans-serif; line-height: 1.6; color: var(--text-dark); margin: 0; padding: 20px; background-color: #f9f9f9; }
+        .container { max-width: 900px; margin: 0 auto; background: #fff; padding: 40px; border: 1px solid var(--border-color); box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        
+        /* 헤더 스타일 */
+        header { border-bottom: 3px solid var(--mega-blue); padding-bottom: 10px; margin-bottom: 30px; display: flex; justify-content: space-between; align-items: flex-end; }
+        .title-box h1 { margin: 0; color: var(--mega-blue); font-size: 28px; }
+        .student-info { font-size: 14px; color: #666; }
+
+        /* 섹션 스타일 */
+        h2 { background: var(--mega-blue); color: white; padding: 8px 15px; font-size: 18px; display: inline-block; border-radius: 0 15px 15px 0; margin-top: 40px; }
+        h3 { border-left: 4px solid var(--mega-orange); padding-left: 10px; color: var(--text-dark); margin-top: 25px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
+        
+        .content-box { background: var(--mega-light-blue); padding: 15px; border-radius: 8px; margin: 10px 0; }
+        ul { list-style: none; padding-left: 10px; }
+        li { margin-bottom: 8px; position: relative; padding-left: 18px; }
+        li::before { content: '•'; color: var(--mega-blue); position: absolute; left: 0; font-weight: bold; }
+        
+        .example-card { border: 1px dashed #aaa; padding: 12px; background: #fff; margin: 10px 0; font-size: 0.95em; border-radius: 5px; }
+        
+        /* 문제 영역 스타일 */
+        .quiz-section { margin-top: 50px; border-top: 2px solid var(--border-color); padding-top: 20px; }
+        .quiz-title { font-size: 20px; color: var(--mega-orange); font-weight: bold; margin-bottom: 20px; text-align: center; }
+        .grid-questions { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .question-item { border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 5px; }
+        .q-num { font-weight: bold; color: var(--mega-blue); margin-right: 5px; }
+        
+        table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 0.9em; }
+        th, td { border: 1px solid var(--border-color); padding: 10px; text-align: center; }
+        th { background: #f2f2f2; }
+
+        @media (max-width: 600px) { .grid-questions { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="title-box">
+            <p style="color: var(--mega-orange); font-weight: bold; margin-bottom: 5px;">[핵심 요약 노트]</p>
+            <h1>국어: 대화의 원리와 매체 언어</h1>
+        </div>
+        <div class="student-info">작성자: 최시원</div>
+    </header>
+
+    <section>
+        <h2>01. 대화의 원리</h2>
+        <div class="content-box">
+            <strong>대화의 목적 [cite: 1]:</strong> 전달하고자 하는 바를 명확히 표현하고 [cite: 2], 상대방의 말을 잘 이해하며 [cite: 3], 좋은 관계를 형성·지속하고 협력하기 위함입니다. [cite: 4, 5]
+        </div>
+
+        <h3>협력의 원리 (Grice) [cite: 14]</h3>
+        <ul>
+            <li><strong>양의 격률:</strong> 필요한 만큼의 정보를 제공함 [cite: 15]</li>
+            <li><strong>질의 격률:</strong> 타당한 근거를 바탕으로 진실만을 말함 [cite: 16]</li>
+            <li><strong>관련성의 격률:</strong> 대화의 목적이나 주제에 연관된 내용을 말함 [cite: 17]</li>
+            <li><strong>태도의 격률:</strong> 모호하거나 중의적인 표현을 피함 [cite: 18]</li>
+        </ul>
+
+        <h3>공손성의 원리 (Leech) [cite: 19]</h3>
+        <table>
+            <tr><th>종류</th><th>핵심 내용</th><th>예시 [cite: 21, 23, 25, 27, 31]</th></tr>
+            <tr><td>요령 [cite: 20]</td><td>청자 부담↓, 이익↑</td><td>의문형으로 부탁하기</td></tr>
+            <tr><td>관용 [cite: 22]</td><td>화자 이익↓, 부담↑</td><td>"내가 할게", "내가 도와줄게"</td></tr>
+            <tr><td>찬동 [cite: 24]</td><td>청자 비난↓, 칭찬↑</td><td>"넌 정말 좋은 친구야!"</td></tr>
+            <tr><td>겸양 [cite: 26]</td><td>화자 칭찬↓, 비난↑</td><td>"난 연습이 더 필요해"</td></tr>
+            <tr><td>동의 [cite: 28]</td><td>의견 차이↓, 일치↑</td><td>"저녁 먹는 건 좋은데..."</td></tr>
+        </table>
+    </section>
+
+    <section>
+        <h2>02. 체면 유지와 담화 관습</h2>
+        <h3>체면 유지의 원리 [cite: 33]</h3>
+        <ul>
+            <li><strong>정의:</strong> 사회 구성원이 보호받고 싶어 하는 공개적 자아(인정욕구 + 간섭받지 않을 욕구) [cite: 34, 35]</li>
+            <li><strong>방법:</strong> 간접적 표현, 예의와 존중 사용 [cite: 36]</li>
+            <li><strong>주의:</strong> 단칼에 거절하거나 여러 사람 앞에서 비판하지 않기 [cite: 37, 38]</li>
+        </ul>
+
+        <h3>우리 사회의 담화 관습 [cite: 40, 42]</h3>
+        <div class="grid-questions">
+            <div>
+                <strong>① 말의 신중함 [cite: 45]</strong>
+                <ul>
+                    <li>장점: 말실수 감소 [cite: 47]</li>
+                    <li>단점: 의견이 불분명할 수 있음 [cite: 48]</li>
+                </ul>
+            </div>
+            <div>
+                <strong>② 우회적 표현 [cite: 51]</strong>
+                <ul>
+                    <li>장점: 편안한 분위기 조성 [cite: 53]</li>
+                    <li>단점: 오해 유발, 겉치레 [cite: 54]</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>03. 매체와 사회적 맥락</h2>
+        <div class="content-box">
+            <strong>매체의 변화:</strong> 뉴스/영화 등 레거시 미디어에서 개인이 생산하는 뉴미디어로 확장되었습니다. [cite: 69]
+        </div>
+        <ul>
+            <li><strong>사회·문화적 맥락:</strong> 특정 사회/문화 속 배경이나 환경(역사적, 정치적, 경제적, 문화적 규범) [cite: 70, 72, 74]</li>
+            <li><strong>비판적 분석:</strong> 매체 생산자의 특정 관점(선택, 강조, 배제)이 반영되므로 주체적 수용이 필요합니다. [cite: 76, 78]</li>
+        </ul>
+    </section>
+
+    <section class="quiz-section">
+        <div class="quiz-title">CHECK QUIZ (학습 확인 문제)</div>
+        <div class="grid-questions">
+            <div>
+                <div class="question-item"><span class="q-num">01.</span> 대화의 원리는 전달하려는 바를 □□히 표현하기 위함이다.</div>
+                <div class="question-item"><span class="q-num">02.</span> 대화를 통해 상대방과 □□ 관계를 형성할 수 있다.</div>
+                <div class="question-item"><span class="q-num">03.</span> 협력의 원리는 대화의 □□과 요구에 맞게 말하는 것이다.</div>
+                <div class="question-item"><span class="q-num">04.</span> 필요한 만큼만 정보를 제공하는 것은 □의 격률이다.</div>
+                <div class="question-item"><span class="q-num">05.</span> 거짓을 말하지 않고 근거를 대는 것은 □의 격률이다.</div>
+                <div class="question-item"><span class="q-num">06.</span> 주제와 관련 있는 말을 하는 것은 □□성이다.</div>
+                <div class="question-item"><span class="q-num">07.</span> 모호한 표현을 피하는 것은 □□의 격률이다.</div>
+                <div class="question-item"><span class="q-num">08.</span> 청자의 부담을 줄여주는 격률은?</div>
+                <div class="question-item"><span class="q-num">09.</span> 화자 자신의 부담을 높이는 격률은?</div>
+                <div class="question-item"><span class="q-num">10.</span> 청자를 비난하지 않고 칭찬하는 것은 □□의 격률이다.</div>
+                <div class="question-item"><span class="q-num">11.</span> 자신을 낮추고 겸손하게 말하는 것은 □□의 격률이다.</div>
+                <div class="question-item"><span class="q-num">12.</span> 의견 차이를 줄이고 일치를 높이는 것은 □□의 격률이다.</div>
+                <div class="question-item"><span class="q-num">13.</span> "창문 좀 닫아줄래?"는 어떤 격률을 지킨 것인가?</div>
+                <div class="question-item"><span class="q-num">14.</span> "제가 부족해서 그래요"는 어떤 격률인가?</div>
+                <div class="question-item"><span class="q-num">15.</span> 체면은 모든 사회 구성원이 □□받고 싶어 하는 자아다.</div>
+            </div>
+            <div>
+                <div class="question-item"><span class="q-num">16.</span> 체면 유지를 위해 주로 □□적 표현을 사용한다.</div>
+                <div class="question-item"><span class="q-num">17.</span> 남들 앞에서 상대방을 □□하는 것은 체면을 깎는 일이다.</div>
+                <div class="question-item"><span class="q-num">18.</span> 담화 관습은 공동체 의식과 □□을 중시한다.</div>
+                <div class="question-item"><span class="q-num">19.</span> 말의 신중함을 강조하면 □□수를 줄일 수 있다.</div>
+                <div class="question-item"><span class="q-num">20.</span> "낮말은 새가 듣고..."는 어떤 담화 관습과 관련 있나?</div>
+                <div class="question-item"><span class="q-num">21.</span> 우회적 표현의 단점은 무엇이 생길 수 있다는 점인가?</div>
+                <div class="question-item"><span class="q-num">22.</span> 예의와 격식을 중시하는 것은 타인을 □□하기 위함이다.</div>
+                <div class="question-item"><span class="q-num">23.</span> 담화 관습이 변화하는 배경 중 하나는 □□가족화다.</div>
+                <div class="question-item"><span class="q-num">24.</span> 정보나 사실을 널리 전달하는 수단을 무엇이라 하는가?</div>
+                <div class="question-item"><span class="q-num">25.</span> 뉴스나 영화는 □□ 미디어에 해당한다.</div>
+                <div class="question-item"><span class="q-num">26.</span> 개인이 정보를 생산하는 미디어는?</div>
+                <div class="question-item"><span class="q-num">27.</span> 우리나라는 역사적으로 □□에 대한 거부감이 있다.</div>
+                <div class="question-item"><span class="q-num">28.</span> 매체는 생산자의 특정 □□이 반영된다.</div>
+                <div class="question-item"><span class="q-num">29.</span> 정보를 무비판적으로 받지 않고 □□적으로 수용해야 한다.</div>
+                <div class="question-item"><span class="q-num">30.</span> 매체 자료 분석 시 선택, 강조, □□를 파악해야 한다.</div>
+            </div>
+        </div>
+    </section>
+</div>
+
+</body>
+</html>
