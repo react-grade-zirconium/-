@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <style>
-    /* 과학 파트만의 시그니처 테마 컬러 */
+    /* 과학 파트 시그니처 테마 컬러 */
     :root { --sci: #0891b2; --bg: #f8fafc; }
     
     body { 
@@ -69,7 +69,7 @@
 
 <div class="nav">
     <button class="nav-btn active" onclick="load('physics.html', this)">⚡ 물리</button>
-    <button class="nav-btn" onclick="load('chemistry.html', this)">🧪 화학</button>
+    <button class="nav-btn" onclick="load('chemistry_interactive.html', this)">🧪 화학</button>
     <button class="nav-btn" onclick="load('biology.html', this)">🧬 생명과학</button>
     <button class="nav-btn" onclick="load('earth_science.html', this)">🌌 지구과학</button>
 </div>
@@ -87,11 +87,6 @@
         // iframe 경로 변경
         document.getElementById('sciFrame').src = "./" + url;
     }
-
-    // 메인(index.html)에서 과학 탭을 처음 눌렀을 때 기본값 설정
-    window.onload = () => {
-        // 필요 시 특정 과목을 기본으로 띄울 수 있습니다.
-    };
 </script>
 </body>
 </html>
