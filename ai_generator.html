@@ -24,12 +24,10 @@
         .subject-badge { display: inline-block; padding: 4px 12px; background: #ede9fe; color: #7c3aed; border-radius: 20px; font-size: 0.85rem; font-weight: 800; margin-bottom: 15px; }
         .problem-text { font-size: 1.4rem; font-weight: 800; margin-bottom: 25px; color: #1e293b; line-height: 1.6; word-break: keep-all; }
         
-        /* 주관식/OX 입력 영역 */
         .answer-area { display: none; justify-content: center; gap: 10px; margin-top: 20px; width: 100%; }
         .answer-area input { padding: 12px; font-size: 1.1rem; width: 250px; text-align: center; border: 2px solid #e2e8f0; border-radius: 10px; }
         .answer-area input:focus { border-color: var(--ai); outline: none; }
         
-        /* 객관식 (5지선다) 버튼 영역 */
         .options-area { display: none; flex-direction: column; gap: 10px; width: 100%; max-width: 500px; margin-top: 10px; }
         .option-btn { padding: 15px 20px; background: white; border: 2px solid #e2e8f0; border-radius: 12px; cursor: pointer; text-align: left; font-size: 1.05rem; transition: 0.2s; font-weight: bold; color: #334155; }
         .option-btn:hover { border-color: var(--ai); background: #f5f3ff; color: var(--ai); transform: translateX(5px); }
@@ -44,6 +42,8 @@
         @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         .loader { display: none; margin: 20px auto; width: 40px; height: 40px; border: 4px solid #f3f3f3; border-top: 4px solid var(--ai); border-radius: 50%; animation: spin 1s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        
+        .enter-hint { font-size: 0.8rem; color: #94a3b8; margin-top: -5px; animation: slideUp 0.3s ease; }
     </style>
 </head>
 <body>
@@ -84,8 +84,17 @@
 <script>
     let curAns = "";
     let isMultiple = false;
+    let isWaitingForNext = false; // 엔터키로 다음 문제 넘어가기를 감지하는 변수
+
+    // 전체 화면에서 엔터키 입력을 감지하는 이벤트
+    document.addEventListener('keydown', (e) => {
+        if(e.key === 'Enter' && isWaitingForNext) {
+            generate(); // 결과 대기 상태일 때 엔터를 누르면 다음 문제 생성
+        }
+    });
 
     function generate() {
+        isWaitingForNext = false; // 문제 생성 시 상태 초기화
         const sub = document.getElementById('subjectSelect').value;
         const badge = document.getElementById('subjectBadge');
         const txt = document.getElementById('problemText');
@@ -94,7 +103,6 @@
         const optArea = document.getElementById('optionsArea');
         const feedback = document.getElementById('feedbackText');
 
-        // UI 초기화
         area.style.display = 'none';
         optArea.style.display = 'none';
         badge.style.display = 'none';
@@ -106,7 +114,6 @@
             loader.style.display = 'none';
             let qData = {};
 
-            // 문제 은행
             const bank = {
                 korean: [
                     { type: 'ox', q: "[OX퀴즈] 공손성의 원리 중 '자신을 낮추고 겸손하게 말하는 것'은 찬동의 격률이다. (O / X 로 입력)", a: "X" },
@@ -125,7 +132,6 @@
                     { type: 'short', q: "[단답형] 도덕적 성찰과 실천을 통해 도달하는 불교의 이상적인 상태(목표)는 무엇인가요?", a: "열반" },
                     { type: 'multi', q: "[5지선다] 다음 중 인간의 행복을 결정짓는 객관적(물질적) 조건에 해당하는 것은?", opts: ["① 삶의 만족도", "② 긍정적 정서", "③ 자아 실현", "④ 소득 수준 및 주거 환경", "⑤ 가치관"], a: "④ 소득 수준 및 주거 환경" }
                 ],
-                // 정보 파트: 자료형 문제 제거 및 알고리즘/제어문 집중
                 info: [
                     { type: 'ox', q: "[OX퀴즈] 알고리즘은 문제를 해결하기 위한 절차로, 반드시 끝이 나야 하는 '유한성'을 가진다. (O / X 로 입력)", a: "O" },
                     { type: 'short', q: "[단답형] 어떤 문제를 해결하기 위해 명확하게 정의된 일련의 절차나 방법을 무엇이라고 하는가?", a: "알고리즘" },
@@ -160,20 +166,27 @@
                 document.getElementById('userAnswer').value = "";
                 document.getElementById('userAnswer').focus();
             }
-        }, 500);
+        }, 300); // 로딩 속도를 살짝 단축해서 쾌적하게!
     }
 
     function check(val) {
+        if(isWaitingForNext) return; // 이미 결과가 나왔을 때 중복 방지
+
         let user = isMultiple ? val : document.getElementById('userAnswer').value.trim().toUpperCase();
         const f = document.getElementById('feedbackText');
         
         if(user === curAns.toUpperCase()) {
             f.innerHTML = `<span class="correct">✅ 정답입니다! 아주 훌륭해요.</span>
-                           <button class="next-btn" onclick="generate()">다음 문제 생성 ⚡</button>`;
+                           <button class="next-btn" onclick="generate()">다음 문제 생성 ⚡</button>
+                           <div class="enter-hint">(Enter 키를 누르면 다음 문제로 넘어갑니다)</div>`;
         } else {
             f.innerHTML = `<span class="wrong">❌ 틀렸습니다. (정답: ${curAns})</span>
-                           <button class="next-btn" onclick="generate()">다른 문제 도전 ⚡</button>`;
+                           <button class="next-btn" onclick="generate()">다른 문제 도전 ⚡</button>
+                           <div class="enter-hint">(Enter 키를 누르면 다음 문제로 넘어갑니다)</div>`;
         }
+
+        // 약간의 딜레이를 주어 정답 제출 시 누른 엔터키와 중복 인식되는 것을 방지
+        setTimeout(() => { isWaitingForNext = true; }, 100);
     }
 </script>
 </body>
