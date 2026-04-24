@@ -5,18 +5,18 @@
     <title>국어 학습 허브</title>
     <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        :root { --kor-main: #b45309; --kor-bg: #fff7ed; }
+        :root { --kor-main: #b45309; --kor-bg: #fff7ed; --mini-main: #059669; }
         body { 
             font-family: 'Pretendard', sans-serif; 
             background: var(--kor-bg); 
             display: flex; justify-content: center; align-items: center; 
-            min-height: 100vh; margin: 0; padding: 40px; gap: 20px;
+            min-height: 100vh; margin: 0; padding: 60px 40px; gap: 20px;
             flex-wrap: wrap;
         }
 
         .card { 
-            width: 260px; 
-            height: 340px; 
+            width: 240px; 
+            height: 320px; 
             background: white; 
             border-radius: 24px; 
             display: flex; 
@@ -39,11 +39,11 @@
         }
 
         .icon { 
-            font-size: 45px; 
+            font-size: 35px; 
             margin-bottom: 15px; 
             background: #fff7ed;
-            width: 80px;
-            height: 80px;
+            width: 70px;
+            height: 70px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -51,31 +51,37 @@
         }
 
         .title { 
-            font-size: 1.25rem; 
+            font-size: 1.1rem; 
             font-weight: 900; 
             color: var(--kor-main); 
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             word-break: keep-all;
         }
 
         .desc { 
-            font-size: 0.9rem; 
+            font-size: 0.85rem; 
             color: #7c2d12; 
             line-height: 1.5;
             word-break: keep-all;
-            opacity: 0.85;
+            opacity: 0.8;
             margin-bottom: 15px;
         }
 
         .badge {
             margin-top: auto;
-            padding: 5px 12px;
+            padding: 4px 12px;
             background: var(--kor-main);
             color: white;
-            border-radius: 10px;
-            font-size: 0.7rem;
+            border-radius: 8px;
+            font-size: 0.65rem;
             font-weight: bold;
         }
+
+        /* 미니 모의고사 전용 스타일 */
+        .mini-card:hover { border-color: var(--mini-main); }
+        .mini-icon { background: #ecfdf5; }
+        .mini-title { color: var(--mini-main); }
+        .mini-badge { background: var(--mini-main); }
     </style>
 </head>
 <body>
@@ -97,15 +103,29 @@
     <a href="./korean_literature.html" class="card">
         <div class="icon">🌸</div>
         <div class="title">문학의 이해</div>
-        <div class="desc">시의 화자와 수사법, 소설의 구성 및 시점 총정리</div>
+        <div class="desc">시/소설의 구성 및 수사법 핵심 총정리</div>
         <div class="badge">LITERATURE</div>
     </a>
 
-    <a href="./korean_mock_exam.html" class="card">
-        <div class="icon">✍️</div>
-        <div class="title">모의고사 기출문제</div>
-        <div class="desc">최신 모의고사 기출 문항 풀이 및 정답 확인</div>
-        <div class="badge" style="background: #2563eb;">PRACTICE</div>
+    <a href="./korean_mini_01.html" class="card mini-card">
+        <div class="icon mini-icon">🎯</div>
+        <div class="title mini-title">미니 모의고사 1회</div>
+        <div class="desc">핵심 문항 위주의 국어 실전 감각 익히기</div>
+        <div class="badge mini-badge">MINI TEST</div>
+    </a>
+
+    <a href="./korean_mini_02.html" class="card mini-card">
+        <div class="icon mini-icon">🎯</div>
+        <div class="title mini-title">미니 모의고사 2회</div>
+        <div class="desc">핵심 문항 위주의 국어 실전 감각 익히기</div>
+        <div class="badge mini-badge">MINI TEST</div>
+    </a>
+
+    <a href="./korean_mini_03.html" class="card mini-card">
+        <div class="icon mini-icon">🎯</div>
+        <div class="title mini-title">미니 모의고사 3회</div>
+        <div class="desc">핵심 문항 위주의 국어 실전 감각 익히기</div>
+        <div class="badge mini-badge">MINI TEST</div>
     </a>
 
 </body>
