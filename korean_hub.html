@@ -2,80 +2,103 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>국어</title>
+    <title>국어 학습 허브</title>
     <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        :root { --kor-main: #b45309; --kor-bg: #fff7ed; --kor-accent: #fbbf24; }
+        :root { --kor-main: #b45309; --kor-bg: #fff7ed; }
         body { 
-            font-family: 'Pretendard', sans-serif; background: var(--kor-bg); 
-            display: flex; flex-direction: column; align-items: center; 
-            min-height: 100vh; margin: 0; padding: 40px; 
+            font-family: 'Pretendard', sans-serif; 
+            background: var(--kor-bg); 
+            display: flex; justify-content: center; align-items: center; 
+            min-height: 100vh; margin: 0; padding: 20px; gap: 25px;
+            flex-wrap: wrap;
         }
-        .hub-title { font-size: 2.2rem; font-weight: 900; color: var(--kor-main); margin-bottom: 40px; text-align: center; }
-        
-        .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; width: 100%; max-width: 1100px; }
-        
-        .section-card { background: white; border-radius: 28px; padding: 30px; box-shadow: 0 10px 25px rgba(180, 83, 9, 0.08); border: 1px solid #ffedd5; display: flex; flex-direction: column; }
-        .section-header { font-size: 1.4rem; font-weight: 800; color: var(--kor-main); margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
-        
-        .item-list { display: flex; flex-direction: column; gap: 10px; flex: 1; }
-        .link-item { 
-            background: #fffbeb; padding: 15px; border-radius: 15px; text-decoration: none; 
-            color: #451a03; font-weight: 700; transition: 0.3s; display: flex; justify-content: space-between; align-items: center;
+
+        .card { 
+            width: 280px; 
+            height: 380px; 
+            background: white; 
+            border-radius: 24px; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center;
+            cursor: pointer; 
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 30px rgba(180, 83, 9, 0.08);
+            border: 2px solid transparent;
+            text-decoration: none;
+            text-align: center;
+            padding: 25px;
         }
-        .link-item:hover { background: var(--kor-main); color: white; transform: translateX(5px); }
-        .tag { font-size: 0.7rem; background: var(--kor-accent); padding: 3px 8px; border-radius: 8px; color: #451a03; }
+
+        .card:hover { 
+            transform: translateY(-15px); 
+            border-color: var(--kor-main);
+            box-shadow: 0 20px 40px rgba(180, 83, 9, 0.15);
+        }
+
+        .icon { 
+            font-size: 55px; 
+            margin-bottom: 20px; 
+            background: #fff7ed;
+            width: 90px;
+            height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .title { 
+            font-size: 1.35rem; 
+            font-weight: 900; 
+            color: var(--kor-main); 
+            margin-bottom: 12px;
+            word-break: keep-all;
+        }
+
+        .desc { 
+            font-size: 0.95rem; 
+            color: #7c2d12; 
+            line-height: 1.6;
+            word-break: keep-all;
+            opacity: 0.9;
+        }
+
+        .badge {
+            margin-top: auto;
+            padding: 6px 15px;
+            background: var(--kor-main);
+            color: white;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
 
-    <h1 class="hub-title">📖 국어 </h1>
+    <a href="./korean_dialogue.html" class="card">
+        <div class="icon">💬</div>
+        <div class="title">대화의 원리</div>
+        <div class="desc">공손성의 원리, 협력의 원리 및 언어 예절 핵심 정리</div>
+        <div class="badge">CONCEPT</div>
+    </a>
 
-    <div class="grid-container">
-        <div class="section-card">
-            <div class="section-header"><span>📒</span> 현대시 핵심 정리</div>
-            <div class="item-list">
-                <a href="./korean_poem_theory.html" class="link-item">
-                    <span>서정 갈래 & 현대시 총정리</span>
-                    <span class="tag">이론·분석</span>
-                </a>
-                <p style="font-size: 0.85rem; color: #92400e; margin-top: 10px; line-height: 1.5;">
-                    서정 갈래의 특성부터 윤동주, 김수영 등 주요 작가 작품 8종 완벽 분석
-                </p>
-            </div>
-        </div>
+    <a href="./korean_debate.html" class="card">
+        <div class="icon">🤖</div>
+        <div class="title">로봇세 토론 정리</div>
+        <div class="desc">로봇세 부과 찬반 쟁점 및 토론 절차와 개요서 작성법</div>
+        <div class="badge" style="background: #ea580c;">HOT ISSUE</div>
+    </a>
 
-        <div class="section-card">
-            <div class="section-header"><span>📝</span> 실전 모의고사</div>
-            <div class="item-list">
-                <a href="./korean_poem.html" class="link-item">
-                    <span>서정 시 모의고사 1회</span>
-                    <span class="tag">기존</span>
-                </a>
-                <a href="./korean_exam2.html" class="link-item">
-                    <span>서정 시 모의고사 2, 3회</span>
-                    <span class="tag">기존</span>
-                </a>
-                <a href="./korean_exam4.html" class="link-item">
-                    <span>서정 시 모의고사 세트 4</span>
-                    <span class="tag">기존</span>
-                </a>
-            </div>
-        </div>
-
-        <div class="section-card">
-            <div class="section-header"><span>💬</span> 화법과 매체</div>
-            <div class="item-list">
-                <a href="./korean_talk.html" class="link-item">
-                    <span>대화의 원리와 매체 언어</span>
-                    <span class="tag">요약·퀴즈</span>
-                </a>
-                <p style="font-size: 0.85rem; color: #92400e; margin-top: 10px;">
-                    공손성의 원리 및 협력의 격률 핵심 정리
-                </p>
-            </div>
-        </div>
-    </div>
+    <a href="./korean_literature.html" class="card">
+        <div class="icon">🌸</div>
+        <div class="title">문학의 이해</div>
+        <div class="desc">시의 화자와 수사법, 소설의 구성 및 시점 총정리</div>
+        <div class="badge">LITERATURE</div>
+    </a>
 
 </body>
 </html>
