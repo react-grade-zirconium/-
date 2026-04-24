@@ -10,13 +10,13 @@
             font-family: 'Pretendard', sans-serif; 
             background: var(--kor-bg); 
             display: flex; justify-content: center; align-items: center; 
-            min-height: 100vh; margin: 0; padding: 20px; gap: 25px;
+            min-height: 100vh; margin: 0; padding: 40px; gap: 20px;
             flex-wrap: wrap;
         }
 
         .card { 
-            width: 280px; 
-            height: 380px; 
+            width: 260px; 
+            height: 340px; 
             background: white; 
             border-radius: 24px; 
             display: flex; 
@@ -29,21 +29,21 @@
             border: 2px solid transparent;
             text-decoration: none;
             text-align: center;
-            padding: 25px;
+            padding: 20px;
         }
 
         .card:hover { 
-            transform: translateY(-15px); 
+            transform: translateY(-12px); 
             border-color: var(--kor-main);
             box-shadow: 0 20px 40px rgba(180, 83, 9, 0.15);
         }
 
         .icon { 
-            font-size: 55px; 
-            margin-bottom: 20px; 
+            font-size: 45px; 
+            margin-bottom: 15px; 
             background: #fff7ed;
-            width: 90px;
-            height: 90px;
+            width: 80px;
+            height: 80px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -51,28 +51,29 @@
         }
 
         .title { 
-            font-size: 1.35rem; 
+            font-size: 1.25rem; 
             font-weight: 900; 
             color: var(--kor-main); 
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             word-break: keep-all;
         }
 
         .desc { 
-            font-size: 0.95rem; 
+            font-size: 0.9rem; 
             color: #7c2d12; 
-            line-height: 1.6;
+            line-height: 1.5;
             word-break: keep-all;
-            opacity: 0.9;
+            opacity: 0.85;
+            margin-bottom: 15px;
         }
 
         .badge {
             margin-top: auto;
-            padding: 6px 15px;
+            padding: 5px 12px;
             background: var(--kor-main);
             color: white;
-            border-radius: 12px;
-            font-size: 0.75rem;
+            border-radius: 10px;
+            font-size: 0.7rem;
             font-weight: bold;
         }
     </style>
@@ -82,15 +83,15 @@
     <a href="./korean_dialogue.html" class="card">
         <div class="icon">💬</div>
         <div class="title">대화의 원리</div>
-        <div class="desc">공손성의 원리, 협력의 원리 및 언어 예절 핵심 정리</div>
+        <div class="desc">공손성/협력의 원리 및 언어 예절 핵심 정리</div>
         <div class="badge">CONCEPT</div>
     </a>
 
     <a href="./korean_debate.html" class="card">
         <div class="icon">🤖</div>
-        <div class="title">로봇세 토론 정리</div>
-        <div class="desc">로봇세 부과 찬반 쟁점 및 토론 절차와 개요서 작성법</div>
-        <div class="badge" style="background: #ea580c;">HOT ISSUE</div>
+        <div class="title">로봇세 토론</div>
+        <div class="desc">찬반 쟁점 분석 및 토론 개요서 작성 가이드</div>
+        <div class="badge">DEBATE</div>
     </a>
 
     <a href="./korean_literature.html" class="card">
@@ -98,6 +99,13 @@
         <div class="title">문학의 이해</div>
         <div class="desc">시의 화자와 수사법, 소설의 구성 및 시점 총정리</div>
         <div class="badge">LITERATURE</div>
+    </a>
+
+    <a href="./korean_mock_exam.html" class="card">
+        <div class="icon">✍️</div>
+        <div class="title">모의고사 기출문제</div>
+        <div class="desc">최신 모의고사 기출 문항 풀이 및 정답 확인</div>
+        <div class="badge" style="background: #2563eb;">PRACTICE</div>
     </a>
 
 </body>
