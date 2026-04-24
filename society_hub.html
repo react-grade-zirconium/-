@@ -1,86 +1,102 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<style>
-    /* 사회 파트 테마 컬러 (오렌지/앰버) */
-    :root { --soc: #f59e0b; --bg: #f8fafc; }
-    
-    body { 
-        font-family: 'Pretendard', sans-serif; 
-        background: var(--bg); 
-        margin: 0; 
-        padding: 20px; 
-        display: flex; 
-        flex-direction: column; 
-        height: 100vh; 
-        overflow: hidden; 
-    }
-    
-    /* 상단 서브 메뉴 (행복/지리) */
-    .nav { 
-        display: flex; 
-        gap: 10px; 
-        margin-bottom: 15px; 
-        border-bottom: 2px solid #e2e8f0; 
-        padding-bottom: 10px; 
-        flex-shrink: 0;
-    }
-    
-    .nav-btn { 
-        padding: 10px 25px; 
-        border: 2px solid var(--soc); 
-        background: white; 
-        color: var(--soc); 
-        border-radius: 25px; 
-        cursor: pointer; 
-        font-weight: 800; 
-        font-size: 0.95rem; 
-        transition: 0.2s;
-    }
-    
-    .nav-btn.active { 
-        background: var(--soc); 
-        color: white; 
-    }
+    <meta charset="UTF-8">
+    <title>통합사회 학습 허브</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root { --soc-main: #f59e0b; --soc-bg: #fffbeb; --soc-accent: #fcd34d; }
+        body { 
+            font-family: 'Pretendard', sans-serif; 
+            background: var(--soc-bg); 
+            display: flex; justify-content: center; align-items: center; 
+            min-height: 100vh; margin: 0; padding: 20px; gap: 25px;
+            flex-wrap: wrap;
+        }
 
-    .nav-btn:hover:not(.active) {
-        background: #fffbeb;
-    }
-    
-    .content { 
-        flex: 1; 
-        border-radius: 16px; 
-        overflow: hidden; 
-        background: white; 
-        border: 1px solid #e2e8f0; 
-        box-shadow: 0 4px 10px rgba(0,0,0,0.03);
-    }
-    
-    iframe { 
-        width: 100%; 
-        height: 100%; 
-        border: none; 
-    }
-</style>
+        .card { 
+            width: 260px; 
+            height: 350px; 
+            background: white; 
+            border-radius: 24px; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center;
+            cursor: pointer; 
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 30px rgba(245, 158, 11, 0.08);
+            border: 2px solid transparent;
+            text-decoration: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .card:hover { 
+            transform: translateY(-15px); 
+            border-color: var(--soc-main);
+            box-shadow: 0 20px 40px rgba(245, 158, 11, 0.15);
+        }
+
+        .icon { 
+            font-size: 55px; 
+            margin-bottom: 20px; 
+            background: #fffbeb;
+            width: 90px;
+            height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .title { 
+            font-size: 1.3rem; 
+            font-weight: 900; 
+            color: var(--soc-main); 
+            margin-bottom: 10px;
+        }
+
+        .desc { 
+            font-size: 0.9rem; 
+            color: #b45309; 
+            line-height: 1.5;
+            word-break: keep-all;
+        }
+
+        .badge {
+            margin-top: 15px;
+            padding: 5px 12px;
+            background: var(--soc-main);
+            color: white;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
 
-<div class="nav">
-    <button class="nav-btn active" onclick="load('happiness_interactive.html', this)">😊 행복 파트</button>
-    <button class="nav-btn" onclick="load('climate_interactive.html', this)">🌍 지리(기후) 파트</button>
-</div>
+    <a href="./society_geography.html" class="card">
+        <div class="icon">🗺️</div>
+        <div class="title">생활 공간과 지리</div>
+        <div class="desc">기후, 지형, 그리고 인간 생활의 공간적 특징 이해하기</div>
+        <div class="badge">기존 자료</div>
+    </a>
 
-<div class="content">
-    <iframe id="socFrame" src="./happiness_interactive.html"></iframe>
-</div>
+    <a href="./society_environment.html" class="card">
+        <div class="icon">🌿</div>
+        <div class="title">자연환경과 인간</div>
+        <div class="desc">지형, 자연재해, 자연관 및 환경 보전을 위한 핵심 정리</div>
+        <div class="badge" style="background: #10b981;">NEW 요약본</div>
+    </a>
 
-<script>
-    function load(url, btn) {
-        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        document.getElementById('socFrame').src = "./" + url;
-    }
-</script>
+    <a href="./society_happiness.html" class="card">
+        <div class="icon">😊</div>
+        <div class="title">행복의 의미와 기준</div>
+        <div class="desc">시대와 지역에 따른 다양한 행복의 기준과 도덕적 탐구</div>
+        <div class="badge">기존 자료</div>
+    </a>
+
 </body>
 </html>
