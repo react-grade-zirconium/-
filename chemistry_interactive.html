@@ -1,268 +1,507 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>화학 I 통합 학습관 — 60제 완벽본</title>
-    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;700;900&display=swap" rel="stylesheet">
-    <style>
-        :root { --primary: #1a4a6e; --secondary: #2d7a6e; --bg: #f0f4f8; --card: #ffffff; --text: #1a202c; }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Pretendard', sans-serif; background: var(--bg); color: var(--text); line-height: 1.8; font-size: 14px; }
-        .header { background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); color: white; padding: 30px 20px; text-align: center; }
-        .header h1 { font-size: 1.6rem; font-weight: 900; margin-bottom: 5px; }
-        .tabs { display: flex; background: white; border-bottom: 2px solid #e2e8f0; position: sticky; top: 0; z-index: 100; overflow-x: auto; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-        .tab { padding: 15px 25px; cursor: pointer; font-size: 0.85rem; font-weight: 700; color: #64748b; border-bottom: 3px solid transparent; white-space: nowrap; transition: 0.3s; background: none; border: none; font-family: inherit; }
-        .tab.active { color: var(--primary); border-bottom-color: var(--primary); background: #f8fafc; }
-        .container { max-width: 900px; margin: 20px auto; padding: 0 20px 100px; }
-        .page { display: none; }
-        .page.active { display: block; animation: fadeIn 0.4s ease; }
-        .card { background: white; border-radius: 12px; padding: 30px; margin-bottom: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border-left: 5px solid #4a5568; }
-        .card h2 { font-size: 1.3rem; font-weight: 900; color: var(--primary); margin-bottom: 20px; border-bottom: 2px solid #edf2f7; padding-bottom: 10px; }
-        .card h3 { font-size: 1.1rem; font-weight: 700; margin: 25px 0 12px; color: #2d3748; }
-        table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 0.9rem; }
-        th { background: #2d7a6e; color: white; padding: 12px; border: 1px solid #e2e8f0; text-align: center; }
-        td { padding: 12px; border: 1px solid #e2e8f0; vertical-align: top; }
-        .quiz-card { background: white; border-radius: 12px; padding: 25px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.08); border-top: 5px solid var(--primary); }
-        .quiz-num { font-size: 0.8rem; font-weight: 800; color: var(--primary); background: #ebf8ff; padding: 3px 12px; border-radius: 20px; margin-bottom: 10px; display: inline-block; }
-        .quiz-q { font-size: 1.05rem; font-weight: 700; margin-bottom: 20px; }
-        .option-list { display: grid; gap: 10px; margin-bottom: 20px; }
-        .option-btn { text-align: left; padding: 12px 15px; border: 2px solid #e2e8f0; border-radius: 8px; background: white; cursor: pointer; transition: 0.2s; font-size: 0.95rem; font-family: inherit; }
-        .option-btn:hover { border-color: var(--primary); }
-        .option-btn.correct { background: #f0fff4; border-color: #38a169; color: #22543d; font-weight: 700; }
-        .option-btn.wrong { background: #fff5f5; border-color: #e53e3e; color: #c53030; }
-        .subjective-input { width: 100%; padding: 15px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 1rem; margin-bottom: 15px; resize: vertical; font-family: inherit; }
-        .ans-box { display: none; margin-top: 15px; padding: 15px; background: #f0fff4; border-radius: 8px; border: 1px solid #bcf0da; font-size: 0.95rem; color: #22543d; line-height: 1.7; }
-        .ans-box.visible { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>화학 마스터 - 전체 정리 및 퀴즈</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Malgun Gothic','Noto Sans KR',sans-serif;background:#f0f4f8;color:#1a202c;font-size:14px}
+.header{background:linear-gradient(135deg,#2d3748 0%,#4a5568 100%);color:white;padding:22px 20px;text-align:center}
+.header h1{font-size:1.45rem;margin-bottom:4px}
+.header p{opacity:.8;font-size:.83rem}
+.tabs{display:flex;background:white;border-bottom:2px solid #e2e8f0;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.08);overflow-x:auto}
+.tab{padding:10px 13px;cursor:pointer;font-size:.75rem;font-weight:700;color:#64748b;border-bottom:3px solid transparent;white-space:nowrap;transition:all .2s}
+.tab.active{color:#2d3748;border-bottom-color:#4a5568;background:#f8faff}
+.tab:hover{background:#f1f5f9;color:#2d3748}
+.tab-group{display:flex;border-right:2px solid #e2e8f0}
+.section{display:none;padding:16px;max-width:960px;margin:0 auto}
+.section.active{display:block}
+.card{background:white;border-radius:12px;padding:16px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,.07);border-left:4px solid #4a5568}
+.card.blue{border-left-color:#3182ce}.card.green{border-left-color:#38a169}.card.purple{border-left-color:#805ad5}
+.card.red{border-left-color:#e53e3e}.card.orange{border-left-color:#dd6b20}.card.teal{border-left-color:#319795}
+.card.pink{border-left-color:#d53f8c}.card.indigo{border-left-color:#5a67d8}
+.card h3{font-size:.95rem;margin-bottom:9px;color:#2d3748;display:flex;align-items:center;gap:5px;font-weight:800}
+.card p,.card li{font-size:.83rem;line-height:1.75;color:#4a5568}
+.card ul,.card ol{padding-left:16px}
+.section-title{font-size:1.05rem;font-weight:700;color:#2d3748;margin-bottom:12px;padding-bottom:7px;border-bottom:2px solid #e2e8f0}
+.unit-badge{display:inline-block;padding:2px 10px;border-radius:20px;font-size:.72rem;font-weight:700;margin-bottom:10px}
+.ub-ch1{background:#ebf8ff;color:#2b6cb0}.ub-ch2{background:#f0fff4;color:#276749}.ub-ch3{background:#faf5ff;color:#6b21a8}
+.tip-box{background:linear-gradient(135deg,#fffbeb,#fef3c7);border:1px solid #f6ad55;border-radius:10px;padding:11px 14px;margin-bottom:12px;font-size:.83rem;color:#744210;line-height:1.6}
+table{width:100%;border-collapse:collapse;font-size:.8rem;margin-top:7px}
+th{background:#2d3748;color:white;padding:8px 9px;text-align:left}
+td{padding:7px 9px;border-bottom:1px solid #e2e8f0;vertical-align:top}
+tr:nth-child(even) td{background:#f9fafb}
+tr:hover td{background:#f0f7ff}
+.badge{display:inline-block;padding:2px 8px;border-radius:20px;font-size:.72rem;font-weight:700;margin-right:3px}
+.badge-blue{background:#ebf8ff;color:#2b6cb0}.badge-red{background:#fff5f5;color:#c53030}.badge-gray{background:#edf2f7;color:#4a5568}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:640px){.grid2{grid-template-columns:1fr}}
+
+/* quiz & interactive */
+.quiz-card{background:white;border-radius:12px;padding:18px;margin-bottom:16px;box-shadow:0 2px 8px rgba(0,0,0,.07)}
+.quiz-num{display:inline-block;background:#2d3748;color:white;width:24px;height:24px;border-radius:50%;text-align:center;line-height:24px;font-size:.75rem;font-weight:700;margin-bottom:9px}
+.quiz-q{font-size:.9rem;font-weight:600;margin-bottom:11px;color:#1a202c;line-height:1.55}
+.option{display:block;width:100%;text-align:left;padding:8px 12px;margin-bottom:6px;border:2px solid #e2e8f0;border-radius:8px;background:white;cursor:pointer;font-size:.82rem;transition:all .2s;color:#4a5568}
+.option:hover{border-color:#4a5568;background:#f7fafc}
+.option.correct{border-color:#38a169;background:#f0fff4;color:#276749;font-weight:600}
+.option.wrong{border-color:#e53e3e;background:#fff5f5;color:#c53030}
+.explain{display:none;margin-top:9px;padding:9px 12px;background:#fffbeb;border-radius:8px;border-left:3px solid #f6ad55;font-size:.8rem;line-height:1.6;color:#744210}
+.explain.show{display:block}
+.quiz-progress{text-align:center;font-size:.85rem;color:#64748b;margin-bottom:12px;font-weight:600}
+.score-bar{background:#e2e8f0;border-radius:10px;height:6px;margin-bottom:16px}
+.score-fill{background:linear-gradient(90deg,#4a5568,#3182ce);height:6px;border-radius:10px;transition:width .5s;width:0%}
+.result-box{text-align:center;padding:20px;background:white;border-radius:12px;margin-top:12px;box-shadow:0 2px 8px rgba(0,0,0,.07)}
+.result-score{font-size:2.3rem;font-weight:800;color:#2d3748}
+.result-msg{font-size:.9rem;color:#64748b;margin-top:7px}
+.reset-btn{background:#2d3748;color:white;border:none;padding:9px 20px;border-radius:8px;cursor:pointer;font-size:.85rem;margin-top:12px;font-weight:600;transition:background .2s}
+.reset-btn:hover{background:#4a5568}
+
+/* OX */
+.ox-card{background:white;border-radius:12px;padding:16px;margin-bottom:10px;box-shadow:0 2px 8px rgba(0,0,0,.07)}
+.ox-q{font-size:.88rem;font-weight:600;margin-bottom:9px;line-height:1.5}
+.ox-btns{display:flex;gap:9px}
+.ox-btn{flex:1;padding:8px;border:2px solid #e2e8f0;border-radius:8px;font-size:1rem;font-weight:700;cursor:pointer;background:white;transition:all .2s}
+.ox-btn.o-btn{color:#3182ce}.ox-btn.x-btn{color:#e53e3e}
+.ox-btn.correct{background:#f0fff4;border-color:#38a169}.ox-btn.wrong{background:#fff5f5;border-color:#e53e3e}
+
+/* keywords */
+.kw-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
+.kw-item{background:white;border-radius:10px;padding:13px;box-shadow:0 2px 6px rgba(0,0,0,.07);cursor:pointer;transition:transform .2s;border-top:3px solid #3182ce}
+.kw-item:hover{transform:translateY(-2px)}
+.kw-term{font-weight:700;color:#2d3748;font-size:.88rem;margin-bottom:4px;display:flex;justify-content:space-between}
+.kw-def{font-size:.79rem;color:#64748b;line-height:1.5;display:none;margin-top:5px}
+.kw-def.show{display:block}
+
+/* Short Answer details */
+details.short-ans {background:white;border-radius:10px;padding:14px;box-shadow:0 2px 8px rgba(0,0,0,.07);margin-bottom:12px;border-left:4px solid #dd6b20;}
+details.short-ans summary {font-weight:700;color:#2d3748;cursor:pointer;outline:none;font-size:.9rem;}
+details.short-ans .ans-box {margin-top:12px;padding:12px;background:#fffaf0;border:1px dashed #f6ad55;border-radius:6px;font-size:.85rem;color:#9c4221;}
+</style>
 </head>
 <body>
-
 <div class="header">
-    <h1>🧪 화학 I 통합 학습관</h1>
-    <p>이론 전문 + 60문항 풀 세트 (데이터 무결성 버전)</p>
+  <h1>🧪 화학 통합 마스터 완벽 정리</h1>
+  <p>개념 정리 + 서술형 + 객관식/OX 인터랙티브 퀴즈</p>
 </div>
 
 <div class="tabs">
-    <button class="tab active" onclick="showPage('theory', this)">📖 이론 정리 전문</button>
-    <button class="tab" onclick="showPage('subjective', this)">📝 서술형 풀기</button>
-    <button class="tab" onclick="showPage('objective', this)">✍️ 객관식 60제</button>
+  <div class="tab-group">
+    <div class="tab active" onclick="ST('ch1',this)">📖 1. 금속과 비금속</div>
+    <div class="tab" onclick="ST('ch2',this)">🔥 2. 알칼리·할로젠</div>
+    <div class="tab" onclick="ST('ch3',this)">⚛️ 3. 원자와 화학결합</div>
+  </div>
+  <div class="tab-group">
+    <div class="tab" onclick="ST('kw',this)">🔑 핵심 키워드</div>
+    <div class="tab" onclick="ST('short',this)">✍️ 서술형 문제</div>
+  </div>
+  <div class="tab-group">
+    <div class="tab" onclick="ST('mcq',this)">✅ 실전 객관식</div>
+    <div class="tab" onclick="ST('ox',this)">⭕ 실전 OX</div>
+  </div>
 </div>
 
-<div class="container">
-    <div id="page-theory" class="page active">
-        <div class="card">
-            <h2>1. 금속 원소와 비금속 원소</h2>
-            <p>현대 주기율표는 원소를 원자 번호(양성자 수) 순서대로 배열하였으며, 주기율표의 왼쪽과 가운데에는 금속 원소가, 오른쪽에는 비금속 원소가 위치하며, 금속과 비금속의 경계에 준금속 원소가 위치합니다.</p>
-            <table>
-                <tr><th>구분</th><th>금속 원소</th><th>비금속 원소</th></tr>
-                <tr><td>위치</td><td>대체로 왼쪽과 가운데 부분</td><td>대체로 오른쪽 (단, 수소는 왼쪽)</td></tr>
-                <tr>
-                    <td>특징</td>
-                    <td>
-                        <ul>
-                            <li>전자를 잃고 양이온이 되기 쉽다.</li>
-                            <li>대부분 광택이 있다.</li>
-                            <li>열과 전기 전도성이 크다.</li>
-                            <li>외부 힘에 의해 길게 늘어나거나 얇게 펴지는 성질(연성과 전성)이 있다.</li>
-                        </ul>
-                    </td>
-                    <td>
-                        <ul>
-                            <li>전자를 얻어 음이온이 되기 쉽다 (18족 제외).</li>
-                            <li>광택이 없다.</li>
-                            <li>열과 전기 전도성이 매우 작다.</li>
-                            <li>충격을 가하면 부서지기 쉽다.</li>
-                        </ul>
-                    </td>
-                </tr>
-                <tr><td>실온 상태</td><td>대부분 고체 (단, 수은(Hg)은 액체)</td><td>대부분 기체 또는 고체 (단, 브로민(Br₂)은 액체)</td></tr>
-            </table>
-            <h3>1-1. 원소의 이용</h3>
-            <p>• <b>철(Fe):</b> 건축 자재, 기계, 교량 등의 주재료로 쓰입니다.</p>
-            <p>• <b>구리(Cu):</b> 전기 전도성이 좋아 전선으로 이용됩니다.</p>
-            <p>• <b>금(Au):</b> 부식되지 않고 전기가 잘 통해 반도체 회로기판 등에 사용됩니다.</p>
-            <p>• <b>알루미늄(Al):</b> 가볍고 단단하여 캔, 비행기 동체 제작에 이용됩니다.</p>
-            <p>• <b>수소(H):</b> 우주 왕복선 연료, 청정 에너지원으로 쓰입니다.</p>
-            <p>• <b>질소(N):</b> 반응성이 낮아 식품 포장용 충전 기체로 이용됩니다.</p>
-            <p>• <b>산소(O):</b> 의료용 기체, 생물의 호흡에 필수적입니다.</p>
-            <p>• <b>인(P):</b> 성냥의 주성분으로 쓰입니다.</p>
-        </div>
+<!-- Chapter 1 -->
+<div id="ch1" class="section active">
+  <span class="unit-badge ub-ch1">Chapter 1</span>
+  <div class="section-title">🧪 1. 금속 원소와 비금속 원소</div>
+  <div class="tip-box">💡 <strong>핵심 흐름:</strong> 주기율표의 위치에 따라 원소는 금속(왼쪽/가운데)과 비금속(오른쪽)으로 나뉘며, 각기 다른 고유한 물리적/화학적 성질을 가집니다.</div>
+  
+  <div class="card blue">
+    <h3>📌 금속 원소와 비금속 원소 비교</h3>
+    <table>
+      <tr><th>구분</th><th>금속 원소 <span class="badge badge-blue">양이온화</span></th><th>비금속 원소 <span class="badge badge-red">음이온화</span></th></tr>
+      <tr><td><strong>위치</strong></td><td>대체로 왼쪽과 가운데 부분</td><td>대체로 오른쪽 (단, <b>수소</b>는 왼쪽)</td></tr>
+      <tr>
+        <td><strong>특징</strong></td>
+        <td>
+          <ul>
+            <li>전자를 잃고 <strong>양이온</strong>이 되기 쉽다.</li>
+            <li>대부분 광택이 있다.</li>
+            <li>열과 전기 전도성이 있다.</li>
+            <li>외부 힘에 의해 길게 늘어나거나 얇게 펴진다.</li>
+          </ul>
+        </td>
+        <td>
+          <ul>
+            <li>전자를 얻어 <strong>음이온</strong>이 되기 쉽다 (18족 제외).</li>
+            <li>광택이 없다.</li>
+            <li>열과 전기 전도성이 매우 작다.</li>
+          </ul>
+        </td>
+      </tr>
+      <tr><td><strong>실온 상태</strong></td><td>대부분 고체 (단, <b>수은(Hg)</b>은 액체)</td><td>기체 또는 고체 (단, <b>브로민(Br)</b>은 액체)</td></tr>
+    </table>
+  </div>
 
-        <div class="card" style="border-left-color: #38a169;">
-            <h2>2. 알칼리 금속과 할로젠</h2>
-            <h3>2-1. 알칼리 금속 (1족 금속)</h3>
-            <p>종류: Li, Na, K, Rb, Cs 등 (수소 제외)</p>
-            <ul>
-                <li>성질: 실온에서 고체, 은백색 광택, 낮은 밀도, 무른 성질(칼로 잘림).</li>
-                <li>반응: 산소와 빠르게 반응하여 광택을 잃음. 물과 격렬히 반응하여 <b>수소 기체(H₂)</b>를 발생시키고 수용액은 <b>염기성</b>으로 변함.</li>
-                <li>반응성: 원자 번호가 클수록 증가함 (Li < Na < K).</li>
-                <li>보관: 반응성이 커서 석유나 액체 파라핀 속에 보관함.</li>
-            </ul>
-            <h3>2-2. 할로젠 (17족 비금속)</h3>
-            <p>종류: F, Cl, Br, I 등</p>
-            <ul>
-                <li>성질: 실온에서 이원자 분자 상태로 존재. 고유 색상(<b>F₂ 노랑, Cl₂ 노랑, Br₂ 적갈색, I₂ 보라</b>).</li>
-                <li>반응: 금속 및 수소와 격렬히 반응. 수소와 반응한 물질은 물에서 강한 산성을 띰.</li>
-                <li>반응성: <b>원자 번호가 작을수록 증가함 (F₂ > Cl₂ > Br₂ > I₂)</b>.</li>
-            </ul>
-        </div>
+  <div class="card orange">
+    <h3>⚠️ 참고 및 예외 사항</h3>
+    <ul>
+      <li><strong>18족 원소 (비활성 기체):</strong> 비금속에 속하지만 전자를 얻으려는 성질을 나타내지는 않습니다.</li>
+      <li><strong>준금속 원소:</strong> 금속과 비금속의 중간 성질을 가집니다. (예: 붕소(B), 규소(Si), 저마늄(Ge))</li>
+      <li><strong>흑연(C):</strong> 비금속 탄소의 공유 결합 물질이지만, 내부에 <b>자유 전자</b>가 있어 예외적으로 전기가 통합니다.</li>
+    </ul>
+  </div>
 
-        <div class="card" style="border-left-color: #805ad5;">
-            <h2>3. 원자의 구조와 화학 결합</h2>
-            <p>원자는 중심의 원자핵(양성자+중성자)과 그 주위의 전자로 구성되며 전기적으로 중성입니다.</p>
-            <h3>3-1. 전자 배치와 옥텟 규칙</h3>
-            <ul>
-                <li>전자 껍질에 전자가 안쪽부터 채워집니다 (첫 껍질 2개, 이후 8개씩).</li>
-                <li><b>원자가 전자:</b> 가장 바깥 껍질의 전자로 화학적 성질을 결정합니다.</li>
-                <li><b>옥텟 규칙:</b> 가장 바깥 전자 껍질에 전자 8개를 채워 비활성 기체와 같은 안정한 전자 배치를 가지려는 성질입니다.</li>
-            </ul>
-            <h3>3-2. 화학 결합의 종류</h3>
-            <p>• <b>이온 결합:</b> 양이온(금속)과 음이온(비금속) 사이의 정전기적 인력에 의한 결합.</p>
-            <p>• <b>공유 결합:</b> 비금속 원자들이 전자쌍을 공유하여 형성하는 결합.</p>
-        </div>
+  <div class="card teal">
+    <h3>🛠️ 원소의 이용 사례</h3>
+    <div class="grid2">
+      <div>
+        <p><strong>[금속 원소]</strong></p>
+        <ul>
+          <li><strong>철(Fe):</strong> 건축 자재, 기계</li>
+          <li><strong>구리(Cu):</strong> 전선 (전도성 우수)</li>
+          <li><strong>금(Au):</strong> 반도체 회로기판 (부식 방지)</li>
+          <li><strong>알루미늄(Al):</strong> 캔, 비행기 동체 (가벼움)</li>
+        </ul>
+      </div>
+      <div>
+        <p><strong>[비금속 원소]</strong></p>
+        <ul>
+          <li><strong>수소(H):</strong> 우주 왕복선 연료</li>
+          <li><strong>질소(N):</strong> 식품 포장 충전재 (부패 방지)</li>
+          <li><strong>산소(O):</strong> 생명체 호흡, 연소</li>
+          <li><strong>인(P):</strong> 성냥</li>
+        </ul>
+      </div>
     </div>
+  </div>
+</div>
 
-    <div id="page-subjective" class="page">
-        <div id="sub-list"></div>
-    </div>
+<!-- Chapter 2 -->
+<div id="ch2" class="section">
+  <span class="unit-badge ub-ch2">Chapter 2</span>
+  <div class="section-title">🔥 2. 알칼리 금속과 할로젠</div>
+  
+  <div class="card green">
+    <h3>💧 알칼리 금속 (1족, 수소 제외)</h3>
+    <ul>
+      <li><strong>종류:</strong> 리튬(Li), 나트륨(Na), 칼륨(K), 루비듐(Rb), 세슘(Cs) 등</li>
+      <li><strong>기본 성질:</strong> 실온에서 고체, 은백색 광택, 밀도가 낮음, 칼로 잘릴 정도로 무름.</li>
+      <li><strong>화학 반응:</strong> 
+        <ul>
+          <li>산소와 빠르게 반응하여 광택을 잃음.</li>
+          <li>물과 격렬히 반응하여 <strong>수소 기체(H₂)</strong>를 발생시키고, 수용액은 <strong>염기성</strong>이 됨. (페놀프탈레인 용액 투하 시 붉은색 변화)</li>
+        </ul>
+      </li>
+      <li><strong>반응성:</strong> 원자 번호가 클수록 반응성 증가 <span class="badge badge-gray">Li &lt; Na &lt; K</span></li>
+      <li><strong>보관 방법:</strong> 공기(산소) 및 물과의 접촉을 차단하기 위해 <strong>석유나 액체 파라핀 속</strong>에 보관.</li>
+      <li><strong>이용:</strong> Li(휴대전화 배터리), Na(터널 조명/나트륨 램프), K(비료)</li>
+    </ul>
+  </div>
 
-    <div id="page-objective" class="page">
-        <div id="obj-list"></div>
+  <div class="card purple">
+    <h3>🧪 할로젠 (17족 비금속)</h3>
+    <ul>
+      <li><strong>종류:</strong> 플루오린(F), 염소(Cl), 브로민(Br), 아이오딘(I) 등</li>
+      <li><strong>기본 성질:</strong> 실온에서 원자 2개가 결합한 <strong>이원자 분자</strong> 형태로 존재, 고유의 색상을 가짐.</li>
+      <li><strong>상태와 색깔:</strong>
+        <ul>
+          <li><span class="badge badge-gray">F₂</span> 연한 노란색 기체</li>
+          <li><span class="badge badge-gray">Cl₂</span> 노란색 기체</li>
+          <li><span class="badge badge-gray">Br₂</span> 적갈색 액체</li>
+          <li><span class="badge badge-gray">I₂</span> 보라색 고체</li>
+        </ul>
+      </li>
+      <li><strong>화학 반응:</strong> 금속이나 수소와 격렬히 반응함. <strong>수소와 반응하여 생성된 물질(예: HCl)을 물에 녹이면 산성</strong>을 띰.</li>
+      <li><strong>반응성:</strong> 원자 번호가 작을수록 반응성 증가 <span class="badge badge-gray">F₂ &gt; Cl₂ &gt; Br₂ &gt; I₂</span></li>
+      <li><strong>이용:</strong> F(충치 예방 치약), Cl(수영장 소독), I(상처 소독약, 미역 등 해조류)</li>
+    </ul>
+  </div>
+</div>
+
+<!-- Chapter 3 -->
+<div id="ch3" class="section">
+  <span class="unit-badge ub-ch3">Chapter 3</span>
+  <div class="section-title">⚛️ 3. 원자의 구조와 화학 결합</div>
+
+  <div class="card blue">
+    <h3>🔍 원자의 구조</h3>
+    <ul>
+      <li>원자는 <strong>원자핵(양성자+중성자)</strong>과 <strong>전자</strong>로 구성됩니다.</li>
+      <li>양성자의 (+)전하량과 전자의 (-)전하량이 같아 원자는 <strong>전기적으로 중성</strong>입니다.</li>
+      <li><strong>원자 번호 = 양성자 수 = (중성 원자의) 전자 수</strong></li>
+      <li>전자는 원자핵 주위의 특정한 에너지 궤도인 <strong>전자 껍질</strong>을 돌고 있습니다.</li>
+    </ul>
+  </div>
+
+  <div class="card green">
+    <h3>🎯 전자 배치와 옥텟 규칙</h3>
+    <ul>
+      <li><strong>전자 껍질:</strong> 안쪽부터 차례로 채워지며 첫 번째 껍질은 2개, 두 번째부터는 8개가 최대로 채워집니다.</li>
+      <li><strong>원자가 전자:</strong> 가장 바깥 전자 껍질에 들어있는 전자. <strong>화학적 성질을 결정</strong>하는 핵심 요소입니다.</li>
+      <li><strong>옥텟 규칙(Octet Rule):</strong> 원자들이 가장 바깥 전자 껍질에 <strong>전자 8개를 채워 비활성 기체와 같이 안정</strong>해지려는 경향성입니다.</li>
+      <li><strong>비활성 기체 (18족):</strong> 헬륨(He), 네온(Ne), 아르곤(Ar). 껍질이 꽉 차 있어 매우 안정하며, 반응에 참여하지 않으므로 원자가 전자는 '0'으로 간주합니다. (이용: 네온사인, 형광등 충전 기체)</li>
+    </ul>
+  </div>
+
+  <div class="card orange">
+    <h3>🔗 화학 결합 (이온 결합 vs 공유 결합)</h3>
+    <table>
+      <tr><th>구분</th><th>이온 결합</th><th>공유 결합</th></tr>
+      <tr><td><strong>결합 원소</strong></td><td><strong>금속</strong> + <strong>비금속</strong></td><td><strong>비금속</strong> + <strong>비금속</strong></td></tr>
+      <tr><td><strong>형성 원리</strong></td><td>금속이 전자를 잃고 양이온, 비금속이 전자를 얻어 음이온이 된 후 <strong>정전기적 인력</strong>으로 결합</td><td>비금속 원자들이 각각 전자를 내놓아 <strong>전자쌍을 공유</strong>하며 결합 (단일/2중/3중)</td></tr>
+      <tr><td><strong>전기 전도성</strong></td><td>고체(X) / <strong>수용액·액체(O)</strong><br>(이온화되어 이동 가능하기 때문)</td><td>고체(X) / 수용액·액체(X)<br>(단, 흑연은 예외)</td></tr>
+      <tr><td><strong>물질 예시</strong></td><td>염화 나트륨(NaCl), 염화 칼슘(CaCl₂), 수산화 나트륨(NaOH)</td><td>물(H₂O), 포도당(C₆H₁₂O₆), 질소 분자(N₂)</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- Keywords -->
+<div id="kw" class="section">
+  <div class="section-title">🔑 핵심 키워드 사전 (클릭하여 확인)</div>
+  <p style="font-size:.82rem;color:#64748b;margin-bottom:12px">카드 클릭 시 상세 해설이 펼쳐집니다.</p>
+  <div class="kw-grid" id="kwGrid"></div>
+</div>
+
+<!-- Short Answer -->
+<div id="short" class="section">
+  <div class="section-title">✍️ 핵심 서술형 문제</div>
+  <div class="tip-box">💡 시험에 자주 출제되는 핵심 서술형 문제입니다. 제목을 클릭하면 정답과 해설이 열립니다.</div>
+  
+  <details class="short-ans">
+    <summary>Q1. 나트륨(Na)과 칼륨(K) 조각을 각각 물이 든 비커에 넣었을 때 반응과 페놀프탈레인 용액 변화</summary>
+    <div class="ans-box">
+      <strong>정답:</strong> 발생하는 기체는 <b>수소 기체(H₂)</b>이며, 반응 후 남은 수용액에 페놀프탈레인 용액을 떨어뜨리면 <b>붉은색</b>으로 변한다. 그 이유는 알칼리 금속이 물과 반응하여 생성된 수용액이 <b>염기성(수산화 금속)</b>을 띠기 때문이다.
     </div>
+  </details>
+
+  <details class="short-ans">
+    <summary>Q2. 할로젠 원소(F, Cl, Br, I)의 반응성 크기 및 실온 상태</summary>
+    <div class="ans-box">
+      <strong>정답:</strong> 가장 반응성이 큰 원소는 <b>플루오린(F)</b>이다. 실온에서의 상태는 플루오린(F₂)과 염소(Cl₂)는 <b>기체</b>, 브로민(Br₂)은 <b>액체</b>, 아이오딘(I₂)은 <b>고체</b>로 존재한다.
+    </div>
+  </details>
+
+  <details class="short-ans">
+    <summary>Q3. 염화 나트륨(NaCl)의 형성 원리를 '전자 이동'과 '정전기적 인력'을 포함하여 설명</summary>
+    <div class="ans-box">
+      <strong>정답:</strong> 나트륨과 염소는 <b>이온 결합</b>을 형성한다. 나트륨의 <b>전자 1개가 염소로 이동</b>하여 나트륨은 양이온(Na⁺)이 되고 염소는 음이온(Cl⁻)이 된 후, 두 이온 사이의 <b>정전기적 인력</b>에 의해 결합이 형성된다.
+    </div>
+  </details>
+
+  <details class="short-ans">
+    <summary>Q4. 염화 칼슘(CaCl₂)과 포도당(C₆H₁₂O₆)의 수용액 전기 전도성 차이</summary>
+    <div class="ans-box">
+      <strong>정답:</strong> 염화 칼슘은 이온 결합 물질로 수용액에서 <b>이온화되어 전하를 띤 이온들이 이동</b>할 수 있어 전기가 통하지만, 포도당은 공유 결합 물질로 수용액에서도 <b>분자 상태로 존재하여 이온이 없으므로</b> 전기가 통하지 않는다.
+    </div>
+  </details>
+</div>
+
+<!-- MCQ Quiz -->
+<div id="mcq" class="section">
+  <div class="section-title">✅ 실전 객관식 테스트 (30문항)</div>
+  <div class="tip-box">⚡ 기존 60문항 중 핵심 기출 포인트 30문항을 엄선하여 인터랙티브로 구성했습니다.</div>
+  <div class="quiz-progress" id="p_mcq">0 / 30 완료</div>
+  <div class="score-bar"><div class="score-fill" id="b_mcq"></div></div>
+  <div id="mcqBox"></div>
+  <div id="r_mcq" style="display:none" class="result-box">
+    <div class="result-score" id="s_mcq"></div>
+    <div class="result-msg" id="m_mcq"></div>
+    <button class="reset-btn" onclick="resetQ('mcqQuiz')">🔄 다시 풀기</button>
+  </div>
+</div>
+
+<!-- OX Quiz -->
+<div id="ox" class="section">
+  <div class="section-title">⭕ 실전 OX 퀴즈 (10문항)</div>
+  <div class="quiz-progress" id="p_ox">0 / 10 완료</div>
+  <div class="score-bar"><div class="score-fill" id="b_ox"></div></div>
+  <div id="oxBox"></div>
+  <div id="r_ox" style="display:none" class="result-box">
+    <div class="result-score" id="s_ox"></div>
+    <div class="result-msg" id="m_ox"></div>
+    <button class="reset-btn" onclick="resetO('oxQuiz')">🔄 다시 풀기</button>
+  </div>
 </div>
 
 <script>
-    const subData = [
-        { id: 1, q: "나트륨(Na)과 칼륨(K) 조각을 각각 물이 든 비커에 넣었을 때의 반응상 공통점 2가지를 쓰시오.", a: "수소 기체(H₂)가 발생하며, 수용액은 염기성(붉은색)으로 변합니다." },
-        { id: 2, q: "할로젠 원소들의 실온 상태(F, Cl, Br, I)와 반응성 순서를 서술하시오.", a: "상태: F/Cl 기체, Br 액체, I 고체. 반응성: F₂ > Cl₂ > Br₂ > I₂" },
-        { id: 3, q: "양이온(금속)과 음이온(비금속) 사이의 결합 원리를 '정전기적 인력'을 포함하여 설명하시오.", a: "전자를 잃고 얻어 형성된 두 이온 사이의 강한 정전기적 인력으로 결합합니다." },
-        { id: 4, q: "이온 결합 물질이 고체에서는 전기가 안 통하나 수용액에서는 통하는 이유를 서술하시오.", a: "고체는 이온이 고정되어 있으나, 수용액에서는 이온이 자유롭게 이동하여 전하를 운반하기 때문입니다." }
-    ];
+// --- Navigation ---
+function ST(id, el) {
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if(el) el.classList.add('active');
+  window.scrollTo(0,0);
+}
 
-    const objData = [
-        { id: 1, q: "주기율표의 왼쪽과 가운데 부분에 주로 위치하는 원소의 종류는?", o: ["금속 원소", "비금속 원소", "비활성 기체", "할로젠", "중성자"], a: 1, e: "금속 원소는 주로 왼쪽과 가운데에 위치합니다." },
-        { id: 2, q: "실온에서 유일하게 액체 상태인 금속 원소는?", o: ["철", "구리", "수은", "금", "알루미늄"], a: 3, e: "수은(Hg)은 실온에서 액체인 유일한 금속입니다." },
-        { id: 3, q: "비금속 원소인 브로민(Br₂)의 실온 상태와 색깔은?", o: ["기체, 노란색", "액체, 적갈색", "고체, 보라색", "기체, 연노랑", "액체, 무색"], a: 2, e: "브로민은 적갈색 액체입니다." },
-        { id: 4, q: "주기율표에서 1족 원소 중 수소를 제외한 원소들의 명칭은?", o: ["할로젠", "알칼리 금속", "비활성 기체", "알칼리 토금속", "희토류"], a: 2, e: "1족 금속 원소는 알칼리 금속입니다." },
-        { id: 5, q: "반응성이 낮아 식품 포장 충전재로 이용되는 비금속 원소는?", o: ["구리", "질소", "철", "알루미늄", "금"], a: 2, e: "질소는 매우 안정하여 충전재로 쓰입니다." },
-        { id: 6, q: "전선에 주로 이용되는 전기 전도성이 큰 금속은?", o: ["질소", "구리", "산소", "인", "헬륨"], a: 2, e: "구리는 전도성이 좋아 전선으로 쓰입니다." },
-        { id: 7, q: "비행기 동체 제작에 주로 쓰이는 가벼운 금속은?", o: ["철", "납", "금", "알루미늄", "수은"], a: 4, e: "알루미늄은 가벼워 비행기 재료로 적합합니다." },
-        { id: 8, q: "반도체 회로기판에 주로 사용되는 금속 원소는?", o: ["철", "납", "구리", "금", "나트륨"], a: 4, e: "금은 부식되지 않고 전기가 잘 통해 회로기판에 쓰입니다." },
-        { id: 9, q: "알칼리 금속의 성질로 옳은 것은?", o: ["밀도가 매우 크다", "매우 단단하다", "물과 반응하여 수소 기체를 낸다", "산소와 반응하지 않는다", "전기가 통하지 않는다"], a: 3, e: "알칼리 금속은 물과 격렬히 반응하여 수소 기체를 발생시킵니다." },
-        { id: 10, q: "나트륨이 물과 반응할 때 발생하는 기체는?", o: ["산소", "수소", "이산화 탄소", "질소", "염소"], a: 2, e: "알칼리 금속은 물과 반응하여 수소 기체를 만듭니다." },
-        { id: 11, q: "할로젠 원소에 대한 설명으로 옳은 것은?", o: ["원자가 전자 1개", "단원자 분자", "번호 작을수록 반응성 큼", "금속과 반응 안 함", "모두 염기성"], a: 3, e: "할로젠은 원자 번호가 작을수록 반응성이 큽니다." },
-        { id: 12, q: "고유 색을 띠는 이원자 분자로 존재하는 원소 그룹은?", o: ["알칼리 금속", "비활성 기체", "할로젠", "준금속", "전이 금속"], a: 3, e: "할로젠은 색깔이 있는 이원자 분자로 존재합니다." },
-        { id: 13, q: "알칼리 금속의 반응성 순서로 옳은 것은?", o: ["Li > Na > K", "Li < Na < K", "Na < Li < K", "K < Na < Li", "동일"], a: 2, e: "알칼리 금속은 원자 번호가 클수록 반응성이 커집니다." },
-        { id: 14, q: "칼륨(K)에 대한 설명으로 옳은 것은?", o: ["물과 반응해 산소 발생", "비료 주성분", "할로젠 원소", "밀도가 매우 큼", "산소와 반응 안 함"], a: 2, e: "칼륨은 비료의 주성분입니다." },
-        { id: 15, q: "할로젠 색깔이 잘못 연결된 것은?", o: ["F₂-노랑", "Cl₂-노랑", "Br₂-적갈색", "I₂-보라", "모두 맞음"], a: 5, e: "원본 데이터 기준 F₂, Cl₂ 모두 노란색 계열입니다." },
-        { id: 16, q: "나트륨이 산소와 반응했을 때의 변화는?", o: ["광택이 유지됨", "폭발함", "광택이 사라짐", "액체가 됨", "푸르게 변함"], a: 3, e: "산소와 빠르게 반응하여 광택을 잃습니다." },
-        { id: 17, q: "할로젠 반응성 순서로 옳은 것은?", o: ["F₂ < Cl₂ < Br₂ < I₂", "F₂ > Cl₂ > Br₂ > I₂", "Cl₂ > F₂", "I₂ > Br₂", "동일"], a: 2, e: "원자 번호가 작을수록 반응성이 큽니다." },
-        { id: 18, q: "리튬을 보관하기 가장 좋은 곳은?", o: ["물 속", "공기 중", "파라핀 속", "알코올 속", "염산 속"], a: 3, e: "반응 차단을 위해 파라핀 등에 보관합니다." },
-        { id: 19, q: "비금속 원소가 음이온이 되기 쉬운 이유는?", o: ["전자를 잃기 쉬워서", "양성자가 많아서", "전자를 얻기 쉬워서", "무거워서", "핵이 없어서"], a: 3, e: "비금속은 전자를 얻어 안정해지려 합니다." },
-        { id: 20, q: "나트륨과 염소가 결합하여 형성되는 물질은?", o: ["공유 결합", "이온 결합", "금속 결합", "수소 결합", "혼합물"], a: 2, e: "금속과 비금속은 이온 결합을 합니다." },
-        { id: 21, q: "이온 결합을 형성하는 주된 힘은?", o: ["정전기적 인력", "중력", "마찰력", "자기력", "공유"], a: 1, e: "전하 차이에 의한 끌림입니다." },
-        { id: 22, q: "비활성 기체의 원자가 전자 수는?", o: ["0개", "2개", "8개", "18개", "10개"], a: 1, e: "이미 안정하여 반응에 참여하지 않으므로 0으로 간주합니다." },
-        { id: 23, q: "바깥 껍질에 8개를 채우려는 성질은?", o: ["배타 원리", "옥텟 규칙", "보어 법칙", "뉴턴 법칙", "아보가드로"], a: 2, e: "옥텟(8) 규칙이라 합니다." },
-        { id: 24, q: "다음 중 공유 결합 물질은?", o: ["NaCl", "H₂O", "MgO", "CaCl₂", "LiF"], a: 2, e: "비금속 간 결합인 물입니다." },
-        { id: 25, q: "다음 중 이온 결합 물질은?", o: ["CO₂", "CH₄", "MgO", "NH₃", "HCl"], a: 3, e: "금속(Mg)이 포함된 산화 마그네슘입니다." },
-        { id: 26, q: "이온 결합 물질의 성질로 옳은 것은?", o: ["잘 부스러지지 않는다", "수용액에서 전기가 통한다", "실온에서 항상 기체다", "녹는점이 매우 낮다", "충격에 강하다"], a: 2, e: "수용액에서 이온화되어 전기가 통합니다." },
-        { id: 27, q: "공유 결합 물질의 일반적 특징은?", o: ["녹는점이 높다", "수용액 전도성이 크다", "전도성이 낮고 녹는점도 낮다", "항상 고체다", "금속 결합이다"], a: 3, e: "분자 간 인력이 약해 녹는점이 낮습니다." },
-        { id: 28, q: "원자가 전자가 결정하는 것은?", o: ["질량", "부피", "화학적 성질", "중성자 수", "핵의 크기"], a: 3, e: "원자가 전자가 반응을 결정합니다." },
-        { id: 29, q: "알칼리 금속이 물과 반응해 만드는 수용액 색은?(페놀프탈레인)", o: ["무색", "노란색", "붉은색", "파란색", "보라색"], a: 3, e: "염기성이므로 붉게 변합니다." },
-        { id: 30, q: "할로젠화 수소가 물에 녹으면?", o: ["산성", "염기성", "중성", "금속", "알 수 없음"], a: 1, e: "강한 산성을 띠게 됩니다." },
-        { id: 31, q: "준금속 원소에 해당하는 것은?", o: ["Fe", "Cu", "Si", "Au", "Al"], a: 3, e: "규소는 대표적인 준금속입니다." },
-        { id: 32, q: "실온에서 고체인 할로젠은?", o: ["F₂", "Cl₂", "Br₂", "I₂", "없음"], a: 4, e: "아이오딘은 고체입니다." },
-        { id: 33, q: "흑연이 전기가 통하는 이유는?", o: ["금속이라서", "이온이라서", "자유로운 전자가 있어서", "물에 녹아서", "빛을 받아서"], a: 3, e: "비금속이지만 구조상 전자가 자유로워 전기가 통합니다." },
-        { id: 34, q: "현대 주기율표 배열 기준은?", o: ["원자량", "원자 번호", "중성자 수", "발견 순서", "알파벳"], a: 2, e: "양성자 수인 원자 번호 기준입니다." },
-        { id: 35, q: "원자가 중성인 이유는?", o: ["중성자만 있어서", "양성자=전자 수", "전자 8개라서", "핵이 없어서", "껍질뿐이라서"], a: 2, e: "전하량이 상쇄되기 때문입니다." },
-        { id: 36, q: "나트륨 이온(Na⁺)의 전자 배치는?", o: ["He", "Ne", "Ar", "Li", "K"], a: 2, e: "전자 1개를 잃어 네온과 같아집니다." },
-        { id: 37, q: "염화 이온(Cl⁻)의 전자 수는?", o: ["17", "18", "16", "8", "7"], a: 2, e: "전자 1개를 얻어 18개가 됩니다." },
-        { id: 38, q: "다음 중 18족 원소가 아닌 것은?", o: ["He", "Ne", "Ar", "Kr", "Cl"], a: 5, e: "염소는 17족 할로젠입니다." },
-        { id: 39, q: "알칼리 금속 반응 확인용 지시약은?", o: ["페놀프탈레인", "메틸오렌지", "리트머스", "BTB", "아이오딘"], a: 1, e: "염기성 확인에 씁니다." },
-        { id: 40, q: "할로젠 중 반응성 가장 작은 것은?", o: ["F₂", "Cl₂", "Br₂", "I₂", "At₂"], a: 4, e: "번호가 클수록 반응성이 작습니다." },
-        { id: 41, q: "질소(N₂)의 공유 전자쌍 수는?", o: ["1", "2", "3", "4", "0"], a: 3, e: "질소는 삼중 결합을 합니다." },
-        { id: 42, q: "산소(O₂)의 공유 전자쌍 수는?", o: ["1", "2", "3", "4", "0"], a: 2, e: "산소는 이중 결합을 합니다." },
-        { id: 43, q: "이온 결합 물질이 잘 부스러지는 원인은?", o: ["결합 약함", "이온 반발", "전자 이동", "중성자 부족", "온도"], a: 2, e: "층 밀림 시 같은 전하끼리 마주쳐 반발합니다." },
-        { id: 44, q: "공유 결합 형성 이유는?", o: ["무거워지려고", "안정해지려고(옥텟)", "전기를 만들려고", "자석이 되려고", "빛나려고"], a: 2, e: "안정한 전자 배치를 위함입니다." },
-        { id: 45, q: "주기율표 2주기 원소 공통점?", o: ["원자가 전자 수", "껍질 수", "반응성", "질량", "금속성"], a: 2, e: "주기는 껍질 수와 같습니다." },
-        { id: 46, q: "주기율표 17족 원소 공통점?", o: ["원자가 전자 수(7)", "껍질 수", "상태", "전도성", "무게"], a: 1, e: "족은 원자가 전자 수와 같습니다." },
-        { id: 47, q: "이온 결합 물질인 것은?", o: ["H₂", "O₂", "MgO", "CO₂", "CH₄"], a: 3, e: "Mg가 금속이므로 정답입니다." },
-        { id: 48, q: "공유 결합 물질인 것은?", o: ["NaCl", "H₂O", "CaCl₂", "KI", "LiF"], a: 2, e: "물은 비금속 간 결합입니다." },
-        { id: 49, q: "화합물인 것은?", o: ["H₂", "O₂", "NaCl", "Fe", "Au"], a: 3, e: "서로 다른 원소가 결합한 것입니다." },
-        { id: 50, q: "전자를 잃기 쉬운 원소는?", o: ["금속", "비금속", "비활성 기체", "할로젠", "없음"], a: 1, e: "금속은 양이온이 되기 쉽습니다." },
-        { id: 51, q: "전자를 얻기 쉬운 원소는?", o: ["금속", "비금속", "준금속", "전이 금속", "수은"], a: 2, e: "비금속은 음이온이 되기 쉽습니다." },
-        { id: 52, q: "알칼리 금속의 밀도는?", o: ["매우 크다", "대체로 작다", "수은과 같다", "철보다 크다", "알 수 없음"], a: 2, e: "밀도가 작아 물에 뜨기도 합니다." },
-        { id: 53, q: "할로젠화 수소 특징은?", o: ["물에 안 녹음", "염기성임", "물에 잘 녹음", "금속임", "기체 아님"], a: 3, e: "물에 매우 잘 녹아 산성을 띱니다." },
-        { id: 54, q: "이온 결합 결정 구조는?", o: ["불규칙", "규칙적 배열", "액체 구조", "분자 구조", "껍질 구조"], a: 2, e: "규칙적인 입체 격자 구조입니다." },
-        { id: 55, q: "공유 결합 시 에너지 상태는?", o: ["불안정", "더 안정해짐", "변화 없음", "매우 높음", "폭발적"], a: 2, e: "결합을 통해 안정됩니다." },
-        { id: 56, q: "원자가 전자 0인 것은?", o: ["Na", "Cl", "Ar", "Mg", "H"], a: 3, e: "비활성 기체인 아르곤입니다." },
-        { id: 57, q: "물에서 산소의 공유 전자쌍 수는?", o: ["1", "2", "3", "4", "0"], a: 2, e: "총 2쌍을 공유합니다." },
-        { id: 58, q: "원자핵 설명 틀린 것?", o: ["(+)전하", "중심 위치", "질량 대부분", "전자가 들어 있음", "양성자+중성자"], a: 4, e: "전자는 껍질에 있습니다." },
-        { id: 59, q: "원자 설명 옳은 것?", o: ["중성이다", "전자 수=중성자 수", "핵이 (-)다", "껍질이 없다", "색이 있다"], a: 1, e: "원자는 전기적 중성입니다." },
-        { id: 60, q: "화학 성질 결정 핵심은?", o: ["중성자", "양성자", "원자가 전자", "껍질 수", "번호"], a: 3, e: "원자가 전자가 성질을 결정합니다." }
-    ];
+// --- Keywords ---
+const kwAll =[
+  {t:'알칼리 금속', d:'1족 금속(수소 제외). Li, Na, K 등. 반응성이 매우 커서 물과 격렬히 반응하며 수소 기체를 발생시킴.'},
+  {t:'할로젠', d:'17족 비금속. F, Cl, Br, I 등. 실온에서 이원자 분자 형태로 존재하며 원자 번호가 작을수록 반응성이 큼.'},
+  {t:'준금속', d:'금속과 비금속의 중간 성질을 갖는 원소. 붕소(B), 규소(Si) 등이 해당함.'},
+  {t:'원자가 전자', d:'가장 바깥 전자 껍질에 들어있는 전자로, 원소의 화학적 성질을 결정하는 핵심 요소.'},
+  {t:'옥텟 규칙', d:'가장 바깥 전자 껍질에 전자 8개를 채워 비활성 기체와 같이 안정해지려는 경향성.'},
+  {t:'이온 결합', d:'금속 원소(양이온)와 비금속 원소(음이온)가 정전기적 인력으로 결합하는 화학 결합.'},
+  {t:'공유 결합', d:'비금속 원자들이 서로 전자를 내놓아 전자쌍을 공유하며 형성하는 화학 결합.'},
+  {t:'비활성 기체', d:'18족 원소. 헬륨, 네온, 아르곤 등. 가장 바깥 껍질이 꽉 차 있어 화학적으로 매우 안정함.'}
+];
 
-    function showPage(id, el) {
-        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-        document.getElementById('page-' + id).classList.add('active');
-        el.classList.add('active');
-        window.scrollTo(0,0);
-    }
+const kwGrid = document.getElementById('kwGrid');
+kwAll.forEach((k,i)=>{
+  const d=document.createElement('div');
+  d.className='kw-item';
+  d.innerHTML=`<div class="kw-term">${k.t}<span style="font-size:.7rem;color:#a0aec0">▼</span></div><div class="kw-def" id="kd${i}">${k.d}</div>`;
+  d.onclick=()=>{
+    const el=document.getElementById(`kd${i}`);
+    el.classList.toggle('show');
+    d.querySelector('span').textContent=el.classList.contains('show')?'▲':'▼';
+  };
+  kwGrid.appendChild(d);
+});
 
-    function renderSubjective() {
-        const container = document.getElementById('sub-list');
-        subData.forEach(item => {
-            const div = document.createElement('div');
-            div.className = 'quiz-card';
-            div.innerHTML = `
-                <span class="quiz-num">서술형 ${item.id}</span>
-                <div class="quiz-q">${item.q}</div>
-                <textarea class="subjective-input" placeholder="답안을 직접 입력하세요..."></textarea>
-                <button onclick="toggleAns('sub-${item.id}')" style="width:100%; padding:12px; border:none; background:var(--primary); color:white; border-radius:8px; cursor:pointer; font-family:inherit; font-weight:700;">정답 확인</button>
-                <div id="sub-${item.id}" class="ans-box">${item.a}</div>
-            `;
-            container.appendChild(div);
-        });
-    }
+// --- Quiz Engine ---
+const quizState={};
+function initQ(id,data,progId,barId,resId,scId,msgId){
+  quizState[id]={data,ans:new Array(data.length).fill(false),sc:0,progId,barId,resId,scId,msgId};
+}
 
-    function renderObjective() {
-        const container = document.getElementById('obj-list');
-        objectiveData.forEach(item => {
-            const div = document.createElement('div');
-            div.className = 'quiz-card';
-            const options = item.o.map((opt, idx) => `
-                <button class="option-btn" onclick="checkAns(this, ${item.id}, ${idx + 1}, ${item.a})">
-                    ${idx + 1}. ${opt}
-                </button>
-            `).join('');
-            div.innerHTML = `
-                <span class="quiz-num">객관식 ${item.id}</span>
-                <div class="quiz-q">${item.q}</div>
-                <div class="option-list">${options}</div>
-                <div id="obj-${item.id}" class="ans-box"><b>정답: ${item.a}번</b><br>${item.e}</div>
-            `;
-            container.appendChild(div);
-        });
-    }
+function buildMCQ(id,containerId){
+  const s=quizState[id];
+  const c=document.getElementById(containerId);
+  c.innerHTML='';
+  s.data.forEach((q,i)=>{
+    const d=document.createElement('div');d.className='quiz-card';
+    d.innerHTML=`<div class="quiz-num">${i+1}</div><div class="quiz-q">${q.q}</div>
+      ${q.opts.map((o,j)=>`<button class="option" id="${id}_o${i}_${j}" onclick="chkMCQ('${id}',${i},${j})">${['①','②','③','④','⑤'][j]} ${o}</button>`).join('')}
+      <div class="explain" id="${id}_e${i}">💡 <strong>해설:</strong> ${q.exp}</div>`;
+    c.appendChild(d);
+  });
+}
 
-    function checkAns(btn, id, sel, correct) {
-        const parent = btn.parentElement;
-        parent.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected', 'correct', 'wrong'));
-        btn.classList.add('selected');
-        const ansBox = document.getElementById('obj-' + id);
-        ansBox.classList.add('visible');
-        if(sel === correct) btn.classList.add('correct');
-        else btn.classList.add('wrong');
-    }
+function chkMCQ(id,qi,sel){
+  const s=quizState[id];if(s.ans[qi])return;
+  s.ans[qi]=true;const q=s.data[qi];
+  for(let j=0;j<q.opts.length;j++){
+    const b=document.getElementById(`${id}_o${qi}_${j}`);b.disabled=true;
+    if(j===q.ans)b.classList.add('correct');else if(j===sel)b.classList.add('wrong');
+  }
+  if(sel===q.ans)s.sc++;
+  document.getElementById(`${id}_e${qi}`).classList.add('show');
+  
+  const done=s.ans.filter(Boolean).length;
+  document.getElementById(s.progId).textContent=`${done} / ${s.data.length} 완료`;
+  document.getElementById(s.barId).style.width=`${(done/s.data.length)*100}%`;
+  
+  if(done===s.data.length){
+    setTimeout(()=>{
+      document.getElementById(s.resId).style.display='block';
+      document.getElementById(s.scId).textContent=`${s.sc} / ${s.data.length}`;
+      const p=Math.round(s.sc/s.data.length*100);
+      document.getElementById(s.msgId).textContent=p>=80?'🎉 화학 마스터에 등극하셨습니다!':p>=60?'👍 잘 하셨습니다! 틀린 문항을 복습해 보세요.':'📖 핵심 개념 정리를 다시 한 번 읽어보세요.';
+    },300);
+  }
+}
 
-    function toggleAns(id) {
-        document.getElementById(id).classList.toggle('visible');
-    }
+function resetQ(id){
+  const s=quizState[id];s.ans=new Array(s.data.length).fill(false);s.sc=0;
+  document.getElementById(s.progId).textContent=`0 / ${s.data.length} 완료`;
+  document.getElementById(s.barId).style.width='0%';
+  document.getElementById(s.resId).style.display='none';
+  buildMCQ(id,'mcqBox');
+}
 
-    window.onload = () => { renderSubjective(); renderObjective(); };
+// OX Engine
+function buildOX(id,containerId){
+  const s=quizState[id];const c=document.getElementById(containerId);c.innerHTML='';
+  s.data.forEach((q,i)=>{
+    const d=document.createElement('div');d.className='ox-card';
+    d.innerHTML=`<div class="quiz-num">${i+1}</div><div class="ox-q">${q.q}</div>
+      <div class="ox-btns">
+        <button class="ox-btn o-btn" id="${id}_oo${i}" onclick="chkOX('${id}',${i},true)">⭕ O</button>
+        <button class="ox-btn x-btn" id="${id}_ox${i}" onclick="chkOX('${id}',${i},false)">❌ X</button>
+      </div>
+      <div class="explain" id="${id}_oe${i}">💡 <strong>해설:</strong> ${q.exp}</div>`;
+    c.appendChild(d);
+  });
+}
+
+function chkOX(id,qi,sel){
+  const s=quizState[id];if(s.ans[qi])return;
+  s.ans[qi]=true;const correct=s.data[qi].ans===sel;if(correct)s.sc++;
+  const oB=document.getElementById(`${id}_oo${qi}`);const xB=document.getElementById(`${id}_ox${qi}`);
+  oB.disabled=xB.disabled=true;
+  if(s.data[qi].ans){oB.classList.add('correct');if(!sel)xB.classList.add('wrong');}
+  else{xB.classList.add('correct');if(sel)oB.classList.add('wrong');}
+  document.getElementById(`${id}_oe${qi}`).classList.add('show');
+  
+  const done=s.ans.filter(Boolean).length;
+  document.getElementById(s.progId).textContent=`${done} / ${s.data.length} 완료`;
+  document.getElementById(s.barId).style.width=`${(done/s.data.length)*100}%`;
+  
+  if(done===s.data.length){
+    setTimeout(()=>{
+      document.getElementById(s.resId).style.display='block';
+      document.getElementById(s.scId).textContent=`${s.sc} / ${s.data.length}`;
+      const p=Math.round(s.sc/s.data.length*100);
+      document.getElementById(s.msgId).textContent=p>=80?'🎉 완벽합니다!':p>=60?'👍 좋습니다!':'📖 다시 복습해보세요.';
+    },300);
+  }
+}
+
+function resetO(id){
+  const s=quizState[id];s.ans=new Array(s.data.length).fill(false);s.sc=0;
+  document.getElementById(s.progId).textContent=`0 / ${s.data.length} 완료`;
+  document.getElementById(s.barId).style.width='0%';
+  document.getElementById(s.resId).style.display='none';
+  buildOX(id,'oxBox');
+}
+
+// --- Data ---
+const mcqData =[
+  {q:'주기율표의 왼쪽과 가운데 부분에 주로 위치하는 원소의 종류는?',opts:['금속 원소','비금속 원소','비활성 기체','할로젠','중성자'],ans:0,exp:'금속 원소는 대체로 주기율표의 왼쪽과 가운데에 위치합니다.'},
+  {q:'다음 중 실온에서 액체 상태인 금속 원소는?',opts:['철','알루미늄','수은','나트륨','리튬'],ans:2,exp:'수은(Hg)은 실온에서 유일하게 액체 상태인 금속입니다.'},
+  {q:'비금속 원소인 브로민(Br₂)의 실온 상태와 색깔은?',opts:['기체, 노란색','액체, 적갈색','고체, 보라색','기체, 연한 노란색','액체, 은백색'],ans:1,exp:'브로민은 실온에서 적갈색 액체 상태로 존재합니다.'},
+  {q:'금속과 비금속의 중간 성질을 갖는 원소를 무엇이라 하는가?',opts:['알칼리 금속','비활성 기체','할로젠','준금속 원소','이온'],ans:3,exp:'붕소, 규소 등 중간 성질 원소는 준금속 원소입니다.'},
+  {q:'반도체 회로기판에 주로 사용되는 금속 원소는?',opts:['철','구리','금','알루미늄','납'],ans:2,exp:'금은 전도성이 좋고 부식되지 않아 반도체 회로기판에 쓰입니다.'},
+  {q:'알칼리 금속의 광택이 공기 중에서 빠르게 사라지는 이유는?',opts:['수분 흡수','산소와 반응','질소와 반응','빛의 굴절','증발'],ans:1,exp:'알칼리 금속은 공기 중의 산소와 빠르게 반응하여 산화물을 형성하며 광택을 잃습니다.'},
+  {q:'나트륨이 물과 반응할 때 발생하는 기체는?',opts:['산소','이산화 탄소','수소','질소','헬륨'],ans:2,exp:'알칼리 금속은 물과 격렬히 반응하여 수소 기체(H₂)를 발생시킵니다.'},
+  {q:'알칼리 금속 수용액에 페놀프탈레인 용액을 넣었을 때의 색깔은?',opts:['무색','노란색','붉은색','푸른색','보라색'],ans:2,exp:'알칼리 금속 수용액은 염기성을 띠어 페놀프탈레인 용액을 붉은색으로 변화시킵니다.'},
+  {q:'알칼리 금속의 반응성 크기 순서가 옳은 것은?',opts:['Li > Na > K','Li < Na < K','Na < Li < K','K < Na < Li','Na > K > Li'],ans:1,exp:'알칼리 금속은 원자 번호가 클수록 반응성이 커집니다 (Li < Na < K).'},
+  {q:'할로젠 원소가 속한 족은?',opts:['1족','2족','13족','17족','18족'],ans:3,exp:'할로젠은 17족에 속하는 비금속 원소들입니다.'},
+  {q:'염소(Cl₂)의 실온 상태와 색깔은?',opts:['연한 노란색 기체','노란색 기체','적갈색 액체','보라색 고체','무색 기체'],ans:1,exp:'염소(Cl₂)는 노란색 기체 상태로 존재합니다.'},
+  {q:'할로젠화 수소를 물에 녹인 수용액의 액성은?',opts:['산성','중성','염기성','알칼리성','없음'],ans:0,exp:'할로젠 원소가 수소와 결합한 물질(HF, HCl 등)은 물에 녹아 산성을 띱니다.'},
+  {q:'비금속 원소의 반응성이 크다는 것의 의미는?',opts:['전자를 잃기 쉽다','전자를 얻기 쉽다','양이온이 되기 쉽다','화학 결합을 안 한다','질량이 가볍다'],ans:1,exp:'비금속은 전자를 얻어 음이온이 되려는 성질이 반응성의 척도입니다.'},
+  {q:'원자핵을 구성하는 두 입자는?',opts:['양성자와 전자','양성자와 중성자','중성자와 전자','전자와 이온','원자 번호와 양성자'],ans:1,exp:'원자핵은 양성자와 중성자로 이루어져 있습니다.'},
+  {q:'원자가 전기적으로 중성인 이유는?',opts:['전하가 없어서','양성자수와 중성자수가 같아서','양성자수와 전자 수가 같아서','전자가 핵 안에 있어서','이온이 안 되어서'],ans:2,exp:'원자핵의 양성자(+) 수와 주변을 도는 전자(-)의 수가 같아 전하가 상쇄됩니다.'},
+  {q:'두 번째 전자 껍질에 채워질 수 있는 최대 전자 수는?',opts:['2개','4개','8개','10개','18개'],ans:2,exp:'전자 껍질은 첫 번째는 2개, 두 번째부터는 8개까지 최대로 채워집니다.'},
+  {q:'화학적 성질을 결정하는 "가장 바깥 껍질의 전자"를 무엇이라 하는가?',opts:['최내각 전자','원자가 전자','중성 전자','안정 전자','핵 전자'],ans:1,exp:'화학 결합에 직접 참여하는 가장 바깥 껍질의 전자를 원자가 전자라고 합니다.'},
+  {q:'18족 원소(비활성 기체)의 원자가 전자 수는?',opts:['0개','2개','8개','18개','1개'],ans:0,exp:'18족 원소는 전자 껍질이 꽉 차 있어 화학 반응에 참여하지 않으므로 원자가 전자를 0개로 정합니다.'},
+  {q:'이온 결합이 형성되는 주된 힘은?',opts:['공유 결합력','자기력','정전기적 인력','중력','마찰력'],ans:2,exp:'양이온(+)과 음이온(-) 사이의 전하적 끌림인 정전기적 인력에 의해 결합합니다.'},
+  {q:'17족 할로젠 원소가 되기 쉬운 이온의 전하는?',opts:['+1가','+2가','-1가','-2가','0'],ans:2,exp:'17족 원소는 원자가 전자가 7개이므로 전자 1개를 얻어 -1가 음이온이 되기 쉽습니다.'},
+  {q:'공유 결합이 형성되는 원소들의 조합은?',opts:['금속 + 금속','금속 + 비금속','비금속 + 비금속','비활성 기체 + 금속','양이온 + 음이온'],ans:2,exp:'공유 결합은 비금속 원소 사이에서 전자쌍을 공유하며 형성됩니다.'},
+  {q:'물 분자(H₂O) 한 개에 포함된 공유 전자쌍의 수는?',opts:['1개','2개','3개','4개','8개'],ans:1,exp:'산소가 수소 두 개와 각각 1쌍씩, 총 2개의 전자쌍을 공유합니다.'},
+  {q:'질소 분자(N₂)에서 두 질소 원자 사이의 결합 종류는?',opts:['단일 결합','2중 결합','3중 결합','이온 결합','없음'],ans:2,exp:'질소는 원자가 전자가 5개이므로, 3개의 전자를 공유하는 3중 결합을 형성합니다.'},
+  {q:'이온 결합 물질의 특징으로 옳은 것은?',opts:['실온에서 주로 액체이다','고체 상태에서 전기가 잘 통한다','수용액 상태에서 전기가 통한다','물에 전혀 녹지 않는다','분자 단위로 존재한다'],ans:2,exp:'이온 결합 물질은 수용액 상태에서 이온이 자유롭게 움직일 수 있어 전기가 통합니다.'},
+  {q:'설탕 수용액에 전류가 흐르지 않는 이유는?',opts:['설탕이 안 녹아서','이온이 생성되지 않아서','설탕이 금속이라서','물 분자가 방해해서','전압이 낮아서'],ans:1,exp:'설탕은 공유 결합 물질로, 물에 녹아도 이온화되지 않고 분자 상태로 존재합니다.'},
+  {q:'다음 중 금속 원소와 비금속 원소에 대한 설명으로 옳은 것은?',opts:['금속은 대체로 오른쪽에 위치한다.','비금속은 양이온이 되기 쉽다.','비금속은 실온에서 액체이다.','금속은 열과 전기 전도성이 크다.','흑연은 전기가 통하지 않는다.'],ans:3,exp:'금속 원소는 열과 전기 전도성이 매우 큰 것이 특징입니다. 흑연은 예외적으로 전기가 통합니다.'},
+  {q:'알칼리 금속의 공통적인 성질로 옳지 않은 것은?',opts:['밀도가 작아 물에 뜬다.','물과 반응하여 산소 기체를 발생시킨다.','반응 후 수용액은 붉은색(페놀프탈레인)을 띤다.','칼로 잘릴 정도로 무르다.','공기나 물과 접촉하지 않게 보관한다.'],ans:1,exp:'알칼리 금속은 물과 반응하여 산소가 아닌 수소 기체(H₂)를 발생시킵니다.'},
+  {q:'할로젠 원소에 대한 설명으로 가장 적절한 것은?',opts:['1족 원소이다.','원자가 전자가 1개이다.','원자 번호가 커질수록 반응성이 커진다.','실온에서 2개의 원자가 결합한 이원자 분자로 존재한다.','물에 녹이면 염기성을 띤다.'],ans:3,exp:'할로젠(17족)은 실온에서 F₂, Cl₂ 등 이원자 분자 형태로 존재합니다. 원자 번호가 작을수록 반응성이 큽니다.'},
+  {q:'다음 중 옥텟 규칙(Octet Rule)의 의미를 가장 잘 설명한 것은?',opts:['원자가 핵융합을 통해 산소가 되려는 경향','모든 원소가 화합물을 형성하는 현상','가장 바깥 껍질에 전자 8개를 채워 안정해지려는 경향','비활성 기체들이 서로 전자를 주고받는 결합','전자가 8개면 무조건 이온 결합을 한다는 규칙'],ans:2,exp:'옥텟 규칙은 가장 바깥 껍질에 전자 8개를 채워 비활성 기체처럼 안정해지려는 경향입니다.'},
+  {q:'다음 중 화학적 성질을 결정짓는 가장 중요한 요소는 무엇인가?',opts:['원자핵에 있는 중성자의 수','총 전자 껍질의 수','가장 안쪽 껍질에 있는 전자의 수','가장 바깥 껍질에 있는 원자가 전자의 수','양성자와 중성자의 비율'],ans:3,exp:'화학 결합에 직접 참여하는 가장 바깥 껍질의 전자, 즉 원자가 전자가 원소의 화학적 성질을 결정합니다.'}
+];
+
+const oxData =[
+  {q:'수소(H)는 주기율표의 왼쪽에 위치하므로 금속 원소이다.',ans:false,exp:'수소는 주기율표의 왼쪽(1족)에 위치하지만 예외적으로 비금속 원소입니다.'},
+  {q:'알칼리 금속은 물과 격렬히 반응하므로 석유나 액체 파라핀 속에 보관해야 한다.',ans:true,exp:'공기 중의 산소 및 수분과 반응하는 것을 막기 위해 석유 속에 보관합니다.'},
+  {q:'할로젠 원소 중 플루오린(F)이 아이오딘(I)보다 반응성이 더 크다.',ans:true,exp:'할로젠 원소는 원자 번호가 작을수록 반응성이 큽니다. F > Cl > Br > I 순서입니다.'},
+  {q:'비금속 원소 중 브로민(Br)은 실온에서 유일하게 액체 상태이다.',ans:true,exp:'비금속 원소 중 실온에서 액체인 것은 브로민(Br₂)이 유일합니다. (금속 중에서는 수은이 액체)'},
+  {q:'원자핵은 양성자와 전자로 이루어져 있어 전체적으로 전기적 중성이다.',ans:false,exp:'원자핵은 양성자와 중성자로 이루어져 있으며 (+) 전하를 띱니다. 원자 전체가 중성인 이유는 양성자와 외부 전자의 수가 같기 때문입니다.'},
+  {q:'18족 비활성 기체는 원자가 전자가 8개이므로 원자가 전자를 8이라고 정한다.',ans:false,exp:'18족 원소는 가장 바깥 껍질이 모두 채워져 안정하여 화학 반응에 참여하지 않으므로 원자가 전자를 0으로 정합니다.'},
+  {q:'이온 결합 물질은 고체 상태에서는 전기가 통하지 않지만 수용액 상태에서는 전기가 통한다.',ans:true,exp:'이온 결합 물질은 고체일 때 이온이 고정되어 전기가 통하지 않으나, 액체나 수용액 상태에서는 이온이 자유롭게 움직여 전기가 통합니다.'},
+  {q:'물(H₂O) 분자에서 산소와 수소는 이온 결합을 형성한다.',ans:false,exp:'산소와 수소는 둘 다 비금속 원소이므로 전자쌍을 공유하는 공유 결합을 형성합니다.'},
+  {q:'나트륨(Na)은 전자를 하나 잃어 옥텟 규칙을 만족하는 양이온이 되기 쉽다.',ans:true,exp:'나트륨은 1족 원소로 원자가 전자가 1개이므로, 이를 버리고 +1가 양이온이 되어 안정해지는 성질이 있습니다.'},
+  {q:'공유 결합 물질은 대체로 수용액 상태에서 전하를 띤 이온으로 분리되어 전기가 잘 통한다.',ans:false,exp:'공유 결합 물질은 대부분 수용액에서도 이온화되지 않고 분자 상태로 존재하여 전기가 통하지 않습니다. (단, HCl 등 일부 예외 있음)'}
+];
+
+// Initialize Quizzes
+initQ('mcqQuiz', mcqData, 'p_mcq', 'b_mcq', 'r_mcq', 's_mcq', 'm_mcq');
+initQ('oxQuiz', oxData, 'p_ox', 'b_ox', 'r_ox', 's_ox', 'm_ox');
+
+// Render Quizzes
+buildMCQ('mcqQuiz', 'mcqBox');
+buildOX('oxQuiz', 'oxBox');
+
 </script>
 </body>
 </html>
