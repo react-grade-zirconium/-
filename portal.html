@@ -39,17 +39,17 @@
         .content-container { flex: 1; background: white; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); overflow: hidden; border: 1px solid #e2e8f0; position: relative; }
         iframe { width: 100%; height: 100%; border: none; display: block; }
 
-        /* 내장 섹션 공통 스타일 */
+        /* 내장 섹션 스타일 */
         .internal-box { display: none; width: 100%; height: 100%; background: #fdfcf8; flex-direction: column; align-items: center; padding: 50px; overflow-y: auto; }
         
-        /* 한국사 선택 허브 (내용정리 vs 부록) */
+        /* 한국사 선택 허브 */
         .hub-grid { display: flex; gap: 30px; justify-content: center; align-items: center; height: 100%; }
-        .hub-card { width: 280px; padding: 40px; background: white; border: 1px solid #e2e8f0; border-radius: 24px; text-align: center; cursor: pointer; transition: 0.3s; box-shadow: 0 10px 20px rgba(0,0,0,0.02); }
+        .hub-card { width: 280px; padding: 50px 30px; background: white; border: 1px solid #e2e8f0; border-radius: 24px; text-align: center; cursor: pointer; transition: 0.3s; box-shadow: 0 10px 20px rgba(0,0,0,0.02); }
         .hub-card:hover { transform: translateY(-10px); border-color: var(--hist-theme); box-shadow: 0 15px 30px rgba(30, 58, 138, 0.1); }
-        .hub-card .icon { font-size: 50px; margin-bottom: 20px; }
-        .hub-card h3 { color: var(--hist-theme); font-weight: 900; margin-bottom: 10px; }
+        .hub-card .icon { font-size: 60px; margin-bottom: 25px; }
+        .hub-card h3 { color: var(--hist-theme); font-weight: 900; font-size: 1.4rem; margin: 0; }
 
-        /* 부록(Appendix) 상세 디자인 */
+        /* 부록 상세 디자인 */
         .appendix-wrapper { max-width: 900px; width: 100%; text-align: left; padding-bottom: 50px; }
         .appendix-section { margin-bottom: 30px; background: white; border: 1px solid #e2e8f0; border-radius: 16px; padding: 30px; }
         .appendix-section h4 { background: var(--hist-theme); color: white; display: inline-block; padding: 6px 16px; border-radius: 8px; margin-bottom: 20px; font-size: 1.1rem; }
@@ -93,12 +93,10 @@
                 <div class="hub-card" onclick="loadHistorySummary()">
                     <div class="icon">📜</div>
                     <h3>한국사 내용 정리</h3>
-                    <p>외부 파일(iframe)로 연결</p>
                 </div>
                 <div class="hub-card" onclick="showAppendix()">
                     <div class="icon">📁</div>
                     <h3>한국사 부록</h3>
-                    <p>내장된 핵심 요약 자료</p>
                 </div>
             </div>
         </div>
@@ -110,24 +108,26 @@
                     <div class="appendix-item">
                         <h5>고대 및 남북국 시대</h5>
                         <ul>
-                            <li>• <b>구석기 시대:</b> 주먹도끼와 같은 뗀석기 사용</li>
-                            <li>• <b>초기 국가:</b> 동예의 '책화', 옥저/동예의 군장(읍군, 삼로) 통치</li>
-                            <li>• <b>가야:</b> 풍부한 철을 바탕으로 한 철기 문화 (철제 투구, 말 갑옷)</li>
-                            <li>• <b>남북국 시대:</b> 발해의 독자적 3성 6부제, 신라 말기 반란(김헌창, 원종·애노의 난)</li>
+                            <li>• <b>구석기 시대:</b> 대표적인 도구로 주먹도끼와 같은 뗀석기가 사용되었습니다.</li>
+                            <li>• <b>초기 국가 (동예/옥저):</b> 동예의 풍습으로 다른 부족의 경계를 침범하면 가축이나 노비로 보상하는 '책화'가 있었습니다.</li>
+                            <li>• <b>군장 통치:</b> 옥저와 동예에는 왕이 없었으며, 읍군이나 삼로라 불리는 군장이 다스렸습니다.</li>
+                            <li>• <b>가야:</b> 풍부한 철을 바탕으로 철제 투구와 말 갑옷 등 뛰어난 철기 문화를 꽃피웠습니다.</li>
+                            <li>• <b>남북국 시대 (발해/신라):</b> 발해는 당의 3성 6부제를 독자적으로 수용(유교식 명칭), 신라 말기 반란(김헌창의 난, 원종·애노의 난) 빈번.</li>
                         </ul>
                     </div>
                     <div class="appendix-item">
                         <h5>고려 시대</h5>
                         <ul>
-                            <li>• <b>성종:</b> 최승로 시무 28조 수용, 유교 통치 확립, 12목 지방관 파견</li>
-                            <li>• <b>과거 제도:</b> 문과, 잡과, 승과 시행 (조선과 차별점)</li>
+                            <li>• <b>성종의 업적:</b> 최승로의 시무 28조 수용, 유교 통치 체제 확립, 국자감 설치 및 12목 지방관 파견.</li>
+                            <li>• <b>과거 제도:</b> 문과, 잡과, 승과 중심으로 시행 (조선은 승과 폐지).</li>
                         </ul>
                     </div>
                     <div class="appendix-item">
                         <h5>조선 시대</h5>
                         <ul>
-                            <li>• <b>태종:</b> 왕자의 난을 통한 집권 | <b>중종:</b> 조광조의 급진 개혁(현량과, 위훈 삭제)</li>
-                            <li>• <b>병자호란:</b> 인조의 남한산성 항전</li>
+                            <li>• <b>태종:</b> 이방원은 두 차례의 왕자의 난을 통해 권력을 잡고 왕위에 올랐습니다.</li>
+                            <li>• <b>중종 (조광조):</b> 현량과 실시, 소격서 폐지, 위훈 삭제 등을 주장하며 급진적 개혁 시도.</li>
+                            <li>• <b>병자호란:</b> 인조 시기 발생, 남한산성으로 피난하여 항전 (※ 광해군은 이전 폐위).</li>
                         </ul>
                     </div>
                 </div>
@@ -135,23 +135,25 @@
                 <div class="appendix-section">
                     <h4>🇰🇷 2. 근대사 (개항기 ~ 대한제국)</h4>
                     <div class="appendix-item">
-                        <h5>개항 및 개화 정책</h5>
+                        <h5>개항 및 초기 개화 정책 (1870~80년대)</h5>
                         <ul>
-                            <li>• <b>강화도 조약:</b> 최익현의 왜양일체론 반대 | <b>통리기무아문:</b> 개화 정책 총괄</li>
-                            <li>• <b>갑신정변:</b> 급진 개화파의 3일 천하, 유길준의 조선 중립화론</li>
+                            <li>• <b>강화도 조약 (1876):</b> 최익현은 '왜양일체론'을 내세우며 조약 체결을 강력히 반대했습니다.</li>
+                            <li>• <b>통리기무아문 (1880):</b> 개항 이후 개화 정책을 총괄하기 위해 설치된 기구입니다.</li>
+                            <li>• <b>갑신정변 (1884):</b> 급진 개화파 주도, '3일 천하'로 종료. 유길준은 조선 중립화론을 주장했습니다.</li>
                         </ul>
                     </div>
                     <div class="appendix-item">
-                        <h5>외세 침략과 저항</h5>
+                        <h5>외세의 침략과 저항</h5>
                         <ul>
-                            <li>• <b>병인양요:</b> 프랑스군의 외규장각 의궤 약탈 | <b>을미사변:</b> 명성황후 시해</li>
-                            <li>• <b>독립 협회:</b> 영은문을 헐고 독립문 건립</li>
+                            <li>• <b>외규장각 의궤 약탈:</b> 1866년 병인양요 당시 프랑스군에 의해 자행되었습니다. (※ 신미양요는 미군 충돌)</li>
+                            <li>• <b>을미사변 (1895):</b> 일본이 명성황후를 시해한 사건.</li>
+                            <li>• <b>독립문 건립:</b> 독립 협회가 사대주의의 상징인 영은문을 헐고 건립했습니다.</li>
                         </ul>
                     </div>
                     <div class="appendix-item">
-                        <h5>대한제국</h5>
+                        <h5>대한제국 (1897~)</h5>
                         <ul>
-                            <li>• <b>광무개혁:</b> 양전 사업 실시 및 토지 소유권 증서인 '지계' 발급</li>
+                            <li>• <b>광무개혁:</b> 양전 사업 실시 및 토지 소유권 증서인 '지계' 발급으로 근대적 토지 소유 제도 확립 시도.</li>
                         </ul>
                     </div>
                 </div>
@@ -215,7 +217,7 @@
         const frame = document.getElementById('mainFrame');
         document.getElementById('historyHub').style.display = 'none';
         frame.style.display = 'block';
-        frame.src = "./history_summary.html"; // 외부 정리 파일 연결
+        frame.src = "./history_interactive.html.html"; // 요청하신 파일명 적용
         document.getElementById('mainTitle').innerText = "한국사 내용 정리";
     }
 
