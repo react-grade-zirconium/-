@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>통합사회</title>
+    <title>통합사회 학습 허브</title>
     <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root { --soc-main: #f59e0b; --soc-bg: #fffbeb; --soc-accent: #fcd34d; }
@@ -15,8 +15,8 @@
         }
 
         .card { 
-            width: 260px; 
-            height: 350px; 
+            width: 280px; 
+            height: 380px; 
             background: white; 
             border-radius: 24px; 
             display: flex; 
@@ -29,7 +29,7 @@
             border: 2px solid transparent;
             text-decoration: none;
             text-align: center;
-            padding: 20px;
+            padding: 25px;
         }
 
         .card:hover { 
@@ -51,22 +51,24 @@
         }
 
         .title { 
-            font-size: 1.3rem; 
+            font-size: 1.35rem; 
             font-weight: 900; 
             color: var(--soc-main); 
-            margin-bottom: 10px;
-        }
-
-        .desc { 
-            font-size: 0.9rem; 
-            color: #b45309; 
-            line-height: 1.5;
+            margin-bottom: 12px;
             word-break: keep-all;
         }
 
+        .desc { 
+            font-size: 0.95rem; 
+            color: #b45309; 
+            line-height: 1.6;
+            word-break: keep-all;
+            opacity: 0.9;
+        }
+
         .badge {
-            margin-top: 15px;
-            padding: 5px 12px;
+            margin-top: auto;
+            padding: 6px 15px;
             background: var(--soc-main);
             color: white;
             border-radius: 12px;
@@ -77,25 +79,25 @@
 </head>
 <body>
 
+    <a href="./society_happiness.html" class="card">
+        <div class="icon">💎</div>
+        <div class="title">통합적 관점과 행복</div>
+        <div class="desc">통합적 관점과 적용, 행복의 기준과 조건</div>
+        <div class="badge">ESSENTIAL</div>
+    </a>
+
     <a href="./society_geography.html" class="card">
-        <div class="icon">🗺️</div>
-        <div class="title">생활 공간과 지리</div>
-        <div class="desc">기후, 지형, 그리고 인간 생활의 공간적 특징 이해하기</div>
-        <div class="badge">기존 자료</div>
+        <div class="icon">☀️</div>
+        <div class="title">기후 총정리</div>
+        <div class="desc">기후 개념 정리와 문제 풀이, 그래프/지도 해석 퀴즈</div>
+        <div class="badge">TEST & STUDY</div>
     </a>
 
     <a href="./society_environment.html" class="card">
         <div class="icon">🌿</div>
         <div class="title">자연환경과 인간</div>
-        <div class="desc">지형, 자연재해, 자연관 및 환경 보전을 위한 핵심 정리</div>
-        <div class="badge" style="background: #10b981;">NEW 요약본</div>
-    </a>
-
-    <a href="./society_happiness.html" class="card">
-        <div class="icon">😊</div>
-        <div class="title">행복의 의미와 기준</div>
-        <div class="desc">시대와 지역에 따른 다양한 행복의 기준과 도덕적 탐구</div>
-        <div class="badge">기존 자료</div>
+        <div class="desc">지형, 자연재해, 자연관 및 환경 보전을 위한 노력 핵심 정리</div>
+        <div class="badge" style="background: #10b981;">CORE SUMMARY</div>
     </a>
 
 </body>
