@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>화학 마스터 - 전체 정리 및 퀴즈</title>
+<title>화학 통합 마스터 - 전체 정리 및 퀴즈</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Malgun Gothic','Noto Sans KR',sans-serif;background:#f0f4f8;color:#1a202c;font-size:14px}
@@ -22,7 +22,7 @@ body{font-family:'Malgun Gothic','Noto Sans KR',sans-serif;background:#f0f4f8;co
 .card.red{border-left-color:#e53e3e}.card.orange{border-left-color:#dd6b20}.card.teal{border-left-color:#319795}
 .card.pink{border-left-color:#d53f8c}.card.indigo{border-left-color:#5a67d8}
 .card h3{font-size:.95rem;margin-bottom:9px;color:#2d3748;display:flex;align-items:center;gap:5px;font-weight:800}
-.card p,.card li{font-size:.83rem;line-height:1.75;color:#4a5568}
+.card p,.card li{font-size:.85rem;line-height:1.75;color:#4a5568}
 .card ul,.card ol{padding-left:16px}
 .section-title{font-size:1.05rem;font-weight:700;color:#2d3748;margin-bottom:12px;padding-bottom:7px;border-bottom:2px solid #e2e8f0}
 .unit-badge{display:inline-block;padding:2px 10px;border-radius:20px;font-size:.72rem;font-weight:700;margin-bottom:10px}
@@ -57,14 +57,6 @@ tr:hover td{background:#f0f7ff}
 .reset-btn{background:#2d3748;color:white;border:none;padding:9px 20px;border-radius:8px;cursor:pointer;font-size:.85rem;margin-top:12px;font-weight:600;transition:background .2s}
 .reset-btn:hover{background:#4a5568}
 
-/* OX */
-.ox-card{background:white;border-radius:12px;padding:16px;margin-bottom:10px;box-shadow:0 2px 8px rgba(0,0,0,.07)}
-.ox-q{font-size:.88rem;font-weight:600;margin-bottom:9px;line-height:1.5}
-.ox-btns{display:flex;gap:9px}
-.ox-btn{flex:1;padding:8px;border:2px solid #e2e8f0;border-radius:8px;font-size:1rem;font-weight:700;cursor:pointer;background:white;transition:all .2s}
-.ox-btn.o-btn{color:#3182ce}.ox-btn.x-btn{color:#e53e3e}
-.ox-btn.correct{background:#f0fff4;border-color:#38a169}.ox-btn.wrong{background:#fff5f5;border-color:#e53e3e}
-
 /* keywords */
 .kw-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
 .kw-item{background:white;border-radius:10px;padding:13px;box-shadow:0 2px 6px rgba(0,0,0,.07);cursor:pointer;transition:transform .2s;border-top:3px solid #3182ce}
@@ -75,29 +67,26 @@ tr:hover td{background:#f0f7ff}
 
 /* Short Answer details */
 details.short-ans {background:white;border-radius:10px;padding:14px;box-shadow:0 2px 8px rgba(0,0,0,.07);margin-bottom:12px;border-left:4px solid #dd6b20;}
-details.short-ans summary {font-weight:700;color:#2d3748;cursor:pointer;outline:none;font-size:.9rem;}
-details.short-ans .ans-box {margin-top:12px;padding:12px;background:#fffaf0;border:1px dashed #f6ad55;border-radius:6px;font-size:.85rem;color:#9c4221;}
+details.short-ans summary {font-weight:700;color:#2d3748;cursor:pointer;outline:none;font-size:.9rem; line-height: 1.4;}
+details.short-ans .ans-box {margin-top:12px;padding:12px;background:#fffaf0;border:1px dashed #f6ad55;border-radius:6px;font-size:.85rem;color:#9c4221; line-height: 1.6;}
 </style>
 </head>
 <body>
 <div class="header">
-  <h1>🧪 화학 통합 마스터 완벽 정리</h1>
-  <p>개념 정리 + 서술형 + 객관식/OX 인터랙티브 퀴즈</p>
+  <h1>🧪 화학 통합 마스터</h1>
+  <p>전체 정리 + 서술형 + 객관식 60문항 완벽 대비</p>
 </div>
 
 <div class="tabs">
   <div class="tab-group">
     <div class="tab active" onclick="ST('ch1',this)">📖 1. 금속과 비금속</div>
     <div class="tab" onclick="ST('ch2',this)">🔥 2. 알칼리·할로젠</div>
-    <div class="tab" onclick="ST('ch3',this)">⚛️ 3. 원자와 화학결합</div>
+    <div class="tab" onclick="ST('ch3',this)">⚛️ 3. 원자와 결합</div>
   </div>
   <div class="tab-group">
-    <div class="tab" onclick="ST('kw',this)">🔑 핵심 키워드</div>
-    <div class="tab" onclick="ST('short',this)">✍️ 서술형 문제</div>
-  </div>
-  <div class="tab-group">
-    <div class="tab" onclick="ST('mcq',this)">✅ 실전 객관식</div>
-    <div class="tab" onclick="ST('ox',this)">⭕ 실전 OX</div>
+    <div class="tab" onclick="ST('kw',this)">🔑 키워드</div>
+    <div class="tab" onclick="ST('short',this)">✍️ 서술형</div>
+    <div class="tab" onclick="ST('mcq',this)">✅ 객관식 (60문항)</div>
   </div>
 </div>
 
@@ -105,63 +94,61 @@ details.short-ans .ans-box {margin-top:12px;padding:12px;background:#fffaf0;bord
 <div id="ch1" class="section active">
   <span class="unit-badge ub-ch1">Chapter 1</span>
   <div class="section-title">🧪 1. 금속 원소와 비금속 원소</div>
-  <div class="tip-box">💡 <strong>핵심 흐름:</strong> 주기율표의 위치에 따라 원소는 금속(왼쪽/가운데)과 비금속(오른쪽)으로 나뉘며, 각기 다른 고유한 물리적/화학적 성질을 가집니다.</div>
+  <p style="margin-bottom:12px; color:#4a5568; font-size:0.9rem;">주기율표의 왼쪽과 가운데에는 금속 원소, 오른쪽에는 비금속 원소가 위치하며, 금속과 비금속의 경계에 준금속 원소가 위치합니다[cite: 1].</p>
   
   <div class="card blue">
-    <h3>📌 금속 원소와 비금속 원소 비교</h3>
+    <h3>📌 금속 원소와 비금속 원소 구분</h3>
     <table>
-      <tr><th>구분</th><th>금속 원소 <span class="badge badge-blue">양이온화</span></th><th>비금속 원소 <span class="badge badge-red">음이온화</span></th></tr>
-      <tr><td><strong>위치</strong></td><td>대체로 왼쪽과 가운데 부분</td><td>대체로 오른쪽 (단, <b>수소</b>는 왼쪽)</td></tr>
+      <tr><th>구분</th><th>금속 원소 [cite: 2]</th><th>비금속 원소 [cite: 2]</th></tr>
+      <tr><td>주기율표 위치</td><td>대체로 왼쪽과 가운데 부분 [cite: 2]</td><td>대체로 오른쪽 (단, 수소는 왼쪽) [cite: 2]</td></tr>
       <tr>
-        <td><strong>특징</strong></td>
+        <td>특징</td>
         <td>
           <ul>
-            <li>전자를 잃고 <strong>양이온</strong>이 되기 쉽다.</li>
-            <li>대부분 광택이 있다.</li>
-            <li>열과 전기 전도성이 있다.</li>
-            <li>외부 힘에 의해 길게 늘어나거나 얇게 펴진다.</li>
+            <li>전자를 잃고 양이온이 되기 쉽다 [cite: 2].</li>
+            <li>대부분 광택이 있다 [cite: 2].</li>
+            <li>열과 전기 전도성이 있다 [cite: 2].</li>
+            <li>외부 힘에 의해 길게 늘어나거나 얇게 펴진다 [cite: 2].</li>
           </ul>
         </td>
         <td>
           <ul>
-            <li>전자를 얻어 <strong>음이온</strong>이 되기 쉽다 (18족 제외).</li>
-            <li>광택이 없다.</li>
-            <li>열과 전기 전도성이 매우 작다.</li>
+            <li>전자를 얻어 음이온이 되기 쉽다 (18족 제외)[cite: 2].</li>
+            <li>광택이 없다 [cite: 2].</li>
+            <li>열과 전기 전도성이 매우 작다 [cite: 2].</li>
           </ul>
         </td>
       </tr>
-      <tr><td><strong>실온 상태</strong></td><td>대부분 고체 (단, <b>수은(Hg)</b>은 액체)</td><td>기체 또는 고체 (단, <b>브로민(Br)</b>은 액체)</td></tr>
+      <tr><td>실온 상태</td><td>대부분 고체 (단, 수은은 액체)[cite: 2]</td><td>대부분 기체 또는 고체 (단, 브로민은 액체)[cite: 2]</td></tr>
     </table>
   </div>
 
-  <div class="card orange">
-    <h3>⚠️ 참고 및 예외 사항</h3>
-    <ul>
-      <li><strong>18족 원소 (비활성 기체):</strong> 비금속에 속하지만 전자를 얻으려는 성질을 나타내지는 않습니다.</li>
-      <li><strong>준금속 원소:</strong> 금속과 비금속의 중간 성질을 가집니다. (예: 붕소(B), 규소(Si), 저마늄(Ge))</li>
-      <li><strong>흑연(C):</strong> 비금속 탄소의 공유 결합 물질이지만, 내부에 <b>자유 전자</b>가 있어 예외적으로 전기가 통합니다.</li>
-    </ul>
+  <div class="tip-box">
+    <b>참고 및 예외 사항:</b><br>
+    • <b>18족 원소:</b> 비금속이지만 전자를 얻는 성질을 나타내지는 않습니다 [cite: 3].<br>
+    • <b>준금속:</b> 금속과 비금속의 중간 성질을 가집니다 (예: B, Si, Ge) [cite: 4, 5].<br>
+    • <b>흑연:</b> 비금속 탄소의 공유 결합 물질이나, 자유 전자가 있어 전기가 통합니다[cite: 7, 8].
   </div>
 
   <div class="card teal">
-    <h3>🛠️ 원소의 이용 사례</h3>
+    <h3>🛠️ 1-1. 원소의 이용 [cite: 6]</h3>
     <div class="grid2">
       <div>
         <p><strong>[금속 원소]</strong></p>
         <ul>
-          <li><strong>철(Fe):</strong> 건축 자재, 기계</li>
-          <li><strong>구리(Cu):</strong> 전선 (전도성 우수)</li>
-          <li><strong>금(Au):</strong> 반도체 회로기판 (부식 방지)</li>
-          <li><strong>알루미늄(Al):</strong> 캔, 비행기 동체 (가벼움)</li>
+          <li>철: 건축 자재, 기계</li>
+          <li>구리: 전선</li>
+          <li>금: 반도체 회로기판</li>
+          <li>알루미늄: 캔, 비행기 동체</li>
         </ul>
       </div>
       <div>
         <p><strong>[비금속 원소]</strong></p>
         <ul>
-          <li><strong>수소(H):</strong> 우주 왕복선 연료</li>
-          <li><strong>질소(N):</strong> 식품 포장 충전재 (부패 방지)</li>
-          <li><strong>산소(O):</strong> 생명체 호흡, 연소</li>
-          <li><strong>인(P):</strong> 성냥</li>
+          <li>수소: 우주 왕복선 연료</li>
+          <li>질소: 식품 포장 충전재</li>
+          <li>산소: 생명체 호흡</li>
+          <li>인: 성냥</li>
         </ul>
       </div>
     </div>
@@ -174,38 +161,23 @@ details.short-ans .ans-box {margin-top:12px;padding:12px;background:#fffaf0;bord
   <div class="section-title">🔥 2. 알칼리 금속과 할로젠</div>
   
   <div class="card green">
-    <h3>💧 알칼리 금속 (1족, 수소 제외)</h3>
+    <h3>💧 2-1. 알칼리 금속 (1족, 수소 제외) [cite: 9]</h3>
     <ul>
-      <li><strong>종류:</strong> 리튬(Li), 나트륨(Na), 칼륨(K), 루비듐(Rb), 세슘(Cs) 등</li>
-      <li><strong>기본 성질:</strong> 실온에서 고체, 은백색 광택, 밀도가 낮음, 칼로 잘릴 정도로 무름.</li>
-      <li><strong>화학 반응:</strong> 
-        <ul>
-          <li>산소와 빠르게 반응하여 광택을 잃음.</li>
-          <li>물과 격렬히 반응하여 <strong>수소 기체(H₂)</strong>를 발생시키고, 수용액은 <strong>염기성</strong>이 됨. (페놀프탈레인 용액 투하 시 붉은색 변화)</li>
-        </ul>
-      </li>
-      <li><strong>반응성:</strong> 원자 번호가 클수록 반응성 증가 <span class="badge badge-gray">Li &lt; Na &lt; K</span></li>
-      <li><strong>보관 방법:</strong> 공기(산소) 및 물과의 접촉을 차단하기 위해 <strong>석유나 액체 파라핀 속</strong>에 보관.</li>
-      <li><strong>이용:</strong> Li(휴대전화 배터리), Na(터널 조명/나트륨 램프), K(비료)</li>
+      <li><strong>종류:</strong> Li, Na, K, Rb, Cs 등 [cite: 9]</li>
+      <li><strong>성질:</strong> 실온 고체, 은백색 광택, 낮은 밀도, 무른 성질 [cite: 10, 11].</li>
+      <li><strong>반응:</strong> 산소와 빠르게 반응하여 광택 소실 [cite: 11, 12]. 물과 반응하여 수소 기체(H₂) 발생 및 수용액 염기성 화[cite: 13, 35].</li>
+      <li><strong>반응성:</strong> 원자 번호가 클수록 증가 (Li &lt; Na &lt; K) [cite: 13, 14].</li>
+      <li><strong>보관:</strong> 석유나 액체 파라핀 속 [cite: 15].</li>
     </ul>
   </div>
 
   <div class="card purple">
-    <h3>🧪 할로젠 (17족 비금속)</h3>
+    <h3>🧪 2-2. 할로젠 (17족 비금속) [cite: 18]</h3>
     <ul>
-      <li><strong>종류:</strong> 플루오린(F), 염소(Cl), 브로민(Br), 아이오딘(I) 등</li>
-      <li><strong>기본 성질:</strong> 실온에서 원자 2개가 결합한 <strong>이원자 분자</strong> 형태로 존재, 고유의 색상을 가짐.</li>
-      <li><strong>상태와 색깔:</strong>
-        <ul>
-          <li><span class="badge badge-gray">F₂</span> 연한 노란색 기체</li>
-          <li><span class="badge badge-gray">Cl₂</span> 노란색 기체</li>
-          <li><span class="badge badge-gray">Br₂</span> 적갈색 액체</li>
-          <li><span class="badge badge-gray">I₂</span> 보라색 고체</li>
-        </ul>
-      </li>
-      <li><strong>화학 반응:</strong> 금속이나 수소와 격렬히 반응함. <strong>수소와 반응하여 생성된 물질(예: HCl)을 물에 녹이면 산성</strong>을 띰.</li>
-      <li><strong>반응성:</strong> 원자 번호가 작을수록 반응성 증가 <span class="badge badge-gray">F₂ &gt; Cl₂ &gt; Br₂ &gt; I₂</span></li>
-      <li><strong>이용:</strong> F(충치 예방 치약), Cl(수영장 소독), I(상처 소독약, 미역 등 해조류)</li>
+      <li><strong>종류:</strong> F, Cl, Br, I 등 [cite: 18]</li>
+      <li><strong>성질:</strong> 실온 이원자 분자, 고유 색상(F₂ 노랑, Cl₂ 노랑, Br₂ 적갈색, I₂ 보라) [cite: 18, 19].</li>
+      <li><strong>반응:</strong> 금속/수소와 격렬히 반응 [cite: 20, 21]. 수소 반응물은 물에서 산성 [cite: 21, 22].</li>
+      <li><strong>반응성:</strong> 원자 번호가 작을수록 증가 (F₂ &gt; Cl₂ &gt; Br₂ &gt; I₂) [cite: 22].</li>
     </ul>
   </div>
 </div>
@@ -214,104 +186,84 @@ details.short-ans .ans-box {margin-top:12px;padding:12px;background:#fffaf0;bord
 <div id="ch3" class="section">
   <span class="unit-badge ub-ch3">Chapter 3</span>
   <div class="section-title">⚛️ 3. 원자의 구조와 화학 결합</div>
+  <p style="margin-bottom:12px; color:#4a5568; font-size:0.9rem;">원자는 원자핵(양성자+중성자)과 전자로 구성되며 전기적 중성입니다[cite: 40, 42].</p>
 
   <div class="card blue">
-    <h3>🔍 원자의 구조</h3>
+    <h3>🎯 3-1. 전자 배치와 옥텟 규칙</h3>
     <ul>
-      <li>원자는 <strong>원자핵(양성자+중성자)</strong>과 <strong>전자</strong>로 구성됩니다.</li>
-      <li>양성자의 (+)전하량과 전자의 (-)전하량이 같아 원자는 <strong>전기적으로 중성</strong>입니다.</li>
-      <li><strong>원자 번호 = 양성자 수 = (중성 원자의) 전자 수</strong></li>
-      <li>전자는 원자핵 주위의 특정한 에너지 궤도인 <strong>전자 껍질</strong>을 돌고 있습니다.</li>
-    </ul>
-  </div>
-
-  <div class="card green">
-    <h3>🎯 전자 배치와 옥텟 규칙</h3>
-    <ul>
-      <li><strong>전자 껍질:</strong> 안쪽부터 차례로 채워지며 첫 번째 껍질은 2개, 두 번째부터는 8개가 최대로 채워집니다.</li>
-      <li><strong>원자가 전자:</strong> 가장 바깥 전자 껍질에 들어있는 전자. <strong>화학적 성질을 결정</strong>하는 핵심 요소입니다.</li>
-      <li><strong>옥텟 규칙(Octet Rule):</strong> 원자들이 가장 바깥 전자 껍질에 <strong>전자 8개를 채워 비활성 기체와 같이 안정</strong>해지려는 경향성입니다.</li>
-      <li><strong>비활성 기체 (18족):</strong> 헬륨(He), 네온(Ne), 아르곤(Ar). 껍질이 꽉 차 있어 매우 안정하며, 반응에 참여하지 않으므로 원자가 전자는 '0'으로 간주합니다. (이용: 네온사인, 형광등 충전 기체)</li>
+      <li><strong>전자 껍질:</strong> 안쪽부터 차례로 채워짐 (2, 8, 8...)[cite: 44, 45].</li>
+      <li><strong>원자가 전자:</strong> 가장 바깥 껍질 전자로 화학 성질 결정[cite: 53, 54].</li>
+      <li><strong>옥텟 규칙:</strong> 8개를 채워 비활성 기체처럼 안정해지려는 경향 [cite: 67].</li>
     </ul>
   </div>
 
   <div class="card orange">
-    <h3>🔗 화학 결합 (이온 결합 vs 공유 결합)</h3>
-    <table>
-      <tr><th>구분</th><th>이온 결합</th><th>공유 결합</th></tr>
-      <tr><td><strong>결합 원소</strong></td><td><strong>금속</strong> + <strong>비금속</strong></td><td><strong>비금속</strong> + <strong>비금속</strong></td></tr>
-      <tr><td><strong>형성 원리</strong></td><td>금속이 전자를 잃고 양이온, 비금속이 전자를 얻어 음이온이 된 후 <strong>정전기적 인력</strong>으로 결합</td><td>비금속 원자들이 각각 전자를 내놓아 <strong>전자쌍을 공유</strong>하며 결합 (단일/2중/3중)</td></tr>
-      <tr><td><strong>전기 전도성</strong></td><td>고체(X) / <strong>수용액·액체(O)</strong><br>(이온화되어 이동 가능하기 때문)</td><td>고체(X) / 수용액·액체(X)<br>(단, 흑연은 예외)</td></tr>
-      <tr><td><strong>물질 예시</strong></td><td>염화 나트륨(NaCl), 염화 칼슘(CaCl₂), 수산화 나트륨(NaOH)</td><td>물(H₂O), 포도당(C₆H₁₂O₆), 질소 분자(N₂)</td></tr>
-    </table>
+    <h3>🔗 3-2. 화학 결합[cite: 68, 84]</h3>
+    <div class="grid2">
+      <div style="background:#eff6ff; padding:12px; border-radius:8px; border:1px solid #bfdbfe;">
+        <b>이온 결합:</b><br>
+        양이온(금속)과 음이온(비금속) 사이의 정전기적 인력[cite: 68, 70].
+      </div>
+      <div style="background:#f5f3ff; padding:12px; border-radius:8px; border:1px solid #ddd6fe;">
+        <b>공유 결합:</b><br>
+        비금속 원자들이 전자쌍을 공유하여 형성 [cite: 84].
+      </div>
+    </div>
   </div>
 </div>
 
 <!-- Keywords -->
 <div id="kw" class="section">
-  <div class="section-title">🔑 핵심 키워드 사전 (클릭하여 확인)</div>
-  <p style="font-size:.82rem;color:#64748b;margin-bottom:12px">카드 클릭 시 상세 해설이 펼쳐집니다.</p>
+  <div class="section-title">🔑 주요 키워드 해설</div>
+  <p style="font-size:.82rem;color:#64748b;margin-bottom:12px">카드를 클릭하면 상세 설명이 펼쳐집니다.</p>
   <div class="kw-grid" id="kwGrid"></div>
 </div>
 
 <!-- Short Answer -->
 <div id="short" class="section">
-  <div class="section-title">✍️ 핵심 서술형 문제</div>
-  <div class="tip-box">💡 시험에 자주 출제되는 핵심 서술형 문제입니다. 제목을 클릭하면 정답과 해설이 열립니다.</div>
+  <div class="section-title">✍️ 실전 서술형 문제</div>
+  <div class="tip-box">💡 질문을 클릭하면 모범 정답과 해설이 나타납니다. 빈 종이에 직접 써보고 확인해 보세요!</div>
   
   <details class="short-ans">
-    <summary>Q1. 나트륨(Na)과 칼륨(K) 조각을 각각 물이 든 비커에 넣었을 때 반응과 페놀프탈레인 용액 변화</summary>
+    <summary>서술형 1. 나트륨(Na)과 칼륨(K) 조각을 각각 물이 든 비커에 넣었을 때의 반응을 관찰했습니다. 두 금속이 물과 반응할 때 발생하는 기체의 종류를 쓰고, 반응 후 남은 수용액에 페놀프탈레인 용액을 떨어뜨렸을 때 나타나는 색깔 변화와 그 이유를 서술하시오.</summary>
     <div class="ans-box">
-      <strong>정답:</strong> 발생하는 기체는 <b>수소 기체(H₂)</b>이며, 반응 후 남은 수용액에 페놀프탈레인 용액을 떨어뜨리면 <b>붉은색</b>으로 변한다. 그 이유는 알칼리 금속이 물과 반응하여 생성된 수용액이 <b>염기성(수산화 금속)</b>을 띠기 때문이다.
+      <strong>정답:</strong> 수소 기체(H₂) / 붉은색 (수용액이 염기성인 수산화 금속이 되기 때문) [cite: 13, 16].
     </div>
   </details>
 
   <details class="short-ans">
-    <summary>Q2. 할로젠 원소(F, Cl, Br, I)의 반응성 크기 및 실온 상태</summary>
+    <summary>서술형 2. 할로젠 원소인 플루오린(F)과 염소(Cl), 브로민(Br), 아이오딘(I) 중에서 가장 반응성이 큰 원소는 무엇인지 쓰고, 할로젠 원소들의 실온에서의 상태(기체, 액체, 고체)에 대해 간단히 설명하시오.</summary>
     <div class="ans-box">
-      <strong>정답:</strong> 가장 반응성이 큰 원소는 <b>플루오린(F)</b>이다. 실온에서의 상태는 플루오린(F₂)과 염소(Cl₂)는 <b>기체</b>, 브로민(Br₂)은 <b>액체</b>, 아이오딘(I₂)은 <b>고체</b>로 존재한다.
+      <strong>정답:</strong> 플루오린(F) / F₂·Cl₂ 기체, Br₂ 액체, I₂ 고체[cite: 19, 22].
     </div>
   </details>
 
   <details class="short-ans">
-    <summary>Q3. 염화 나트륨(NaCl)의 형성 원리를 '전자 이동'과 '정전기적 인력'을 포함하여 설명</summary>
+    <summary>서술형 3. 원자 번호 11번인 나트륨(Na)과 17번인 염소(Cl)가 만나 염화 나트륨(NaCl)을 형성하는 과정은 어떤 화학 결합인지 쓰고, 이 결합이 형성되는 원리를 '전자 이동'과 '정전기적 인력'이라는 단어를 포함하여 설명하시오.</summary>
     <div class="ans-box">
-      <strong>정답:</strong> 나트륨과 염소는 <b>이온 결합</b>을 형성한다. 나트륨의 <b>전자 1개가 염소로 이동</b>하여 나트륨은 양이온(Na⁺)이 되고 염소는 음이온(Cl⁻)이 된 후, 두 이온 사이의 <b>정전기적 인력</b>에 의해 결합이 형성된다.
+      <strong>정답:</strong> 이온 결합 / 나트륨의 전자 1개가 염소로 이동하여 각각 양이온과 음이온이 된 후, 정전기적 인력으로 결합함[cite: 68, 75].
     </div>
   </details>
 
   <details class="short-ans">
-    <summary>Q4. 염화 칼슘(CaCl₂)과 포도당(C₆H₁₂O₆)의 수용액 전기 전도성 차이</summary>
+    <summary>서술형 4. 염화 칼슘(CaCl₂)과 포도당(C₆H₁₂O₆)의 전기 전도성 차이를 이온의 이동과 관련지어 서술하시오.</summary>
     <div class="ans-box">
-      <strong>정답:</strong> 염화 칼슘은 이온 결합 물질로 수용액에서 <b>이온화되어 전하를 띤 이온들이 이동</b>할 수 있어 전기가 통하지만, 포도당은 공유 결합 물질로 수용액에서도 <b>분자 상태로 존재하여 이온이 없으므로</b> 전기가 통하지 않는다.
+      <strong>정답:</strong> 염화 칼슘은 수용액에서 이온화되어 전기가 통하지만, 포도당은 분자 상태로 존재하여 통하지 않음 [cite: 121, 122].
     </div>
   </details>
 </div>
 
 <!-- MCQ Quiz -->
 <div id="mcq" class="section">
-  <div class="section-title">✅ 실전 객관식 테스트 (30문항)</div>
-  <div class="tip-box">⚡ 기존 60문항 중 핵심 기출 포인트 30문항을 엄선하여 인터랙티브로 구성했습니다.</div>
-  <div class="quiz-progress" id="p_mcq">0 / 30 완료</div>
+  <div class="section-title">✅ 객관식 실전 테스트 (총 60문항)</div>
+  <div class="tip-box">⚡ 요약 없이 원본 파일에 있던 60문항 전부를 담았습니다.</div>
+  <div class="quiz-progress" id="p_mcq">0 / 60 완료</div>
   <div class="score-bar"><div class="score-fill" id="b_mcq"></div></div>
   <div id="mcqBox"></div>
   <div id="r_mcq" style="display:none" class="result-box">
     <div class="result-score" id="s_mcq"></div>
     <div class="result-msg" id="m_mcq"></div>
     <button class="reset-btn" onclick="resetQ('mcqQuiz')">🔄 다시 풀기</button>
-  </div>
-</div>
-
-<!-- OX Quiz -->
-<div id="ox" class="section">
-  <div class="section-title">⭕ 실전 OX 퀴즈 (10문항)</div>
-  <div class="quiz-progress" id="p_ox">0 / 10 완료</div>
-  <div class="score-bar"><div class="score-fill" id="b_ox"></div></div>
-  <div id="oxBox"></div>
-  <div id="r_ox" style="display:none" class="result-box">
-    <div class="result-score" id="s_ox"></div>
-    <div class="result-msg" id="m_ox"></div>
-    <button class="reset-btn" onclick="resetO('oxQuiz')">🔄 다시 풀기</button>
   </div>
 </div>
 
@@ -325,16 +277,14 @@ function ST(id, el) {
   window.scrollTo(0,0);
 }
 
-// --- Keywords ---
+// --- Keywords Data ---
 const kwAll =[
-  {t:'알칼리 금속', d:'1족 금속(수소 제외). Li, Na, K 등. 반응성이 매우 커서 물과 격렬히 반응하며 수소 기체를 발생시킴.'},
-  {t:'할로젠', d:'17족 비금속. F, Cl, Br, I 등. 실온에서 이원자 분자 형태로 존재하며 원자 번호가 작을수록 반응성이 큼.'},
-  {t:'준금속', d:'금속과 비금속의 중간 성질을 갖는 원소. 붕소(B), 규소(Si) 등이 해당함.'},
-  {t:'원자가 전자', d:'가장 바깥 전자 껍질에 들어있는 전자로, 원소의 화학적 성질을 결정하는 핵심 요소.'},
-  {t:'옥텟 규칙', d:'가장 바깥 전자 껍질에 전자 8개를 채워 비활성 기체와 같이 안정해지려는 경향성.'},
-  {t:'이온 결합', d:'금속 원소(양이온)와 비금속 원소(음이온)가 정전기적 인력으로 결합하는 화학 결합.'},
-  {t:'공유 결합', d:'비금속 원자들이 서로 전자를 내놓아 전자쌍을 공유하며 형성하는 화학 결합.'},
-  {t:'비활성 기체', d:'18족 원소. 헬륨, 네온, 아르곤 등. 가장 바깥 껍질이 꽉 차 있어 화학적으로 매우 안정함.'}
+  {t:'알칼리 금속 [cite: 9]', d:'1족 금속(H 제외). 반응성 매우 큼, 수소 기체 발생, 염기성 수용액.'},
+  {t:'할로젠 [cite: 18]', d:'17족 비금속. 이원자 분자, 색깔 있음, 반응성 매우 큼.'},
+  {t:'원자가 전자 [cite: 53]', d:'가장 바깥 껍질의 전자. 화학적 성질 결정.'},
+  {t:'옥텟 규칙 [cite: 67]', d:'가장 바깥 껍질에 전자 8개를 채워 안정해지려는 경향.'},
+  {t:'이온 결합[cite: 68]', d:'금속과 비금속 사이의 전하적 끌림.'},
+  {t:'공유 결합 [cite: 84]', d:'비금속끼리 전자쌍을 나눠 갖는 결합.'}
 ];
 
 const kwGrid = document.getElementById('kwGrid');
@@ -388,7 +338,7 @@ function chkMCQ(id,qi,sel){
       document.getElementById(s.resId).style.display='block';
       document.getElementById(s.scId).textContent=`${s.sc} / ${s.data.length}`;
       const p=Math.round(s.sc/s.data.length*100);
-      document.getElementById(s.msgId).textContent=p>=80?'🎉 화학 마스터에 등극하셨습니다!':p>=60?'👍 잘 하셨습니다! 틀린 문항을 복습해 보세요.':'📖 핵심 개념 정리를 다시 한 번 읽어보세요.';
+      document.getElementById(s.msgId).textContent=p>=80?'🎉 완벽합니다! 화학 마스터!':p>=60?'👍 잘 하셨습니다! 복습을 권장합니다.':'📖 처음부터 다시 차근차근 복습해보세요.';
     },300);
   }
 }
@@ -401,106 +351,75 @@ function resetQ(id){
   buildMCQ(id,'mcqBox');
 }
 
-// OX Engine
-function buildOX(id,containerId){
-  const s=quizState[id];const c=document.getElementById(containerId);c.innerHTML='';
-  s.data.forEach((q,i)=>{
-    const d=document.createElement('div');d.className='ox-card';
-    d.innerHTML=`<div class="quiz-num">${i+1}</div><div class="ox-q">${q.q}</div>
-      <div class="ox-btns">
-        <button class="ox-btn o-btn" id="${id}_oo${i}" onclick="chkOX('${id}',${i},true)">⭕ O</button>
-        <button class="ox-btn x-btn" id="${id}_ox${i}" onclick="chkOX('${id}',${i},false)">❌ X</button>
-      </div>
-      <div class="explain" id="${id}_oe${i}">💡 <strong>해설:</strong> ${q.exp}</div>`;
-    c.appendChild(d);
-  });
-}
-
-function chkOX(id,qi,sel){
-  const s=quizState[id];if(s.ans[qi])return;
-  s.ans[qi]=true;const correct=s.data[qi].ans===sel;if(correct)s.sc++;
-  const oB=document.getElementById(`${id}_oo${qi}`);const xB=document.getElementById(`${id}_ox${qi}`);
-  oB.disabled=xB.disabled=true;
-  if(s.data[qi].ans){oB.classList.add('correct');if(!sel)xB.classList.add('wrong');}
-  else{xB.classList.add('correct');if(sel)oB.classList.add('wrong');}
-  document.getElementById(`${id}_oe${qi}`).classList.add('show');
-  
-  const done=s.ans.filter(Boolean).length;
-  document.getElementById(s.progId).textContent=`${done} / ${s.data.length} 완료`;
-  document.getElementById(s.barId).style.width=`${(done/s.data.length)*100}%`;
-  
-  if(done===s.data.length){
-    setTimeout(()=>{
-      document.getElementById(s.resId).style.display='block';
-      document.getElementById(s.scId).textContent=`${s.sc} / ${s.data.length}`;
-      const p=Math.round(s.sc/s.data.length*100);
-      document.getElementById(s.msgId).textContent=p>=80?'🎉 완벽합니다!':p>=60?'👍 좋습니다!':'📖 다시 복습해보세요.';
-    },300);
-  }
-}
-
-function resetO(id){
-  const s=quizState[id];s.ans=new Array(s.data.length).fill(false);s.sc=0;
-  document.getElementById(s.progId).textContent=`0 / ${s.data.length} 완료`;
-  document.getElementById(s.barId).style.width='0%';
-  document.getElementById(s.resId).style.display='none';
-  buildOX(id,'oxBox');
-}
-
-// --- Data ---
+// --- ALL 60 MCQ Data from original file ---
 const mcqData =[
-  {q:'주기율표의 왼쪽과 가운데 부분에 주로 위치하는 원소의 종류는?',opts:['금속 원소','비금속 원소','비활성 기체','할로젠','중성자'],ans:0,exp:'금속 원소는 대체로 주기율표의 왼쪽과 가운데에 위치합니다.'},
-  {q:'다음 중 실온에서 액체 상태인 금속 원소는?',opts:['철','알루미늄','수은','나트륨','리튬'],ans:2,exp:'수은(Hg)은 실온에서 유일하게 액체 상태인 금속입니다.'},
-  {q:'비금속 원소인 브로민(Br₂)의 실온 상태와 색깔은?',opts:['기체, 노란색','액체, 적갈색','고체, 보라색','기체, 연한 노란색','액체, 은백색'],ans:1,exp:'브로민은 실온에서 적갈색 액체 상태로 존재합니다.'},
-  {q:'금속과 비금속의 중간 성질을 갖는 원소를 무엇이라 하는가?',opts:['알칼리 금속','비활성 기체','할로젠','준금속 원소','이온'],ans:3,exp:'붕소, 규소 등 중간 성질 원소는 준금속 원소입니다.'},
-  {q:'반도체 회로기판에 주로 사용되는 금속 원소는?',opts:['철','구리','금','알루미늄','납'],ans:2,exp:'금은 전도성이 좋고 부식되지 않아 반도체 회로기판에 쓰입니다.'},
-  {q:'알칼리 금속의 광택이 공기 중에서 빠르게 사라지는 이유는?',opts:['수분 흡수','산소와 반응','질소와 반응','빛의 굴절','증발'],ans:1,exp:'알칼리 금속은 공기 중의 산소와 빠르게 반응하여 산화물을 형성하며 광택을 잃습니다.'},
-  {q:'나트륨이 물과 반응할 때 발생하는 기체는?',opts:['산소','이산화 탄소','수소','질소','헬륨'],ans:2,exp:'알칼리 금속은 물과 격렬히 반응하여 수소 기체(H₂)를 발생시킵니다.'},
-  {q:'알칼리 금속 수용액에 페놀프탈레인 용액을 넣었을 때의 색깔은?',opts:['무색','노란색','붉은색','푸른색','보라색'],ans:2,exp:'알칼리 금속 수용액은 염기성을 띠어 페놀프탈레인 용액을 붉은색으로 변화시킵니다.'},
-  {q:'알칼리 금속의 반응성 크기 순서가 옳은 것은?',opts:['Li > Na > K','Li < Na < K','Na < Li < K','K < Na < Li','Na > K > Li'],ans:1,exp:'알칼리 금속은 원자 번호가 클수록 반응성이 커집니다 (Li < Na < K).'},
-  {q:'할로젠 원소가 속한 족은?',opts:['1족','2족','13족','17족','18족'],ans:3,exp:'할로젠은 17족에 속하는 비금속 원소들입니다.'},
-  {q:'염소(Cl₂)의 실온 상태와 색깔은?',opts:['연한 노란색 기체','노란색 기체','적갈색 액체','보라색 고체','무색 기체'],ans:1,exp:'염소(Cl₂)는 노란색 기체 상태로 존재합니다.'},
-  {q:'할로젠화 수소를 물에 녹인 수용액의 액성은?',opts:['산성','중성','염기성','알칼리성','없음'],ans:0,exp:'할로젠 원소가 수소와 결합한 물질(HF, HCl 등)은 물에 녹아 산성을 띱니다.'},
-  {q:'비금속 원소의 반응성이 크다는 것의 의미는?',opts:['전자를 잃기 쉽다','전자를 얻기 쉽다','양이온이 되기 쉽다','화학 결합을 안 한다','질량이 가볍다'],ans:1,exp:'비금속은 전자를 얻어 음이온이 되려는 성질이 반응성의 척도입니다.'},
-  {q:'원자핵을 구성하는 두 입자는?',opts:['양성자와 전자','양성자와 중성자','중성자와 전자','전자와 이온','원자 번호와 양성자'],ans:1,exp:'원자핵은 양성자와 중성자로 이루어져 있습니다.'},
-  {q:'원자가 전기적으로 중성인 이유는?',opts:['전하가 없어서','양성자수와 중성자수가 같아서','양성자수와 전자 수가 같아서','전자가 핵 안에 있어서','이온이 안 되어서'],ans:2,exp:'원자핵의 양성자(+) 수와 주변을 도는 전자(-)의 수가 같아 전하가 상쇄됩니다.'},
-  {q:'두 번째 전자 껍질에 채워질 수 있는 최대 전자 수는?',opts:['2개','4개','8개','10개','18개'],ans:2,exp:'전자 껍질은 첫 번째는 2개, 두 번째부터는 8개까지 최대로 채워집니다.'},
-  {q:'화학적 성질을 결정하는 "가장 바깥 껍질의 전자"를 무엇이라 하는가?',opts:['최내각 전자','원자가 전자','중성 전자','안정 전자','핵 전자'],ans:1,exp:'화학 결합에 직접 참여하는 가장 바깥 껍질의 전자를 원자가 전자라고 합니다.'},
-  {q:'18족 원소(비활성 기체)의 원자가 전자 수는?',opts:['0개','2개','8개','18개','1개'],ans:0,exp:'18족 원소는 전자 껍질이 꽉 차 있어 화학 반응에 참여하지 않으므로 원자가 전자를 0개로 정합니다.'},
-  {q:'이온 결합이 형성되는 주된 힘은?',opts:['공유 결합력','자기력','정전기적 인력','중력','마찰력'],ans:2,exp:'양이온(+)과 음이온(-) 사이의 전하적 끌림인 정전기적 인력에 의해 결합합니다.'},
-  {q:'17족 할로젠 원소가 되기 쉬운 이온의 전하는?',opts:['+1가','+2가','-1가','-2가','0'],ans:2,exp:'17족 원소는 원자가 전자가 7개이므로 전자 1개를 얻어 -1가 음이온이 되기 쉽습니다.'},
-  {q:'공유 결합이 형성되는 원소들의 조합은?',opts:['금속 + 금속','금속 + 비금속','비금속 + 비금속','비활성 기체 + 금속','양이온 + 음이온'],ans:2,exp:'공유 결합은 비금속 원소 사이에서 전자쌍을 공유하며 형성됩니다.'},
-  {q:'물 분자(H₂O) 한 개에 포함된 공유 전자쌍의 수는?',opts:['1개','2개','3개','4개','8개'],ans:1,exp:'산소가 수소 두 개와 각각 1쌍씩, 총 2개의 전자쌍을 공유합니다.'},
-  {q:'질소 분자(N₂)에서 두 질소 원자 사이의 결합 종류는?',opts:['단일 결합','2중 결합','3중 결합','이온 결합','없음'],ans:2,exp:'질소는 원자가 전자가 5개이므로, 3개의 전자를 공유하는 3중 결합을 형성합니다.'},
-  {q:'이온 결합 물질의 특징으로 옳은 것은?',opts:['실온에서 주로 액체이다','고체 상태에서 전기가 잘 통한다','수용액 상태에서 전기가 통한다','물에 전혀 녹지 않는다','분자 단위로 존재한다'],ans:2,exp:'이온 결합 물질은 수용액 상태에서 이온이 자유롭게 움직일 수 있어 전기가 통합니다.'},
-  {q:'설탕 수용액에 전류가 흐르지 않는 이유는?',opts:['설탕이 안 녹아서','이온이 생성되지 않아서','설탕이 금속이라서','물 분자가 방해해서','전압이 낮아서'],ans:1,exp:'설탕은 공유 결합 물질로, 물에 녹아도 이온화되지 않고 분자 상태로 존재합니다.'},
-  {q:'다음 중 금속 원소와 비금속 원소에 대한 설명으로 옳은 것은?',opts:['금속은 대체로 오른쪽에 위치한다.','비금속은 양이온이 되기 쉽다.','비금속은 실온에서 액체이다.','금속은 열과 전기 전도성이 크다.','흑연은 전기가 통하지 않는다.'],ans:3,exp:'금속 원소는 열과 전기 전도성이 매우 큰 것이 특징입니다. 흑연은 예외적으로 전기가 통합니다.'},
-  {q:'알칼리 금속의 공통적인 성질로 옳지 않은 것은?',opts:['밀도가 작아 물에 뜬다.','물과 반응하여 산소 기체를 발생시킨다.','반응 후 수용액은 붉은색(페놀프탈레인)을 띤다.','칼로 잘릴 정도로 무르다.','공기나 물과 접촉하지 않게 보관한다.'],ans:1,exp:'알칼리 금속은 물과 반응하여 산소가 아닌 수소 기체(H₂)를 발생시킵니다.'},
-  {q:'할로젠 원소에 대한 설명으로 가장 적절한 것은?',opts:['1족 원소이다.','원자가 전자가 1개이다.','원자 번호가 커질수록 반응성이 커진다.','실온에서 2개의 원자가 결합한 이원자 분자로 존재한다.','물에 녹이면 염기성을 띤다.'],ans:3,exp:'할로젠(17족)은 실온에서 F₂, Cl₂ 등 이원자 분자 형태로 존재합니다. 원자 번호가 작을수록 반응성이 큽니다.'},
-  {q:'다음 중 옥텟 규칙(Octet Rule)의 의미를 가장 잘 설명한 것은?',opts:['원자가 핵융합을 통해 산소가 되려는 경향','모든 원소가 화합물을 형성하는 현상','가장 바깥 껍질에 전자 8개를 채워 안정해지려는 경향','비활성 기체들이 서로 전자를 주고받는 결합','전자가 8개면 무조건 이온 결합을 한다는 규칙'],ans:2,exp:'옥텟 규칙은 가장 바깥 껍질에 전자 8개를 채워 비활성 기체처럼 안정해지려는 경향입니다.'},
-  {q:'다음 중 화학적 성질을 결정짓는 가장 중요한 요소는 무엇인가?',opts:['원자핵에 있는 중성자의 수','총 전자 껍질의 수','가장 안쪽 껍질에 있는 전자의 수','가장 바깥 껍질에 있는 원자가 전자의 수','양성자와 중성자의 비율'],ans:3,exp:'화학 결합에 직접 참여하는 가장 바깥 껍질의 전자, 즉 원자가 전자가 원소의 화학적 성질을 결정합니다.'}
-];
-
-const oxData =[
-  {q:'수소(H)는 주기율표의 왼쪽에 위치하므로 금속 원소이다.',ans:false,exp:'수소는 주기율표의 왼쪽(1족)에 위치하지만 예외적으로 비금속 원소입니다.'},
-  {q:'알칼리 금속은 물과 격렬히 반응하므로 석유나 액체 파라핀 속에 보관해야 한다.',ans:true,exp:'공기 중의 산소 및 수분과 반응하는 것을 막기 위해 석유 속에 보관합니다.'},
-  {q:'할로젠 원소 중 플루오린(F)이 아이오딘(I)보다 반응성이 더 크다.',ans:true,exp:'할로젠 원소는 원자 번호가 작을수록 반응성이 큽니다. F > Cl > Br > I 순서입니다.'},
-  {q:'비금속 원소 중 브로민(Br)은 실온에서 유일하게 액체 상태이다.',ans:true,exp:'비금속 원소 중 실온에서 액체인 것은 브로민(Br₂)이 유일합니다. (금속 중에서는 수은이 액체)'},
-  {q:'원자핵은 양성자와 전자로 이루어져 있어 전체적으로 전기적 중성이다.',ans:false,exp:'원자핵은 양성자와 중성자로 이루어져 있으며 (+) 전하를 띱니다. 원자 전체가 중성인 이유는 양성자와 외부 전자의 수가 같기 때문입니다.'},
-  {q:'18족 비활성 기체는 원자가 전자가 8개이므로 원자가 전자를 8이라고 정한다.',ans:false,exp:'18족 원소는 가장 바깥 껍질이 모두 채워져 안정하여 화학 반응에 참여하지 않으므로 원자가 전자를 0으로 정합니다.'},
-  {q:'이온 결합 물질은 고체 상태에서는 전기가 통하지 않지만 수용액 상태에서는 전기가 통한다.',ans:true,exp:'이온 결합 물질은 고체일 때 이온이 고정되어 전기가 통하지 않으나, 액체나 수용액 상태에서는 이온이 자유롭게 움직여 전기가 통합니다.'},
-  {q:'물(H₂O) 분자에서 산소와 수소는 이온 결합을 형성한다.',ans:false,exp:'산소와 수소는 둘 다 비금속 원소이므로 전자쌍을 공유하는 공유 결합을 형성합니다.'},
-  {q:'나트륨(Na)은 전자를 하나 잃어 옥텟 규칙을 만족하는 양이온이 되기 쉽다.',ans:true,exp:'나트륨은 1족 원소로 원자가 전자가 1개이므로, 이를 버리고 +1가 양이온이 되어 안정해지는 성질이 있습니다.'},
-  {q:'공유 결합 물질은 대체로 수용액 상태에서 전하를 띤 이온으로 분리되어 전기가 잘 통한다.',ans:false,exp:'공유 결합 물질은 대부분 수용액에서도 이온화되지 않고 분자 상태로 존재하여 전기가 통하지 않습니다. (단, HCl 등 일부 예외 있음)'}
+  {q:'주기율표의 왼쪽과 가운데 부분에 주로 위치하는 원소의 종류는?',opts:['금속 원소','비금속 원소','비활성 기체','할로젠','중성자'],ans:0,exp:'금속 원소는 대체로 주기율표의 왼쪽과 가운데에 위치합니다[cite: 1, 2].'},
+  {q:'다음 중 실온에서 액체 상태인 금속 원소는?',opts:['철','알루미늄','수은','나트륨','리튬'],ans:2,exp:'수은(Hg)은 실온에서 유일하게 액체 상태인 금속입니다 [cite: 2].'},
+  {q:'비금속 원소인 브로민(Br₂)의 실온 상태와 색깔은?',opts:['기체, 노란색','액체, 적갈색','고체, 보라색','기체, 연한 노란색','액체, 은백색'],ans:1,exp:'브로민은 실온에서 적갈색 액체입니다[cite: 2, 19].'},
+  {q:'금속과 비금속의 중간 성질을 갖는 원소를 무엇이라 하는가?',opts:['알칼리 금속','비활성 기체','할로젠','준금속 원소','이온'],ans:3,exp:'붕소, 규소 등 중간 성질 원소는 준금속입니다 [cite: 4].'},
+  {q:'다음 중 전기 전도성이 있는 비금속 공유 결합 물질은?',opts:['포도당','설탕','증류수','흑연','다이아몬드'],ans:3,exp:'흑연은 탄소 공유 결합 물질이나 자유 전자가 있어 전기가 통합니다 [cite: 7].'},
+  {q:'우주 왕복선의 연료로 이용되는 비금속 원소는?',opts:['질소','산소','인','수소','헬륨'],ans:3,exp:'수소는 우주 왕복선의 연료로 사용됩니다 [cite: 6].'},
+  {q:'식품 포장용 충전 기체로 사용되는 원소는?',opts:['수소','산소','질소','인','염소'],ans:2,exp:'질소는 식품 부패 방지를 위한 충전재로 쓰입니다[cite: 6].'},
+  {q:'반도체 회로기판에 주로 사용되는 금속 원소는?',opts:['철','구리','금','알루미늄','납'],ans:2,exp:'금은 전도성이 좋고 부식되지 않아 반도체 기판에 쓰입니다[cite: 6].'},
+  {q:'알칼리 금속에 해당하지 않는 원소는?',opts:['리튬','나트륨','칼륨','수소','루비듐'],ans:3,exp:'수소는 1족이지만 비금속으로 알칼리 금속이 아닙니다[cite: 8, 9].'},
+  {q:'알칼리 금속의 광택이 공기 중에서 빠르게 사라지는 이유는?',opts:['수분 흡수','산소와 반응','질소와 반응','빛의 굴절','증발'],ans:1,exp:'산소와 빠르게 반응하여 산화물을 형성하기 때문입니다 [cite: 11, 12].'},
+  {q:'나트륨이 물과 반응할 때 발생하는 기체는?',opts:['산소','이산화 탄소','수소','질소','헬륨'],ans:2,exp:'알칼리 금속은 물과 반응하여 수소 기체를 냅니다 [cite: 13, 35].'},
+  {q:'알칼리 금속 수용액에 페놀프탈레인 용액을 넣었을 때의 색깔은?',opts:['무색','노란색','붉은색','푸른색','보라색'],ans:2,exp:'수용액이 염기성이 되어 붉은색을 띱니다[cite: 13, 16].'},
+  {q:'알칼리 금속의 반응성 크기 순서가 옳은 것은?',opts:['Li > Na > K','Li < Na < K','Na < Li < K','K < Na < Li','Na > K > Li'],ans:1,exp:'원자 번호가 클수록 반응성이 커집니다 [cite: 13, 14].'},
+  {q:'알칼리 금속을 석유 속에 보관하는 주된 이유는?',opts:['냄새 방지','산소와 물 접촉 차단','온도 유지','광택 유지','증발 방지'],ans:1,exp:'공기 중 산소나 물과 쉽게 반응하기 때문입니다[cite: 14, 15].'},
+  {q:'리튬 이온이 이용되는 대표적인 제품은?',opts:['가로등','비료','휴대 전화 배터리','성냥','전선'],ans:2,exp:'리튬은 휴대 전화 배터리에 사용됩니다 [cite: 18].'},
+  {q:'터널의 노란 조명(램프)에 이용되는 원소는?',opts:['리튬','나트륨','칼륨','염소','네온'],ans:1,exp:'나트륨 램프는 터널 조명으로 쓰입니다 [cite: 18].'},
+  {q:'비료를 만드는 데 사용되는 알칼리 금속은?',opts:['나트륨','칼륨','리튬','세슘','마그네슘'],ans:1,exp:'칼륨은 비료의 주성분입니다 [cite: 18].'},
+  {q:'할로젠 원소가 속한 족은?',opts:['1족','2족','13족','17족','18족'],ans:3,exp:'할로젠은 17족 원소입니다[cite: 18].'},
+  {q:'염소(Cl₂)의 실온 상태와 색깔은?',opts:['연한 노란색 기체','노란색 기체','적갈색 액체','보라색 고체','무색 기체'],ans:1,exp:'염소는 노란색 기체입니다[cite: 19].'},
+  {q:'아이오딘(I₂)의 실온 상태와 색깔은?',opts:['적갈색 액체','노란색 기체','보라색 고체','연한 노란색 기체','은백색 고체'],ans:2,exp:'아이오딘은 보라색 고체입니다 [cite: 19].'},
+  {q:'할로젠 원소의 반응성 크기 순서가 옳은 것은?',opts:['F₂ < Cl₂ < Br₂','F₂ > Cl₂ > Br₂','Cl₂ > F₂ > Br₂','Br₂ > Cl₂ > F₂','I₂ > Br₂ > Cl₂'],ans:1,exp:'원자 번호가 작을수록 반응성이 큽니다 [cite: 22].'},
+  {q:'염소가 나트륨과 반응하여 생성되는 흰색 고체는?',opts:['산화 나트륨','수산화 나트륨','염화 나트륨','염화 수소','아이오딘화 나트륨'],ans:2,exp:'나트륨과 염소는 반응하여 NaCl을 만듭니다 [cite: 20].'},
+  {q:'할로젠화 수소를 물에 녹인 수용액의 액성은?',opts:['산성','중성','염기성','알칼리성','없음'],ans:0,exp:'HF, HCl 등은 물에서 산성을 띱니다[cite: 21, 22].'},
+  {q:'충치 예방을 위해 치약에 넣는 할로젠 원소는?',opts:['염소','브로민','아이오딘','플루오린','질소'],ans:3,exp:'플루오린은 충치 예방에 쓰입니다[cite: 23].'},
+  {q:'수영장 물의 소독에 이용되는 원소는?',opts:['플루오린','염소','아이오딘','브로민','산소'],ans:1,exp:'염소는 소독과 표백에 쓰입니다 [cite: 23].'},
+  {q:'미역에 많이 포함되어 있으며 소독약으로 쓰이는 원소는?',opts:['염소','브로민','아이오딘','플루오린','인'],ans:2,exp:'아이오딘은 해조류에 많고 소독약에 쓰입니다 [cite: 23].'},
+  {q:'비금속 원소의 반응성이 크다는 것의 의미는?',opts:['전자를 잃기 쉽다','전자를 얻기 쉽다','양이온이 되기 쉽다','화학 결합을 안 한다','질량이 가볍다'],ans:1,exp:'비금속은 전자를 얻어 음이온이 되려는 성질이 반응성입니다 [cite: 23, 24].'},
+  {q:'원자핵을 구성하는 두 입자는?',opts:['양성자와 전자','양성자와 중성자','중성자와 전자','전자와 이온','원자 번호와 양성자'],ans:1,exp:'원자핵은 양성자와 중성자로 이루어집니다[cite: 40, 41].'},
+  {q:'원자 번호를 결정하는 기준은?',opts:['전자 수','중성자 수','양성자 수','전자 껍질 수','질량'],ans:2,exp:'양성자수가 곧 원자 번호입니다 [cite: 41].'},
+  {q:'원자가 전기적으로 중성인 이유는?',opts:['전하가 없어서','양성자수와 중성자수가 같아서','양성자수와 전자 수가 같아서','전자가 핵 안에 있어서','이온이 안 되어서'],ans:2,exp:'양성자(+)와 전자(-)의 수가 같아 상쇄됩니다 [cite: 42].'},
+  {q:'전자가 운동하는 특정한 에너지 궤도를 무엇이라 하는가?',opts:['원자핵','전자 껍질','중성자','양성자','이온'],ans:1,exp:'전자는 전자 껍질에 존재합니다 [cite: 43].'},
+  {q:'두 번째 전자 껍질에 채워질 수 있는 최대 전자 수는?',opts:['2개','4개','8개','10개','18개'],ans:2,exp:'첫 번째는 2개, 두 번째부터는 8개입니다[cite: 45].'},
+  {q:'원자가 번호가 11인 나트륨의 전자 배치로 옳은 것은? (안쪽 껍질부터)',opts:['2, 9','2, 8, 1','2, 7, 2','11','2, 2, 7'],ans:1,exp:'2 + 8 + 1 = 11입니다[cite: 55].'},
+  {q:'화학적 성질을 결정하는 "가장 바깥 껍질의 전자"를 무엇이라 하는가?',opts:['최내각 전자','원자가 전자','중성 전자','안정 전자','핵 전자'],ans:1,exp:'원자가 전자가 화학 성질을 결정합니다 [cite: 53, 54].'},
+  {q:'18족 원소(비활성 기체)의 원자가 전자 수는?',opts:['0개','2개','8개','18개','1개'],ans:0,exp:'반응에 참여하지 않으므로 0으로 정합니다 [cite: 56, 57].'},
+  {q:'비활성 기체에 해당하지 않는 원소는?',opts:['헬륨','네온','아르곤','질소','크립톤'],ans:3,exp:'질소는 15족 원소입니다[cite: 59].'},
+  {q:'헬륨(He)의 첫 번째 전자 껍질에 있는 전자 수는?',opts:['1개','2개','8개','0개','4개'],ans:1,exp:'헬륨은 2개의 전자가 첫 껍질을 채웁니다[cite: 61, 63].'},
+  {q:'광고판(네온사인) 충전 기체로 쓰이는 비활성 기체는?',opts:['헬륨','네온','아르곤','산소','질소'],ans:1,exp:'네온은 광고판 충전 기체로 쓰입니다[cite: 64].'},
+  {q:'형광등의 충전 기체나 용접 시 사용되는 원소는?',opts:['헬륨','네온','아르곤','염소','나트륨'],ans:2,exp:'아르곤은 용접 등에 쓰입니다 [cite: 64].'},
+  {q:'이온 결합이 형성되는 주된 힘은?',opts:['공유 결합력','자기력','정전기적 인력','중력','마찰력'],ans:2,exp:'양이온과 음이온 사이의 끌림인 정전기적 인력입니다[cite: 68, 70].'},
+  {q:'금속 원소가 양이온이 될 때의 변화는?',opts:['전자를 얻는다','전자를 잃는다','양성자를 얻는다','중성자를 잃는다','변화 없다'],ans:1,exp:'전자를 잃고 양전하를 띱니다 [cite: 69].'},
+  {q:'17족 할로젠 원소가 되기 쉬운 이온의 전하는?',opts:['+1가','+2가','-1가','-2가','0'],ans:2,exp:'전자 1개를 얻어 -1가 음이온이 되기 쉽습니다 [cite: 69].'},
+  {q:'염화 나트륨(NaCl)에서 나트륨 이온과 염화 이온의 결합 개수비는?',opts:['1:1','1:2','2:1','1:3','3:1'],ans:0,exp:'전하 합이 0이 되기 위해 1:1로 결합합니다[cite: 80].'},
+  {q:'공유 결합이 형성되는 원소들의 조합은?',opts:['금속 + 금속','금속 + 비금속','비금속 + 비금속','비활성 기체 + 금속','양이온 + 음이온'],ans:2,exp:'공유 결합은 비금속 원소 사이에서 일어납니다[cite: 84, 87].'},
+  {q:'물 분자(H₂O) 한 개에 포함된 공유 전자쌍의 수는?',opts:['1개','2개','3개','4개','8개'],ans:1,exp:'산소가 수소 두 개와 각각 1쌍씩, 총 2쌍을 공유합니다[cite: 88, 89].'},
+  {q:'질소 분자(N₂)에서 두 질소 원자 사이의 결합 종류는?',opts:['단일 결합','2중 결합','3중 결합','이온 결합','없음'],ans:2,exp:'질소는 전자 3쌍을 공유하는 3중 결합을 합니다 [cite: 90].'},
+  {q:'이온 결합 물질의 특징으로 옳은 것은?',opts:['실온에서 주로 액체이다','고체 상태에서 전기가 잘 통한다','수용액 상태에서 전기가 통한다','물에 전혀 녹지 않는다','분자 단위로 존재한다'],ans:2,exp:'수용액에서 이온화되어 전기가 통합니다 [cite: 99].'},
+  {q:'설탕 수용액에 전류가 흐르지 않는 이유는?',opts:['설탕이 안 녹아서','이온이 생성되지 않아서','설탕이 금속이라서','물 분자가 방해해서','전압이 낮아서'],ans:1,exp:'설탕은 공유 결합 물질로 이온화되지 않습니다[cite: 110, 111].'},
+  {q:'제설제로 쓰이며 습기 제거에도 이용되는 물질은?',opts:['염화 나트륨','염화 칼슘','수산화 나트륨','탄산수소나트륨','산화 마그네슘'],ans:1,exp:'염화 칼슘은 제설제와 습기 제거제에 쓰입니다 [cite: 102].'},
+  {q:'비누의 제조에 사용되는 이온 결합 물질은?',opts:['염화 나트륨','탄산수소나트륨','수산화 나트륨','염화 칼슘','탄산 칼슘'],ans:2,exp:'수산화 나트륨(NaOH)은 비누 제조에 쓰입니다[cite: 101].'},
+  {q:'다음 중 금속 원소와 비금속 원소에 대한 설명으로 옳은 것은?',opts:['금속 원소는 주기율표에서 대체로 오른쪽에 위치한다.','비금속 원소는 전자를 잃고 양이온이 되기 쉽다.','대부분의 비금속 원소는 실온에서 액체 상태로 존재한다.','금속 원소는 열과 전기 전도성이 크다.','흑연은 비금속 원소이므로 예외 없이 전기가 통하지 않는다.'],ans:3,exp:'금속은 전도성이 큽니다. 흑연은 예외적으로 전기가 통합니다 [cite: 2, 7, 8].'},
+  {q:'알칼리 금속(리튬, 나트륨, 칼륨)의 공통적인 성질로 옳지 않은 것은?',opts:['밀도가 작아 물에 뜬다.','물과 반응하여 산소 기체를 발생시킨다.','물과 반응한 후의 수용액에 페놀프탈레인 용액을 넣으면 붉은색으로 변한다.','칼로 쉽게 잘릴 정도로 무른 금속이다.','반응성이 매우 커서 공기나 물과 접촉하지 않도록 보관한다.'],ans:1,exp:'물과 반응하여 수소 기체(H₂)를 발생시킵니다 [cite: 13, 35].'},
+  {q:'할로젠 원소에 대한 설명으로 가장 적절한 것은?',opts:['주기율표의 1족에 속하는 원소들이다.','원자가 전자가 1개이다.','원자 번호가 커질수록 반응성이 커진다.','실온에서 2개의 동일한 원자가 결합한 이원자 분자 형태로 존재한다.','수소와 반응하여 생성된 물질을 물에 녹이면 염기성을 띤다.'],ans:3,exp:'할로젠은 17족으로, 실온에서 이원자 분자로 존재합니다 [cite: 18, 19].'},
+  {q:'원소와 그 이용 사례가 바르게 짝지어지지 않은 것은?',opts:['철(Fe) - 건축 자재 및 기계','구리(Cu) - 전선','수소(H) - 우주 왕복선의 연료','질소(N) - 성냥','알루미늄(Al) - 비행기 동체'],ans:3,exp:'성냥은 인(P)으로 만듭니다. 질소는 포장 충전재로 씁니다 [cite: 6].'},
+  {q:'원자의 구조와 전자 배치에 대한 설명으로 옳은 것은?',opts:['원자핵은 (-)전하를 띠고 전자는 (+)전하를 띤다.','원자는 양성자수와 중성자수가 같아 전기적으로 중성이다.','전자는 원자핵 주위의 아무 공간에나 자유롭게 존재한다.','첫 번째 전자 껍질에는 최대 8개의 전자가 채워질 수 있다.','같은 족 원소들은 원자가 전자 수가 같다.'],ans:4,exp:'같은 족 원소들은 원자가 전자 수가 같아 화학적 성질이 유사합니다 [cite: 54].'},
+  {q:'다음 중 옥텟 규칙(Octet Rule)의 의미를 가장 잘 설명한 것은?',opts:['원자가 핵융합을 통해 8번 원소인 산소가 되려는 경향','모든 원소가 8개의 원자가 전자를 가져야만 화합물을 형성하는 현상','화학 결합을 통해 가장 바깥 껍질에 전자 8개를 채워 안정해지려는 경향','18족 비활성 기체들이 서로 전자를 8개씩 주고받는 결합','전자가 8개인 원소는 무조건 이온 결합만 형성한다는 규칙'],ans:2,exp:'옥텟 규칙은 전자 8개(비활성 기체)를 채워 안정화하려는 경향입니다[cite: 67].'},
+  {q:'다음 중 이온 결합에 대한 설명으로 옳은 것은?',opts:['비금속 원소와 비금속 원소 사이에서 형성된다.','두 원자가 전자쌍을 공유하여 결합하는 방식이다.','물(H₂O)과 수소(H₂)가 대표적인 이온 결합 물질이다.','양이온과 음이온 사이의 정전기적 인력에 의해 형성된다.','금속 원소는 전자를 얻고, 비금속 원소는 전자를 잃는 과정이 포함된다.'],ans:3,exp:'양이온과 음이온의 정전기적 인력에 의한 결합입니다 [cite: 68, 70].'},
+  {q:'이온 결합 물질과 공유 결합 물질의 전기 전도성 실험 결과에 대한 해석으로 바른 것은?',opts:['염화 칼슘(이온 결합)은 고체 상태일 때 전류가 가장 잘 흐른다.','포도당(공유 결합)은 수용액 상태가 되면 전기가 통한다.','염화 칼슘 수용액에서 전류가 흐르는 이유는 이온들이 분리되어 움직이기 때문이다.','설탕 수용액은 이온이 자유롭게 움직이므로 전기 전도성을 띤다.','이온 결합 물질은 상태와 관계없이 항상 전기가 통한다.'],ans:2,exp:'이온 결합 물질은 수용액에서 이온화되어 전류가 흐릅니다[cite: 121, 122].'},
+  {q:'할로젠 원소 중 실온에서 적갈색의 액체 상태로 존재하는 원소는?',opts:['플루오린(F₂)','염소(Cl₂)','브로민(Br₂)','아이오딘(I₂)','아스타틴(At₂)'],ans:2,exp:'브로민(Br₂)은 적갈색 액체입니다 [cite: 19].'},
+  {q:'다음 중 화학적 성질을 결정짓는 가장 중요한 요소는 무엇인가?',opts:['원자핵에 있는 중성자의 수','원자가 가진 총 전자 껍질의 수','가장 안쪽 껍질에 있는 전자의 수','가장 바깥 껍질에 있는 원자가 전자의 수','원자핵 내부의 양성자와 중성자의 비율'],ans:3,exp:'화학 결합에 참여하는 원자가 전자가 화학적 성질을 결정합니다 [cite: 53, 54].'}
 ];
 
 // Initialize Quizzes
 initQ('mcqQuiz', mcqData, 'p_mcq', 'b_mcq', 'r_mcq', 's_mcq', 'm_mcq');
-initQ('oxQuiz', oxData, 'p_ox', 'b_ox', 'r_ox', 's_ox', 'm_ox');
 
 // Render Quizzes
 buildMCQ('mcqQuiz', 'mcqBox');
-buildOX('oxQuiz', 'oxBox');
 
 </script>
 </body>
