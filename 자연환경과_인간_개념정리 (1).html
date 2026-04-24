@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>자연환경과 인간 — 개념 정리</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f5f4f0;
+    --surface: #ffffff;
+    --border: #e2dfd8;
+    --text-main: #1a1a1a;
+    --text-sub: #555;
+    --text-muted: #888;
+
+    --tab1: #2d6a4f;
+    --tab1-light: #e8f5ee;
+    --tab1-mid: #52b788;
+
+    --tab2: #9b2226;
+    --tab2-light: #fdecea;
+    --tab2-mid: #e05252;
+
+    --tab3: #1b4079;
+    --tab3-light: #e8eef7;
+    --tab3-mid: #4a7fcb;
+
+    --tab4: #6a3d9a;
+    --tab4-light: #f0ebf8;
+    --tab4-mid: #9b72d0;
+
+    --active-tab: var(--tab1);
+    --active-light: var(--tab1-light);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--bg);
+    color: var(--text-main);
+    min-height: 100vh;
+    padding: 0 0 60px;
+  }
+
+  /* ── Header ── */
+  header {
+    background: #1a1a1a;
+    color: #fff;
+    padding: 28px 40px 24px;
+    display: flex;
+    align-items: flex-end;
+    gap: 20px;
+  }
+  header .badge {
+    font-size: 11px;
+    letter-spacing: .12em;
+    color: #aaa;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  header h1 {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -.02em;
+    line-height: 1.2;
+  }
+  header .subtitle {
+    font-size: 13px;
+    color: #bbb;
+    margin-top: 6px;
+    font-weight: 300;
+  }
+
+  /* ── Tab Bar ── */
+  .tab-bar {
+    display: flex;
+    background: #fff;
+    border-bottom: 2px solid var(--border);
+    overflow-x: auto;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0,0,0,.06);
+  }
+  .tab-btn {
+    flex: 1;
+    min-width: 130px;
+    padding: 16px 20px 14px;
+    border: none;
+    background: transparent;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 13.5px;
+    font-weight: 500;
+    color: var(--text-muted);
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
+    transition: all .2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    white-space: nowrap;
+  }
+  .tab-btn .icon { font-size: 18px; }
+  .tab-btn:hover { color: var(--text-main); background: #fafafa; }
+  .tab-btn.active-1 { color: var(--tab1); border-bottom-color: var(--tab1); }
+  .tab-btn.active-2 { color: var(--tab2); border-bottom-color: var(--tab2); }
+  .tab-btn.active-3 { color: var(--tab3); border-bottom-color: var(--tab3); }
+  .tab-btn.active-4 { color: var(--tab4); border-bottom-color: var(--tab4); }
+
+  /* ── Content ── */
+  .tab-content { display: none; padding: 36px 40px; max-width: 960px; margin: 0 auto; }
+  .tab-content.active { display: block; }
+
+  /* Section headers */
+  .sec-title {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 20px;
+    font-weight: 700;
+    margin: 36px 0 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid currentColor;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .sec-title:first-child { margin-top: 0; }
+  .tab-1 .sec-title { color: var(--tab1); }
+  .tab-2 .sec-title { color: var(--tab2); }
+  .tab-3 .sec-title { color: var(--tab3); }
+  .tab-4 .sec-title { color: var(--tab4); }
+
+  .sub-title {
+    font-size: 15px;
+    font-weight: 700;
+    margin: 22px 0 10px;
+    color: var(--text-main);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .sub-title::before {
+    content: '';
+    display: inline-block;
+    width: 4px; height: 14px;
+    border-radius: 2px;
+  }
+  .tab-1 .sub-title::before { background: var(--tab1-mid); }
+  .tab-2 .sub-title::before { background: var(--tab2-mid); }
+  .tab-3 .sub-title::before { background: var(--tab3-mid); }
+  .tab-4 .sub-title::before { background: var(--tab4-mid); }
+
+  /* Card */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 14px;
+  }
+  .card p, .card li { font-size: 14px; line-height: 1.85; color: var(--text-sub); }
+  .card ul { padding-left: 18px; }
+  .card ul li { margin-bottom: 4px; }
+  .card strong { color: var(--text-main); font-weight: 600; }
+
+  /* Highlight box */
+  .highlight-box {
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin: 12px 0;
+    font-size: 14px;
+    line-height: 1.8;
+  }
+  .tab-1 .highlight-box { background: var(--tab1-light); border-left: 4px solid var(--tab1-mid); }
+  .tab-2 .highlight-box { background: var(--tab2-light); border-left: 4px solid var(--tab2-mid); }
+  .tab-3 .highlight-box { background: var(--tab3-light); border-left: 4px solid var(--tab3-mid); }
+  .tab-4 .highlight-box { background: var(--tab4-light); border-left: 4px solid var(--tab4-mid); }
+  .highlight-box strong { font-weight: 700; }
+
+  /* Table */
+  .concept-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+    background: var(--surface);
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    margin: 12px 0 20px;
+  }
+  .concept-table th {
+    padding: 11px 16px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 13px;
+    color: #fff;
+  }
+  .tab-1 .concept-table th { background: var(--tab1); }
+  .tab-2 .concept-table th { background: var(--tab2); }
+  .tab-3 .concept-table th { background: var(--tab3); }
+  .tab-4 .concept-table th { background: var(--tab4); }
+  .concept-table td {
+    padding: 11px 16px;
+    border-top: 1px solid var(--border);
+    vertical-align: top;
+    line-height: 1.75;
+    color: var(--text-sub);
+  }
+  .concept-table tr:hover td { background: #fafaf8; }
+  .concept-table .row-label {
+    font-weight: 600;
+    color: var(--text-main);
+    white-space: nowrap;
+    width: 110px;
+  }
+
+  /* Keyword tag */
+  .kw {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    margin: 1px 2px;
+    vertical-align: middle;
+  }
+  .tab-1 .kw { background: var(--tab1-light); color: var(--tab1); }
+  .tab-2 .kw { background: var(--tab2-light); color: var(--tab2); }
+  .tab-3 .kw { background: var(--tab3-light); color: var(--tab3); }
+  .tab-4 .kw { background: var(--tab4-light); color: var(--tab4); }
+
+  /* Two-col grid */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+  @media (max-width: 640px) {
+    .two-col { grid-template-columns: 1fr; }
+    .tab-content { padding: 24px 18px; }
+    header { padding: 20px 18px; }
+    .tab-btn { font-size: 12px; padding: 13px 12px; }
+  }
+
+  /* Compare block */
+  .compare-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 0;
+  }
+  .compare-card {
+    border-radius: 10px;
+    padding: 18px 20px;
+    border: 1px solid var(--border);
+  }
+  .compare-card h4 {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+  .compare-card ul { padding-left: 16px; }
+  .compare-card li { font-size: 13.5px; line-height: 1.8; color: var(--text-sub); }
+  .el-nino { background: #fff8e6; border-color: #f5c842; }
+  .el-nino h4 { color: #b8860b; }
+  .la-nina { background: #e8f0ff; border-color: #7aaae0; }
+  .la-nina h4 { color: #2255a4; }
+
+  /* Numbered steps */
+  .steps { list-style: none; padding: 0; }
+  .steps li {
+    display: flex;
+    gap: 14px;
+    margin-bottom: 12px;
+    font-size: 14px;
+    line-height: 1.75;
+    color: var(--text-sub);
+    align-items: flex-start;
+  }
+  .steps li .num {
+    flex-shrink: 0;
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700; color: #fff;
+    margin-top: 2px;
+  }
+  .tab-1 .steps li .num { background: var(--tab1); }
+  .tab-2 .steps li .num { background: var(--tab2); }
+  .tab-3 .steps li .num { background: var(--tab3); }
+  .tab-4 .steps li .num { background: var(--tab4); }
+
+  /* Philosopher table special */
+  .phil-name {
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--text-main);
+  }
+  .quote {
+    font-style: italic;
+    color: #666;
+    background: #f9f9f9;
+    padding: 6px 12px;
+    border-radius: 4px;
+    margin-top: 4px;
+    font-size: 13px;
+    line-height: 1.7;
+    border-left: 3px solid #ddd;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <div class="badge">III·IV. 자연환경과 인간</div>
+    <h1>자연환경 &amp; 인간 — 핵심 개념 정리</h1>
+    <div class="subtitle">지형 · 자연재해 · 자연관 · 환경 보전을 위한 노력</div>
+  </div>
+</header>
+
+<div class="tab-bar">
+  <button class="tab-btn active-1" onclick="showTab(1)" id="btn1">
+    <span class="icon">🏔</span> 지형
+  </button>
+  <button class="tab-btn" onclick="showTab(2)" id="btn2">
+    <span class="icon">🌪</span> 자연재해
+  </button>
+  <button class="tab-btn" onclick="showTab(3)" id="btn3">
+    <span class="icon">🌿</span> 자연관
+  </button>
+  <button class="tab-btn" onclick="showTab(4)" id="btn4">
+    <span class="icon">♻</span> 환경 보전 노력
+  </button>
+</div>
+
+<!-- ══════════════ TAB 1: 지형 ══════════════ -->
+<div id="tab1" class="tab-content tab-1 active">
+
+  <div class="sec-title">1. 지형이 인간 생활에 미치는 영향</div>
+
+  <div class="card">
+    <p>지역에 따라 산지·평야·하천·해안·사막·화산·빙하 등 <strong>다양한 지형</strong>이 발달하며, 이는 교통·산업 등 인간 생활 전반에 영향을 준다.</p>
+    <div class="highlight-box" style="margin-top:12px;">
+      <strong>지형이 교통에 미치는 영향</strong><br>
+      • 높은 산지·넓은 사막 → 교통의 장애물 (서안 채양성)<br>
+      • 하천 → 지역 간 교통로로 이용 → <span class="kw">수운</span> 발달, 해안은 무역 도시 발달에 유리
+    </div>
+  </div>
+
+  <div class="sec-title">2. 지형에 따른 다양한 생활양식</div>
+
+  <table class="concept-table">
+    <tr>
+      <th class="row-label">지형</th>
+      <th>특성</th>
+      <th>인간 생활</th>
+    </tr>
+    <tr>
+      <td class="row-label">산지 지역</td>
+      <td>해발고도 높음, 사면 경사 급함 → 인간 거주에 불리</td>
+      <td>밭농사(감자·옥수수), 임산물 채취, 광업, 고산 지대 목축업, 산지 경관 활용 관광산업</td>
+    </tr>
+    <tr>
+      <td class="row-label">초원 지역</td>
+      <td>나무 적고 풀 무성, 강수량 부족</td>
+      <td>유목·방목 등 목축업 발달</td>
+    </tr>
+    <tr>
+      <td class="row-label">평야 지역</td>
+      <td>지형 평탄 → 농경지·교통로 건설 유리</td>
+      <td>다양한 농업 발달, 대하천 주변 평야 지대 → 도시 발달, 교통 편리한 지역 중심 대도시 발달</td>
+    </tr>
+    <tr>
+      <td class="row-label">해안 지역</td>
+      <td>육지와 바다가 만나는 곳, 수심 깊은 곳에 항구 발달</td>
+      <td>어업·양식업, 교통 편리 → 도시 발달, 대규모 항구·산업 단지(상업·무역 기반 대도시), 모래 해안·갯벌 활용 관광산업</td>
+    </tr>
+    <tr>
+      <td class="row-label">특수 지형</td>
+      <td>화산, 빙하, 카르스트 지형 등 독특한 지형</td>
+      <td>관광 산업 발달, 과학 기술 발전으로 주거·산업 활동 가능 범위 확대</td>
+    </tr>
+  </table>
+
+  <div class="two-col">
+    <div class="highlight-box">
+      <strong>🌋 빙하 지형</strong><br>
+      빙하의 <span class="kw">침식</span> 및 <span class="kw">퇴적</span> 작용으로 형성된 다양한 지형<br>
+      예) 북유럽의 피오르, 스위스 마터호른
+    </div>
+    <div class="highlight-box">
+      <strong>🪨 카르스트 지형</strong><br>
+      <span class="kw">석회암</span>이 오랜 시간 빗물·지하수에 의해 <span class="kw">용식 작용</span>으로 형성<br>
+      예) 베트남 하롱베이, 강원도 석회 동굴
+    </div>
+  </div>
+
+  <div class="sub-title">지형에 따른 다양한 발전 방식</div>
+  <table class="concept-table">
+    <tr><th>지형</th><th>발전 방식</th></tr>
+    <tr><td>산지·해안 (강한 바람)</td><td>풍력 발전</td></tr>
+    <tr><td>산지 (낙차 이용)</td><td>수력 발전</td></tr>
+    <tr><td>해안 (조수 간만 차)</td><td>조력 발전</td></tr>
+    <tr><td>화산 지형</td><td>지열 발전 (예: 아이슬란드)</td></tr>
+    <tr><td>빙하 주변 지역</td><td>석유·천연가스 등 화석 연료 → 화력 발전 (예: 러시아)</td></tr>
+  </table>
+
+  <div class="sec-title">3. 자연환경의 변화가 인간 생활에 미치는 영향</div>
+
+  <div class="sub-title">지구 온난화</div>
+  <div class="card">
+    <ul>
+      <li><strong>부정적 영향:</strong> 극지방 빙하 면적 축소, 해수면 상승 → 저지대 침수, 기상 이변 발생, 자연재해 증가, 동식물 서식 환경 변화(아열대성 생물 증가, 농작물 재배 가능 지역 확대), 북한계선 북상</li>
+      <li><strong>긍정적 측면:</strong> 북극해 지역 빙하가 녹으면서 새로운 항로 가능성 높아짐</li>
+      <li>과학 기술 발달 → 인간은 자연환경의 제약을 극복할 수 있음</li>
+    </ul>
+  </div>
+
+  <div class="sub-title">엘니뇨 vs 라니냐</div>
+  <div class="compare-header">
+    <div class="compare-card el-nino">
+      <h4>🌡 엘니뇨 (El Niño)</h4>
+      <ul>
+        <li>적도 인근 <strong>태평양 동부</strong> 해수 온도가 평소보다 <strong>비정상적으로 상승</strong></li>
+        <li>원인: 무역풍 약화 → 따뜻한 해수가 동쪽으로 이동 → 용승 약화 → 동태평양 수온 상승</li>
+        <li>동태평양(남아메리카 서부 해안): <strong>고온·강수 증가</strong>(홍수 발생)</li>
+        <li>서태평양(동남아·인도·오스트레일리아): <strong>가뭄, 산불, 폭염</strong></li>
+        <li>생태계: 용승 약화 → 영양염 감소 → 어획량 감소 (페루 어업 타격)</li>
+      </ul>
+    </div>
+    <div class="compare-card la-nina">
+      <h4>🌊 라니냐 (La Niña)</h4>
+      <ul>
+        <li>적도 인근 <strong>태평양 동부</strong> 해수 온도가 평소보다 <strong>비정상적으로 하강</strong></li>
+        <li>원인: 무역풍 강화 → 따뜻한 해수가 서쪽으로 더 강하게 이동 → 용승 강화</li>
+        <li>동태평양(남아메리카 서부): <strong>저온·강수 감소</strong>(건조)</li>
+        <li>서태평양(동남아·인도·오스트레일리아): <strong>강수 증가</strong>(홍수 발생)</li>
+        <li>생태계: 용승 강화 → 영양염 증가 → 플랑크톤 증가 → 어획량 증가 (부진책 ×)</li>
+      </ul>
+    </div>
+  </div>
+  <div class="highlight-box" style="margin-top:12px;">
+    <strong>영양염</strong>: 바닷속 식물(플랑크톤)이 자라는 데 필요한 영양물질
+  </div>
+
+</div>
+
+<!-- ══════════════ TAB 2: 자연재해 ══════════════ -->
+<div id="tab2" class="tab-content tab-2">
+
+  <div class="sec-title">1. 자연재해의 의미와 유형</div>
+  <div class="two-col">
+    <div class="card">
+      <strong>재해</strong>
+      <p style="margin-top:6px;">국민의 생명·신체 및 재산에 피해를 줄 수 있는 자연현상 및 인위적 사고</p>
+    </div>
+    <div class="card">
+      <strong>재난</strong>
+      <p style="margin-top:6px;">재해보다 규모가 큰 사고와 피해. 보통 국지적 규모 이상이면 <span class="kw">국가적</span> 규모의 피해. 자연 재난과 사회 재난으로 구분</p>
+    </div>
+  </div>
+
+  <div class="sub-title">기상 현상에 의한 자연재해</div>
+  <table class="concept-table">
+    <tr><th>종류</th><th>내용</th></tr>
+    <tr>
+      <td class="row-label">가뭄</td>
+      <td>오랫동안 비가 내리지 않는 것 → 산불 발생, 농작물 피해, <span class="kw">용수</span> 부족</td>
+    </tr>
+    <tr>
+      <td class="row-label">홍수</td>
+      <td>집중호우 등에 의해 많은 비가 내려 하천이 범람하는 것 → <span class="kw">침수 피해</span> 발생</td>
+    </tr>
+    <tr>
+      <td class="row-label">열대 저기압</td>
+      <td>적도 부근 바다에서 발생, 중위도 지역으로 이동하면서 강한 바람·비 동반 (태풍, 허리케인 등) → <span class="kw">풍수해</span> 발생</td>
+    </tr>
+    <tr>
+      <td class="row-label">기타</td>
+      <td>폭염, 폭설, 한파 등</td>
+    </tr>
+  </table>
+
+  <div class="sub-title">지각 변동에 의한 자연재해</div>
+  <div class="card">
+    <p>주로 <strong>지각판의 경계</strong>인 환태평양 조산대와 알프스·히말라야 조산대에서 발생</p>
+    <div class="two-col" style="margin-top:12px;">
+      <div>
+        <strong>화산 활동</strong>
+        <ul style="margin-top:6px;padding-left:16px;">
+          <li>용암, 화산 가스, 화산재가 분출하는 현상</li>
+          <li>농작물·주거지 매몰, 항공기 운항 지장</li>
+        </ul>
+      </div>
+      <div>
+        <strong>지진</strong>
+        <ul style="margin-top:6px;padding-left:16px;">
+          <li>땅이 갈라지고 흔들리는 현상 → 건물·도로 붕괴</li>
+          <li>해저 지진 시 <span class="kw">지진 해일(쓰나미)</span> 발생 → 침수 피해</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="highlight-box">
+    <strong>⭐ 태풍</strong> — 적도 부근 해상에서 발생, 중위도 쪽으로 불어오는 <span class="kw">열대성 저기압</span><br>
+    • 강한 바람과 많은 비(집중호우) 동반<br>
+    • <strong>발생 시기:</strong> 주로 7~9월<br>
+    • <strong>특징:</strong> 진행 방향의 오른쪽 = <span class="kw">위험 반원</span>, 왼쪽 = <span class="kw">가항 반원</span><br>
+    • <strong>단점:</strong> 토양 유실, 도로·농경지·가옥 침수, 해일로 인한 해안 저지대 침수<br>
+    • <strong>장점:</strong> 우더위 완화, 가뭄 해소, 적조 현상 완화<br>
+    • <strong>3대 자연재해:</strong> 태풍, 호우, 대설
+  </div>
+
+  <div class="sec-title">2. 자연재해에 따른 피해</div>
+  <div class="card">
+    <ul>
+      <li>지역 개발(갯벌 간척, 삼림파괴 등)에 따른 자연환경 변화 → 인간에게 피해를 줌</li>
+      <li>산업 발달·인구 증가에 따른 무분별한 <strong>개발</strong>로 피해 규모 계속 커지고 있음</li>
+      <li>특히 <span class="kw">기후 변화</span>에 따라 자연재해 발생 횟수·피해 규모 증가, 이상 기후 현상 발생</li>
+      <li>인명·재산 피해, 생산·생활 공간과 <span class="kw">사회 기반 시설</span> 파괴 → 자연재해 발생은 <strong>지역 경제에 악영향</strong></li>
+    </ul>
+  </div>
+
+  <div class="sec-title">3. 자연재해에 대한 대응</div>
+  <ul class="steps">
+    <li><span class="num">전</span><div>평상시 예보 활동과 <strong>대피 훈련</strong> 시행, 방어 시설물 구축 등으로 피해 최소화</div></li>
+    <li><span class="num">시</span><div>신속한 복구를 위한 <strong>대응 체계</strong> 마련, 피해 지역에 대한 지원 대책 마련</div></li>
+  </ul>
+
+  <div class="sec-title">4. 안전권과 환경권</div>
+  <div class="card">
+    <p>헌법을 통해 <strong>안전권</strong>과 <strong>환경권</strong> 등 시민의 생존권과 <strong>인간의 존엄성</strong> 보장</p>
+    <div class="highlight-box" style="margin-top:12px;">
+      <strong>헌법 제34조 ⑥</strong> 국가는 재해를 예방하고 그 위험으로부터 국민을 보호하기 위하여 노력하여야 한다. (안전권)<br><br>
+      <strong>헌법 제35조 ①</strong> 모든 국민은 건강하고 쾌적한 환경에서 생활할 권리를 가지며, 국가와 국민은 환경 보전을 위하여 노력하여야 한다. (환경권)
+    </div>
+    <p style="margin-top:10px;">* 35조 1항을 '환경권'이라고 하며, 환경 오염의 배제 청구를 할 수 있고, 오염이 없더라도 위험성이 예상되는 경우에는 <span class="kw">예방 청구권</span>을 행사할 수 있다.</p>
+  </div>
+
+  <div class="sub-title">안전하고 쾌적한 환경 속에서 살아가기 위한 노력</div>
+  <div class="two-col">
+    <div class="card">
+      <strong>국가·사회적 차원</strong>
+      <ul style="margin-top:8px;">
+        <li>헌법에 안전권·환경권 명시, 관련 법률 제정</li>
+        <li>조기 예보·경보 체계, 재난 대비 안전 수칙 교육, 건물 내진 설계 의무화</li>
+        <li><span class="kw">재난 관리 시스템</span> 구축</li>
+        <li>신속한 피해 복구 및 재해민 지원·보상 정책 수립<br>→ <span class="kw">특별 재난 지역</span> 지정, <span class="kw">풍수해 보험</span> 지원</li>
+      </ul>
+    </div>
+    <div class="card">
+      <strong>개인적 차원</strong>
+      <ul style="margin-top:8px;">
+        <li>국민 스스로 안전권·환경권에 대한 권리 인식 → 재난 발생 시 국가·지방자치단체에 <span class="kw">안전 조치 요청</span></li>
+        <li>재해·재난 대비 안전 교육·대응 훈련 적극 참여</li>
+        <li>공동체의 빠른 회복을 위해 함께 노력하는 성숙한 시민 의식 갖추기</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="highlight-box">
+    <strong>특별 재난 지역</strong>: 대형 사고나 자연재해 등으로 피해를 입은 지역의 긴급 복구 지원을 위해 대통령이 선포하는 지역. 응급 대책 및 재해 구호와 복구에 필요한 행정·재정·금융·세제 등 지원을 받을 수 있다.<br><br>
+    <strong>풍수해 보험</strong>: 자연재해로 재산 피해를 입었을 경우 피해 복구 비용을 보상할 수 있는 보험. 보험료의 일부를 국가와 지방자치단체에서 보조.
+  </div>
+
+</div>
+
+<!-- ══════════════ TAB 3: 자연관 ══════════════ -->
+<div id="tab3" class="tab-content tab-3">
+
+  <div class="sec-title">1. 인간 중심주의 자연관</div>
+  <div class="card">
+    <p><strong>의미:</strong> 자연의 가치를 인간의 이익이나 필요에 따라 평가하는 관점 → 인간을 중심으로 가치 판단</p>
+    <ul style="margin-top:10px;">
+      <li>인간을 다른 자연적 존재보다 우월하고 귀한 존재로 파악 (인간은 이성을 지닌 존재이기 때문)</li>
+      <li>인간을 자연으로부터 독립된 존재로 봄 → 인간과 자연을 구분하는 <span class="kw">이분법적 세계관</span></li>
+      <li>자연은 인간의 생존과 복지를 위한 수단으로 여김 → 자연의 <span class="kw">도구적 가치</span> 강조</li>
+    </ul>
+    <div class="highlight-box" style="margin-top:12px;">
+      <strong>이분법적 세계관</strong>: (자연) 정신 혹은 영혼이 없는 단순한 물질 ↔ (인간) 도덕적 자율성과 자기결정 능력을 지닌 존재. 모든 존재를 정신과 물질로 구분하는 세계관.
+    </div>
+  </div>
+
+  <div class="sub-title">인간 중심주의 사상가</div>
+  <table class="concept-table">
+    <tr><th>사상가</th><th>핵심 주장</th></tr>
+    <tr>
+      <td class="row-label"><span class="phil-name">아리스토텔레스</span></td>
+      <td>
+        자연은 목적을 가지며, 궁극적으로 인간을 위해 존재함<br>
+        존재의 위계: 인간 &gt; 동물 &gt; 식물 (<em>이성</em> 첫 사용)
+      </td>
+    </tr>
+    <tr>
+      <td class="row-label"><span class="phil-name">아퀴나스</span></td>
+      <td>
+        신의 질서 속에서 동물은 인간을 위해 존재<br>
+        <div class="quote">신의 섭리에 따라 동물은 인간이 사용하도록 운명 지어졌다.</div>
+      </td>
+    </tr>
+    <tr>
+      <td class="row-label"><span class="phil-name">베이컨</span></td>
+      <td>
+        자연은 인간이 정복·이용해야 할 대상, 과학 기술을 통한 자연 지배 강조<br>
+        <div class="quote">방황하고 있는 자연을 사냥해서 노예로 만들어 인간의 이익에 봉사하도록 해야 한다.</div>
+      </td>
+    </tr>
+    <tr>
+      <td class="row-label"><span class="phil-name">데카르트</span></td>
+      <td>
+        동물은 감정 없는 기계적 존재, 인간의 <span class="kw">이성</span>만이 가치 있는 것으로 봄<br>
+        <div class="quote">우리는 자연의 주인이자 소유자가 될 수 있다. 인간은 정신을 소유한 존엄한 존재이며, 자연은 의식이 없는 물질이다.</div>
+        ("나는 생각한다, 고로 존재한다" → 이성 중시)
+      </td>
+    </tr>
+    <tr>
+      <td class="row-label"><span class="phil-name">칸트</span></td>
+      <td>
+        동물에 대한 의무는 인간성을 위한 <span class="kw">간접적인</span> 도덕적 의무 (인간성 귀해, 자연을 보지자)<br>
+        → 동물 자체가 아닌 인간을 위해 배려해야 함
+      </td>
+    </tr>
+  </table>
+
+  <div class="sub-title">극단적 vs 온건한 인간 중심주의</div>
+  <div class="two-col">
+    <div class="card">
+      <strong>극단적 인간 중심주의</strong>
+      <p style="margin-top:6px;">인간을 자연에 비해 우월한 존재로 인식, 인간의 욕구 충족을 위한 자연의 훼손도 정당화될 수 있다고 봄</p>
+    </div>
+    <div class="card">
+      <strong>온건한 인간 중심주의</strong>
+      <p style="margin-top:6px;">인간의 이익을 고려하되, <strong>자연을 보존</strong>하여 미래 세대의 인간에게 물려주어야 한다는 관점. 인간이 환경 문제를 일으켰으니 이를 해결하는 것도 인간의 책임이라는 입장.</p>
+    </div>
+  </div>
+
+  <div class="sub-title">인간 중심주의 평가</div>
+  <div class="card">
+    <ul>
+      <li>✅ <strong>긍정적:</strong> 자연을 개발함으로써 과학 기술의 발전과 경제 성장 → 인간 삶을 풍요롭게 함</li>
+      <li>❌ <strong>부정적:</strong> 자연을 함부로 사용 → 훼손한 결과 심각한 환경문제 초래 (자원 고갈, 환경 오염, 생태계 파괴 등)</li>
+    </ul>
+  </div>
+
+  <div class="sec-title">2. 생태 중심주의 자연관</div>
+  <div class="card">
+    <p><strong>의미:</strong> 모든 생명체와 더불어 토양·물·대기 등 생태계 전체를 하나의 공동체로 보고, 자연 그 자체의 가치를 존중해야 한다고 보는 자연관</p>
+    <ul style="margin-top:10px;">
+      <li>인간도 자연을 강하는 빛으로, 독립적 존재가 아님</li>
+      <li>등장: 환경 문제의 원인이 자연을 도구로 보는 인간 중심주의 자연관에 있다고 보고, 반성의 의미에서 등장</li>
+      <li>인간뿐 아니라 동·식물, 더 나아가 무생물을 포함한 생태계 전체를 도덕적으로 고려해야 함</li>
+      <li>자연은 다양한 구성원이 상호작용하는 생태계이므로, 인간은 자연과 분리되어 존재할 수 없음</li>
+      <li>인간과 자연은 서로 영향을 주고받는 <strong>관계</strong>로, 조화와 균형이 중요</li>
+      <li><span class="kw">전일론적 관점</span> (이분법적 세계관 ↔ 이분법적 세계관): 자연을 그 자체로 가치를 지닌 것으로 봄 → 자연의 <span class="kw">내재적 가치</span> 강조</li>
+    </ul>
+  </div>
+
+  <div class="sub-title">생태 중심주의 사상가</div>
+  <table class="concept-table">
+    <tr><th>구분</th><th>사상가</th><th>핵심 주장</th></tr>
+    <tr>
+      <td>동물 중심주의</td>
+      <td class="row-label"><span class="phil-name">피터 싱어</span></td>
+      <td>
+        '종 차별주의' 반대: 고통을 느낄 수 있으므로 인간과 동물을 다르게 대우하는 것은 정당화될 수 없다.<br>
+        <div class="quote">고통을 느끼는 존재는 모두 도덕적 고려의 대상이다.</div>
+      </td>
+    </tr>
+    <tr>
+      <td>생명 중심주의</td>
+      <td class="row-label"><span class="phil-name">알베르트 슈바이처</span></td>
+      <td>
+        <span class="kw">생명 외경 사상</span><br>
+        <div class="quote">인간, 동물, 식물 등 모든 생명을 것들의 내재적 가치를 지니며, 이를 존중해야 한다.</div>
+      </td>
+    </tr>
+    <tr>
+      <td rowspan="2">생태 중심주의</td>
+      <td class="row-label"><span class="phil-name">알도 레오폴드</span></td>
+      <td>
+        <span class="kw">대지 윤리</span>: 생태계 전체를 하나의 공동체로 보고, 그 범위를 동물·식물·토양·물을 비롯한 대지까지 확대<br>
+        인간은 생명 공동체의 구성원으로서 생태계의 안정을 유지할 의무 가짐<br>
+        <div class="quote">어떤 것이 생명 공동체의 온전성, 안전성, 아름다움의 보존에 이바지한다면 그것은 옳고, 그렇지 않다면 그르다.</div>
+      </td>
+    </tr>
+    <tr>
+      <td class="row-label"><span class="phil-name">아르네 네스</span></td>
+      <td>
+        <span class="kw">심층 생태주의</span>: 인간 중심 사고에서 벗어나 자연과의 조화 강조
+      </td>
+    </tr>
+  </table>
+
+  <div class="highlight-box">
+    <strong>동양의 자연관</strong> — 자연과의 조화를 중시하며, 인간은 자연과 분리된 존재가 아니라 자연의 일부로 본다.<br><br>
+    • <strong>공자(유교):</strong> 인간과 자연이 <span class="kw">조화</span>를 이루어야 한다고 봄. 자연 질서 속에서 인간이 도덕적으로 살아야 함 → <em>자연과의 조화</em> 강조<br>
+    • <strong>노자(도교):</strong> 인간이 자연을 인위적으로 지배하려 하기보다 자연의 흐름에 따라 살아야 한다고 봄. 무위자연(無爲自然) → <em>자연에의 귀응</em> 강조<br>
+    • <strong>석가모니(불교):</strong> 모든 존재는 서로 의존하여 생겨난다는 <span class="kw">연기(緣起) 사상</span>에 따라 인간·자연·생명이 서로 긴밀히 연결되어 있다고 봄 → <em>상호 의존과 생명 존중</em> 강조
+  </div>
+
+  <div class="sub-title">극단적 생태 중심주의</div>
+  <div class="card">
+    <ul>
+      <li>자연을 인간과 동등하게 보고, 자연에 대한 인간의 어떠한 개입도 허용하지 않음</li>
+      <li>자연에 대한 인간의 개입은 필수 불가결이기에 비현실적이라는 비판을 받음</li>
+      <li>실제 삶을 살아가는 데 있어 자연에 대한 인간의 이익을 우선하여 고려하기 때문에 <span class="kw">환경 파시즘</span>이라는 비판을 받기도 함</li>
+      <li>개별 생명체의 이익보다는 생태계 전체의 이익을 우선하여 고려</li>
+    </ul>
+  </div>
+  <div class="highlight-box">
+    <strong>생태 중심주의의 의의:</strong> 인간과 자연의 공존을 모색하려는 관점에서 오늘날 환경 문제 해결의 실마리를 제공함
+  </div>
+
+  <div class="sec-title">3. 인간과 자연의 바람직한 관계</div>
+  <div class="card">
+    <p><strong>인간과 자연의 유기적 관계:</strong> 인간은 생태계의 일부 — 생태계는 일정한 상태를 유지하려는 <span class="kw">항상성</span>을 지님. 인간은 생태계의 일부로서 다른 생명체·환경과 <span class="kw">유기적 관계</span>를 맺음.</p>
+    <p style="margin-top:8px;">지구상의 모든 생명체가 서로 밀접하게 연결되어 있고 인간과 자연은 서로 영향을 주고받는 관계. <strong>인간이 자연을 파괴하면, 그 피해는 인간에게 되돌아옴.</strong></p>
+  </div>
+  <div class="highlight-box">
+    <strong>인간과 자연의 바람직한 관계:</strong> 어느 한쪽만을 중시하기보다 인간 중심주의 자연관과 생태 중심주의 자연관 각각의 장점을 취하여 <strong>조화</strong>를 이루어야 함.
+  </div>
+
+</div>
+
+<!-- ══════════════ TAB 4: 환경 보전 노력 ══════════════ -->
+<div id="tab4" class="tab-content tab-4">
+
+  <div class="sec-title">1. 지구촌의 다양한 환경 문제</div>
+
+  <div class="sub-title">환경 문제 발생 원인 및 특징</div>
+  <div class="card">
+    <ul>
+      <li><strong>발생 원인:</strong> 산업 혁명 이후 공업 발전과 <span class="kw">인구 증가</span>에 따른 <span class="kw">자원 소비의 증가</span></li>
+      <li>① <strong>복구의 어려움:</strong> 피해 복구에 많은 시간·노력·비용 소모</li>
+      <li>② <strong>피해의 심각성:</strong> 피해 정도가 인간의 생존을 위협할 수 있을 정도로 큼</li>
+      <li>③ <strong>피해 규모의 광범위성:</strong> 피해 규모가 인접 국가와 전 지구에 영향을 미칠 정도로 큼</li>
+    </ul>
+  </div>
+
+  <div class="sub-title">환경 문제의 종류</div>
+  <table class="concept-table">
+    <tr><th>종류</th><th>의미 및 원인</th><th>영향</th></tr>
+    <tr>
+      <td class="row-label">지구 온난화</td>
+      <td>대기 중 <span class="kw">온실가스</span> 농도 증가 → 지구 평균 기온 상승. 원인: 산업화로 인한 화석 연료의 사용 증가</td>
+      <td>극지방 빙하 면적 축소, 해수면 상승, 해안 저지대 침수, 기상 이변 발생, 자연재해 증가, 동식물 서식 환경 변화(아열대성 생물 증가, 농작물 북한계선 북상)</td>
+    </tr>
+    <tr>
+      <td class="row-label">열대림 파괴</td>
+      <td>무분별한 벌목과 개간, 목축 등으로 지구에 산소를 공급하는 열대우림 파괴</td>
+      <td>동식물 서식지 감소, <span class="kw">생물종 다양성 감소</span>, 토양 침식, <span class="kw">지구온화 심화</span></td>
+    </tr>
+    <tr>
+      <td class="row-label">사막화</td>
+      <td>극심한 가뭄과 인구 증가에 따른 <span class="kw">과한 산림활동</span>으로 기존 사막이 확대</td>
+      <td><span class="kw">황사 심화</span>, 식량 생산량 감소</td>
+    </tr>
+    <tr>
+      <td class="row-label">미세먼지 농도 증가</td>
+      <td>인간의 산업 활동으로 자동차·공장 등에서 오염 물질 증가 → 사람 몸에 들어가 여러 질병 유발</td>
+      <td>호흡기 질환 등</td>
+    </tr>
+    <tr>
+      <td class="row-label">쓰레기 배출량 증가</td>
+      <td>플라스틱 쓰레기는 잘 썩지 않아 환경 오염</td>
+      <td>생태계 파괴</td>
+    </tr>
+    <tr>
+      <td class="row-label">오존층 파괴</td>
+      <td><span class="kw">프레온 가스(CFCs)</span>의 과다 사용으로 오존층이 파괴</td>
+      <td>피부암, 백내장 등의 발병률 증가</td>
+    </tr>
+    <tr>
+      <td class="row-label">산성비</td>
+      <td>자동차 배기가스·공장 매연에서 나오는 황산화물·질소산화물이 빗물에 섞여 내리는 것. 수소 이온 농도(pH) <strong>5.6 미만</strong>인 비</td>
+      <td>삼림 파괴, 식물 고사, 하천·토양 오염, 건축물·조각상 부식</td>
+    </tr>
+  </table>
+
+  <div class="sec-title">2. 인간과 자연의 공존을 위한 노력</div>
+
+  <div class="two-col">
+    <div class="highlight-box">
+      <strong>생태 도시</strong><br>
+      사람과 자연환경이 조화를 이루며 공생할 수 있는 체계를 갖춘 지속 가능한 도시. 대표: 브라질의 <span class="kw">쿠리치바</span><br>
+      (쿠리치바: 굴형 버스정류장과 굴절 이동 글로벌버스 도입, 인간&환경 공존 개발)
+    </div>
+    <div class="highlight-box">
+      <strong>슬로 시티</strong><br>
+      해 없는 자연 속에서 전통문화와 자연을 잘 보호하며 '느림의 삶'을 추구하는 국제 운동. 1986년 패스트푸드에 반대해 시작된 슬로 푸드 운동의 정신 확대.<br>
+      우리나라: 담양군 창평면, 신안군 증도면, 완도군 청산면, 하동군 악양면 등이 가입.
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="highlight-box">
+      <strong>자연 휴식년제</strong><br>
+      생태계 보존을 위해 훼손 우려가 있는 국·공립 공원 및 유원지 등을 지정하여 일정 기간 <span class="kw">출입을 통제</span>하는 제도. 근거: 「자연공원법」 제28조
+    </div>
+    <div class="highlight-box">
+      <strong>갯벌 복원 사업</strong><br>
+      우리나라 순천만 일대를 비롯해 네덜란드·독일·덴마크·미국·일본 등 갯벌 복원 사업 추진.<br>
+      갯벌의 기능: 유기물 분해·해수 정화, 산소 공급, 철새 서식지, 태풍·해일로부터 완충 역할, 생태 관광 및 체험학습장
+    </div>
+  </div>
+
+  <div class="highlight-box">
+    <strong>사회적 차원의 노력 (인간과 자연의 공존)</strong><br>
+    • 자연과 조화를 이루는 개발 노력: <span class="kw">생태 도시</span> 및 <span class="kw">슬로 시티</span> 지정, 동물 서식지 보호를 위한 생태 통로 건설 등<br>
+    • 생태계 복원을 위한 노력: <span class="kw">자연 휴식년제</span> 지정, 갯벌 복원 사업 추진, 멸종 위기종 복원 사업 추진<br>
+    • 자연과 인간의 공생을 중시하는 사회적 인식의 확대<br><br>
+    <strong>개인적 차원의 노력</strong>: 환경친화적 가치관 정립, 후손들에 대한 책임 의식 고취, 일상생활에서 자연 보호 실천 노력
+  </div>
+
+  <div class="sec-title">3. 환경 문제 해결을 위한 다양한 주체들의 노력</div>
+
+  <table class="concept-table">
+    <tr><th>주체</th><th>노력 내용</th></tr>
+    <tr>
+      <td class="row-label">정부의 노력</td>
+      <td>
+        ① 다양한 법과 제도, 정책 마련 → 기업과 개인이 실천하도록 함<br>
+        &nbsp;&nbsp;• <span class="kw">환경 영향 평가 제도</span>: 대규모 개발 사업 계획 수립 시 환경에 미치는 영향을 미리 예측·평가하는 제도<br>
+        &nbsp;&nbsp;• <span class="kw">에너지 소비 효율 등급 표시제</span>: 에너지 효율이 높은 절약형 제품을 쉽게 구입, 제조업자가 생산단계에서부터 원천적으로 에너지 절약형 제품을 생산·판매하도록 하는 의무적인 신고 제도<br>
+        &nbsp;&nbsp;• 그 외 전기차 보급 정책, 탄소 중립 포인트 제도 등 다양한 정책 실시<br>
+        ② 친환경 산업 육성 및 친환경 기술과 에너지 개발 장려<br>
+        &nbsp;&nbsp;• <span class="kw">저탄소 녹색 성장 정책</span>: 화석 에너지에 대한 의존도를 낮추고 청정에너지와 녹색 기술을 연구 개발하여 새로운 일자리를 창출해 나가는 경제와 환경이 조화를 이루는 성장 정책<br>
+        ③ 에너지 절약 실천 방안과 올바른 쓰레기 분리배출 방법 홍보
+      </td>
+    </tr>
+    <tr>
+      <td class="row-label">시민 사회 (시민 단체)의 노력</td>
+      <td>
+        ① 환경 관련 정책과 사업 감시: 정부와 기업의 활동을 환경 보전의 측면에서 감시<br>
+        ② 환경 보호 의식 고취를 위한 캠페인: 다양한 환경 보호 캠페인 및 실천 방안 교육 실시, <span class="kw">환경 보호를 위한 시민 사회</span> 전개<br>
+        <strong>환경 보호 비정부기구(NGO)</strong><br>
+        &nbsp;&nbsp;• <span class="kw">그린피스</span>: 지구의 환경을 보존하고 세계 평화를 위한 활동을 벌이는 국제 환경 보호 단체<br>
+        &nbsp;&nbsp;• <span class="kw">세계 자연 기금(WWF)</span>: 세계 최대의 민간 자연보호단체. 인간과 자연의 공존 및 조화를 위해 생물의 다양성 보존, 자연 자원의 지속적 이용 추진, 환경 오염 방지, 자원·에너지의 낭비 방지 등을 주요 사업으로 함
+      </td>
+    </tr>
+    <tr>
+      <td class="row-label">기업의 노력</td>
+      <td>
+        ① 환경친화적 기업 윤리관 정립: 이윤 창출에 앞서 <span class="kw">사회적 책임 의식</span>을 가지고 환경 보호를 위한 윤리 의식 확립, 상품의 생산·유통·폐기 과정에서 환경에 미치는 부정적 영향 최소화<br>
+        ② 환경 관련 법률 준수: 오염 물질 배출량의 기준 준수, 환경 오염 방지 시설 구축<br>
+        ③ 에너지 고효율 생산 시설 도입: 에너지 절약 및 온실가스 배출량 감소를 위한 노력, 신·재생 에너지 사용 확대<br>
+        ④ 환경친화적 제품 개발: <span class="kw">지속적인 기술 혁신</span>을 통한 환경친화적 제품 개발
+      </td>
+    </tr>
+    <tr>
+      <td class="row-label">개인의 노력</td>
+      <td>
+        ① 환경친화적 가치관의 내면화: 환경 보호의 필요성에 대한 올바른 인식, 환경 윤리 보전 의식 정립<br>
+        ② 일상생활에서의 녹색 생활 실천: <span class="kw">녹색 소비</span> 활동, 자원과 에너지 절약, 일회용품의 사용 억제, <span class="kw">쓰레기 분리수거</span> 및 재활용, 대중교통 이용 등<br>
+        <strong>녹색 소비</strong>: 제품을 구매하고 사용한 후 버릴 때까지 전 과정에 걸쳐 친환경적인 행동을 하는 것. 꼭 필요한 물건만 구매하고, 에너지 효율이 높은 제품이나 재활용 가능한 제품을 선택.
+      </td>
+    </tr>
+  </table>
+
+  <div class="highlight-box">
+    각 주체가 하는 노력은 서로 영향을 주고받음<br>
+    전 지구적으로 발생하는 환경 문제 해결을 위해 서로 협력하며 <span class="kw">환경 협약</span>을 체결함
+  </div>
+
+</div>
+
+<script>
+  function showTab(n) {
+    for (let i = 1; i <= 4; i++) {
+      document.getElementById('tab' + i).classList.remove('active');
+      const btn = document.getElementById('btn' + i);
+      btn.className = 'tab-btn';
+    }
+    document.getElementById('tab' + n).classList.add('active');
+    document.getElementById('btn' + n).classList.add('active-' + n);
+  }
+  // init
+  showTab(1);
+</script>
+</body>
+</html>
