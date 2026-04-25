@@ -958,7 +958,7 @@ function renderGraphQuestion(){
       <canvas id="climateGraph" width="720" height="260"></canvas>
     </div>
     <div class="graph-options">
-      ${allOpts.map((o,i)=>`<button class="opt-btn" id="gopt-${i}" onclick="answerGraph(${i},${correctIdx})">${o.label}</button>`).join('')}
+      ${allOpts.map((o,i)=>`<button class="opt-btn" id="gopt-${i}" onclick="answerGraph(${i},${correctIdx},'${climate.id}')">${o.label}</button>`).join('')}
     </div>
     <div class="graph-answer-overlay" id="g-overlay"></div>
     <div id="g-next-btn" style="display:none;margin-top:14px;text-align:center;">
@@ -1016,7 +1016,7 @@ function drawClimateGraph(temps,precip){
     ctx.fillText('0℃',pL-4,zy+4);
   }
 }
-function answerGraph(i,correctIdx){
+function answerGraph(i,correctIdx,climateId){
   if(graphGame.answered)return;
   graphGame.answered=true;
   graphGame.total++;
@@ -1024,9 +1024,15 @@ function answerGraph(i,correctIdx){
   if(correct){graphGame.score++;graphGame.streak++;}else{graphGame.streak=0;}
   for(let j=0;j<4;j++){const b=document.getElementById('gopt-'+j);if(b){b.disabled=true;if(j===correctIdx)b.classList.add('correct');if(j===i&&!correct)b.classList.add('wrong');}}
   const ov=document.getElementById('g-overlay');
-  // 현재 문제의 기후 정보는 allOpts[correctIdx]에서 가져옴
   const correctLabel=document.getElementById('gopt-'+correctIdx)?.textContent||'';
-  if(ov){ov.style.display='block';ov.innerHTML=(correct?'✅ <b>정답!</b>':'❌ <b>오답</b>')+` 정답: <b>${correctLabel}</b>`;}
+  const climateObj=CLIMATE_TYPES.find(c=>c.id===climateId);
+  const desc=climateObj?climateObj.desc:'';
+  if(correct){
+    if(ov){ov.style.display='block';ov.innerHTML=`✅ <b>정답!</b> — <b>${correctLabel}</b><br><span style="font-size:.8rem;">${desc}</span>`;}
+  }else{
+    const selectedLabel=document.getElementById('gopt-'+i)?.textContent||'';
+    if(ov){ov.style.display='block';ov.innerHTML=`❌ <b>오답</b> — 선택: <b>${selectedLabel}</b><br>정답: <b>${correctLabel}</b><br><span style="font-size:.8rem;">${desc}</span>`;}
+  }
   document.getElementById('g-next-btn').style.display='block';
 }
 function stopGraphGame(){showGraphResult();}
