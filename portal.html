@@ -49,6 +49,29 @@
         .hub-card .icon { font-size: 60px; margin-bottom: 25px; }
         .hub-card h3 { color: var(--hist-theme); font-weight: 900; font-size: 1.4rem; margin: 0; }
 
+        /* ⚡ 매우 간단 요약 이동 박스 (새로 추가) */
+        .summary-link-box {
+            background: linear-gradient(135deg, var(--hist-theme), #3b82f6);
+            color: white;
+            border-radius: 16px;
+            padding: 25px 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            cursor: pointer;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(30, 58, 138, 0.2);
+            transition: 0.3s;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .summary-link-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(30, 58, 138, 0.3);
+        }
+        .summary-link-box .icon { font-size: 45px; }
+        .summary-link-box h3 { font-size: 1.5rem; margin-bottom: 6px; color: white; font-weight: 900; letter-spacing: -0.5px; }
+        .summary-link-box p { font-size: 0.95rem; opacity: 0.9; margin: 0; }
+
         /* 부록 상세 디자인 */
         .appendix-wrapper { max-width: 900px; width: 100%; text-align: left; padding-bottom: 50px; }
         .appendix-section { margin-bottom: 30px; background: white; border: 1px solid #e2e8f0; border-radius: 16px; padding: 30px; }
@@ -87,24 +110,37 @@
 <div class="main-content">
     <div class="subject-header"><h1 id="mainTitle" class="subject-title">국어 통합 학습 허브</h1></div>
     <div class="content-container">
+        <!-- 메인 프레임 -->
         <iframe id="mainFrame" src="./korean_hub.html"></iframe>
 
+        <!-- 1. 한국사 선택 허브 -->
         <div id="historyHub" class="internal-box">
             <div class="hub-grid">
                 <div class="hub-card" onclick="loadHistorySummary()">
                     <div class="icon">📜</div>
                     <h3>한국사 내용 정리</h3>
                 </div>
-                <!-- 수정됨: showAppendix() 함수를 버리고 안정적인 go() 함수로 통일 -->
-                <div class="hub-card" onclick="go('', 'appendix', null)">
+                <div class="hub-card" onclick="showAppendix()">
                     <div class="icon">📁</div>
                     <h3>한국사 부록</h3>
                 </div>
             </div>
         </div>
 
+        <!-- 2. 한국사 부록 (요약 버튼 + 원래 텍스트가 같이 있는 곳) -->
         <div id="appendixBox" class="internal-box">
             <div class="appendix-wrapper">
+                
+                <!-- 새로 추가된 "한국사 매우 간단 요약" 외부 파일 이동 버튼 박스 -->
+                <div class="summary-link-box" onclick="loadSimpleSummaryFile()">
+                    <div class="icon">⚡</div>
+                    <div>
+                        <h3>한국사 매우 간단 요약</h3>
+                        <p>핵심만 쏙쏙 뽑은 요약 파일로 바로 넘어가려면 이 버튼을 클릭하세요!</p>
+                    </div>
+                </div>
+
+                <!-- 기존 부록 텍스트 -->
                 <div class="appendix-section">
                     <h4>📜 1. 전근대사 (고대 ~ 조선)</h4>
                     <div class="appendix-item">
@@ -159,13 +195,15 @@
                         </ul>
                     </div>
                 </div>
-                <!-- 수정됨: <center> 태그 폐기 및 CSS div로 교체 -->
+
+                <!-- 돌아가기 버튼 -->
                 <div style="text-align: center; margin-top: 20px;">
-                    <button class="back-btn" onclick="go('', 'history', null)">← 선택 화면으로</button>
+                    <button class="back-btn" onclick="go('', 'history', null)">← 선택 화면으로 돌아가기</button>
                 </div>
             </div>
         </div>
 
+        <!-- SPECIAL THANKS 박스 -->
         <div id="thanksBox" class="internal-box">
             <div class="thanks-wrapper">
                 <h2 style="font-size: 2.5rem; color: var(--thanks-theme); font-weight: 900; margin-bottom: 20px;">SPECIAL THANKS</h2>
@@ -177,8 +215,8 @@
                     </div>
                     <div class="thanks-card">
                         <h4 style="margin-bottom:10px;">🛠️ Core Developers</h4>
-                        <p><b>심규원</b> : 국어, 물리, 화학, 지구과학, 한국사, 정보</p>
-                        <p><b>최시원</b> : 영어, 사회, 지리, 생물, 자료 정리</p>
+                        <p><b>심규원</b> : 국어, 수학, 물리, 화학, 지구과학, 한국사</p>
+                        <p><b>최시원</b> : 사회, 지리, 생물, 자료 정리</p>
                     </div>
                 </div>
             </div>
@@ -193,10 +231,10 @@
             el.classList.add('active');
         }
         const frame = document.getElementById('mainFrame');
-        const internalBoxes =[document.getElementById('historyHub'), document.getElementById('appendixBox'), document.getElementById('thanksBox')];
+        const internalBoxes = [document.getElementById('historyHub'), document.getElementById('appendixBox'), document.getElementById('thanksBox')];
         const title = document.getElementById('mainTitle');
 
-        // 이동할 때마다 모든 요소를 일단 숨김 처리 (버그 방지)
+        // 이동할 때마다 화면 비우기
         frame.style.display = 'none';
         internalBoxes.forEach(box => box.style.display = 'none');
 
@@ -206,9 +244,6 @@
         } else if(type === 'thanks') {
             internalBoxes[2].style.display = 'flex';
             title.innerText = "SPECIAL THANKS"; title.style.borderLeftColor = 'var(--thanks-theme)';
-        } else if(type === 'appendix') {
-            internalBoxes[1].style.display = 'flex';
-            title.innerText = "한국사 심화 부록"; title.style.borderLeftColor = 'var(--hist-theme)';
         } else {
             frame.style.display = 'block'; frame.src = "./" + url;
             if(type === 'korean') { title.innerText = "국어 통합 학습 허브"; title.style.borderLeftColor = 'var(--kor-theme)'; }
@@ -219,16 +254,31 @@
         }
     }
 
+    // 1. 한국사 내용 정리 (외부 파일 띄우기)
     function loadHistorySummary() {
         const frame = document.getElementById('mainFrame');
         document.getElementById('historyHub').style.display = 'none';
         frame.style.display = 'block';
-        // 수정됨: .html.html 이중 확장자 버그 수정 (404 에러 방지)
-        frame.src = "./history_interactive.html"; 
+        frame.src = "./history_interactive.html";
         document.getElementById('mainTitle').innerText = "한국사 내용 정리";
     }
 
-    // showAppendix() 함수는 go() 로직에 포함되므로 삭제하여 최적화했습니다.
+    // 2. 한국사 부록 (내부 박스 띄우기)
+    function showAppendix() {
+        document.getElementById('historyHub').style.display = 'none';
+        document.getElementById('mainFrame').style.display = 'none';
+        document.getElementById('appendixBox').style.display = 'flex';
+        document.getElementById('mainTitle').innerText = "한국사 심화 부록";
+    }
+
+    // 3. 매우 간단 요약 (부록 박스 안에 있는 버튼 클릭 시 외부 파일 띄우기)
+    function loadSimpleSummaryFile() {
+        const frame = document.getElementById('mainFrame');
+        document.getElementById('appendixBox').style.display = 'none';
+        frame.style.display = 'block';
+        frame.src = "./history_appendix.html"; // ★ 띄우고 싶은 부록 파일명!
+        document.getElementById('mainTitle').innerText = "한국사 매우 간단 요약";
+    }
 </script>
 </body>
 </html>
