@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>최시원의 기출 분석 - 26 영어 3모</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #13131a;
+    --surface: #1c1c26;
+    --surface2: #252535;
+    --border: #33334a;
+    --accent: #f0b482;
+    --accent2: #ff6b6b;
+    --text: #f0eeff;
+    --text-muted: #a0a0c0;
+    --text-dim: #666688;
+    --highlight: rgba(240,180,130,0.1);
+    --red-mark: #ff6b6b;
+    --tab-active-bg: #252535;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #13131a;
+    color: #f0eeff;
+    font-family: 'Noto Sans KR', sans-serif;
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  header {
+    padding: 36px 48px 24px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    background: linear-gradient(180deg, #16161e 0%, var(--bg) 100%);
+  }
+  .header-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--accent);
+    text-transform: uppercase;
+  }
+  header h1 {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.5px;
+  }
+  header h1 span {
+    color: var(--accent);
+  }
+
+  /* ── TAB BAR ── */
+  .tab-bar {
+    display: flex;
+    gap: 0;
+    padding: 0 48px;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .tab-bar::-webkit-scrollbar { display: none; }
+
+  .tab {
+    padding: 15px 24px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-muted);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: none;
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    font-family: 'Noto Sans KR', sans-serif;
+  }
+  .tab:hover {
+    color: var(--text);
+    background: var(--highlight);
+  }
+  .tab.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+    background: none;
+  }
+  .tab-num {
+    background: var(--surface2);
+    border-radius: 4px;
+    padding: 1px 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-dim);
+  }
+  .tab.active .tab-num {
+    background: rgba(232,168,124,0.15);
+    color: var(--accent);
+  }
+
+  /* ── CONTENT ── */
+  .content-area {
+    padding: 48px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .panel { display: none; }
+  .panel.active { display: block; animation: fadeIn 0.3s ease; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── PANEL LAYOUT ── */
+  .panel-header {
+    margin-bottom: 32px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+    background: transparent;
+    color: var(--text);
+  }
+  .q-badge {
+    display: inline-block;
+    background: rgba(232,168,124,0.15);
+    color: var(--accent);
+    border: 1px solid rgba(232,168,124,0.3);
+    border-radius: 4px;
+    padding: 3px 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    margin-bottom: 10px;
+  }
+  .panel-header h2 {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 23px;
+    font-weight: 700;
+    line-height: 1.5;
+    color: #1a1a2e;
+    background: #f5f4ff;
+    padding: 14px 20px;
+    border-radius: 8px;
+    margin-top: 8px;
+  }
+  .panel-header .subject-box {
+    margin-top: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #1c1c28;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 8px 16px;
+    font-size: 14px;
+    color: var(--text-muted);
+  }
+  .panel-header .subject-box strong {
+    color: var(--accent2);
+  }
+
+  /* ── PASSAGE ── */
+  .passage-box {
+    background: #1c1c28;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 32px 36px;
+    margin-bottom: 28px;
+    line-height: 2.2;
+    font-size: 16px;
+    letter-spacing: 0.01em;
+  }
+  .passage-box p { margin-bottom: 14px; }
+  .sent-num {
+    display: inline-block;
+    width: 22px;
+    height: 22px;
+    background: var(--surface2);
+    border-radius: 50%;
+    font-size: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text-dim);
+    text-align: center;
+    line-height: 22px;
+    margin-right: 4px;
+    vertical-align: middle;
+    flex-shrink: 0;
+  }
+  .key-underline {
+    border-bottom: 2px solid var(--accent);
+    color: var(--accent);
+    font-weight: 500;
+  }
+  .red-mark {
+    color: var(--red-mark);
+    font-weight: 700;
+    border-bottom: 2px solid var(--red-mark);
+  }
+  .circle-mark {
+    display: inline-block;
+    border: 2px solid var(--accent);
+    border-radius: 20px;
+    padding: 0 4px;
+    color: var(--accent);
+  }
+
+  /* ── SECTION CARDS ── */
+  .section-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  @media (max-width: 720px) {
+    .section-grid { grid-template-columns: 1fr; }
+    .content-area { padding: 24px 20px; }
+    .tab-bar { padding: 0 20px; }
+    header { padding: 24px 20px 18px; }
+  }
+
+  .card {
+    background: #1c1c28;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 22px 26px;
+  }
+  .card-full {
+    background: #1c1c28;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 22px 26px;
+    margin-bottom: 16px;
+  }
+  .card h3 {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #888899;
+    font-family: 'JetBrains Mono', monospace;
+    margin-bottom: 16px;
+  }
+
+  /* ── THEME BOX ── */
+  .theme-box {
+    background: #1a1e28;
+    border: 1px solid rgba(240,180,130,0.35);
+    border-left: 4px solid var(--accent);
+    border-radius: 10px;
+    padding: 22px 26px;
+    margin-bottom: 20px;
+  }
+  .theme-box .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .theme-box .theme-text {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  /* ── ANALYSIS LIST ── */
+  .analysis-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
+  }
+  .analysis-list li {
+    display: flex;
+    gap: 10px;
+    font-size: 14.5px;
+    line-height: 1.75;
+    color: #b8b8d8;
+  }
+  .analysis-list li::before {
+    content: '→';
+    color: var(--accent);
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .analysis-list li strong {
+    color: var(--text);
+  }
+  .analysis-list li .red {
+    color: var(--red-mark);
+    font-weight: 600;
+  }
+
+  /* ── VOCAB GRID ── */
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 8px;
+  }
+  .vocab-item {
+    background: var(--surface2);
+    border-radius: 6px;
+    padding: 8px 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    gap: 8px;
+  }
+  .vocab-item .word {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--accent);
+    font-size: 12px;
+  }
+  .vocab-item .meaning {
+    color: var(--text-muted);
+    font-size: 12px;
+    text-align: right;
+  }
+
+  /* ── OPTIONS ── */
+  .options-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 4px;
+  }
+  .option {
+    display: flex;
+    gap: 10px;
+    padding: 11px 16px;
+    border-radius: 7px;
+    font-size: 14px;
+    line-height: 1.6;
+    background: #1a1a28;
+    border: 1px solid var(--border);
+    color: #9898b8;
+  }
+  .option.correct {
+    background: #1e1e2e;
+    border: 1px solid rgba(240,180,130,0.45);
+    border-left: 4px solid var(--accent);
+    color: var(--text);
+    font-weight: 600;
+  }
+  .option .opt-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--text-dim);
+    flex-shrink: 0;
+    padding-top: 1px;
+  }
+  .option.correct .opt-num {
+    color: var(--accent);
+    font-weight: 700;
+  }
+  .answer-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(232,168,124,0.12);
+    border: 1px solid rgba(232,168,124,0.3);
+    border-radius: 6px;
+    padding: 5px 12px;
+    font-size: 13px;
+    color: var(--accent);
+    font-family: 'JetBrains Mono', monospace;
+    margin-bottom: 12px;
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 24px 0;
+  }
+
+  .tag {
+    display: inline-block;
+    background: var(--surface2);
+    border-radius: 4px;
+    padding: 2px 8px;
+    font-size: 11px;
+    color: var(--text-muted);
+    font-family: 'JetBrains Mono', monospace;
+    margin-right: 4px;
+    margin-bottom: 4px;
+  }
+  .tag.red { background: rgba(242,92,92,0.12); color: var(--red-mark); }
+  .tag.accent { background: rgba(232,168,124,0.12); color: var(--accent); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-label">경희고1 · 2026년도</div>
+  <h1>최시원의 기출 분석 — <span>26 영어 3모</span></h1>
+</header>
+
+<div class="tab-bar">
+  <button class="tab active" onclick="switchTab(0)"><span class="tab-num">21</span> 함축의미 추론</button>
+  <button class="tab" onclick="switchTab(1)"><span class="tab-num">24</span> 주제 추론</button>
+  <button class="tab" onclick="switchTab(2)"><span class="tab-num">32</span> 빈칸 추론</button>
+  <button class="tab" onclick="switchTab(3)"><span class="tab-num">34</span> 빈칸 추론</button>
+  <button class="tab" onclick="switchTab(4)"><span class="tab-num">35</span> 무관한 문장</button>
+  <button class="tab" onclick="switchTab(5)"><span class="tab-num">38</span> 문장 삽입</button>
+</div>
+
+<div class="content-area">
+
+<!-- ══════════════ Q21 ══════════════ -->
+<div class="panel active" id="panel-0">
+  <div class="panel-header">
+    <div class="q-badge">Q21 · 함축의미 추론</div>
+    <h2>밑줄 친 <u>steal the shade from our descendants</u>가 다음 글에서 의미하는 바로 가장 적절한 것은?</h2>
+    <div class="subject-box"><strong>Subject:</strong> 미래 세대를 고려한 장기적 책임의 중요성</div>
+  </div>
+
+  <div class="passage-box">
+    <p><span class="sent-num">❶</span> We are now at a point of unprecedented genetic, cultural, and environmental power as a species, and we are linked to <span class="key-underline">nearly every other</span> person on Earth.</p>
+    <p><span class="sent-num">❷</span> We are <span class="circle-mark">embodied</span> individuals, <span class="key-underline">trapped within limited time</span>, but we are also <span class="circle-mark">networked data</span> streams, memories, and influencers, and part of a grander humanity.</p>
+    <p><span class="sent-num">❸</span> <span class="key-underline">Our decisions today have far-reaching impacts</span> that place a responsibility on us to become good ancestors, to take the long view and <span class="circle-mark">time travel</span> forward to imagine the well-being of billions of people whose lives will be lived in the world we are currently making.</p>
+    <p><span class="sent-num">❹</span> Centuries ago, leaders of the native North American Iroquois people created "seven generation stewardship," instructing people to consider the impact of every decision on their children seven generations into the future.</p>
+    <p><span class="sent-num">❺</span> In the precious few decades that Earth is ours, while we enjoy the gardens planted by our ancestors, we must not <span class="red-mark">steal the shade from our descendants</span>.</p>
+  </div>
+
+  <div class="theme-box">
+    <div class="label">📝 주제 (네모칸 요약)</div>
+    <div class="theme-text">우리가 후손들에게 살기 좋은 환경을 물려줘야 한다.</div>
+  </div>
+
+  <div class="section-grid">
+    <div class="card">
+      <h3>🔴 핵심 마킹 포인트</h3>
+      <ul class="analysis-list">
+        <li><span class="red">steal the shade from our descendants</span> — 후손들로부터 그늘을 빼앗아서는 안 된다</li>
+        <li><strong>내려가다 / ascend</strong> — shade(그늘)의 상하 방향 대비로 함축 파악</li>
+        <li><strong>every other</strong> = 둘 중 하나 → 거의 모든 사람과 연결됨</li>
+        <li><strong>time travel forward</strong> = 계속 응용 → 미래를 상상하라</li>
+        <li><strong>impact / influence of A on B / effect</strong> — 세트 암기</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>✅ 선지 분석</h3>
+      <div class="answer-badge">정답 ⑤</div>
+      <div class="options-list">
+        <div class="option">① ignore the benefits passed down from our fathers</div>
+        <div class="option">② remove environmental problems our generation faces</div>
+        <div class="option">③ blame our children for their lack of responsibilities</div>
+        <div class="option">④ take care of resources to give to the future generation</div>
+        <div class="option correct">⑤ take from future generations <u>what they deserve to have</u></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-full">
+    <h3>🧠 문제 풀이 전략</h3>
+    <ul class="analysis-list">
+      <li><strong>ancestors가 심어준 정원(gardens)</strong>을 우리가 누리듯, 우리도 후손에게 그 혜택(그늘)을 남겨야 한다는 구조</li>
+      <li><strong>steal</strong> = take without right → ⑤의 <em>take from future generations what they deserve</em>와 직결</li>
+      <li>Iroquois '7세대 관리' 예시가 핵심 근거 → 미래 7세대 영향까지 고려하라</li>
+      <li>함축의미 문제: 밑줄의 <strong>비유적 표현 → 추상 의미 변환</strong> 과정 중요</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ══════════════ Q24 ══════════════ -->
+<div class="panel" id="panel-1">
+  <div class="panel-header">
+    <div class="q-badge">Q24 · 주제 추론</div>
+    <h2>다음 글의 제목으로 가장 적절한 것은?</h2>
+    <div class="subject-box"><strong>Subject:</strong> 유혹 묶기를 통한 바람직한 습관 형성 전략</div>
+  </div>
+
+  <div class="passage-box">
+    <p><span class="sent-num">❶</span> Habits aren't bad. <span class="sent-num">❷</span> We need them to survive. <span class="sent-num">❸</span> Understanding how the brain uses habits and how you can work with them is essential for business.</p>
+    <p><span class="sent-num">❹</span> One question to ask is, are you really trying to break a habit, or would you do better by attaching to another one (known as <span class="circle-mark">temptation bundling</span>)?</p>
+    <p><span class="sent-num">❺</span> Wharton professor Katy Milkman led a research project called <span class="key-underline">Holding the Hunger Games Hostage</span> at the Gym, where participants could only have access to their audio devices while at the gym.</p>
+    <p><span class="sent-num">❻</span> This uses a <span class="red-mark">tempting habit</span> — listening to that awesome audiobook — and <span class="key-underline">combines it with a habit people would like to build</span>, but may otherwise feel forced to put off, like exercising.</p>
+    <p><span class="sent-num">❼</span> The participants whose devices were "held hostage" were <span class="red-mark">51 percent</span> more likely to visit the gym.</p>
+    <p><span class="sent-num">❽</span> And the really amazing thing is what happened after it was over: nearly two-thirds opted to pay to have gym-only access for their devices!</p>
+  </div>
+
+  <div class="theme-box">
+    <div class="label">📝 주제 (네모칸 요약)</div>
+    <div class="theme-text">새로운 습관과 즐거운 습관을 결합하여 만들어라.</div>
+  </div>
+
+  <div class="section-grid">
+    <div class="card">
+      <h3>🔴 핵심 마킹 포인트</h3>
+      <ul class="analysis-list">
+        <li><span class="red">temptation bundling</span> = 유혹 묶기 — 핵심 개념어</li>
+        <li><strong>combine</strong> = 결합하다 (= bundle)</li>
+        <li><strong>otherwise</strong> = 그렇지 않았다면 → 조건부 역접</li>
+        <li><strong>put off</strong> = 미루다, 연기하다</li>
+        <li><strong>opted to pay</strong> = 자발적으로 비용 지불 선택 → 습관 내재화 증거</li>
+        <li><span class="red">51% more likely</span> → 핵심 통계, 실험 결과</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>✅ 선지 분석</h3>
+      <div class="answer-badge">정답 ⑤</div>
+      <div class="options-list">
+        <div class="option">① Stop Thinking and Just Go to the Gym Now!</div>
+        <div class="option">② Avoid Listening to Music While You Work Out</div>
+        <div class="option">③ Why Smart Businesses Focus on Healthcare Service</div>
+        <div class="option">④ The Key to Success in Life: Give Up Everyday Hobbies</div>
+        <div class="option correct">⑤ Pairing Pleasure with Effort: Guiding People to New Behavior</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-full">
+    <h3>🧠 문제 풀이 전략</h3>
+    <ul class="analysis-list">
+      <li><strong>temptation bundling</strong>의 정의 문장(❹)이 핵심 → 즐거운 습관 + 어려운 습관을 묶는 전략</li>
+      <li>실험(Hostage 연구) → 구체적 사례로 개념 입증하는 구조 파악</li>
+      <li>⑤ "Pairing Pleasure with Effort" = combine(즐거운) + build(노력 필요한) 습관의 직접 번역</li>
+      <li><strong>제목 문제</strong>: 주제문(❹) + 결과(❼❽) 조합으로 가장 포괄적 선지 선택</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ══════════════ Q32 ══════════════ -->
+<div class="panel" id="panel-2">
+  <div class="panel-header">
+    <div class="q-badge">Q32 · 빈칸 추론</div>
+    <h2>다음 빈칸에 들어갈 말로 가장 적절한 것을 고르시오.</h2>
+    <div class="subject-box"><strong>Subject:</strong> 가르치기 기반 학습 효과: 능력에 대한 착각 극복</div>
+  </div>
+
+  <div class="passage-box">
+    <p><span class="sent-num">❶</span> Students often <span class="circle-mark">mistake familiarity</span> with <span class="circle-mark">true mastery</span>, creating a dangerous <span class="red-mark">"illusion of competence,"</span> where recognizing information feels like genuine knowledge, but they struggle when asked to recall or apply it independently.</p>
+    <p><span class="sent-num">❷</span> This cognitive bias, strengthened by passive study methods, leads learners to <span class="key-underline">overestimate their understanding</span>.</p>
+    <p><span class="sent-num">❸</span> Teaching materials (even informally or imaginatively) actively <span class="circle-mark">counters</span> this illusion by requiring deep processing, active recall, structured organization, and revealing gaps in knowledge.</p>
+    <p><span class="sent-num">❹</span> It introduces powerful methods like teaching imaginary students, peer-teaching in study groups, employing the Feynman Technique, and writing explanations for others.</p>
+    <p><span class="sent-num">❺</span> Ultimately, <span class="red-mark">adopting the teacher mindset</span> transforms (surface familiarity) into (real mastery) exposing and filling gaps in knowledge and ensuring solid, reliable understanding.</p>
+  </div>
+
+  <div class="theme-box">
+    <div class="label">📝 주제 (네모칸 요약)</div>
+    <div class="theme-text">학습에서 teacher mindset의 중요성 → 지식의 정교화</div>
+  </div>
+
+  <div class="section-grid">
+    <div class="card">
+      <h3>🔴 핵심 마킹 포인트</h3>
+      <ul class="analysis-list">
+        <li><span class="red">"illusion of competence"</span> — 능력의 착각 = 핵심 개념</li>
+        <li><strong>familiarity(친숙함) ↔ mastery(숙달)</strong> 대비 구조</li>
+        <li><span class="red">adopting the teacher mindset</span> — 빈칸 정답의 직접 근거</li>
+        <li><strong>counters</strong> = combat, counteract, dispel (무력화하다, 없애다)</li>
+        <li><strong>surface ↔ solid/reliable / superficial ↔ hollow</strong> — 대비 어휘 쌍</li>
+        <li>사목·목적격 → 선행사 분석 필요</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>✅ 선지 분석</h3>
+      <div class="answer-badge">정답 ①</div>
+      <div class="options-list">
+        <div class="option correct">① adopting the teacher mindset</div>
+        <div class="option">② using leisure time effectively</div>
+        <div class="option">③ activating background knowledge</div>
+        <div class="option">④ supporting the emotional stability</div>
+        <div class="option">⑤ reducing the amount of studying time</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-full">
+    <h3>🧠 문제 풀이 전략</h3>
+    <ul class="analysis-list">
+      <li><strong>글의 흐름</strong>: 착각 발생(❶❷) → 해결책 제시(❸❹) → 결론(❺) 구조</li>
+      <li>빈칸은 ❺ 결론 문장 — ❸❹의 "teaching"과 직결 → <strong>teacher mindset</strong></li>
+      <li><em>Recognizing information feels like genuine knowledge → 위험한 "illusion of competence"</em> — 문제의 본질 파악 핵심 문장</li>
+      <li><strong>transforms A into B</strong> 구조: surface familiarity → real mastery</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ══════════════ Q34 ══════════════ -->
+<div class="panel" id="panel-3">
+  <div class="panel-header">
+    <div class="q-badge">Q34 · 빈칸 추론</div>
+    <h2>다음 빈칸에 들어갈 말로 가장 적절한 것을 고르시오.</h2>
+    <div class="subject-box"><strong>Subject:</strong> 효율성보다 내집단 규범을 따르는 모방 행동</div>
+  </div>
+
+  <div class="passage-box">
+    <p><span class="sent-num">❶</span> The emphasis on learning from the ingroup takes little <span class="circle-mark">account of</span> individuals.</p>
+    <p><span class="sent-num">❷</span> Amazingly, while we may dislike some of the people in our ingroup, we still <span class="circle-mark">copy</span> them.</p>
+    <p><span class="sent-num">❸</span> Wilks, Kirby, and Nielsen studied <span class="key-underline">copying behavior</span> in the context of observing how to open a puzzle box.</p>
+    <p><span class="sent-num">❹</span> Ingroups and outgroups were distinguished in a minimal way using simple color coding of wristbands.</p>
+    <p><span class="sent-num">❺</span> The children did not simply like all members of their ingroup; they disliked those who behaved in an antisocial fashion.</p>
+    <p><span class="sent-num">❻</span> Indeed, they liked these antisocial ingroup members <span class="red-mark">less</span> than the prosocial members of an outgroup.</p>
+    <p><span class="sent-num">❼</span> Still, their dislike did not affect their tendency to copy ingroup behavior <span class="key-underline">more closely than outgroup behavior</span>.</p>
+    <p><span class="sent-num">❽</span> This <span class="circle-mark">overimitation</span> reveals that we are not copying in order to learn how to open a box most efficiently.</p>
+    <p><span class="sent-num">❾</span> We want to learn how to do it in the proper way — in other words, <span class="red-mark">conforming to the rules and conventions of the ingroup</span>.</p>
+    <p><span class="sent-num">❿</span> This will be appropriately demonstrated even by antisocial ingroup members.</p>
+  </div>
+
+  <div class="theme-box">
+    <div class="label">📝 주제 (네모칸 요약)</div>
+    <div class="theme-text">아이들이 과잉 모방을 하는 이유는 내집단의 관습에 따라 적절하게 행동하기 위해서이다.<br><small style="color:var(--text-muted); font-size:13px;">집단성, 집단 협동 &gt; 개성, 개인적 선호</small></div>
+  </div>
+
+  <div class="section-grid">
+    <div class="card">
+      <h3>🔴 핵심 마킹 포인트</h3>
+      <ul class="analysis-list">
+        <li><span class="red">conforming to the rules and conventions of the ingroup</span> = 빈칸 정답</li>
+        <li><strong>overimitation</strong> — 과잉 모방: 효율 아닌 규범을 위한 모방</li>
+        <li><strong>dislike ≠ 모방 안 함</strong> — 역접 구조(Still) 핵심</li>
+        <li><strong>in a fashion/manner/way</strong> = ~한 태도[방식]으로</li>
+        <li><strong>conform</strong> = adhere to, comply with, abide by ↔ violate, defy</li>
+        <li><strong>take account of</strong> = consider, take into consideration</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>✅ 선지 분석</h3>
+      <div class="answer-badge">정답 ①</div>
+      <div class="options-list">
+        <div class="option correct">① conforming to the rules and conventions of the ingroup</div>
+        <div class="option">② following outgroup behavior which is socially appropriate</div>
+        <div class="option">③ avoiding behaviors demonstrated by the ingroup on purpose</div>
+        <div class="option">④ pursuing the most efficient strategy for completing the task</div>
+        <div class="option">⑤ maintaining an individual identity rather than a group identity</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-full">
+    <h3>🧠 문제 풀이 전략</h3>
+    <ul class="analysis-list">
+      <li><strong>역접(Still, ❼)</strong>이 핵심 — 싫어도 따라 한다 → 효율이 아닌 <strong>규범</strong> 때문</li>
+      <li>❽의 overimitation + "not copying to learn efficiently" → 빈칸 근거 직접 제공</li>
+      <li>collectivity / social identity / collective behavior &gt; individuality / personal preference</li>
+      <li>④ 효율 추구 → ❽에서 직접 반박 ("not copying in order to learn most efficiently")</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ══════════════ Q35 ══════════════ -->
+<div class="panel" id="panel-4">
+  <div class="panel-header">
+    <div class="q-badge">Q35 · 무관한 문장 찾기</div>
+    <h2>다음 글에서 전체 흐름과 관계 없는 문장은?</h2>
+    <div class="subject-box"><strong>Subject:</strong> 지방 세포의 설정점 이론과 다이어트의 어려움</div>
+  </div>
+
+  <div class="passage-box">
+    <p><span class="sent-num">❶</span> The "set point theory" concept is that your body has a stable quantity of fat cells by the time you are an adult.</p>
+    <p><span class="sent-num">❷</span> The more weight you carried in your childhood and your teenage years, the more fat cells you will have as an adult.</p>
+    <p><span class="sent-num">❸</span> ① These fat cells then become "fuller" or "thinner" as you gain and lose weight as an adult.</p>
+    <p><span class="sent-num">❹</span> ② The set point is the <span class="circle-mark">trigger</span> in these cells that will send a message to your brain saying that your fat cells are getting too thin and that you must eat more.</p>
+    <p><span class="sent-num">❺</span> ③ Different people's fat cells will have different set points, and the strength of the message is affected by the number of cells.</p>
+    <p><span class="sent-num">❻</span> <span class="red-mark">④ Some researchers report that fat cells can release hormones and other chemicals that could help treat a disease.</span></p>
+    <p><span class="sent-num">❼</span> ⑤ Thus a person with lots of fat cells and a high set point will battle with a strong desire for food when dieting.</p>
+  </div>
+
+  <div class="theme-box">
+    <div class="label">📝 주제 (네모칸 요약)</div>
+    <div class="theme-text">소재: 세트 포인트 이론<br><small style="color:var(--text-muted);">지방 세포↑ → 세트포인트↑ → 식욕↑ → 다이어트↓</small></div>
+  </div>
+
+  <div class="section-grid">
+    <div class="card">
+      <h3>🔴 핵심 마킹 포인트</h3>
+      <ul class="analysis-list">
+        <li><span class="red">④번 문장</span> — 무관한 문장 정답</li>
+        <li>글의 흐름: 설정점 이론 → 지방세포가 뇌에 신호 → 체중 유지 → 다이어트 어려움</li>
+        <li>④는 <strong>지방세포가 질병 치료 호르몬 분비</strong> → 글의 주제(다이어트 어려움)와 무관</li>
+        <li><strong>set point</strong> = 설정점, 방아쇠 역할 (trigger = 방아쇠)</li>
+        <li><strong>battle with</strong> = struggle with (~와 싸우다)</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>✅ 정답</h3>
+      <div class="answer-badge">정답 ④</div>
+      <ul class="analysis-list" style="margin-top:12px;">
+        <li>①②③⑤ → 모두 세트포인트 → 식욕 신호 → 다이어트 어려움 흐름 유지</li>
+        <li>④만 <strong>질병 치료</strong> 언급 → 완전히 다른 방향</li>
+        <li><strong>무관문장 풀이법</strong>: 글의 한 줄 주제 먼저 파악 → 이탈 문장 탐색</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card-full">
+    <h3>🧠 흐름 분석</h3>
+    <ul class="analysis-list">
+      <li>지방세포 고정(성인) → 체중 감소 → 지방세포 얇아짐 → 뇌에 '지방이 너무 줄었다' 신호 전송 → 뇌의 식욕 촉진 → <strong>체중을 원래대로 되돌리려 함</strong></li>
+      <li>set point theory: 우리 몸은 일정한 체중/체지방 수준을 유지하려는 자동 조절 시스템을 가지고 있다</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ══════════════ Q38 ══════════════ -->
+<div class="panel" id="panel-5">
+  <div class="panel-header">
+    <div class="q-badge">Q38 · 문장 삽입</div>
+    <h2>글의 흐름으로 보아, 주어진 문장이 들어가기에 가장 적절한 곳을 고르시오.</h2>
+    <div class="subject-box"><strong>Subject:</strong> 과학 인식의 변화: 과학적 진보를 이끄는 패러다임 전환의 의미</div>
+  </div>
+
+  <div class="passage-box">
+    <div style="background:rgba(232,168,124,0.08);border:1px dashed rgba(232,168,124,0.4);border-radius:6px;padding:14px 18px;margin-bottom:14px;">
+      <strong style="color:var(--accent);font-size:12px;font-family:'JetBrains Mono',monospace;">【삽입 문장】</strong>
+      <p style="margin-top:6px;">Thus, what we call major progress in science is not a movement from a less to a more accurate paradigm.</p>
+    </div>
+    <p><span class="sent-num">❶</span> As Kuhn proposed, our propositions about the world are embedded within paradigms, roughly a network of interrelated commitments to a particular theory, a conception of a subject matter, and methodological practices.</p>
+    <p><span class="sent-num">❷</span> Thus, when scientists undertake research, they do so from within a specific paradigm.</p>
+    <p><span class="sent-num">❸</span> Even the most exacting measurements are only <span class="circle-mark">sensible</span> from within that paradigm.</p>
+    <p><span class="sent-num">❹</span> For example, a look into a microscope tells you nothing unless you are already informed about the nature of the instrument and what you are supposed to be looking at.</p>
+    <p><span class="sent-num">❺</span> Thus, what we call major progress in science is not a movement from a less to a more accurate paradigm. <span class="red-mark">【삽입 위치 ⑤】</span></p>
+    <p><span class="sent-num">❻</span> Rather, it is a <span class="red-mark">horizontal shift</span> from one 'way of seeing the world' to another.</p>
+    <p><span class="sent-num">❼</span> For Kuhn, 'the scientist with a new paradigm sees differently from the way he had seen before.'</p>
+  </div>
+
+  <div class="theme-box">
+    <div class="label">📝 주제 (네모칸 요약)</div>
+    <div class="theme-text">쿤이 말하는 패러다임 = 전에 세상을 보던 방식에서 다른 방식으로 세상을 보는 것 → 수평적 이동/변화</div>
+  </div>
+
+  <div class="section-grid">
+    <div class="card">
+      <h3>🔴 핵심 마킹 포인트</h3>
+      <ul class="analysis-list">
+        <li><span class="red">horizontal shift</span> ↔ vertical (수평적 전환 vs 수직적 향상)</li>
+        <li><strong>삽입 문장의 Thus</strong> → 앞에 근거(❸❹)가 오고, 뒤에 Rather로 역접 연결</li>
+        <li><strong>sensible</strong> = 사리에 맞는 (≠ sensitive 민감한, ≠ sensory 감각적인)</li>
+        <li><strong>paradigm</strong> 개념: 이론+관점+방법론의 네트워크</li>
+        <li>뉴턴 vs 아인슈타인: 수직(better, 절대적 진리) ↔ 쿤: 수평(different, 절대적 진리 부재)</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>✅ 정답</h3>
+      <div class="answer-badge">정답 ⑤</div>
+      <ul class="analysis-list" style="margin-top:12px;">
+        <li>삽입 문장 = ❺번 위치 (⑤번 자리)</li>
+        <li>앞: 현미경 예시(❹) → 패러다임 안에서만 의미 있음</li>
+        <li>뒤: Rather + horizontal shift (❻) → 방향 전환 설명</li>
+        <li><strong>Thus ~ not A / Rather ~ B</strong> 구조 연결 확인</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card-full">
+    <h3>🧠 문단 구조 분석</h3>
+    <ul class="analysis-list">
+      <li>패러다임 정의(❶) → 과학자는 패러다임 안에서 연구(❷) → 측정도 패러다임 안에서만 의미(❸) → 현미경 예시(❹) → <strong>【삽입】 진보 ≠ 더 정확한 패러다임(❺)</strong> → 오히려 수평적 전환(❻) → 쿤의 결론(❼)</li>
+      <li>뉴턴 패러다임: 이론=중력 운동 법칙 / 관점=세계는 기계적으로 작동 / 방법론=수학적 측정과 실험</li>
+      <li>통념: 과학은 진보한다 → 수직적(better), 절대적 진리 존재 / 쿤: 수평적(different), 절대적 진리 부재</li>
+    </ul>
+  </div>
+</div>
+
+</div><!-- /content-area -->
+
+<script>
+  function switchTab(index) {
+    document.querySelectorAll('.tab').forEach((t, i) => {
+      t.classList.toggle('active', i === index);
+    });
+    document.querySelectorAll('.panel').forEach((p, i) => {
+      p.classList.toggle('active', i === index);
+    });
+  }
+</script>
+</body>
+</html>
