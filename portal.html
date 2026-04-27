@@ -8,7 +8,6 @@
     <style>
         :root { 
             --primary: #2563eb; --dark: #1e293b; --bg: #f8fafc; 
-            /* 영어 테마 색상 추가 (--eng-theme) */
             --kor-theme: #b45309; --eng-theme: #10b981; --sci-theme: #0891b2; --soc-theme: #f59e0b;
             --ai-theme: #8b5cf6; --thanks-theme: #f43f5e; --hist-theme: #1e3a8a;
         }
@@ -50,7 +49,7 @@
         .hub-card .icon { font-size: 60px; margin-bottom: 25px; }
         .hub-card h3 { color: var(--hist-theme); font-weight: 900; font-size: 1.4rem; margin: 0; }
 
-        /* 매우 간단 요약 이동 박스 */
+        /* ⚡ 매우 간단 요약 이동 박스 */
         .summary-link-box {
             background: linear-gradient(135deg, var(--hist-theme), #3b82f6);
             color: white;
@@ -98,8 +97,7 @@
     <div class="sidebar-header">STUDY MAX</div>
     <div class="subject-list">
         <div class="subject-item active" onclick="go('korean_hub.html', 'korean', this)">📖 국어 (시/대화)</div>
-        <!-- 📝 영어 탭 새롭게 추가 (국어 바로 밑) -->
-        <div class="subject-item" onclick="go('english_hub.html', 'english', this)">📝 영어 (최기분)</div>
+        <div class="subject-item" onclick="go('english_hub.html', 'english', this)">📝 영어 (본문/문법)</div>
         <div class="subject-item" onclick="go('science_hub.html', 'science', this)">🧪 통합과학 (물/화/생/지)</div>
         <div class="subject-item" onclick="go('society_hub.html', 'society', this)">🌍 통합사회 (행복/지리)</div>
         <div class="subject-item" onclick="go('', 'history', this)">📚 한국사 (정리/부록)</div>
@@ -250,7 +248,7 @@
         } else {
             frame.style.display = 'block'; frame.src = "./" + url;
             
-            // 상단 타이틀 및 컬러 변경 로직 (영어 추가)
+            // 상단 타이틀 및 컬러 변경 로직
             if(type === 'korean') { title.innerText = "국어 통합 학습 허브"; title.style.borderLeftColor = 'var(--kor-theme)'; }
             else if(type === 'english') { title.innerText = "영어 통합 학습 허브"; title.style.borderLeftColor = 'var(--eng-theme)'; }
             else if(type === 'science') { title.innerText = "통합과학 (물/화/생/지)"; title.style.borderLeftColor = 'var(--sci-theme)'; }
@@ -282,7 +280,10 @@
         const frame = document.getElementById('mainFrame');
         document.getElementById('appendixBox').style.display = 'none';
         frame.style.display = 'block';
-        frame.src = "./history_appendix.html"; // 띄우고 싶은 부록 파일명
+        
+        // ★ 질문자님이 말씀하신 파일명(history_apendix.html)을 정확히 반영했습니다! ★
+        frame.src = "./history_apendix.html"; 
+        
         document.getElementById('mainTitle').innerText = "한국사 매우 간단 요약";
     }
 </script>
