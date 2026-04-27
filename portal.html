@@ -8,7 +8,8 @@
     <style>
         :root { 
             --primary: #2563eb; --dark: #1e293b; --bg: #f8fafc; 
-            --kor-theme: #b45309; --sci-theme: #0891b2; --soc-theme: #f59e0b;
+            /* 영어 테마 색상 추가 (--eng-theme) */
+            --kor-theme: #b45309; --eng-theme: #10b981; --sci-theme: #0891b2; --soc-theme: #f59e0b;
             --ai-theme: #8b5cf6; --thanks-theme: #f43f5e; --hist-theme: #1e3a8a;
         }
         
@@ -49,7 +50,7 @@
         .hub-card .icon { font-size: 60px; margin-bottom: 25px; }
         .hub-card h3 { color: var(--hist-theme); font-weight: 900; font-size: 1.4rem; margin: 0; }
 
-        /* ⚡ 매우 간단 요약 이동 박스 (새로 추가) */
+        /* 매우 간단 요약 이동 박스 */
         .summary-link-box {
             background: linear-gradient(135deg, var(--hist-theme), #3b82f6);
             color: white;
@@ -97,6 +98,8 @@
     <div class="sidebar-header">STUDY MAX</div>
     <div class="subject-list">
         <div class="subject-item active" onclick="go('korean_hub.html', 'korean', this)">📖 국어 (시/대화)</div>
+        <!-- 📝 영어 탭 새롭게 추가 (국어 바로 밑) -->
+        <div class="subject-item" onclick="go('english_hub.html', 'english', this)">📝 영어 (최기분)</div>
         <div class="subject-item" onclick="go('science_hub.html', 'science', this)">🧪 통합과학 (물/화/생/지)</div>
         <div class="subject-item" onclick="go('society_hub.html', 'society', this)">🌍 통합사회 (행복/지리)</div>
         <div class="subject-item" onclick="go('', 'history', this)">📚 한국사 (정리/부록)</div>
@@ -127,16 +130,16 @@
             </div>
         </div>
 
-        <!-- 2. 한국사 부록 (요약 버튼 + 원래 텍스트가 같이 있는 곳) -->
+        <!-- 2. 한국사 부록 (요약 버튼 + 원래 텍스트) -->
         <div id="appendixBox" class="internal-box">
             <div class="appendix-wrapper">
                 
-                <!-- 새로 추가된 "한국사 매우 간단 요약" 외부 파일 이동 버튼 박스 -->
+                <!-- "한국사 매우 간단 요약" 외부 파일 이동 버튼 -->
                 <div class="summary-link-box" onclick="loadSimpleSummaryFile()">
                     <div class="icon">⚡</div>
                     <div>
-                        <h3>한국사 왕 맞추기 퀴즈</h3>
-                        <p>이 버튼을 클릭하세요!</p>
+                        <h3>한국사 매우 간단 요약</h3>
+                        <p>핵심만 쏙쏙 뽑은 요약 파일로 바로 넘어가려면 이 버튼을 클릭하세요!</p>
                     </div>
                 </div>
 
@@ -231,7 +234,7 @@
             el.classList.add('active');
         }
         const frame = document.getElementById('mainFrame');
-        const internalBoxes = [document.getElementById('historyHub'), document.getElementById('appendixBox'), document.getElementById('thanksBox')];
+        const internalBoxes =[document.getElementById('historyHub'), document.getElementById('appendixBox'), document.getElementById('thanksBox')];
         const title = document.getElementById('mainTitle');
 
         // 이동할 때마다 화면 비우기
@@ -246,7 +249,10 @@
             title.innerText = "SPECIAL THANKS"; title.style.borderLeftColor = 'var(--thanks-theme)';
         } else {
             frame.style.display = 'block'; frame.src = "./" + url;
+            
+            // 상단 타이틀 및 컬러 변경 로직 (영어 추가)
             if(type === 'korean') { title.innerText = "국어 통합 학습 허브"; title.style.borderLeftColor = 'var(--kor-theme)'; }
+            else if(type === 'english') { title.innerText = "영어 통합 학습 허브"; title.style.borderLeftColor = 'var(--eng-theme)'; }
             else if(type === 'science') { title.innerText = "통합과학 (물/화/생/지)"; title.style.borderLeftColor = 'var(--sci-theme)'; }
             else if(type === 'society') { title.innerText = "통합사회 (행복/지리)"; title.style.borderLeftColor = 'var(--soc-theme)'; }
             else if(type === 'info') { title.innerText = "정보 (알고리즘)"; title.style.borderLeftColor = '#0d9488'; }
@@ -276,7 +282,7 @@
         const frame = document.getElementById('mainFrame');
         document.getElementById('appendixBox').style.display = 'none';
         frame.style.display = 'block';
-        frame.src = "./history_appendix.html"; // ★ 띄우고 싶은 부록 파일명!
+        frame.src = "./history_appendix.html"; // 띄우고 싶은 부록 파일명
         document.getElementById('mainTitle').innerText = "한국사 매우 간단 요약";
     }
 </script>
